@@ -16,9 +16,9 @@ local.properties
 # User-specific configurations
 *.hprof
 *.log
-*.xml
 *.txt
 *.apk
+*.aab
 *.ap_
 *.dex
 *.jar
@@ -47,6 +47,9 @@ out/
 
 # Java
 *.class
+
+# Firebase config file
+google-services.json
 
 # Misc
 *.DS_Store
