@@ -1,0 +1,52 @@
+# Gradle files
+.gradle/
+build/
+*/build/
+**/build/
+gradle-wrapper.jar
+gradle-wrapper.properties
+
+# Local configuration file
+local.properties
+
+# Android Studio files
+.idea/
+*.iml
+
+# User-specific configurations
+*.hprof
+*.log
+*.xml
+*.txt
+*.apk
+*.ap_
+*.dex
+*.jar
+*.war
+*.ear
+*.so
+*.o
+*.obj
+*.bin
+*.dll
+
+# Android Emulator
+*.avd/
+*.avd/*.ini
+*.lock
+
+# External libraries and generated files
+externalNativeBuild/
+.cxx/
+generated/
+generated_build/
+out/
+
+# NDK
+*.cxx/
+
+# Java
+*.class
+
+# Misc
+*.DS_Store
