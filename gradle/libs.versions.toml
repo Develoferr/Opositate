@@ -15,7 +15,7 @@ datastorePreferences = "1.1.1"
 navigation = "2.8.2"
 hilt = "2.52"
 firebaseBom = "33.4.0"
-googleServices = "4.4.2"
+# googleServices = "4.4.2"
 
 [libraries]
 # Core Libraries
@@ -56,4 +56,4 @@ androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-co
 android-application = { id = "com.android.application", version.ref = "agp" }
 jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
-google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+# google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
