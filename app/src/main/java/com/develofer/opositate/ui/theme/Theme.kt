@@ -45,34 +45,34 @@ val DarkColorScheme = darkColorScheme(
     onError = Color.Black
 )
 
-fun Typography.applyFontFamily(fontFamily: FontFamily): Typography {
+fun applyFontFamily(fontFamily: FontFamily): Typography {
     return Typography(
-        displayLarge = displayLarge.copy(fontFamily = fontFamily),
-        displayMedium = displayMedium.copy(fontFamily = fontFamily),
-        displaySmall = displaySmall.copy(fontFamily = fontFamily),
-        headlineLarge = headlineLarge.copy(fontFamily = fontFamily),
-        headlineMedium = headlineMedium.copy(fontFamily = fontFamily),
-        headlineSmall = headlineSmall.copy(fontFamily = fontFamily),
-        titleLarge = titleLarge.copy(fontFamily = fontFamily),
-        titleMedium = titleMedium.copy(fontFamily = fontFamily),
-        titleSmall = titleSmall.copy(fontFamily = fontFamily),
-        bodyLarge = bodyLarge.copy(fontFamily = fontFamily),
-        bodyMedium = bodyMedium.copy(fontFamily = fontFamily),
-        bodySmall = bodySmall.copy(fontFamily = fontFamily),
-        labelLarge = labelLarge.copy(fontFamily = fontFamily),
-        labelMedium = labelMedium.copy(fontFamily = fontFamily),
-        labelSmall = labelSmall.copy(fontFamily = fontFamily),
+        displayLarge = Typography.displayLarge.copy(fontFamily = fontFamily),
+        displayMedium = Typography.displayMedium.copy(fontFamily = fontFamily),
+        displaySmall = Typography.displaySmall.copy(fontFamily = fontFamily),
+        headlineLarge = Typography.headlineLarge.copy(fontFamily = fontFamily),
+        headlineMedium = Typography.headlineMedium.copy(fontFamily = fontFamily),
+        headlineSmall = Typography.headlineSmall.copy(fontFamily = fontFamily),
+        titleLarge = Typography.titleLarge.copy(fontFamily = fontFamily),
+        titleMedium = Typography.titleMedium.copy(fontFamily = fontFamily),
+        titleSmall = Typography.titleSmall.copy(fontFamily = fontFamily),
+        bodyLarge = Typography.bodyLarge.copy(fontFamily = fontFamily),
+        bodyMedium = Typography.bodyMedium.copy(fontFamily = fontFamily),
+        bodySmall = Typography.bodySmall.copy(fontFamily = fontFamily),
+        labelLarge = Typography.labelLarge.copy(fontFamily = fontFamily),
+        labelMedium = Typography.labelMedium.copy(fontFamily = fontFamily),
+        labelSmall = Typography.labelSmall.copy(fontFamily = fontFamily),
     )
 }
 
 @Composable
 fun appTypography(): Typography {
-    val baseTypography = Typography()
+    Typography()
 
     return if (isSystemInDarkTheme()) {
-        baseTypography.applyFontFamily(AkzidenzGroteskBQ)
+        applyFontFamily(AkzidenzGroteskBQ)
     } else {
-        baseTypography.applyFontFamily(Gotham)
+        applyFontFamily(Gotham)
     }
 }
 
