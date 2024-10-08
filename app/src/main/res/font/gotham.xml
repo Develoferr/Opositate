@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+
+<!--    GOTHAM BLACK-->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="700"
+        android:font="@font/gotham_black"/>
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="700"
+        android:font="@font/gotham_black_italic"/>
+
+<!--    GOTHAM BOLD-->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/gotham_bold"/>
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="400"
+        android:font="@font/gotham_bold_italic"/>
+
+<!--    GOTHAM BOOK-->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="300"
+        android:font="@font/gotham_book"/>
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="300"
+        android:font="@font/gotham_book_italic"/>
+
+<!--    GOTHAM LIGHT-->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="300"
+        android:font="@font/gotham_light"/>
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="300"
+        android:font="@font/gotham_light_italic"/>
+
+<!--    GOTHAM MEDIUM-->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/gotham_medium"/>
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="400"
+        android:font="@font/gotham_medium_italic"/>
+
+<!--    GOTHAM THIN-->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="200"
+        android:font="@font/gotham_thin"/>
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="200"
+        android:font="@font/gotham_thin_italic"/>
+
+<!--    GOTHAM ULTRA-->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        android:font="@font/gotham_ultra"/>
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="400"
+        android:font="@font/gotham_ultra"/>
+
+<!--    GOTHAM X LIGHT-->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="300"
+        android:font="@font/gotham_x_light"/>
+    <font
+        android:fontStyle="italic"
+        android:fontWeight="300"
+        android:font="@font/gotham_x_light_italic"/>
+
+</font-family>

@@ -1,6 +1,5 @@
 package com.develofer.opositate.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -8,35 +7,78 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
+import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontFamily
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+val LightColorScheme = lightColorScheme(
+    primary = Primary400,
+    primaryContainer = Primary600,
+    secondary = Secondary400,
+    secondaryContainer = Secondary600,
+    background = Gray50,
+    surface = Gray100,
+    error = Color(0xFFB00020),
     onPrimary = Color.White,
     onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    onBackground = TextPrimaryLight,
+    onSurface = TextSecondaryLight,
+    onError = Color.White
 )
+
+val DarkColorScheme = darkColorScheme(
+    primary = Primary300,
+    primaryContainer = Primary700,
+    secondary = Secondary300,
+    secondaryContainer = Secondary700,
+    background = Gray900,
+//    background = Color(0xFF121212),
+//    background = Color(0xFF303030),
+    surface = Color(0xFF1E1E1E),
+    error = Color(0xFFCF6679),
+    onPrimary = TextPrimaryDark,
+    onSecondary = TextPrimaryDark,
+    onBackground = TextPrimaryDark,
+    onSurface = TextSecondaryDark,
+    onError = Color.Black
+)
+
+fun Typography.applyFontFamily(fontFamily: FontFamily): Typography {
+    return Typography(
+        displayLarge = displayLarge.copy(fontFamily = fontFamily),
+        displayMedium = displayMedium.copy(fontFamily = fontFamily),
+        displaySmall = displaySmall.copy(fontFamily = fontFamily),
+        headlineLarge = headlineLarge.copy(fontFamily = fontFamily),
+        headlineMedium = headlineMedium.copy(fontFamily = fontFamily),
+        headlineSmall = headlineSmall.copy(fontFamily = fontFamily),
+        titleLarge = titleLarge.copy(fontFamily = fontFamily),
+        titleMedium = titleMedium.copy(fontFamily = fontFamily),
+        titleSmall = titleSmall.copy(fontFamily = fontFamily),
+        bodyLarge = bodyLarge.copy(fontFamily = fontFamily),
+        bodyMedium = bodyMedium.copy(fontFamily = fontFamily),
+        bodySmall = bodySmall.copy(fontFamily = fontFamily),
+        labelLarge = labelLarge.copy(fontFamily = fontFamily),
+        labelMedium = labelMedium.copy(fontFamily = fontFamily),
+        labelSmall = labelSmall.copy(fontFamily = fontFamily),
+    )
+}
+
+@Composable
+fun appTypography(): Typography {
+    val baseTypography = Typography()
+
+    return if (isSystemInDarkTheme()) {
+        baseTypography.applyFontFamily(AkzidenzGroteskBQ)
+    } else {
+        baseTypography.applyFontFamily(Gotham)
+    }
+}
 
 @Composable
 fun OpositateTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
@@ -52,7 +94,7 @@ fun OpositateTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = appTypography(),
         content = content
     )
 }

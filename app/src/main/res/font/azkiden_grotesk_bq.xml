@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android">
+<!-- Akzidenz Grotesk BQ Bold Condensed -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="700"
+    android:font="@font/akzidenz_grotesk_bq_bd_cnd"/>
+<font
+    android:fontStyle="normal"
+    android:fontWeight="700"
+    android:font="@font/akzidenz_grotesk_bq_bd_cnd_it"/>
+
+<!-- Akzidenz Grotesk BQ Bold -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="700"
+    android:font="@font/akzidenz_grotesk_bq_bold"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="700"
+    android:font="@font/akzidenz_grotesk_bq_bold_italic"/>
+<font
+    android:fontStyle="normal"
+    android:fontWeight="700"
+    android:font="@font/akzidenz_grotesk_bq_bold_ext"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="700"
+    android:font="@font/akzidenz_grotesk_bq_bold_ext_it"/>
+
+<!-- Akzidenz Grotesk BQ Regular and Italic -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="400"
+    android:font="@font/akzidenz_grotesk_bq_reg"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="400"
+    android:font="@font/akzidenz_grotesk_bq_italic"/>
+
+<!-- Akzidenz Grotesk BQ Condensed -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="400"
+    android:font="@font/akzidenz_grotesk_bq_cnd"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="400"
+    android:font="@font/akzidenz_grotesk_bq_cnd_it"/>
+
+<!-- Akzidenz Grotesk BQ Light -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="300"
+    android:font="@font/akzidenz_grotesk_bq_light"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="300"
+    android:font="@font/akzidenz_grotesk_bq_light_it"/>
+<font
+    android:fontStyle="normal"
+    android:fontWeight="300"
+    android:font="@font/akzidenz_grotesk_bq_light_os_f"/>
+<font
+    android:fontStyle="normal"
+    android:fontWeight="300"
+    android:font="@font/akzidenz_grotesk_bq_light_sc"/>
+
+<!-- Akzidenz Grotesk BQ Medium -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="500"
+    android:font="@font/akzidenz_grotesk_bq_medium"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="500"
+    android:font="@font/akzidenz_grotesk_bq_med_italic"/>
+<font
+    android:fontStyle="normal"
+    android:fontWeight="500"
+    android:font="@font/akzidenz_grotesk_bq_md_cnd"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="500"
+    android:font="@font/akzidenz_grotesk_bq_md_cnd_it"/>
+
+<!-- Akzidenz Grotesk BQ Super -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="900"
+    android:font="@font/akzidenz_grotesk_bq_super"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="900"
+    android:font="@font/akzidenz_grotesk_bq_super_italic"/>
+
+<!-- Akzidenz Grotesk BQ Extended -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="400"
+    android:font="@font/akzidenz_grotesk_bq_ext"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="400"
+    android:font="@font/akzidenz_grotesk_bq_ext_it"/>
+
+<!-- Akzidenz Grotesk BQ Light Extended -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="300"
+    android:font="@font/akzidenz_grotesk_bq_lig_ext"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="300"
+    android:font="@font/akzidenz_grotesk_bq_lig_ext_it"/>
+
+<!-- Akzidenz Grotesk BQ Medium Extended -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="500"
+    android:font="@font/akzidenz_grotesk_bq_med_ext"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="500"
+    android:font="@font/akzidenz_grotesk_bq_med_ext_it"/>
+
+<!-- Akzidenz Grotesk BQ Extra -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="800"
+    android:font="@font/akzidenz_grotesk_bq_x_bd_cnd"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="800"
+    android:font="@font/akzidenz_grotesk_bq_x_bd_cnd_it"/>
+<font
+    android:fontStyle="normal"
+    android:fontWeight="800"
+    android:font="@font/akzidenz_grotesk_bq_x_bd_cnd_alt"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="800"
+    android:font="@font/akzidenz_grotesk_bq_x_bd_cnd_it_alt"/>
+
+<!-- Akzidenz Grotesk BQ Extra Bold -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="800"
+    android:font="@font/akzidenz_grotesk_bq_x_bold"/>
+<font
+    android:fontStyle="normal"
+    android:fontWeight="800"
+    android:font="@font/akzidenz_grotesk_bq_x_bold_alt"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="800"
+    android:font="@font/akzidenz_grotesk_bq_x_bold_it"/>
+
+<!-- Akzidenz Grotesk BQ Light Condensed -->
+<font
+    android:fontStyle="normal"
+    android:fontWeight="300"
+    android:font="@font/akzidenz_grotesk_bq_lig_cnd"/>
+<font
+    android:fontStyle="italic"
+    android:fontWeight="300"
+    android:font="@font/akzidenz_grotesk_bq_lig_cnd_it"/>
+
+</font-family>

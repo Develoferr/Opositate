@@ -5,6 +5,49 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    // GAMA grises
+    <color name="gray_50">#FAFAFA</color>
+    <color name="gray_100">#F5F5F5</color>
+    <color name="gray_200">#EEEEEE</color>
+    <color name="gray_300">#E0E0E0</color>
+    <color name="gray_400">#BDBDBD</color>
+    <color name="gray_500">#9E9E9E</color>
+    <color name="gray_600">#757575</color>
+    <color name="gray_700">#616161</color>
+    <color name="gray_800">#424242</color>
+    <color name="gray_900">#212121</color>
+
+    // Color principal y secundario
+    <color name="primary">#1CE9B6</color>
+    <color name="secondary">#1D65E6</color>
+
+    // Gama (1de9b6) a negro
+    <color name="azulVerdeABlanco1">#63eec2</color>
+    <color name="azulVerdeABlanco2">#8af2ce</color>
+    <color name="azulVerdeABlanco3">#abf6da</color>
+    <color name="azulVerdeABlanco4">#c8f9e6</color>
+    <color name="azulVerdeABlanco5">#e4fcf3</color>
+
+    // Gama (1de9b6) a negro
+    <color name="azulVerdeANegro1">#25be95</color>
+    <color name="azulVerdeANegro2">#269575</color>
+    <color name="azulVerdeANegro3">#236e57</color>
+    <color name="azulVerdeANegro4">#1d493b</color>
+    <color name="azulVerdeANegro5">#142720</color>
+
+    // Gama (1de9b6) colores relacionados y medio relacionados
+    <color name="azulVerdeRelacionado1">#00ff7f</color>
+    <color name="azulVerdeRelacionado2">#81d8d0</color>
+    <color name="azulVerdeRelacionado3">#00ffff</color>
+    <color name="azulVerdeRelacionado4">#96c8a2</color>
+    <color name="azulVerdeRelacionado5">#63eec2</color>
+    <color name="azulVerdeMedioRelacionado1">#cd5700</color>
+    <color name="azulVerdeMedioRelacionado2">#6576b4</color>
+    <color name="azulVerdeMedioRelacionado3">#ffffff</color>
+    <color name="azulVerdeMedioRelacionado4">#f44611</color>
+    <color name="azulVerdeMedioRelacionado5">#a56d5d</color>
 </resources>
