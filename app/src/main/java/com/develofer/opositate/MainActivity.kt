@@ -12,13 +12,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.splashscreen.SplashScreenViewProvider
-import com.develofer.opositate.ui.LoginScreen
+import com.develofer.opositate.ui.navigation.AppNavigation
 import com.develofer.opositate.ui.theme.OpositateTheme
 
 class MainActivity : ComponentActivity() {
@@ -41,7 +39,7 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    LoginScreen()
+                    AppNavigation()
                 }
             }
         }
@@ -67,14 +65,5 @@ class MainActivity : ComponentActivity() {
         }
         createZoomAnimator(View.SCALE_X).start()
         createZoomAnimator(View.SCALE_Y).start()
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    OpositateTheme {
-        LoginScreen()
     }
 }

@@ -1,5 +1,6 @@
-package com.develofer.opositate.ui
+package com.develofer.opositate.ui.screen
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -37,6 +38,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
 import com.develofer.opositate.ui.custom.CustomLoginTextField
 import com.develofer.opositate.ui.theme.Gray200
@@ -44,7 +47,7 @@ import com.develofer.opositate.ui.theme.OpositateTheme
 import java.util.Locale
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(navController: NavHostController) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isUsernameFocused by remember { mutableStateOf(false) }
@@ -209,12 +212,12 @@ fun LoginScreen() {
                         text = "LOGIN CON GOOGLE",
                         fontSize = if (isSystemInDarkTheme()) 20.sp else 25.sp,
                         style = MaterialTheme.typography.titleMedium,
-                        color = Gray200,
+                        color = if (isSystemInDarkTheme()) Color.Black else Gray200,
                     )
                 }
 
                 TextButton(
-                    onClick = {},
+                    onClick = { navController.navigate("register") },
                     modifier = Modifier.padding(vertical = 5.dp)
                 ) {
                     Text(
@@ -234,18 +237,18 @@ fun LoginScreen() {
 
 }
 
-//@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-//@Composable
-//fun LoginPreview() {
-//    OpositateTheme {
-//        LoginScreen()
-//    }
-//}
-
-@Preview(showBackground = true)
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun LoginPreview() {
     OpositateTheme {
-        LoginScreen()
+        LoginScreen(rememberNavController())
     }
 }
+
+//@Preview(showBackground = true)
+//@Composable
+//fun LoginPreview() {
+//    OpositateTheme {
+//        LoginScreen(rememberNavController())
+//    }
+//}
