@@ -1,5 +1,6 @@
 package com.develofer.opositate.ui.theme
 
+import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
@@ -9,19 +10,23 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontFamily
+import androidx.core.view.WindowCompat
 
 val LightColorScheme = lightColorScheme(
     primary = Primary400,
     primaryContainer = Primary600,
     secondary = Secondary400,
     secondaryContainer = Secondary600,
-    background = Gray50,
+    background = Primary,
     surface = Gray100,
     error = Color(0xFFB00020),
-    onPrimary = Color.White,
+    onPrimary = Gray900,
     onSecondary = Color.White,
     onBackground = TextPrimaryLight,
     onSurface = TextSecondaryLight,
@@ -33,8 +38,9 @@ val DarkColorScheme = darkColorScheme(
     primaryContainer = Primary700,
     secondary = Secondary300,
     secondaryContainer = Secondary700,
-    background = Gray900,
+//    background = Gray900,
 //    background = Color(0xFF121212),
+    background = Color.Black,
 //    background = Color(0xFF303030),
     surface = Color(0xFF1E1E1E),
     error = Color(0xFFCF6679),
@@ -67,8 +73,6 @@ fun applyFontFamily(fontFamily: FontFamily): Typography {
 
 @Composable
 fun appTypography(): Typography {
-    Typography()
-
     return if (isSystemInDarkTheme()) {
         applyFontFamily(AkzidenzGroteskBQ)
     } else {
@@ -79,17 +83,17 @@ fun appTypography(): Typography {
 @Composable
 fun OpositateTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = colorScheme.primary.toArgb()
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+        }
     }
 
     MaterialTheme(

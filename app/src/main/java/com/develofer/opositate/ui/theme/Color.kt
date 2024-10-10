@@ -48,8 +48,8 @@ val Gray900 = Color(0xFF212121)
 val TextPrimaryLight = Gray900
 val TextSecondaryLight = Gray600
 
-val TextPrimaryDark = Color(0xFFFFFFFF)
-val TextSecondaryDark = Color(0xFFCCCCCC)
+val TextPrimaryDark = Gray100
+val TextSecondaryDark = Gray500
 
 // Background
-val backgroundOriginal = Color(0xFF170616)
+val BackgroundOriginal = Color(0xFF170616)

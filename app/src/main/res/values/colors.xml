@@ -8,6 +8,7 @@
 
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="background_original">#FF170616</color>
 
     // GAMA grises
     <color name="gray_50">#FAFAFA</color>
@@ -20,6 +21,11 @@
     <color name="gray_700">#616161</color>
     <color name="gray_800">#424242</color>
     <color name="gray_900">#212121</color>
+
+    //Colores primarios alternativos
+    <color name="primary_2">#29ceb6</color>
+    <color name="primary_3">#54ecc4</color>
+    <color name="primary_4">#1bebb3</color>
 
     // Color principal y secundario
     <color name="primary">#1CE9B6</color>
