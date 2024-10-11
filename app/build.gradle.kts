@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.crashlytics)
     alias(libs.plugins.hilt)
+    id("kotlin-kapt")
 }
 
 android {
@@ -40,6 +41,10 @@ android {
 
     kotlinOptions {
         jvmTarget = "1.8"
+    }
+
+    kapt {
+        correctErrorTypes = true
     }
 
     buildFeatures {
@@ -81,7 +86,8 @@ dependencies {
 
     // Hilt for Dependency Injection
     implementation(libs.hilt.android)
-    implementation(libs.hilt.compiler)
+    implementation(libs.androidx.hilt.navigation.compose)
+    kapt(libs.hilt.compiler)
 
     // Firebase
     implementation(platform(libs.firebase.bom))
