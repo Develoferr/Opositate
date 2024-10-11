@@ -1,8 +1,9 @@
-package com.develofer.opositate
+package com.develofer.opositate.presentation
 
 import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.util.Property
 import android.view.View
 import android.view.WindowInsets
@@ -10,22 +11,37 @@ import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.splashscreen.SplashScreenViewProvider
-import com.develofer.opositate.ui.navigation.AppNavigation
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
+import com.develofer.opositate.presentation.navigation.AppNavigation
+import com.develofer.opositate.presentation.viewmodel.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var auth: FirebaseAuth
+    private lateinit var navHostController: NavHostController
+    private val mainViewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().apply {
-//            setKeepOnScreenCondition {
-//                !viewModel.isReady.value
-//            }
+            setKeepOnScreenCondition {
+                !mainViewModel.isUserAuthFindOutFinished.value
+            }
             if (Build.VERSION.SDK_INT >= 34) {
                 setOnExitAnimationListener { screen ->
                     animateSplashScreenExit(screen)
@@ -36,10 +52,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             OpositateTheme {
+                navHostController = rememberNavController()
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    AppNavigation()
+                    AppNavigation(navHostController)
+                    if (mainViewModel.currentUser != null) {
+                        navHostController.navigate("home")
+                    }
                 }
             }
         }
