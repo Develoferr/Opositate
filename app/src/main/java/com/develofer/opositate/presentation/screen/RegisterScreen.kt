@@ -1,6 +1,5 @@
-package com.develofer.opositate.ui.screen
+package com.develofer.opositate.presentation.screen
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -20,10 +19,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -34,25 +31,27 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
-import com.develofer.opositate.ui.custom.CustomLoginTextField
+import com.develofer.opositate.presentation.custom.CustomLoginTextField
+import com.develofer.opositate.presentation.viewmodel.RegisterViewModel
 import com.develofer.opositate.ui.theme.Gray200
-import com.develofer.opositate.ui.theme.OpositateTheme
 import java.util.Locale
 
 @Composable
-fun RegisterScreen(navController: NavHostController) {
-    var username by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var isUsernameFocused by remember { mutableStateOf(false) }
-    var isEmailFocused by remember { mutableStateOf(false) }
-    var isPasswordFocused by remember { mutableStateOf(false) }
+fun RegisterScreen(
+    navController: NavHostController,
+    registerViewModel: RegisterViewModel =  hiltViewModel()
+) {
+    val username by registerViewModel.username.collectAsState("")
+    val email by registerViewModel.email.collectAsState("")
+    val password by registerViewModel.password.collectAsState("")
+    val isUsernameFocused by registerViewModel.isUsernameFocused.collectAsState()
+    val isEmailFocused by registerViewModel.isEmailFocused.collectAsState()
+    val isPasswordFocused by registerViewModel.isPasswordFocused.collectAsState()
     val focusManager = LocalFocusManager.current
 
     Box(
@@ -108,7 +107,7 @@ fun RegisterScreen(navController: NavHostController) {
                 modifier = Modifier
                     .padding(top = (24).dp)
             )
-            val text = "para empezar tu viaje"
+            val text = "Aquí empieza tu viaje"
             Text(
                 text = text.uppercase(Locale.getDefault()),
                 fontSize = 13.sp,
@@ -137,10 +136,10 @@ fun RegisterScreen(navController: NavHostController) {
 
                 CustomLoginTextField(
                     value = username,
-                    onValueChange = { username = it },
+                    onValueChange = { registerViewModel.onUsernameChanged(it) },
                     label = "Usuario".uppercase(),
                     isFocused = isUsernameFocused,
-                    onFocusChange = { isUsernameFocused = it },
+                    onFocusChange = { registerViewModel.onUsernameFocusChanged(it) },
                     isPasswordField = false,
                     containerColor = containerColor,
                     indicatorColor = indicatorColor,
@@ -149,10 +148,10 @@ fun RegisterScreen(navController: NavHostController) {
 
                 CustomLoginTextField(
                     value = email,
-                    onValueChange = { email = it },
+                    onValueChange = { registerViewModel.onEmailChanged(it) },
                     label = "Correo".uppercase(),
                     isFocused = isEmailFocused,
-                    onFocusChange = { isEmailFocused = it },
+                    onFocusChange = { registerViewModel.onEmailFocusChanged(it) },
                     isPasswordField = false,
                     containerColor = containerColor,
                     indicatorColor = indicatorColor,
@@ -161,10 +160,10 @@ fun RegisterScreen(navController: NavHostController) {
 
                 CustomLoginTextField(
                     value = password,
-                    onValueChange = { password = it },
+                    onValueChange = { registerViewModel.onPasswordChanged(it) },
                     label = "CONTRASEÑA",
                     isFocused = isPasswordFocused,
-                    onFocusChange = { isPasswordFocused = it },
+                    onFocusChange = { registerViewModel.onPasswordFocusChanged(it) },
                     isPasswordField = true,
                     containerColor = containerColor,
                     indicatorColor = indicatorColor,
@@ -176,7 +175,15 @@ fun RegisterScreen(navController: NavHostController) {
                     else Color.Black
 
                 Button(
-                    onClick = {},
+                    onClick = {
+                        registerViewModel.register(
+                            onRegisterSuccess = {
+                                navController.navigate("next_screen")
+                            },
+                            onRegisterFailure = { error ->
+                            }
+                        )
+                    },
                     shape = RoundedCornerShape(13.dp),
                     modifier = Modifier.padding(top = 50.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = buttonBackgroundColor)
@@ -211,13 +218,13 @@ fun RegisterScreen(navController: NavHostController) {
 
 }
 
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun RegisterPreview() {
-    OpositateTheme {
-        RegisterScreen(rememberNavController())
-    }
-}
+//@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+//@Composable
+//fun RegisterPreview() {
+//    OpositateTheme {
+//        RegisterScreen(rememberNavController(), auth)
+//    }
+//}
 
 //@Preview(showBackground = true)
 //@Composable
