@@ -1,4 +1,4 @@
-package com.develofer.opositate.ui.custom
+package com.develofer.opositate.presentation.custom
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
