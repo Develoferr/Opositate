@@ -3,7 +3,6 @@ package com.develofer.opositate.presentation
 import android.animation.ObjectAnimator
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.util.Property
 import android.view.View
 import android.view.WindowInsets
@@ -21,11 +20,10 @@ import androidx.core.splashscreen.SplashScreenViewProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.presentation.navigation.AppNavigation
+import com.develofer.opositate.presentation.navigation.navigateToHome
 import com.develofer.opositate.presentation.viewmodel.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -58,7 +56,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     AppNavigation(navHostController)
                     if (mainViewModel.currentUser != null) {
-                        navHostController.navigate("home")
+                        navigateToHome(navHostController)
                     }
                 }
             }

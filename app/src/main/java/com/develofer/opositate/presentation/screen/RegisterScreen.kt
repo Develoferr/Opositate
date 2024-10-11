@@ -1,5 +1,6 @@
 package com.develofer.opositate.presentation.screen
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -31,14 +32,17 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
 import com.develofer.opositate.presentation.viewmodel.RegisterViewModel
 import com.develofer.opositate.ui.theme.Gray200
+import com.develofer.opositate.ui.theme.OpositateTheme
 import java.util.Locale
 
 @Composable
@@ -218,18 +222,10 @@ fun RegisterScreen(
 
 }
 
-//@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-//@Composable
-//fun RegisterPreview() {
-//    OpositateTheme {
-//        RegisterScreen(rememberNavController(), auth)
-//    }
-//}
-
-//@Preview(showBackground = true)
-//@Composable
-//fun RegisterPreview() {
-//    OpositateTheme {
-//        RegisterScreen(rememberNavController())
-//    }
-//}
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun RegisterPreview() {
+    OpositateTheme {
+        RegisterScreen(rememberNavController())
+    }
+}

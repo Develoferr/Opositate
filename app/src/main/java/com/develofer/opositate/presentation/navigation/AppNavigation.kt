@@ -7,7 +7,6 @@ import androidx.navigation.compose.composable
 import com.develofer.opositate.presentation.screen.HomeScreen
 import com.develofer.opositate.presentation.screen.LoginScreen
 import com.develofer.opositate.presentation.screen.RegisterScreen
-import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun AppNavigation(navHostController: NavHostController) {
@@ -18,4 +17,18 @@ fun AppNavigation(navHostController: NavHostController) {
         composable("home") { HomeScreen(navHostController) }
     }
 
+}
+
+fun navigateToHome(navController: NavHostController) {
+    navController.navigate("home") {
+        popUpTo("login") { inclusive = true }
+        launchSingleTop = true
+    }
+}
+
+fun navigateToLogin(navController: NavHostController) {
+    navController.navigate("login") {
+        popUpTo("home") { inclusive = true }
+        launchSingleTop = true
+    }
 }

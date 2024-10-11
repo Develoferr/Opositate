@@ -23,9 +23,6 @@ import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -41,10 +38,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
+import com.develofer.opositate.presentation.navigation.navigateToHome
 import com.develofer.opositate.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.ui.theme.Gray200
+import com.develofer.opositate.ui.theme.OpositateTheme
 import java.util.Locale
 
 @Composable
@@ -154,7 +154,7 @@ fun LoginScreen(
             Button(
                 onClick = {
                     loginViewModel.login(
-                        onLoginSuccess = { navController.navigate("home") },
+                        onLoginSuccess = { navigateToHome(navController) },
                         onLoginFailure = {  }
                     )
                 },
@@ -245,15 +245,7 @@ fun LogoImage(modifier: Modifier) {
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun LoginPreview() {
-//    OpositateTheme {
-//        LoginScreen(rememberNavController(), auth)
-//    }
+    OpositateTheme {
+        LoginScreen(rememberNavController())
+    }
 }
-
-//@Preview(showBackground = true)
-//@Composable
-//fun LoginPreview() {
-//    OpositateTheme {
-//        LoginScreen(rememberNavController())
-//    }
-//}
