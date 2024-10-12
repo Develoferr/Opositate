@@ -7,14 +7,15 @@ import androidx.navigation.compose.composable
 import com.develofer.opositate.presentation.screen.HomeScreen
 import com.develofer.opositate.presentation.screen.LoginScreen
 import com.develofer.opositate.presentation.screen.RegisterScreen
+import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
 
 @Composable
-fun AppNavigation(navHostController: NavHostController) {
+fun AppNavigation(navHostController: NavHostController, startDestination: String) {
 
-    NavHost(navHostController, startDestination = "login") {
-        composable("login") { LoginScreen(navHostController) }
-        composable("register") { RegisterScreen(navHostController) }
-        composable("home") { HomeScreen(navHostController) }
+    NavHost(navHostController, startDestination = startDestination) {
+        composable(Destination.LOGIN.route) { LoginScreen(navHostController) }
+        composable(Destination.REGISTER.route) { RegisterScreen(navHostController) }
+        composable(Destination.HOME.route) { HomeScreen(navHostController) }
     }
 
 }
