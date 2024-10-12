@@ -51,7 +51,7 @@ import java.util.Locale
 @Composable
 fun LoginScreen(
     navController: NavHostController,
-    mainViewModel: MainViewModel,
+    mainViewModel: MainViewModel = hiltViewModel(),
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val username by loginViewModel.username.collectAsState("")
@@ -249,10 +249,10 @@ fun LogoImage(modifier: Modifier) {
     )
 }
 
-//@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-//@Composable
-//fun LoginPreview() {
-//    OpositateTheme {
-//        LoginScreen(rememberNavController())
-//    }
-//}
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun LoginPreview() {
+    OpositateTheme {
+        LoginScreen(rememberNavController())
+    }
+}

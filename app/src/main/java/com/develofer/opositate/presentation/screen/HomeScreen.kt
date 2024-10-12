@@ -20,7 +20,7 @@ import com.develofer.opositate.ui.theme.OpositateTheme
 @Composable
 fun HomeScreen(
     navHostController: NavHostController,
-    mainViewModel: MainViewModel,
+    mainViewModel: MainViewModel = hiltViewModel(),
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     mainViewModel.showSystemUI()
@@ -46,10 +46,10 @@ fun HomeScreen(
     }
 }
 
-//@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-//@Composable
-//fun HomeScreenPreview() {
-//    OpositateTheme {
-//        HomeScreen(rememberNavController())
-//    }
-//}
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun HomeScreenPreview() {
+    OpositateTheme {
+        HomeScreen(rememberNavController())
+    }
+}

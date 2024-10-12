@@ -106,12 +106,12 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-//@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-//@Composable
-//fun MainPreview() {
-//    val loginRoute = AppRoutes.Destination.LOGIN.route
-//    val homeRoute = AppRoutes.Destination.HOME.route
-//    OpositateTheme {
-//        AppNavigation(rememberNavController(), loginRoute)
-//    }
-//}
+@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+@Composable
+fun MainPreview() {
+    val loginRoute = AppRoutes.Destination.LOGIN.route
+    val homeRoute = AppRoutes.Destination.HOME.route
+    OpositateTheme {
+        AppNavigation(rememberNavController(), loginRoute)
+    }
+}

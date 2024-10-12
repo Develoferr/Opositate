@@ -1,6 +1,7 @@
 package com.develofer.opositate.presentation.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -14,7 +15,7 @@ import com.develofer.opositate.presentation.viewmodel.MainViewModel
 fun AppNavigation(
     navHostController: NavHostController,
     startDestination: String,
-    mainViewModel: MainViewModel
+    mainViewModel: MainViewModel = hiltViewModel()
 ) {
 
     NavHost(navHostController, startDestination = startDestination) {
