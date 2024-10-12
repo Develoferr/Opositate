@@ -10,6 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
@@ -36,6 +40,8 @@ fun CustomLoginTextField(
     indicatorColor: Color,
     cursorColor: Color
 ) {
+    var isPasswordVisible by remember { mutableStateOf(false) }
+
     TextField(
         value = value,
         onValueChange = onValueChange,
@@ -89,10 +95,12 @@ fun CustomLoginTextField(
                 fontSize = 16.sp,
                 letterSpacing = 1.sp
             ),
-        visualTransformation = if (isPasswordField) PasswordVisualTransformation() else VisualTransformation.None,
+        visualTransformation =
+            if (isPasswordField && !isPasswordVisible) PasswordVisualTransformation()
+            else VisualTransformation.None,
         trailingIcon = if (isPasswordField) {
             {
-                IconButton(onClick = {}) {
+                IconButton(onClick = {isPasswordVisible = !isPasswordVisible}) {
                     Image(
                         painter = painterResource(id = R.drawable.ic_eye),
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
