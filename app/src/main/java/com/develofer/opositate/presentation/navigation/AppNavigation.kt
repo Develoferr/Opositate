@@ -21,15 +21,15 @@ fun AppNavigation(navHostController: NavHostController, startDestination: String
 }
 
 fun navigateToHome(navController: NavHostController) {
-    navController.navigate("home") {
-        popUpTo("login") { inclusive = true }
+    navController.navigate(Destination.HOME.route) {
+        popUpTo(0) { inclusive = true }
         launchSingleTop = true
     }
 }
 
 fun navigateToLogin(navController: NavHostController) {
-    navController.navigate("login") {
-        popUpTo("home") { inclusive = true }
+    navController.navigate(Destination.LOGIN.route) {
+        popUpTo(0) { inclusive = true }
         launchSingleTop = true
     }
 }

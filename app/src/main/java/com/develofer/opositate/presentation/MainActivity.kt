@@ -50,12 +50,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-
         enableEdgeToEdge()
 
         setContent {
             navHostController = rememberNavController()
-
             OpositateTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val startDestination =
