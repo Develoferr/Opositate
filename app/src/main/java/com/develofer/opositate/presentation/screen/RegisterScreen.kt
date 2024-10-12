@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -40,6 +41,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
+import com.develofer.opositate.presentation.navigation.AppRoutes
+import com.develofer.opositate.presentation.navigation.navigateToLogin
 import com.develofer.opositate.presentation.viewmodel.RegisterViewModel
 import com.develofer.opositate.ui.theme.Gray200
 import com.develofer.opositate.ui.theme.OpositateTheme
@@ -87,7 +90,7 @@ fun RegisterScreen(
         }
         Image(
             painter = painterResource(id = R.drawable.brain_icon__2_),
-            contentDescription = "imagen cerebro",
+            contentDescription = stringResource(id = R.string.register_screen_brain_image_content_description),
             colorFilter = colorFilter,
             modifier = modifier,
             alignment = if (isSystemInDarkTheme()) Alignment.BottomCenter else Alignment.TopCenter
@@ -102,7 +105,9 @@ fun RegisterScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
 
-            val displayText = if (isSystemInDarkTheme()) "Regístrate".uppercase() else "Regístrate"
+            val displayText =
+                if (isSystemInDarkTheme()) stringResource(id = R.string.register_screen_register_text_title).uppercase()
+            else stringResource(id = R.string.register_screen_register_text_title)
             Text(
                 text = displayText,
                 fontSize = if (isSystemInDarkTheme()) 36.sp else 50.sp,
@@ -111,7 +116,7 @@ fun RegisterScreen(
                 modifier = Modifier
                     .padding(top = (24).dp)
             )
-            val text = "Aquí empieza tu viaje"
+            val text = stringResource(id = R.string.register_screen_journey_begins_text_subtitle)
             Text(
                 text = text.uppercase(Locale.getDefault()),
                 fontSize = 13.sp,
@@ -141,7 +146,7 @@ fun RegisterScreen(
                 CustomLoginTextField(
                     value = username,
                     onValueChange = { registerViewModel.onUsernameChanged(it) },
-                    label = "Usuario".uppercase(),
+                    label = stringResource(id = R.string.register_screen_user_label_text_field).uppercase(),
                     isFocused = isUsernameFocused,
                     onFocusChange = { registerViewModel.onUsernameFocusChanged(it) },
                     isPasswordField = false,
@@ -153,7 +158,7 @@ fun RegisterScreen(
                 CustomLoginTextField(
                     value = email,
                     onValueChange = { registerViewModel.onEmailChanged(it) },
-                    label = "Correo".uppercase(),
+                    label = stringResource(id = R.string.register_screen_email_label_text_field).uppercase(),
                     isFocused = isEmailFocused,
                     onFocusChange = { registerViewModel.onEmailFocusChanged(it) },
                     isPasswordField = false,
@@ -165,7 +170,7 @@ fun RegisterScreen(
                 CustomLoginTextField(
                     value = password,
                     onValueChange = { registerViewModel.onPasswordChanged(it) },
-                    label = "CONTRASEÑA",
+                    label = stringResource(id = R.string.register_screen_password_label_text_field),
                     isFocused = isPasswordFocused,
                     onFocusChange = { registerViewModel.onPasswordFocusChanged(it) },
                     isPasswordField = true,
@@ -182,7 +187,7 @@ fun RegisterScreen(
                     onClick = {
                         registerViewModel.register(
                             onRegisterSuccess = {
-                                navController.navigate("next_screen")
+                                navController.navigate(AppRoutes.Destination.LOGIN.route)
                             },
                             onRegisterFailure = { error ->
                             }
@@ -194,7 +199,7 @@ fun RegisterScreen(
                 ) {
 
                     Text(
-                        text = "Registrarse".uppercase(),
+                        text = stringResource(id = R.string.register_screen_register_text_btn).uppercase(),
                         fontSize = if (isSystemInDarkTheme()) 20.sp else 25.sp,
                         style = MaterialTheme.typography.titleMedium,
                         color = if (isSystemInDarkTheme()) Color.Black else Gray200,
@@ -202,11 +207,11 @@ fun RegisterScreen(
                 }
 
                 TextButton(
-                    onClick = { navController.navigate("login") },
+                    onClick = { navigateToLogin(navController) },
                     modifier = Modifier.padding(vertical = 5.dp)
                 ) {
                     Text(
-                        text = "¿Ya tienes una cuenta?\nEntra aquí".uppercase(),
+                        text = stringResource(id = R.string.register_screen_already_have_account_text_btn).uppercase(),
                         textAlign = TextAlign.Center,
                         fontSize = 12.sp,
                         style = MaterialTheme.typography.bodyMedium,

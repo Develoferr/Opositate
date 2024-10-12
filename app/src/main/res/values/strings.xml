@@ -1,3 +1,30 @@
 <resources>
     <string name="app_name">opositate</string>
+
+    // Custom Login Text Field
+    <string name="custom_login_text_field_password_eye_image_content_description">Botón alternar visibilidad de la contraseña</string>
+
+
+    // Login Screen
+    <string name="login_screen_welcome_text_title">Bienvenido</string>
+    <string name="login_screen_sign_in_text_subtitle">Inicia sesión para continuar</string>
+    <string name="login_screen_user_label_text_field">Usuario</string>
+    <string name="login_screen_password_label_text_field">Contraseña</string>
+    <string name="login_screen_forget_your_password_text_body">¿Hás olvidado tu contraseña?</string>
+    <string name="login_screen_go_text_btn">Go</string>
+    <string name="login_screen_google_text_btn">Login con Google</string>
+    <string name="login_screen_new_user_text_btn">¿Nuevo usuario?/nRegístrate</string>
+    <string name="login_screen_brain_image_content_description">Imagen Cerebro</string>
+
+    // Register Screen
+    <string name="register_screen_brain_image_content_description">Imagen Cerebro</string>
+    <string name="register_screen_register_text_title">Regístrate</string>
+    <string name="register_screen_journey_begins_text_subtitle">Aquí empieza tu viaje</string>
+    <string name="register_screen_user_label_text_field">Usuario</string>
+    <string name="register_screen_email_label_text_field">Correo</string>
+    <string name="register_screen_password_label_text_field">Contraseña</string>
+    <string name="register_screen_register_text_btn">Registrarse</string>
+    <string name="register_screen_already_have_account_text_btn">¿Ya tienes una cuenta?\nInicia sesión"</string>
+
+
 </resources>

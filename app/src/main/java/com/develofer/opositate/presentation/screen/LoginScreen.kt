@@ -31,6 +31,7 @@ import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,6 +42,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
+import com.develofer.opositate.presentation.navigation.AppRoutes
 import com.develofer.opositate.presentation.navigation.navigateToHome
 import com.develofer.opositate.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.presentation.viewmodel.MainViewModel
@@ -80,8 +82,9 @@ fun LoginScreen(
                 .padding(top = paddingTop),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
-            val displayText = if (isSystemInDarkTheme()) "Bienvenido".uppercase() else "Bienvenido"
+            val displayText = 
+                if (isSystemInDarkTheme()) stringResource(id = R.string.login_screen_welcome_text_title).uppercase()
+                else stringResource(id = R.string.login_screen_welcome_text_title)
             Text(
                 text = displayText,
                 fontSize = if (isSystemInDarkTheme()) 36.sp else 50.sp,
@@ -90,7 +93,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .padding(top = (24).dp)
             )
-            val text = "Inicia sesión para continuar"
+            val text = stringResource(id = R.string.login_screen_sign_in_text_subtitle)
             Text(
                 text = text.uppercase(Locale.getDefault()),
                 fontSize = 13.sp,
@@ -116,7 +119,7 @@ fun LoginScreen(
             CustomLoginTextField(
                 value = username,
                 onValueChange = { loginViewModel.onUsernameChanged(it) },
-                label = "USUARIO",
+                label = stringResource(id = R.string.login_screen_user_label_text_field).uppercase(),
                 isFocused = isUsernameFocused,
                 onFocusChange = { loginViewModel.onUsernameFocusChanged(it) },
                 isPasswordField = false,
@@ -128,7 +131,7 @@ fun LoginScreen(
             CustomLoginTextField(
                 value = password,
                 onValueChange = { loginViewModel.onPasswordChanged(it) },
-                label = "CONTRASEÑA",
+                label = stringResource(id = R.string.login_screen_password_label_text_field).uppercase(),
                 isFocused = isPasswordFocused,
                 onFocusChange = { loginViewModel.onPasswordFocusChanged(it) },
                 isPasswordField = true,
@@ -144,7 +147,7 @@ fun LoginScreen(
                     .align(Alignment.Start),
             ) {
                 Text(
-                    text = "¿HAS OLVIDADO TU CONTRASEÑA?",
+                    text = stringResource(id = R.string.login_screen_forget_your_password_text_body).uppercase(),
                     fontSize = 12.sp,
                     style = MaterialTheme.typography.bodyMedium,
                     color = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
@@ -171,7 +174,7 @@ fun LoginScreen(
             ) {
 
                 Text(
-                    text = "GO",
+                    text = stringResource(id = R.string.login_screen_go_text_btn).uppercase(),
                     fontSize = if (isSystemInDarkTheme()) 20.sp else 25.sp,
                     style = MaterialTheme.typography.titleMedium,
                     color = if (isSystemInDarkTheme()) Color.Black else Gray200,
@@ -193,7 +196,7 @@ fun LoginScreen(
                         .size(25.dp),
                 )
                 Text(
-                    text = "LOGIN CON GOOGLE",
+                    text = stringResource(id = R.string.login_screen_google_text_btn).uppercase(),
                     fontSize = if (isSystemInDarkTheme()) 20.sp else 25.sp,
                     style = MaterialTheme.typography.titleMedium,
                     color = if (isSystemInDarkTheme()) Color.Black else Gray200,
@@ -201,11 +204,11 @@ fun LoginScreen(
             }
 
             TextButton(
-                onClick = { navController.navigate("register") },
+                onClick = { navController.navigate(AppRoutes.Destination.REGISTER.route) },
                 modifier = Modifier.padding(vertical = 5.dp)
             ) {
                 Text(
-                    text = "¿NUEVO USUARIO?\nREGÍSTRATE",
+                    text = stringResource(id = R.string.login_screen_new_user_text_btn),
                     textAlign = TextAlign.Center,
                     fontSize = 12.sp,
                     style = MaterialTheme.typography.bodyMedium,
@@ -242,7 +245,7 @@ fun LogoImage(modifier: Modifier) {
     }
     Image(
         painter = painterResource(id = R.drawable.brain_icon__2_),
-        contentDescription = "imagen cerebro",
+        contentDescription = stringResource(id = R.string.login_screen_brain_image_content_description),
         colorFilter = colorFilter,
         modifier = modifierCopy,
         alignment = if (isSystemInDarkTheme()) Alignment.BottomCenter else Alignment.TopCenter

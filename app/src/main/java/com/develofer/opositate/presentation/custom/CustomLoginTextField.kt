@@ -15,6 +15,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -95,7 +96,7 @@ fun CustomLoginTextField(
                     Image(
                         painter = painterResource(id = R.drawable.ic_eye),
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
-                        contentDescription = "Toggle password visibility",
+                        contentDescription = stringResource(id = R.string.custom_login_text_field_password_eye_image_content_description),
                         modifier = Modifier.offset(y = 12.dp)
                     )
                 }
