@@ -61,6 +61,10 @@ fun RegisterScreen(
     val isPasswordFocused by registerViewModel.isPasswordFocused.collectAsState()
     val focusManager = LocalFocusManager.current
 
+    val usernameError by registerViewModel.usernameError.collectAsState("")
+    val emailError by registerViewModel.emailError.collectAsState("")
+    val passwordError by registerViewModel.passwordError.collectAsState("")
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -143,41 +147,44 @@ fun RegisterScreen(
                     if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary
                     else MaterialTheme.colorScheme.onBackground
 
-//                CustomLoginTextField(
-//                    value = username,
-//                    onValueChange = { registerViewModel.onUsernameChanged(it) },
-//                    label = stringResource(id = R.string.register_screen_user_label_text_field).uppercase(),
-//                    isFocused = isUsernameFocused,
-//                    onFocusChange = { registerViewModel.onUsernameFocusChanged(it) },
-//                    isPasswordField = false,
-//                    containerColor = containerColor,
-//                    indicatorColor = indicatorColor,
-//                    cursorColor = cursorColor
-//                )
-//
-//                CustomLoginTextField(
-//                    value = email,
-//                    onValueChange = { registerViewModel.onEmailChanged(it) },
-//                    label = stringResource(id = R.string.register_screen_email_label_text_field).uppercase(),
-//                    isFocused = isEmailFocused,
-//                    onFocusChange = { registerViewModel.onEmailFocusChanged(it) },
-//                    isPasswordField = false,
-//                    containerColor = containerColor,
-//                    indicatorColor = indicatorColor,
-//                    cursorColor = cursorColor
-//                )
-//
-//                CustomLoginTextField(
-//                    value = password,
-//                    onValueChange = { registerViewModel.onPasswordChanged(it) },
-//                    label = stringResource(id = R.string.register_screen_password_label_text_field).uppercase(),
-//                    isFocused = isPasswordFocused,
-//                    onFocusChange = { registerViewModel.onPasswordFocusChanged(it) },
-//                    isPasswordField = true,
-//                    containerColor = containerColor,
-//                    indicatorColor = indicatorColor,
-//                    cursorColor = cursorColor
-//                )
+                CustomLoginTextField(
+                    value = username,
+                    onValueChange = { registerViewModel.onUsernameChanged(it) },
+                    label = stringResource(id = R.string.register_screen_user_label_text_field).uppercase(),
+                    isFocused = isUsernameFocused,
+                    onFocusChange = { registerViewModel.onUsernameFocusChanged(it) },
+                    isPasswordField = false,
+                    containerColor = containerColor,
+                    indicatorColor = indicatorColor,
+                    cursorColor = cursorColor,
+                    supportingText = usernameError
+                )
+
+                CustomLoginTextField(
+                    value = email,
+                    onValueChange = { registerViewModel.onEmailChanged(it) },
+                    label = stringResource(id = R.string.register_screen_email_label_text_field).uppercase(),
+                    isFocused = isEmailFocused,
+                    onFocusChange = { registerViewModel.onEmailFocusChanged(it) },
+                    isPasswordField = false,
+                    containerColor = containerColor,
+                    indicatorColor = indicatorColor,
+                    cursorColor = cursorColor,
+                    supportingText = emailError
+                )
+
+                CustomLoginTextField(
+                    value = password,
+                    onValueChange = { registerViewModel.onPasswordChanged(it) },
+                    label = stringResource(id = R.string.register_screen_password_label_text_field).uppercase(),
+                    isFocused = isPasswordFocused,
+                    onFocusChange = { registerViewModel.onPasswordFocusChanged(it) },
+                    isPasswordField = true,
+                    containerColor = containerColor,
+                    indicatorColor = indicatorColor,
+                    cursorColor = cursorColor,
+                    supportingText = passwordError
+                )
 
                 val buttonBackgroundColor =
                     if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary
@@ -185,13 +192,19 @@ fun RegisterScreen(
 
                 Button(
                     onClick = {
-                        registerViewModel.register(
-                            onRegisterSuccess = {
-                                navController.navigate(AppRoutes.Destination.LOGIN.route)
-                            },
-                            onRegisterFailure = { _ ->
-                            }
-                        )
+                        registerViewModel.validateFields()
+                        if (registerViewModel.usernameError.value.isNotBlank() &&
+                            registerViewModel.emailError.value.isNotBlank() &&
+                            registerViewModel.passwordError.value.isNotBlank()) {
+                                registerViewModel.register(
+                                    onRegisterSuccess = {
+                                        navController.navigate(AppRoutes.Destination.LOGIN.route)
+                                    },
+                                    onRegisterFailure = { _ ->
+                                    }
+                                )
+                        }
+
                     },
                     shape = RoundedCornerShape(13.dp),
                     modifier = Modifier.padding(top = 50.dp),

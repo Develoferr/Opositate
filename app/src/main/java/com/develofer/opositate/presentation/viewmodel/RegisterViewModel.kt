@@ -35,6 +35,31 @@ class RegisterViewModel @Inject constructor(
     var registerState: RegisterState = RegisterState.Idle
         private set
 
+    private val _usernameError = MutableStateFlow("")
+    val usernameError: StateFlow<String> = _usernameError
+
+    private val _emailError = MutableStateFlow("")
+    val emailError: StateFlow<String> = _emailError
+
+    private val _passwordError = MutableStateFlow("")
+    val passwordError: StateFlow<String> = _passwordError
+
+    fun validateFields() {
+        _usernameError.value =
+            if (isFieldEmpty(username.value)) "Antes debes rellenar este campo"
+            else ""
+
+        _emailError.value = when {
+            isFieldEmpty(email.value) -> "Antes debes rellenar este campo"
+            !isEmailValid(email.value) -> "Debes introducir un correo válido"
+            else -> ""
+        }
+
+        _passwordError.value =
+            if (isFieldEmpty(password.value)) "Antes debes rellenar este campo"
+            else ""
+    }
+
     fun onUsernameChanged(newUsername: String) {
         _username.value = newUsername
     }
@@ -76,6 +101,14 @@ class RegisterViewModel @Inject constructor(
                 }
             )
         }
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun isFieldEmpty(value: String): Boolean {
+        return value.isBlank()
     }
 
     sealed class RegisterState {
