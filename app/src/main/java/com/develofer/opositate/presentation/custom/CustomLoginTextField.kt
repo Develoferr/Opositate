@@ -1,6 +1,7 @@
 package com.develofer.opositate.presentation.custom
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
@@ -39,7 +40,8 @@ fun CustomLoginTextField(
     isPasswordField: Boolean = false,
     containerColor: Color,
     indicatorColor: Color,
-    cursorColor: Color
+    cursorColor: Color,
+    supportingText: String
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
 
@@ -62,6 +64,15 @@ fun CustomLoginTextField(
                     if (isFocused || value.isNotEmpty()) Modifier.offset(x = (-17).dp)
                     else Modifier.offset(y = 13.dp, x = (-17).dp)
             )
+        }, supportingText = {
+            if (supportingText.isNotEmpty()) {
+                Text(
+                    text = supportingText,
+                    fontSize = if (isSystemInDarkTheme()) 9.sp else 10.sp,
+                    letterSpacing = 2.sp,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
         },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = containerColor,

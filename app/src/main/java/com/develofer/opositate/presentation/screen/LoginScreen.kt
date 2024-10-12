@@ -61,6 +61,8 @@ fun LoginScreen(
     val isUsernameFocused by loginViewModel.isUsernameFocused.collectAsState()
     val isPasswordFocused by loginViewModel.isPasswordFocused.collectAsState()
     val focusManager = LocalFocusManager.current
+    val usernameError by loginViewModel.usernameError.collectAsState("")
+    val passwordError by loginViewModel.passwordError.collectAsState("")
 
     mainViewModel.hideSystemUI()
 
@@ -125,7 +127,8 @@ fun LoginScreen(
                 isPasswordField = false,
                 containerColor = containerColor,
                 indicatorColor = indicatorColor,
-                cursorColor = cursorColor
+                cursorColor = cursorColor,
+                supportingText = usernameError
             )
 
             CustomLoginTextField(
@@ -137,7 +140,8 @@ fun LoginScreen(
                 isPasswordField = true,
                 containerColor = containerColor,
                 indicatorColor = indicatorColor,
-                cursorColor = cursorColor
+                cursorColor = cursorColor,
+                supportingText = passwordError
             )
 
             TextButton(
@@ -163,16 +167,18 @@ fun LoginScreen(
 
             Button(
                 onClick = {
-                    loginViewModel.login(
-                        onLoginSuccess = { navigateToHome(navController) },
-                        onLoginFailure = {  }
-                    )
+                    loginViewModel.validateFields()
+                    if (loginViewModel.usernameError.value.isBlank() && loginViewModel.passwordError.value.isBlank()) {
+                        loginViewModel.login(
+                            onLoginSuccess = { navigateToHome(navController) },
+                            onLoginFailure = { /* Handle error */ }
+                        )
+                    }
                 },
                 shape = RoundedCornerShape(13.dp),
                 modifier = Modifier.padding(top = 20.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = buttonBackgroundColor)
             ) {
-
                 Text(
                     text = stringResource(id = R.string.login_screen_go_text_btn).uppercase(),
                     fontSize = if (isSystemInDarkTheme()) 20.sp else 25.sp,

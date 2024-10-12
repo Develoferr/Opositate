@@ -29,6 +29,24 @@ class LoginViewModel @Inject constructor(
     var loginState: LoginState = LoginState.Idle
         private set
 
+    private val _usernameError = MutableStateFlow("")
+    val usernameError: StateFlow<String> = _usernameError
+
+    private val _passwordError = MutableStateFlow("")
+    val passwordError: StateFlow<String> = _passwordError
+
+    fun validateFields() {
+        _usernameError.value = when {
+            isFieldEmpty(username.value) -> "Antes debes rellenar este campo"
+            !isEmailValid(username.value) -> "Debes introducir un correo válido"
+            else -> ""
+        }
+
+        _passwordError.value = if (isFieldEmpty(password.value)) {
+            "Antes debes rellenar este campo"
+        } else ""
+    }
+
     fun onUsernameChanged(newUsername: String) {
         _username.value = newUsername
     }
@@ -61,6 +79,14 @@ class LoginViewModel @Inject constructor(
                 }
             )
         }
+    }
+
+    private fun isEmailValid(email: String): Boolean {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+    }
+
+    private fun isFieldEmpty(value: String): Boolean {
+        return value.isBlank()
     }
 
     sealed class LoginState {

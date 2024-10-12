@@ -143,41 +143,41 @@ fun RegisterScreen(
                     if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary
                     else MaterialTheme.colorScheme.onBackground
 
-                CustomLoginTextField(
-                    value = username,
-                    onValueChange = { registerViewModel.onUsernameChanged(it) },
-                    label = stringResource(id = R.string.register_screen_user_label_text_field).uppercase(),
-                    isFocused = isUsernameFocused,
-                    onFocusChange = { registerViewModel.onUsernameFocusChanged(it) },
-                    isPasswordField = false,
-                    containerColor = containerColor,
-                    indicatorColor = indicatorColor,
-                    cursorColor = cursorColor
-                )
-
-                CustomLoginTextField(
-                    value = email,
-                    onValueChange = { registerViewModel.onEmailChanged(it) },
-                    label = stringResource(id = R.string.register_screen_email_label_text_field).uppercase(),
-                    isFocused = isEmailFocused,
-                    onFocusChange = { registerViewModel.onEmailFocusChanged(it) },
-                    isPasswordField = false,
-                    containerColor = containerColor,
-                    indicatorColor = indicatorColor,
-                    cursorColor = cursorColor
-                )
-
-                CustomLoginTextField(
-                    value = password,
-                    onValueChange = { registerViewModel.onPasswordChanged(it) },
-                    label = stringResource(id = R.string.register_screen_password_label_text_field).uppercase(),
-                    isFocused = isPasswordFocused,
-                    onFocusChange = { registerViewModel.onPasswordFocusChanged(it) },
-                    isPasswordField = true,
-                    containerColor = containerColor,
-                    indicatorColor = indicatorColor,
-                    cursorColor = cursorColor
-                )
+//                CustomLoginTextField(
+//                    value = username,
+//                    onValueChange = { registerViewModel.onUsernameChanged(it) },
+//                    label = stringResource(id = R.string.register_screen_user_label_text_field).uppercase(),
+//                    isFocused = isUsernameFocused,
+//                    onFocusChange = { registerViewModel.onUsernameFocusChanged(it) },
+//                    isPasswordField = false,
+//                    containerColor = containerColor,
+//                    indicatorColor = indicatorColor,
+//                    cursorColor = cursorColor
+//                )
+//
+//                CustomLoginTextField(
+//                    value = email,
+//                    onValueChange = { registerViewModel.onEmailChanged(it) },
+//                    label = stringResource(id = R.string.register_screen_email_label_text_field).uppercase(),
+//                    isFocused = isEmailFocused,
+//                    onFocusChange = { registerViewModel.onEmailFocusChanged(it) },
+//                    isPasswordField = false,
+//                    containerColor = containerColor,
+//                    indicatorColor = indicatorColor,
+//                    cursorColor = cursorColor
+//                )
+//
+//                CustomLoginTextField(
+//                    value = password,
+//                    onValueChange = { registerViewModel.onPasswordChanged(it) },
+//                    label = stringResource(id = R.string.register_screen_password_label_text_field).uppercase(),
+//                    isFocused = isPasswordFocused,
+//                    onFocusChange = { registerViewModel.onPasswordFocusChanged(it) },
+//                    isPasswordField = true,
+//                    containerColor = containerColor,
+//                    indicatorColor = indicatorColor,
+//                    cursorColor = cursorColor
+//                )
 
                 val buttonBackgroundColor =
                     if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary
