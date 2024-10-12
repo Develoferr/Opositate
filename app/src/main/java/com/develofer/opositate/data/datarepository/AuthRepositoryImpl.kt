@@ -13,23 +13,28 @@ class AuthRepositoryImpl @Inject constructor(
     override fun getUser() = auth.currentUser
 
     override fun createUser(username: String, email: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                onSuccess()
-            } else {
-                onFailure(task.exception?.message ?: "Registration failed")
+        if (username.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
+            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    onSuccess()
+                } else {
+                    onFailure(task.exception?.message ?: "Registration failed")
+                }
             }
         }
     }
 
     override fun login(username: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
-        auth.signInWithEmailAndPassword(username, password).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                onSuccess()
-            } else {
-                onFailure(task.exception?.message ?: "Login failed")
+        if (username.isNotBlank() && password.isNotBlank()) {
+            auth.signInWithEmailAndPassword(username, password).addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    onSuccess()
+                } else {
+                    onFailure(task.exception?.message ?: "Login failed")
+                }
             }
         }
+
     }
 
     override fun logout() {
