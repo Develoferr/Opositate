@@ -13,7 +13,7 @@
     <string name="login_screen_forget_your_password_text_body">¿Hás olvidado tu contraseña?</string>
     <string name="login_screen_go_text_btn">Go</string>
     <string name="login_screen_google_text_btn">Login con Google</string>
-    <string name="login_screen_new_user_text_btn">¿Nuevo usuario?/nRegístrate</string>
+    <string name="login_screen_new_user_text_btn">¿Nuevo usuario?\nRegístrate</string>
     <string name="login_screen_brain_image_content_description">Imagen Cerebro</string>
 
     // Register Screen

@@ -170,7 +170,7 @@ fun RegisterScreen(
                 CustomLoginTextField(
                     value = password,
                     onValueChange = { registerViewModel.onPasswordChanged(it) },
-                    label = stringResource(id = R.string.register_screen_password_label_text_field),
+                    label = stringResource(id = R.string.register_screen_password_label_text_field).uppercase(),
                     isFocused = isPasswordFocused,
                     onFocusChange = { registerViewModel.onPasswordFocusChanged(it) },
                     isPasswordField = true,
@@ -189,7 +189,7 @@ fun RegisterScreen(
                             onRegisterSuccess = {
                                 navController.navigate(AppRoutes.Destination.LOGIN.route)
                             },
-                            onRegisterFailure = { error ->
+                            onRegisterFailure = { _ ->
                             }
                         )
                     },

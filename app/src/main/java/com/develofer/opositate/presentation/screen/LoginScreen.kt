@@ -93,7 +93,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .padding(top = (24).dp)
             )
-            val text = stringResource(id = R.string.login_screen_sign_in_text_subtitle)
+            val text = stringResource(id = R.string.login_screen_sign_in_text_subtitle).uppercase()
             Text(
                 text = text.uppercase(Locale.getDefault()),
                 fontSize = 13.sp,
@@ -208,7 +208,7 @@ fun LoginScreen(
                 modifier = Modifier.padding(vertical = 5.dp)
             ) {
                 Text(
-                    text = stringResource(id = R.string.login_screen_new_user_text_btn),
+                    text = stringResource(id = R.string.login_screen_new_user_text_btn).uppercase(),
                     textAlign = TextAlign.Center,
                     fontSize = 12.sp,
                     style = MaterialTheme.typography.bodyMedium,
