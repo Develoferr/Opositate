@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -48,26 +49,18 @@ fun CustomLoginTextField(
         label = {
             Text(
                 text = label,
-                fontSize = if (isFocused) 10.sp
-                else (
-                        if (value.isEmpty()) 15.sp
-                        else 10.sp
-                        ),
+                fontSize =
+                    if (isFocused || value.isNotEmpty()) 10.sp
+                    else 15.sp,
                 letterSpacing = 2.sp,
                 color = MaterialTheme.colorScheme.onBackground,
                 style =
-                if (isFocused) MaterialTheme.typography.labelMedium
-                else (
-                        if (value.isEmpty()) MaterialTheme.typography.bodyLarge
-                        else MaterialTheme.typography.labelMedium
-                        ),
+                    if (isFocused || value.isNotEmpty()) MaterialTheme.typography.labelMedium
+                    else MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Light,
                 modifier =
-                if (isFocused) Modifier.offset(x = (-17).dp)
-                else (
-                        if (value.isEmpty()) Modifier.offset(y = 13.dp, x = (-17).dp)
-                        else Modifier.offset(x = (-17).dp)
-                        )
+                    if (isFocused || value.isNotEmpty()) Modifier.offset(x = (-17).dp)
+                    else Modifier.offset(y = 13.dp, x = (-17).dp)
             )
         },
         colors = TextFieldDefaults.colors(
@@ -98,17 +91,25 @@ fun CustomLoginTextField(
         visualTransformation =
             if (isPasswordField && !isPasswordVisible) PasswordVisualTransformation()
             else VisualTransformation.None,
-        trailingIcon = if (isPasswordField) {
+        trailingIcon =
+        if (isPasswordField) {
             {
                 IconButton(onClick = {isPasswordVisible = !isPasswordVisible}) {
+                    val modifier =
+                        if (isFocused || value.isNotEmpty()) Modifier.offset(y = 8.dp)
+                        else Modifier.offset(y = 12.dp)
                     Image(
-                        painter = painterResource(id = R.drawable.ic_eye),
+
+                        painter =
+                            if (isPasswordVisible) painterResource(id = R.drawable.ic_open_eye)
+                            else painterResource(id = R.drawable.ic_closed_eye),
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
                         contentDescription = stringResource(id = R.string.custom_login_text_field_password_eye_image_content_description),
-                        modifier = Modifier.offset(y = 12.dp)
+                        modifier = modifier.size(24.dp)
                     )
                 }
             }
-        } else null
+        }
+        else null
     )
 }
