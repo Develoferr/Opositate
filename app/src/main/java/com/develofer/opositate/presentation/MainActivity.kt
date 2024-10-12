@@ -37,9 +37,13 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen().apply {
+
+            val isUserNotRetrieved = !mainViewModel.isUserRetrieved.value
+
             setKeepOnScreenCondition {
-                !mainViewModel.isUserAuthFindOutFinished.value
+                isUserNotRetrieved
             }
+
             if (Build.VERSION.SDK_INT >= 34) {
                 setOnExitAnimationListener { screen ->
                     animateSplashScreenExit(screen)
@@ -48,12 +52,12 @@ class MainActivity : ComponentActivity() {
         }
 
         enableEdgeToEdge()
+
         setContent {
+            navHostController = rememberNavController()
+
             OpositateTheme {
-                navHostController = rememberNavController()
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                ) {
+                Surface(modifier = Modifier.fillMaxSize()) {
                     val startDestination =
                         if (mainViewModel.currentUser != null) AppRoutes.Destination.HOME.route
                         else AppRoutes.Destination.LOGIN.route

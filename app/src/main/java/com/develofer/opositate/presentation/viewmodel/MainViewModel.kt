@@ -13,20 +13,17 @@ class MainViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase
 ) : ViewModel() {
 
-    private val _isUserAuthFindOutFinished = MutableStateFlow(false)
-    val isUserAuthFindOutFinished: StateFlow<Boolean> get() = _isUserAuthFindOutFinished
+    private val _isUserRetrieved = MutableStateFlow(false)
+    val isUserRetrieved: StateFlow<Boolean> get() = _isUserRetrieved
 
-    init {
-        checkUserAuth()
-    }
-
-    private fun checkUserAuth() {
-        val user = currentUser
-        _isUserAuthFindOutFinished.value = true
-
-    }
-
+    private var _currentUser: FirebaseUser? = null
     val currentUser: FirebaseUser?
-        get() = getUserUseCase.getUser()
+        get() = _currentUser
 
+    init { getUserAuth() }
+
+    private fun getUserAuth() {
+        _currentUser = getUserUseCase.getUser()
+        _isUserRetrieved.value = true
+    }
 }
