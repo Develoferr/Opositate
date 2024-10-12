@@ -20,7 +20,6 @@ import androidx.core.splashscreen.SplashScreenViewProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.presentation.navigation.AppNavigation
-import com.develofer.opositate.presentation.navigation.navigateToHome
 import com.develofer.opositate.presentation.viewmodel.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.google.firebase.auth.FirebaseAuth
@@ -54,10 +53,10 @@ class MainActivity : ComponentActivity() {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                 ) {
-                    AppNavigation(navHostController)
-                    if (mainViewModel.currentUser != null) {
-                        navigateToHome(navHostController)
-                    }
+                    val startDestination =
+                        if (mainViewModel.currentUser != null) "home"
+                        else "login"
+                    AppNavigation(navHostController = navHostController, startDestination)
                 }
             }
         }
