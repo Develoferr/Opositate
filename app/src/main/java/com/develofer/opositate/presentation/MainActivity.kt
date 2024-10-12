@@ -1,6 +1,7 @@
 package com.develofer.opositate.presentation
 
 import android.animation.ObjectAnimator
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
 import android.os.Bundle
 import android.util.Property
@@ -13,7 +14,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.splashscreen.SplashScreenViewProvider
@@ -53,13 +59,20 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
 
         setContent {
+
+            val isSystemUIVisible by mainViewModel.isSystemUIVisible.collectAsState()
+
+            LaunchedEffect(isSystemUIVisible) {
+                if (isSystemUIVisible) showSystemUI() else hideSystemUI()
+            }
+
             navHostController = rememberNavController()
             OpositateTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {
                     val startDestination =
                         if (mainViewModel.currentUser != null) AppRoutes.Destination.HOME.route
                         else AppRoutes.Destination.LOGIN.route
-                    AppNavigation(navHostController = navHostController, startDestination)
+                    AppNavigation(navHostController = navHostController, startDestination, mainViewModel)
                 }
             }
         }
@@ -75,6 +88,11 @@ class MainActivity : ComponentActivity() {
         windowInsetsController?.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
     }
 
+    private fun showSystemUI() {
+        val windowInsetsController = window.insetsController
+        windowInsetsController?.show(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+    }
+
     private fun animateSplashScreenExit(screen: SplashScreenViewProvider) {
         fun createZoomAnimator(property: Property<View, Float>): ObjectAnimator {
             return ObjectAnimator.ofFloat(screen.iconView, property, 1.0f, 0.0f).apply {
@@ -87,3 +105,13 @@ class MainActivity : ComponentActivity() {
         createZoomAnimator(View.SCALE_Y).start()
     }
 }
+
+//@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+//@Composable
+//fun MainPreview() {
+//    val loginRoute = AppRoutes.Destination.LOGIN.route
+//    val homeRoute = AppRoutes.Destination.HOME.route
+//    OpositateTheme {
+//        AppNavigation(rememberNavController(), loginRoute)
+//    }
+//}

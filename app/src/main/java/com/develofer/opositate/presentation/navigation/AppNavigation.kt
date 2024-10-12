@@ -8,14 +8,19 @@ import com.develofer.opositate.presentation.screen.HomeScreen
 import com.develofer.opositate.presentation.screen.LoginScreen
 import com.develofer.opositate.presentation.screen.RegisterScreen
 import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
+import com.develofer.opositate.presentation.viewmodel.MainViewModel
 
 @Composable
-fun AppNavigation(navHostController: NavHostController, startDestination: String) {
+fun AppNavigation(
+    navHostController: NavHostController,
+    startDestination: String,
+    mainViewModel: MainViewModel
+) {
 
     NavHost(navHostController, startDestination = startDestination) {
-        composable(Destination.LOGIN.route) { LoginScreen(navHostController) }
+        composable(Destination.LOGIN.route) { LoginScreen(navHostController, mainViewModel) }
         composable(Destination.REGISTER.route) { RegisterScreen(navHostController) }
-        composable(Destination.HOME.route) { HomeScreen(navHostController) }
+        composable(Destination.HOME.route) { HomeScreen(navHostController, mainViewModel) }
     }
 
 }

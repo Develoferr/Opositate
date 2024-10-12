@@ -43,6 +43,7 @@ import com.develofer.opositate.R
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
 import com.develofer.opositate.presentation.navigation.navigateToHome
 import com.develofer.opositate.presentation.viewmodel.LoginViewModel
+import com.develofer.opositate.presentation.viewmodel.MainViewModel
 import com.develofer.opositate.ui.theme.Gray200
 import com.develofer.opositate.ui.theme.OpositateTheme
 import java.util.Locale
@@ -50,6 +51,7 @@ import java.util.Locale
 @Composable
 fun LoginScreen(
     navController: NavHostController,
+    mainViewModel: MainViewModel,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
     val username by loginViewModel.username.collectAsState("")
@@ -58,8 +60,13 @@ fun LoginScreen(
     val isPasswordFocused by loginViewModel.isPasswordFocused.collectAsState()
     val focusManager = LocalFocusManager.current
 
+    mainViewModel.hideSystemUI()
+
     Box(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).pointerInput(Unit) {
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
+            .pointerInput(Unit) {
                 detectTapGestures(onTap = { focusManager.clearFocus() })
             }
     ) {
@@ -242,10 +249,10 @@ fun LogoImage(modifier: Modifier) {
     )
 }
 
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun LoginPreview() {
-    OpositateTheme {
-        LoginScreen(rememberNavController())
-    }
-}
+//@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+//@Composable
+//fun LoginPreview() {
+//    OpositateTheme {
+//        LoginScreen(rememberNavController())
+//    }
+//}

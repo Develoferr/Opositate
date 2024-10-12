@@ -1,5 +1,6 @@
 package com.develofer.opositate.presentation.screen
 
+import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -13,13 +14,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.presentation.navigation.navigateToLogin
 import com.develofer.opositate.presentation.viewmodel.HomeViewModel
+import com.develofer.opositate.presentation.viewmodel.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 
 @Composable
 fun HomeScreen(
     navHostController: NavHostController,
+    mainViewModel: MainViewModel,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
+    mainViewModel.showSystemUI()
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -42,10 +46,10 @@ fun HomeScreen(
     }
 }
 
-@Preview(showBackground = true)
-@Composable
-fun HomeScreenPreview() {
-    OpositateTheme {
-        HomeScreen(rememberNavController())
-    }
-}
+//@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+//@Composable
+//fun HomeScreenPreview() {
+//    OpositateTheme {
+//        HomeScreen(rememberNavController())
+//    }
+//}
