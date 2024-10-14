@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.2"
+foundation = "1.7.3"
 kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -10,6 +11,7 @@ activityCompose = "1.9.2"
 composeBom = "2024.09.03"
 composeUI = "1.7.3"
 accompanistSystemUiController = "0.36.0"
+accompanistInsets = "0.30.1"
 coreSplashScreen = "1.0.1"
 datastorePreferences = "1.1.1"
 navigation = "2.8.2"
@@ -22,6 +24,8 @@ crashlytics = "3.0.2"
 [libraries]
 # Core Libraries
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-foundation = { module = "androidx.compose.foundation:foundation", version.ref = "foundation" }
+androidx-foundation-layout = { module = "androidx.compose.foundation:foundation-layout", version.ref = "foundation" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 # Compose
@@ -50,6 +54,8 @@ firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analy
 firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 # Accompanist for System UI
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanistSystemUiController" }
+accompanist-insets = { module = "com.google.accompanist:accompanist-insets", version.ref = "accompanistInsets" }
+
 # Splash Screen
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashScreen" }
 # Testing

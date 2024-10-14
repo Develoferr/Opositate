@@ -57,6 +57,7 @@ class MainActivity : ComponentActivity() {
             }
         }
         enableEdgeToEdge()
+        window.setDecorFitsSystemWindows(false)
 
         setContent {
 

@@ -7,9 +7,12 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -25,6 +28,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
@@ -50,6 +54,7 @@ import com.develofer.opositate.ui.theme.Gray200
 import com.develofer.opositate.ui.theme.OpositateTheme
 import java.util.Locale
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun LoginScreen(
     navController: NavHostController,
@@ -74,14 +79,17 @@ fun LoginScreen(
                 detectTapGestures(onTap = { focusManager.clearFocus() })
             }
     ) {
-        LogoImage(modifier = Modifier.align(Alignment.TopCenter))
+        val isKeyboardVisible = WindowInsets.isImeVisible
+        val logoAlphaLight = if (isKeyboardVisible) 0f else 1f
+        val logoAlphaDark = if (isKeyboardVisible) 0f else .19f
+        LogoImage(modifier = Modifier.align(Alignment.TopCenter), alphaLight = logoAlphaLight, alphaDark = logoAlphaDark)
 
-        val paddingTop = if (isSystemInDarkTheme()) 330.dp else 240.dp
+        val columnPaddingTop = if (isKeyboardVisible) 50.dp else if (isSystemInDarkTheme()) 330.dp else 240.dp
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(horizontal = 16.dp)
-                .padding(top = paddingTop),
+                .padding(top = columnPaddingTop),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             val displayText = 
@@ -230,19 +238,19 @@ fun LoginScreen(
 }
 
 @Composable
-fun LogoImage(modifier: Modifier) {
+fun LogoImage(modifier: Modifier, alphaLight: Float, alphaDark: Float) {
     val colorFilter = if (isSystemInDarkTheme()) null else ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
     val modifierCopy = if (!isSystemInDarkTheme()) {
         modifier
             .size(120.dp)
-            .graphicsLayer { alpha = 1f }
+            .alpha(alphaLight)
             .background(Color.Transparent)
             .padding(top = 0.dp)
             .offset(y = (120).dp, x = (0).dp)
     } else {
         Modifier
             .size(550.dp)
-            .graphicsLayer { alpha = .19f }
+            .alpha(alphaDark)
             .background(Color.Transparent)
             .padding(top = 0.dp)
             .offset(y = (-60).dp, x = (-100).dp)

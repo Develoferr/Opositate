@@ -98,6 +98,7 @@ dependencies {
 
     // Accompanist for System UI
     implementation(libs.accompanist.systemuicontroller)
+    implementation(libs.accompanist.insets)
 
     // Splash Screen
     implementation(libs.androidx.core.splashscreen)
@@ -108,4 +109,6 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.test.manifest)
+    implementation(libs.androidx.foundation)
+    implementation(libs.androidx.foundation.layout)
 }
