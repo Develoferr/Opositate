@@ -3,6 +3,7 @@ package com.develofer.opositate.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.domain.usecase.CreateUserUseCase
+import com.develofer.opositate.presentation.viewmodel.TextFieldErrors.ValidateFieldErrors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -35,29 +36,29 @@ class RegisterViewModel @Inject constructor(
     var registerState: RegisterState = RegisterState.Idle
         private set
 
-    private val _usernameError = MutableStateFlow("")
-    val usernameError: StateFlow<String> = _usernameError
+    private val _usernameValidateFieldError = MutableStateFlow(ValidateFieldErrors.NONE)
+    val usernameValidateFieldError: StateFlow<ValidateFieldErrors> = _usernameValidateFieldError
 
-    private val _emailError = MutableStateFlow("")
-    val emailError: StateFlow<String> = _emailError
+    private val _emailValidateFieldError = MutableStateFlow(ValidateFieldErrors.NONE)
+    val emailValidateFieldError: StateFlow<ValidateFieldErrors> = _emailValidateFieldError
 
-    private val _passwordError = MutableStateFlow("")
-    val passwordError: StateFlow<String> = _passwordError
+    private val _passwordValidateFieldError = MutableStateFlow(ValidateFieldErrors.NONE)
+    val passwordValidateFieldError: StateFlow<ValidateFieldErrors> = _passwordValidateFieldError
 
     fun validateFields() {
-        _usernameError.value =
-            if (isFieldEmpty(username.value)) "Antes debes rellenar este campo"
-            else ""
+        _usernameValidateFieldError.value =
+            if (isFieldEmpty(username.value)) ValidateFieldErrors.EMPTY_TEXT
+            else ValidateFieldErrors.NONE
 
-        _emailError.value = when {
-            isFieldEmpty(email.value) -> "Antes debes rellenar este campo"
-            !isEmailValid(email.value) -> "Debes introducir un correo válido"
-            else -> ""
+        _emailValidateFieldError.value = when {
+            isFieldEmpty(email.value) -> ValidateFieldErrors.EMPTY_TEXT
+            !isEmailValid(email.value) -> ValidateFieldErrors.INVALID_EMAIL
+            else -> ValidateFieldErrors.NONE
         }
 
-        _passwordError.value =
-            if (isFieldEmpty(password.value)) "Antes debes rellenar este campo"
-            else ""
+        _passwordValidateFieldError.value =
+            if (isFieldEmpty(password.value)) ValidateFieldErrors.EMPTY_TEXT
+            else ValidateFieldErrors.NONE
     }
 
     fun onUsernameChanged(newUsername: String) {

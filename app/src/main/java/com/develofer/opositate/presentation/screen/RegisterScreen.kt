@@ -48,6 +48,7 @@ import com.develofer.opositate.presentation.custom.CustomLoginTextField
 import com.develofer.opositate.presentation.navigation.AppRoutes
 import com.develofer.opositate.presentation.navigation.navigateToLogin
 import com.develofer.opositate.presentation.viewmodel.RegisterViewModel
+import com.develofer.opositate.presentation.viewmodel.TextFieldErrors.ValidateFieldErrors
 import com.develofer.opositate.ui.theme.Gray200
 import com.develofer.opositate.ui.theme.OpositateTheme
 import java.util.Locale
@@ -66,9 +67,9 @@ fun RegisterScreen(
     val isPasswordFocused by registerViewModel.isPasswordFocused.collectAsState()
     val focusManager = LocalFocusManager.current
 
-    val usernameError by registerViewModel.usernameError.collectAsState("")
-    val emailError by registerViewModel.emailError.collectAsState("")
-    val passwordError by registerViewModel.passwordError.collectAsState("")
+    val usernameValidateFieldError by registerViewModel.usernameValidateFieldError.collectAsState(ValidateFieldErrors.NONE)
+    val emailValidateFieldError by registerViewModel.emailValidateFieldError.collectAsState(ValidateFieldErrors.NONE)
+    val passwordValidateFieldError by registerViewModel.passwordValidateFieldError.collectAsState(ValidateFieldErrors.NONE)
 
     Box(
         modifier = Modifier
@@ -166,7 +167,7 @@ fun RegisterScreen(
                     containerColor = containerColor,
                     indicatorColor = indicatorColor,
                     cursorColor = cursorColor,
-                    supportingText = usernameError
+                    supportingText = usernameValidateFieldError
                 )
 
                 CustomLoginTextField(
@@ -179,7 +180,7 @@ fun RegisterScreen(
                     containerColor = containerColor,
                     indicatorColor = indicatorColor,
                     cursorColor = cursorColor,
-                    supportingText = emailError
+                    supportingText = emailValidateFieldError
                 )
 
                 CustomLoginTextField(
@@ -192,7 +193,7 @@ fun RegisterScreen(
                     containerColor = containerColor,
                     indicatorColor = indicatorColor,
                     cursorColor = cursorColor,
-                    supportingText = passwordError
+                    supportingText = passwordValidateFieldError
                 )
 
                 val buttonBackgroundColor =
@@ -202,9 +203,9 @@ fun RegisterScreen(
                 Button(
                     onClick = {
                         registerViewModel.validateFields()
-                        if (registerViewModel.usernameError.value.isNotBlank() &&
-                            registerViewModel.emailError.value.isNotBlank() &&
-                            registerViewModel.passwordError.value.isNotBlank()) {
+                        if (registerViewModel.usernameValidateFieldError.value == ValidateFieldErrors.NONE &&
+                            registerViewModel.emailValidateFieldError.value == ValidateFieldErrors.NONE &&
+                            registerViewModel.passwordValidateFieldError.value == ValidateFieldErrors.NONE) {
                                 registerViewModel.register(
                                     onRegisterSuccess = {
                                         navController.navigate(AppRoutes.Destination.LOGIN.route)

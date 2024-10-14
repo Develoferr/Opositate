@@ -50,6 +50,7 @@ import com.develofer.opositate.presentation.navigation.AppRoutes
 import com.develofer.opositate.presentation.navigation.navigateToHome
 import com.develofer.opositate.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.presentation.viewmodel.MainViewModel
+import com.develofer.opositate.presentation.viewmodel.TextFieldErrors.ValidateFieldErrors
 import com.develofer.opositate.ui.theme.Gray200
 import com.develofer.opositate.ui.theme.OpositateTheme
 import java.util.Locale
@@ -66,8 +67,8 @@ fun LoginScreen(
     val isUsernameFocused by loginViewModel.isUsernameFocused.collectAsState()
     val isPasswordFocused by loginViewModel.isPasswordFocused.collectAsState()
     val focusManager = LocalFocusManager.current
-    val usernameError by loginViewModel.usernameError.collectAsState("")
-    val passwordError by loginViewModel.passwordError.collectAsState("")
+    val usernameValidateFieldError by loginViewModel.usernameValidateFieldError.collectAsState(ValidateFieldErrors.NONE)
+    val passwordValidateFieldError by loginViewModel.passwordValidateFieldError.collectAsState(ValidateFieldErrors.NONE)
 
     mainViewModel.hideSystemUI()
 
@@ -136,7 +137,7 @@ fun LoginScreen(
                 containerColor = containerColor,
                 indicatorColor = indicatorColor,
                 cursorColor = cursorColor,
-                supportingText = usernameError
+                supportingText = usernameValidateFieldError
             )
 
             CustomLoginTextField(
@@ -149,7 +150,7 @@ fun LoginScreen(
                 containerColor = containerColor,
                 indicatorColor = indicatorColor,
                 cursorColor = cursorColor,
-                supportingText = passwordError
+                supportingText = passwordValidateFieldError
             )
 
             TextButton(
@@ -176,7 +177,9 @@ fun LoginScreen(
             Button(
                 onClick = {
                     loginViewModel.validateFields()
-                    if (loginViewModel.usernameError.value.isBlank() && loginViewModel.passwordError.value.isBlank()) {
+                    if (loginViewModel.usernameValidateFieldError.value == ValidateFieldErrors.NONE &&
+                        loginViewModel.passwordValidateFieldError.value == ValidateFieldErrors.NONE
+                    ) {
                         loginViewModel.login(
                             onLoginSuccess = { navigateToHome(navController) },
                             onLoginFailure = { /* Handle error */ }

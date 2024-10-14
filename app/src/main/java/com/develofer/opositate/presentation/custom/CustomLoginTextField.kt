@@ -31,6 +31,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.develofer.opositate.R
+import com.develofer.opositate.presentation.viewmodel.TextFieldErrors.ValidateFieldErrors
 
 @Composable
 fun CustomLoginTextField(
@@ -43,7 +44,7 @@ fun CustomLoginTextField(
     containerColor: Color,
     indicatorColor: Color,
     cursorColor: Color,
-    supportingText: String
+    supportingText: ValidateFieldErrors
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
 
@@ -67,8 +68,17 @@ fun CustomLoginTextField(
                     else Modifier.offset(y = 13.dp, x = (-17).dp)
             )
         }, supportingText = {
+            val supportingTextFieldError = when (supportingText) {
+                ValidateFieldErrors.INVALID_EMAIL -> stringResource(
+                    id = R.string.login_screen__supporting_text__invalid_email
+                )
+                ValidateFieldErrors.EMPTY_TEXT -> stringResource(
+                    id = R.string.login_screen__supporting_text__empty_field
+                )
+                else -> ""
+            }
             Text(
-                text = supportingText,
+                text = supportingTextFieldError,
                 fontSize = if (isSystemInDarkTheme()) 10.sp else 10.sp,
                 letterSpacing = 2.sp,
                 color = MaterialTheme.colorScheme.error
@@ -138,6 +148,6 @@ fun CustomLoginTextFieldPreview() {
         containerColor = Color.White,
         indicatorColor = Color.Black,
         cursorColor = Color.Black,
-        supportingText = ""
+        supportingText = ValidateFieldErrors.EMPTY_TEXT
     )
 }

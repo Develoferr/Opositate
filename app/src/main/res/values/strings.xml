@@ -15,6 +15,8 @@
     <string name="login_screen_google_text_btn">Login con Google</string>
     <string name="login_screen_new_user_text_btn">¿Nuevo usuario?\nRegístrate</string>
     <string name="login_screen_brain_image_content_description">Imagen Cerebro</string>
+    <string name="login_screen__supporting_text__empty_field">Antes debes rellenar este campo</string>
+    <string name="login_screen__supporting_text__invalid_email">Debes introducir un correo válido</string>
 
     // Register Screen
     <string name="register_screen_brain_image_content_description">Imagen Cerebro</string>
