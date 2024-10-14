@@ -3,6 +3,7 @@ package com.develofer.opositate.presentation.custom
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -26,6 +27,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.develofer.opositate.R
@@ -65,14 +67,12 @@ fun CustomLoginTextField(
                     else Modifier.offset(y = 13.dp, x = (-17).dp)
             )
         }, supportingText = {
-            if (supportingText.isNotEmpty()) {
-                Text(
-                    text = supportingText,
-                    fontSize = if (isSystemInDarkTheme()) 9.sp else 10.sp,
-                    letterSpacing = 2.sp,
-                    color = MaterialTheme.colorScheme.error
-                )
-            }
+            Text(
+                text = supportingText,
+                fontSize = if (isSystemInDarkTheme()) 10.sp else 10.sp,
+                letterSpacing = 2.sp,
+                color = MaterialTheme.colorScheme.error
+            )
         },
         colors = TextFieldDefaults.colors(
             focusedContainerColor = containerColor,
@@ -89,7 +89,7 @@ fun CustomLoginTextField(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 45.dp)
-            .padding(top = 10.dp)
+            .height(76.dp)
             .onFocusChanged { onFocusChange(it.isFocused) },
         textStyle =
             TextStyle(
@@ -122,5 +122,22 @@ fun CustomLoginTextField(
             }
         }
         else null
+    )
+}
+
+@Preview
+@Composable
+fun CustomLoginTextFieldPreview() {
+    CustomLoginTextField(
+        value = "",
+        onValueChange = {},
+        label = "USUARIO",
+        isFocused = false,
+        onFocusChange = {},
+        isPasswordField = true,
+        containerColor = Color.White,
+        indicatorColor = Color.Black,
+        cursorColor = Color.Black,
+        supportingText = ""
     )
 }
