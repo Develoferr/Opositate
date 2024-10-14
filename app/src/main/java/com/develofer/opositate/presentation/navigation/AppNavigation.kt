@@ -17,13 +17,11 @@ fun AppNavigation(
     startDestination: String,
     mainViewModel: MainViewModel = hiltViewModel()
 ) {
-
     NavHost(navHostController, startDestination = startDestination) {
         composable(Destination.LOGIN.route) { LoginScreen(navHostController, mainViewModel) }
         composable(Destination.REGISTER.route) { RegisterScreen(navHostController) }
         composable(Destination.HOME.route) { HomeScreen(navHostController, mainViewModel) }
     }
-
 }
 
 fun navigateToHome(navController: NavHostController) {

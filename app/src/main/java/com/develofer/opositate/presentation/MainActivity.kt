@@ -42,40 +42,11 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        installSplashScreen().apply {
-
-            val isUserNotRetrieved = !mainViewModel.isUserRetrieved.value
-
-            setKeepOnScreenCondition {
-                isUserNotRetrieved
-            }
-
-            if (Build.VERSION.SDK_INT >= 34) {
-                setOnExitAnimationListener { screen ->
-                    animateSplashScreenExit(screen)
-                }
-            }
-        }
-        enableEdgeToEdge()
-        window.setDecorFitsSystemWindows(false)
-
+        setupSplashScreen()
+        setupEdgeToEdge()
         setContent {
-
-            val isSystemUIVisible by mainViewModel.isSystemUIVisible.collectAsState()
-
-            LaunchedEffect(isSystemUIVisible) {
-                if (isSystemUIVisible) showSystemUI() else hideSystemUI()
-            }
-
             navHostController = rememberNavController()
-            OpositateTheme {
-                Surface(modifier = Modifier.fillMaxSize()) {
-                    val startDestination =
-                        if (mainViewModel.currentUser != null) AppRoutes.Destination.HOME.route
-                        else AppRoutes.Destination.LOGIN.route
-                    AppNavigation(navHostController = navHostController, startDestination, mainViewModel)
-                }
-            }
+            SetupAppContent()
         }
     }
 
@@ -84,14 +55,53 @@ class MainActivity : ComponentActivity() {
         hideSystemUI()
     }
 
+    private fun setupSplashScreen() {
+        installSplashScreen().apply {
+            setKeepOnScreenCondition { !mainViewModel.isUserRetrieved.value }
+
+            if (Build.VERSION.SDK_INT >= 34) {
+                setOnExitAnimationListener { screen ->
+                    animateSplashScreenExit(screen)
+                }
+            }
+        }
+    }
+
+    private fun setupEdgeToEdge() {
+        enableEdgeToEdge()
+        window.setDecorFitsSystemWindows(false)
+    }
+
+    @Composable
+    private fun SetupAppContent() {
+        val isSystemUIVisible by mainViewModel.isSystemUIVisible.collectAsState()
+
+        LaunchedEffect(isSystemUIVisible) {
+            if (isSystemUIVisible) showSystemUI() else hideSystemUI()
+        }
+
+        OpositateTheme {
+            Surface(modifier = Modifier.fillMaxSize()) {
+                val startDestination = getStartDestination()
+                AppNavigation(navHostController = navHostController, startDestination, mainViewModel)
+            }
+        }
+    }
+
+    private fun getStartDestination(): String {
+        return if (mainViewModel.currentUser != null) {
+            AppRoutes.Destination.HOME.route
+        } else {
+            AppRoutes.Destination.LOGIN.route
+        }
+    }
+
     private fun hideSystemUI() {
-        val windowInsetsController = window.insetsController
-        windowInsetsController?.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+        window.insetsController?.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
     }
 
     private fun showSystemUI() {
-        val windowInsetsController = window.insetsController
-        windowInsetsController?.show(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+        window.insetsController?.show(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
     }
 
     private fun animateSplashScreenExit(screen: SplashScreenViewProvider) {
@@ -110,9 +120,7 @@ class MainActivity : ComponentActivity() {
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun MainPreview() {
-    val loginRoute = AppRoutes.Destination.LOGIN.route
-    val homeRoute = AppRoutes.Destination.HOME.route
     OpositateTheme {
-        AppNavigation(rememberNavController(), loginRoute)
+        AppNavigation(navHostController = rememberNavController(), startDestination = AppRoutes.Destination.LOGIN.route)
     }
 }

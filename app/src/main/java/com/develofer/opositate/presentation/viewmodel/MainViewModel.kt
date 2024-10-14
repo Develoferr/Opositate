@@ -14,12 +14,10 @@ class MainViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _isUserRetrieved = MutableStateFlow(false)
-
     val isUserRetrieved: StateFlow<Boolean> get() = _isUserRetrieved
-    private var _currentUser: FirebaseUser? = null
 
-    val currentUser: FirebaseUser?
-        get() = _currentUser
+    private var _currentUser: FirebaseUser? = null
+    val currentUser: FirebaseUser? get() = _currentUser
 
     private val _isSystemUIVisible = MutableStateFlow(false)
     val isSystemUIVisible: StateFlow<Boolean> get() = _isSystemUIVisible
@@ -31,16 +29,16 @@ class MainViewModel @Inject constructor(
         _isUserRetrieved.value = true
     }
 
-    fun toggleSystemUIVisibility() {
-        _isSystemUIVisible.value = !_isSystemUIVisible.value
-    }
-
     fun hideSystemUI() {
         _isSystemUIVisible.value = false
     }
 
     fun showSystemUI() {
         _isSystemUIVisible.value = true
+    }
+
+    fun toggleSystemUIVisibility() {
+        _isSystemUIVisible.value = !_isSystemUIVisible.value
     }
 
 }
