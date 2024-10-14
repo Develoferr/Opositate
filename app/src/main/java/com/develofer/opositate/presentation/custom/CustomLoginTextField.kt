@@ -105,18 +105,18 @@ fun CustomLoginTextField(
         trailingIcon =
         if (isPasswordField) {
             {
+                val padding = if (isPasswordVisible) (-4).dp else 0.dp
                 IconButton(onClick = {isPasswordVisible = !isPasswordVisible}) {
                     val modifier =
                         if (isFocused || value.isNotEmpty()) Modifier.offset(y = 8.dp)
                         else Modifier.offset(y = 12.dp)
                     Image(
-
                         painter =
                             if (isPasswordVisible) painterResource(id = R.drawable.ic_open_eye)
                             else painterResource(id = R.drawable.ic_closed_eye),
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
                         contentDescription = stringResource(id = R.string.custom_login_text_field_password_eye_image_content_description),
-                        modifier = modifier.size(24.dp)
+                        modifier = modifier.size(24.dp).offset(y = padding)
                     )
                 }
             }
