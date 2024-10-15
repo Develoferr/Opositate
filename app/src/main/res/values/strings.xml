@@ -28,5 +28,12 @@
     <string name="register_screen_register_text_btn">Registrarse</string>
     <string name="register_screen_already_have_account_text_btn">¿Ya tienes una cuenta?\nInicia sesión"</string>
 
+    // Reset Password Dialog
+    <string name="resetPassword_dialog__supporting_text__emails_do_not_match">Los correos no coinciden</string>
+    <string name="resetPassword_dialog___text__reset_password">Reestablece tu contraseña</string>
+    <string name="resetPassword_dialog__text__email">Correo</string>
+    <string name="resetPassword_dialog__text__repeat_email">Confirmación</string>
+    <string name="resetPassword_dialog__btn_text__send_email">Enviar correo</string>
+    <string name="resetPassword_dialog__btn_text__cancel">Cancelar</string>
 
 </resources>

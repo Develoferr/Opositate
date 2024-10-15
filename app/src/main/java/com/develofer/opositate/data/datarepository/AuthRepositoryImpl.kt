@@ -34,7 +34,21 @@ class AuthRepositoryImpl @Inject constructor(
                 }
             }
         }
+    }
 
+    override fun sendPasswordResetEmail(
+        email: String,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        auth.sendPasswordResetEmail(email)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    onSuccess()
+                } else {
+                    onFailure(task.exception?.message ?: "Failed to send reset email")
+                }
+            }
     }
 
     override fun logout() {

@@ -31,7 +31,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
-import com.develofer.opositate.presentation.navigation.AppRoutes
+import com.develofer.opositate.presentation.dialog.ResetPasswordDialog
+import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
 import com.develofer.opositate.presentation.navigation.navigateToHome
 import com.develofer.opositate.presentation.viewmodel.LoginUiState
 import com.develofer.opositate.presentation.viewmodel.LoginViewModel
@@ -63,7 +64,30 @@ fun LoginScreen(
             }
     ) {
         LoginLogo(isKeyboardVisible, Modifier.align(Alignment.TopCenter), isDarkTheme)
-        LoginContent(uiState, navController, loginViewModel, isDarkTheme, isKeyboardVisible)
+        LoginContent(
+            uiState, navController, loginViewModel, isDarkTheme, isKeyboardVisible,
+            onForgotPasswordClick = { loginViewModel.toggleResetPasswordDialogVisibility(true) }
+        )
+        LoginResetPasswordDialog(
+            uiState.showResetPasswordDialog,
+            hideDialog = { loginViewModel.toggleResetPasswordDialogVisibility(false) }
+        )
+
+    }
+}
+
+@Composable
+fun LoginResetPasswordDialog(showResetPasswordDialog: Boolean, hideDialog: () -> Unit) {
+    if (showResetPasswordDialog) {
+        ResetPasswordDialog(
+            onDismissRequest = { hideDialog() },
+            onSuccess = {
+                // Toast de exito. Se ha enviado el correo de restablecimiento de contraseña
+            },
+            onFailure = {
+                // Toast de error. No se ha podido restablecer la contraseña. Prueba más tarde o registra ootra cuenta.
+            }
+        )
     }
 }
 
@@ -99,7 +123,8 @@ private fun LoginContent(
     navController: NavHostController,
     loginViewModel: LoginViewModel,
     isDarkTheme: Boolean,
-    isKeyBoardVisible: Boolean
+    isKeyBoardVisible: Boolean,
+    onForgotPasswordClick: () -> Unit
 ) {
     val columnPaddingTop = if (isKeyBoardVisible) 50.dp else if (isDarkTheme) 330.dp else 240.dp
     Column(
@@ -110,7 +135,13 @@ private fun LoginContent(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LoginHeader(isDarkTheme)
-        LoginFields(uiState, loginViewModel, Modifier.align(Alignment.Start), isDarkTheme)
+        LoginFields(
+            uiState,
+            loginViewModel,
+            Modifier.align(Alignment.CenterHorizontally),
+            isDarkTheme,
+            onForgotPasswordClick
+        )
         LoginButtons(navController, loginViewModel, isDarkTheme)
     }
 }
@@ -149,10 +180,9 @@ private fun LoginFields(
     uiState: LoginUiState,
     loginViewModel: LoginViewModel,
     modifier: Modifier,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
+    onForgotPasswordClick: () -> Unit
 ) {
-    val fieldColors = getLoginFieldColors(isDarkTheme)
-
     CustomLoginTextField(
         value = uiState.username,
         onValueChange = { loginViewModel.onUsernameChanged(it) },
@@ -160,10 +190,8 @@ private fun LoginFields(
         isFocused = uiState.isUsernameFocused,
         onFocusChange = { loginViewModel.onUsernameFocusChanged(it) },
         isPasswordField = false,
-        containerColor = fieldColors.containerColor,
-        indicatorColor = fieldColors.indicatorColor,
-        cursorColor = fieldColors.cursorColor,
-        supportingText = uiState.usernameValidateFieldError
+        supportingText = uiState.usernameValidateFieldError,
+        isDarkTheme = isDarkTheme
     )
 
     CustomLoginTextField(
@@ -173,13 +201,11 @@ private fun LoginFields(
         isFocused = uiState.isPasswordFocused,
         onFocusChange = { loginViewModel.onPasswordFocusChanged(it) },
         isPasswordField = true,
-        containerColor = fieldColors.containerColor,
-        indicatorColor = fieldColors.indicatorColor,
-        cursorColor = fieldColors.cursorColor,
-        supportingText = uiState.passwordValidateFieldError
+        supportingText = uiState.passwordValidateFieldError,
+        isDarkTheme = isDarkTheme
     )
 
-    ForgotPasswordButton(modifier, isDarkTheme)
+    ForgotPasswordButton(modifier, isDarkTheme, onForgotPasswordClick)
 }
 
 @Composable
@@ -192,12 +218,10 @@ private fun LoginButtons(
 
     LoginButton(
         onClick = {
-            if (loginViewModel.areFieldsValid()) {
-                loginViewModel.login(
-                    onLoginSuccess = { navigateToHome(navController) },
-                    onLoginFailure = { /* Handle error */ }
-                )
-            }
+            loginViewModel.login(
+                onLoginSuccess = { navigateToHome(navController) },
+                onLoginFailure = { } // Toast Error
+            )
         },
         buttonBackgroundColor = buttonBackgroundColor,
         isDarkTheme
@@ -209,11 +233,15 @@ private fun LoginButtons(
 }
 
 @Composable
-private fun ForgotPasswordButton(modifier: Modifier, isDarkTheme: Boolean) {
+private fun ForgotPasswordButton(
+    modifier: Modifier,
+    isDarkTheme: Boolean,
+    onForgotPasswordClick: () -> Unit
+) {
     TextButton(
-        onClick = {},
+        onClick = { onForgotPasswordClick() },
         modifier = modifier
-            .padding(bottom = 5.dp, start = 50.dp),
+            .padding(bottom = 5.dp)
     ) {
         Text(
             text = stringResource(id = R.string.login_screen_forget_your_password_text_body).uppercase(),
@@ -223,7 +251,7 @@ private fun ForgotPasswordButton(modifier: Modifier, isDarkTheme: Boolean) {
             fontWeight = if (isDarkTheme) FontWeight.Medium else FontWeight.Light,
             modifier = Modifier.padding(top = 0.dp),
             textAlign = TextAlign.Center,
-            letterSpacing = 0.2.sp
+            letterSpacing = 0.2.sp,
         )
     }
 }
@@ -272,7 +300,7 @@ private fun GoogleLoginButton(buttonBackgroundColor: Color, isDarkTheme: Boolean
 @Composable
 private fun GoToRegisterButton(navController: NavHostController, isDarkTheme: Boolean) {
     TextButton(
-        onClick = { navController.navigate(AppRoutes.Destination.REGISTER.route) },
+        onClick = { navController.navigate(Destination.REGISTER.route) },
         modifier = Modifier.padding(vertical = 5.dp)
     ) {
         Text(
@@ -287,20 +315,6 @@ private fun GoToRegisterButton(navController: NavHostController, isDarkTheme: Bo
         )
     }
 }
-
-@Composable
-private fun getLoginFieldColors(isDarkTheme: Boolean): LoginFieldColors {
-    val containerColor = if (isDarkTheme) Color.Black else MaterialTheme.colorScheme.primary
-    val indicatorColor = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
-    val cursorColor = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
-    return LoginFieldColors(containerColor, indicatorColor, cursorColor)
-}
-
-private data class LoginFieldColors(
-    val containerColor: Color,
-    val indicatorColor: Color,
-    val cursorColor: Color
-)
 
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable

@@ -36,7 +36,31 @@ class LoginViewModel @Inject constructor(
         _uiState.update { it.copy(isPasswordFocused = isFocused) }
     }
 
-    fun areFieldsValid(): Boolean {
+    fun toggleResetPasswordDialogVisibility(show: Boolean) {
+        _uiState.update { it.copy(showResetPasswordDialog = show) }
+    }
+
+    fun login(onLoginSuccess: () -> Unit, onLoginFailure: (String) -> Unit) {
+        if (areFieldsValid()) {
+            viewModelScope.launch {
+                _uiState.update { it.copy(loginState = LoginState.Loading) }
+                loginUseCase.login(
+                    username = _uiState.value.username,
+                    password = _uiState.value.password,
+                    onSuccess = {
+                        _uiState.update { it.copy(loginState = LoginState.Success) }
+                        onLoginSuccess()
+                    },
+                    onFailure = { errorMessage ->
+                        _uiState.update { it.copy(loginState = LoginState.Failure(errorMessage)) }
+                        onLoginFailure(errorMessage)
+                    }
+                )
+            }
+        }
+    }
+
+    private fun areFieldsValid(): Boolean {
         val validatedState = validateFields(_uiState.value)
         _uiState.update { validatedState }
         return validatedState.usernameValidateFieldError == ValidateFieldErrors.NONE &&
@@ -67,24 +91,6 @@ class LoginViewModel @Inject constructor(
     private fun isFieldEmpty(value: String): Boolean {
         return value.isBlank()
     }
-
-    fun login(onLoginSuccess: () -> Unit, onLoginFailure: (String) -> Unit) {
-        viewModelScope.launch {
-            _uiState.update { it.copy(loginState = LoginState.Loading) }
-            loginUseCase.login(
-                username = _uiState.value.username,
-                password = _uiState.value.password,
-                onSuccess = {
-                    _uiState.update { it.copy(loginState = LoginState.Success) }
-                    onLoginSuccess()
-                },
-                onFailure = { errorMessage ->
-                    _uiState.update { it.copy(loginState = LoginState.Failure(errorMessage)) }
-                    onLoginFailure(errorMessage)
-                }
-            )
-        }
-    }
 }
 
 data class LoginUiState(
@@ -94,6 +100,7 @@ data class LoginUiState(
     val isPasswordFocused: Boolean = false,
     val usernameValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
     val passwordValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
+    val showResetPasswordDialog: Boolean = false,
     val loginState: LoginState = LoginState.Idle
 )
 

@@ -28,6 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.develofer.opositate.R
@@ -41,22 +43,26 @@ fun CustomLoginTextField(
     isFocused: Boolean,
     onFocusChange: (Boolean) -> Unit,
     isPasswordField: Boolean = false,
-    containerColor: Color,
-    indicatorColor: Color,
-    cursorColor: Color,
-    supportingText: ValidateFieldErrors
+    supportingText: ValidateFieldErrors,
+    isDarkTheme: Boolean,
+    textLetterSpacing: TextUnit = 2.sp,
+    labelFontSize: TextUnit = 15.sp,
+    textFieldPaddingBottom: Dp = 0.dp
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
+    val fieldColors = getLoginFieldColors(isDarkTheme)
 
     TextField(
+        singleLine = true,
         value = value,
         onValueChange = onValueChange,
         label = {
             Text(
+                maxLines = 1,
                 text = label,
                 fontSize =
                     if (isFocused || value.isNotEmpty()) 10.sp
-                    else 15.sp,
+                    else labelFontSize,
                 letterSpacing = 2.sp,
                 color = MaterialTheme.colorScheme.onBackground,
                 style =
@@ -75,30 +81,33 @@ fun CustomLoginTextField(
                 ValidateFieldErrors.EMPTY_TEXT -> stringResource(
                     id = R.string.login_screen__supporting_text__empty_field
                 )
+                ValidateFieldErrors.EMAILS_DO_NOT_MATCH -> stringResource(
+                    id = R.string.resetPassword_dialog__supporting_text__emails_do_not_match
+                )
                 else -> ""
             }
             Text(
                 text = supportingTextFieldError,
                 fontSize = if (isSystemInDarkTheme()) 10.sp else 10.sp,
-                letterSpacing = 2.sp,
+                letterSpacing = textLetterSpacing,
                 color = MaterialTheme.colorScheme.error
             )
         },
         colors = TextFieldDefaults.colors(
-            focusedContainerColor = containerColor,
-            unfocusedContainerColor = containerColor,
-            disabledContainerColor = containerColor,
-            focusedIndicatorColor = indicatorColor,
-            unfocusedIndicatorColor = indicatorColor,
-            disabledIndicatorColor = indicatorColor,
-            cursorColor = cursorColor,
+            focusedContainerColor = fieldColors.containerColor,
+            unfocusedContainerColor = fieldColors.containerColor,
+            disabledContainerColor = fieldColors.containerColor,
+            focusedIndicatorColor = fieldColors.indicatorColor,
+            unfocusedIndicatorColor = fieldColors.indicatorColor,
+            disabledIndicatorColor = fieldColors.indicatorColor,
+            cursorColor = fieldColors.cursorColor,
             focusedTextColor = Color.Black,
             unfocusedTextColor = Color.Black,
             disabledTextColor = Color.Black,
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 45.dp)
+            .padding(horizontal = 45.dp).padding(textFieldPaddingBottom)
             .height(76.dp)
             .onFocusChanged { onFocusChange(it.isFocused) },
         textStyle =
@@ -135,6 +144,21 @@ fun CustomLoginTextField(
     )
 }
 
+
+@Composable
+private fun getLoginFieldColors(isDarkTheme: Boolean): LoginFieldColors {
+    val containerColor = if (isDarkTheme) Color.Black else MaterialTheme.colorScheme.primary
+    val indicatorColor = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
+    val cursorColor = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
+    return LoginFieldColors(containerColor, indicatorColor, cursorColor)
+}
+
+private data class LoginFieldColors(
+    val containerColor: Color,
+    val indicatorColor: Color,
+    val cursorColor: Color
+)
+
 @Preview
 @Composable
 fun CustomLoginTextFieldPreview() {
@@ -145,9 +169,7 @@ fun CustomLoginTextFieldPreview() {
         isFocused = false,
         onFocusChange = {},
         isPasswordField = true,
-        containerColor = Color.White,
-        indicatorColor = Color.Black,
-        cursorColor = Color.Black,
-        supportingText = ValidateFieldErrors.EMPTY_TEXT
+        supportingText = ValidateFieldErrors.EMPTY_TEXT,
+        isDarkTheme = true
     )
 }

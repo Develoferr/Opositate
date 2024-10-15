@@ -65,6 +65,7 @@ fun RegisterScreen(
     val isUsernameFocused by registerViewModel.isUsernameFocused.collectAsState()
     val isEmailFocused by registerViewModel.isEmailFocused.collectAsState()
     val isPasswordFocused by registerViewModel.isPasswordFocused.collectAsState()
+    val isDarkTheme = isSystemInDarkTheme()
     val focusManager = LocalFocusManager.current
 
     val usernameValidateFieldError by registerViewModel.usernameValidateFieldError.collectAsState(ValidateFieldErrors.NONE)
@@ -147,16 +148,6 @@ fun RegisterScreen(
                 modifier = Modifier.fillMaxSize(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                val containerColor =
-                    if (isSystemInDarkTheme()) Color.Black
-                    else MaterialTheme.colorScheme.primary
-                val indicatorColor =
-                    if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary
-                    else MaterialTheme.colorScheme.onBackground
-                val cursorColor =
-                    if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary
-                    else MaterialTheme.colorScheme.onBackground
-
                 CustomLoginTextField(
                     value = username,
                     onValueChange = { registerViewModel.onUsernameChanged(it) },
@@ -164,10 +155,8 @@ fun RegisterScreen(
                     isFocused = isUsernameFocused,
                     onFocusChange = { registerViewModel.onUsernameFocusChanged(it) },
                     isPasswordField = false,
-                    containerColor = containerColor,
-                    indicatorColor = indicatorColor,
-                    cursorColor = cursorColor,
-                    supportingText = usernameValidateFieldError
+                    supportingText = usernameValidateFieldError,
+                    isDarkTheme = isDarkTheme
                 )
 
                 CustomLoginTextField(
@@ -177,10 +166,8 @@ fun RegisterScreen(
                     isFocused = isEmailFocused,
                     onFocusChange = { registerViewModel.onEmailFocusChanged(it) },
                     isPasswordField = false,
-                    containerColor = containerColor,
-                    indicatorColor = indicatorColor,
-                    cursorColor = cursorColor,
-                    supportingText = emailValidateFieldError
+                    supportingText = emailValidateFieldError,
+                    isDarkTheme = isDarkTheme
                 )
 
                 CustomLoginTextField(
@@ -190,10 +177,8 @@ fun RegisterScreen(
                     isFocused = isPasswordFocused,
                     onFocusChange = { registerViewModel.onPasswordFocusChanged(it) },
                     isPasswordField = true,
-                    containerColor = containerColor,
-                    indicatorColor = indicatorColor,
-                    cursorColor = cursorColor,
-                    supportingText = passwordValidateFieldError
+                    supportingText = passwordValidateFieldError,
+                    isDarkTheme = isDarkTheme
                 )
 
                 val buttonBackgroundColor =
