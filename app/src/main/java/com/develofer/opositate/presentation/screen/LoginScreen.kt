@@ -14,6 +14,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.graphicsLayer
@@ -70,6 +71,8 @@ fun LoginScreen(
         )
         LoginResetPasswordDialog(
             uiState.showResetPasswordDialog,
+            focusManager,
+            loginViewModel,
             hideDialog = { loginViewModel.toggleResetPasswordDialogVisibility(false) }
         )
 
@@ -77,8 +80,14 @@ fun LoginScreen(
 }
 
 @Composable
-fun LoginResetPasswordDialog(showResetPasswordDialog: Boolean, hideDialog: () -> Unit) {
+fun LoginResetPasswordDialog(
+    showResetPasswordDialog: Boolean,
+    focusManager: FocusManager,
+    loginViewModel: LoginViewModel,
+    hideDialog: () -> Unit
+) {
     if (showResetPasswordDialog) {
+        clearFocus(focusManager, loginViewModel)
         ResetPasswordDialog(
             onDismissRequest = { hideDialog() },
             onSuccess = {
@@ -314,6 +323,12 @@ private fun GoToRegisterButton(navController: NavHostController, isDarkTheme: Bo
             fontWeight = if (isDarkTheme) FontWeight.Medium else FontWeight.Light
         )
     }
+}
+
+private fun clearFocus(focusManager: FocusManager, loginViewModel: LoginViewModel) {
+    focusManager.clearFocus()
+    loginViewModel.onUsernameFocusChanged(false)
+    loginViewModel.onPasswordFocusChanged(false)
 }
 
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
