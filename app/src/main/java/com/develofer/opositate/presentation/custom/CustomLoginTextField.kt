@@ -13,8 +13,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Info
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -89,15 +87,17 @@ fun CustomLoginTextField(
                     else painterResource(id = R.drawable.ic_closed_eye),
                     colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
                     contentDescription = stringResource(id = R.string.custom_login_text_field_password_eye_image_content_description),
-                    modifier = modifier.size(24.dp).offset(y = padding)
+                    modifier = modifier
+                        .size(24.dp)
+                        .offset(y = padding)
                 )
             }
         }} else if (haveToolTip) {{
             Icon(
-                imageVector = Icons.Default.Info,
+                painter = painterResource(id = R.drawable.ic_info),
                 contentDescription = "Info Icon",
                 modifier = Modifier
-                    .offset(y = 8.dp)
+                    .offset(y = 8.dp).size(24.dp)
                     .onGloballyPositioned { coordinates: LayoutCoordinates ->
                         iconSize = coordinates.size
                         tooltipPosition = coordinates.localToWindow(Offset.Zero)
@@ -169,7 +169,8 @@ fun CustomLoginTextField(
         ),
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 45.dp).padding(textFieldPaddingBottom)
+            .padding(horizontal = 45.dp)
+            .padding(textFieldPaddingBottom)
             .height(76.dp)
             .onFocusChanged { onFocusChange(it.isFocused) },
         textStyle =
