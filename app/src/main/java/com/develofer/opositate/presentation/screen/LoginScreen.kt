@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -27,14 +28,19 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.develofer.opositate.R
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
 import com.develofer.opositate.presentation.dialog.ResetPasswordDialog
 import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
-import com.develofer.opositate.presentation.navigation.navigateToHome
+import com.develofer.opositate.presentation.viewmodel.LoginState
 import com.develofer.opositate.presentation.viewmodel.LoginUiState
 import com.develofer.opositate.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.presentation.viewmodel.MainViewModel
@@ -75,9 +81,52 @@ fun LoginScreen(
             loginViewModel,
             hideDialog = { loginViewModel.toggleResetPasswordDialogVisibility(false) }
         )
+        if (uiState.loginState == LoginState.Loading) {
+            LottieLoginAnimation(
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .zIndex(2f),
+                navController,
+                loginViewModel
+            )
+        }
 
     }
 }
+
+@Composable
+fun LottieLoginAnimation(
+    modifier: Modifier = Modifier,
+    navController: NavHostController,
+    loginViewModel: LoginViewModel
+) {
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_anim7))
+    val progress by animateLottieCompositionAsState(
+        composition = composition,
+        iterations = 1
+    )
+
+    if (progress >= 1f && loginViewModel.areFieldsValid()) {
+        LaunchedEffect(Unit) {
+            navController.navigate(Destination.HOME.route)
+        }
+    }
+
+    Surface(
+        modifier = modifier
+            .fillMaxSize()
+            .alpha(1f),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        LottieAnimation(
+            composition = composition,
+            progress = { progress },
+            modifier = modifier
+                .size(200.dp).alpha(1f).offset(y = (50).dp)
+        )
+    }
+}
+
 
 @Composable
 fun LoginResetPasswordDialog(
@@ -227,10 +276,7 @@ private fun LoginButtons(
 
     LoginButton(
         onClick = {
-            loginViewModel.login(
-                onLoginSuccess = { navigateToHome(navController) },
-                onLoginFailure = { } // Toast Error
-            )
+            loginViewModel.login()
         },
         buttonBackgroundColor = buttonBackgroundColor,
         isDarkTheme

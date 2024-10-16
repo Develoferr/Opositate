@@ -40,7 +40,7 @@ class LoginViewModel @Inject constructor(
         _uiState.update { it.copy(showResetPasswordDialog = show) }
     }
 
-    fun login(onLoginSuccess: () -> Unit, onLoginFailure: (String) -> Unit) {
+    fun login() {
         if (areFieldsValid()) {
             viewModelScope.launch {
                 _uiState.update { it.copy(loginState = LoginState.Loading) }
@@ -49,18 +49,16 @@ class LoginViewModel @Inject constructor(
                     password = _uiState.value.password,
                     onSuccess = {
                         _uiState.update { it.copy(loginState = LoginState.Success) }
-                        onLoginSuccess()
                     },
                     onFailure = { errorMessage ->
                         _uiState.update { it.copy(loginState = LoginState.Failure(errorMessage)) }
-                        onLoginFailure(errorMessage)
                     }
                 )
             }
         }
     }
 
-    private fun areFieldsValid(): Boolean {
+    fun areFieldsValid(): Boolean {
         val validatedState = validateFields(_uiState.value)
         _uiState.update { validatedState }
         return validatedState.usernameValidateFieldError == ValidateFieldErrors.NONE &&
@@ -108,5 +106,5 @@ sealed class LoginState {
     data object Idle : LoginState()
     data object Loading : LoginState()
     data object Success : LoginState()
-    data class Failure(val error: String) : LoginState()
+    data class Failure(val error: String = "No se ha podido iniciar tu sesión, prueba otra vez") : LoginState()
 }
