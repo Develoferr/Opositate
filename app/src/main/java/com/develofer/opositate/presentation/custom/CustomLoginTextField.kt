@@ -30,6 +30,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.LayoutCoordinates
 import androidx.compose.ui.layout.onGloballyPositioned
@@ -68,7 +69,8 @@ fun CustomLoginTextField(
     labelFontSize: TextUnit = 15.sp,
     textFieldPaddingBottom: Dp = 0.dp,
     haveToolTip: Boolean = false,
-    toolTipText: String = "Test tooltip"
+    toolTipText: String = "Test tooltip",
+    painter: Painter = painterResource(id = R.drawable.ic_info_bold),
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
     val fieldColors = getLoginFieldColors(isDarkTheme)
@@ -94,10 +96,10 @@ fun CustomLoginTextField(
             }
         }} else if (haveToolTip) {{
             Icon(
-                painter = painterResource(id = R.drawable.ic_info),
+                painter = painter,
                 contentDescription = "Info Icon",
                 modifier = Modifier
-                    .offset(y = 8.dp).size(24.dp)
+                    .offset(y = 8.dp).size(16.dp)
                     .onGloballyPositioned { coordinates: LayoutCoordinates ->
                         iconSize = coordinates.size
                         tooltipPosition = coordinates.localToWindow(Offset.Zero)
