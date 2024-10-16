@@ -12,6 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -40,12 +43,14 @@ import com.develofer.opositate.R
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
 import com.develofer.opositate.presentation.dialog.ResetPasswordDialog
 import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
+import com.develofer.opositate.presentation.navigation.navigateToHome
 import com.develofer.opositate.presentation.viewmodel.LoginState
 import com.develofer.opositate.presentation.viewmodel.LoginUiState
 import com.develofer.opositate.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.presentation.viewmodel.MainViewModel
 import com.develofer.opositate.ui.theme.Gray200
 import com.develofer.opositate.ui.theme.OpositateTheme
+import kotlinx.coroutines.delay
 import java.util.Locale
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -60,45 +65,105 @@ fun LoginScreen(
     val isKeyboardVisible = WindowInsets.isImeVisible
     val focusManager = LocalFocusManager.current
 
+    var animationState: AnimationState by remember { mutableStateOf(AnimationState.Idle) }
+    var isSuccessDialogVisible by remember { mutableStateOf(false) }
+
     mainViewModel.hideSystemUI()
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
-            .pointerInput(Unit) {
-                detectTapGestures(onTap = { focusManager.clearFocus() })
-            }
+        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+            .pointerInput(Unit) { detectTapGestures(onTap = { focusManager.clearFocus() }) }
     ) {
-        LoginLogo(isKeyboardVisible, Modifier.align(Alignment.TopCenter), isDarkTheme)
+        LoginLogo(isKeyboardVisible, isDarkTheme, Modifier.align(Alignment.TopCenter))
         LoginContent(
             uiState, navController, loginViewModel, isDarkTheme, isKeyboardVisible,
-            onForgotPasswordClick = { loginViewModel.toggleResetPasswordDialogVisibility(true) }
+            onForgotPasswordClick = { loginViewModel.toggleResetPasswordDialogVisibility(true) },
+            clearFocus = { focusManager.clearFocus() }
         )
         LoginResetPasswordDialog(
-            uiState.showResetPasswordDialog,
-            focusManager,
-            loginViewModel,
+            showResetPasswordDialog = uiState.showResetPasswordDialog,
+            focusManager = focusManager,
+            loginViewModel = loginViewModel,
             hideDialog = { loginViewModel.toggleResetPasswordDialogVisibility(false) }
         )
-        if (uiState.loginState == LoginState.Loading) {
-            LottieLoginAnimation(
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .zIndex(2f),
-                navController,
-                loginViewModel
-            )
-        }
+        LoginLoadingAnimation(
+            loginState = uiState.loginState,
+            animationState = animationState,
+            loginViewModel = loginViewModel,
+            modifier = Modifier.align(Alignment.Center),
+            onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState }
+        )
+        LoginFinishedDialog(
+            animationState = animationState,
+            loginState = uiState.loginState,
+            isSuccessDialogVisible = isSuccessDialogVisible,
+            onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState },
+            onSuccessDialogVisibilityChanged = { newSuccessDialogVisibility -> isSuccessDialogVisible = newSuccessDialogVisibility },
+            goToHome = { navigateToHome(navController) }
+        )
+    }
+}
 
+@Composable
+private fun LoginFinishedDialog(
+    animationState: AnimationState,
+    loginState: LoginState,
+    isSuccessDialogVisible: Boolean,
+    onAnimationStateChanged: (animationState: AnimationState) -> Unit,
+    onSuccessDialogVisibilityChanged: (isSuccessDialogVisible: Boolean) -> Unit,
+    goToHome: () -> Unit
+
+) {
+    if (animationState == AnimationState.Finish) {
+        when (loginState) {
+            is LoginState.Success -> {
+                onSuccessDialogVisibilityChanged(true)
+                SuccessDialog(
+                    onDismiss = {
+                        onAnimationStateChanged(AnimationState.Idle)
+                        onSuccessDialogVisibilityChanged(false)
+                        goToHome()
+                    },
+                    isSuccessDialogVisible = isSuccessDialogVisible
+                )
+            }
+            is LoginState.Failure -> {
+                ErrorDialog(
+                    onDismiss = { onAnimationStateChanged(AnimationState.Idle) },
+                    errorMessage = loginState.error
+                )
+            }
+            else -> {
+                ErrorDialog(
+                    onDismiss = { }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun LoginLoadingAnimation(
+    loginState: LoginState,
+    animationState: AnimationState,
+    loginViewModel: LoginViewModel,
+    modifier: Modifier,
+    onAnimationStateChanged: (animationsState: AnimationState) -> Unit
+) {
+    if (loginState == LoginState.Loading || animationState == AnimationState.Loading) {
+        onAnimationStateChanged(AnimationState.Loading)
+        LottieLoginAnimation(
+            modifier = modifier.zIndex(2f),
+            loginViewModel
+        ) { onAnimationStateChanged(AnimationState.Finish) }
     }
 }
 
 @Composable
 fun LottieLoginAnimation(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
-    loginViewModel: LoginViewModel
+    loginViewModel: LoginViewModel,
+    onFinish: () -> Unit
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_anim7))
     val progress by animateLottieCompositionAsState(
@@ -108,7 +173,7 @@ fun LottieLoginAnimation(
 
     if (progress >= 1f && loginViewModel.areFieldsValid()) {
         LaunchedEffect(Unit) {
-            navController.navigate(Destination.HOME.route)
+            onFinish()
         }
     }
 
@@ -122,7 +187,9 @@ fun LottieLoginAnimation(
             composition = composition,
             progress = { progress },
             modifier = modifier
-                .size(200.dp).alpha(1f).offset(y = (50).dp)
+                .size(200.dp)
+                .alpha(1f)
+                .offset(y = (50).dp)
         )
     }
 }
@@ -150,7 +217,7 @@ fun LoginResetPasswordDialog(
 }
 
 @Composable
-private fun LoginLogo(isKeyboardVisible: Boolean, modifier: Modifier, isDarkTheme: Boolean) {
+private fun LoginLogo(isKeyboardVisible: Boolean, isDarkTheme: Boolean, modifier: Modifier) {
     val logoAlphaLight = if (isKeyboardVisible) 0f else 1f
     val logoAlphaDark = if (isKeyboardVisible) 0f else .19f
     val colorFilter = if (isDarkTheme) null else ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
@@ -182,7 +249,8 @@ private fun LoginContent(
     loginViewModel: LoginViewModel,
     isDarkTheme: Boolean,
     isKeyBoardVisible: Boolean,
-    onForgotPasswordClick: () -> Unit
+    onForgotPasswordClick: () -> Unit,
+    clearFocus: () -> Unit
 ) {
     val columnPaddingTop = if (isKeyBoardVisible) 50.dp else if (isDarkTheme) 330.dp else 240.dp
     Column(
@@ -200,7 +268,7 @@ private fun LoginContent(
             isDarkTheme,
             onForgotPasswordClick
         )
-        LoginButtons(navController, loginViewModel, isDarkTheme)
+        LoginButtons(navController, loginViewModel, isDarkTheme, clearFocus)
     }
 }
 
@@ -270,13 +338,15 @@ private fun LoginFields(
 private fun LoginButtons(
     navController: NavHostController,
     loginViewModel: LoginViewModel,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
+    clearFocus: () -> Unit = {}
 ) {
     val buttonBackgroundColor = if (isDarkTheme) MaterialTheme.colorScheme.primary else Color.Black
 
     LoginButton(
         onClick = {
             loginViewModel.login()
+            clearFocus()
         },
         buttonBackgroundColor = buttonBackgroundColor,
         isDarkTheme
@@ -383,4 +453,10 @@ fun LoginPreview() {
     OpositateTheme {
         LoginScreen(rememberNavController())
     }
+}
+
+sealed class AnimationState {
+    data object Idle : AnimationState()
+    data object Loading : AnimationState()
+    data object Finish : AnimationState()
 }

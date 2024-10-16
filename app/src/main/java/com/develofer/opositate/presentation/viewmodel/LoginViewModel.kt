@@ -106,5 +106,5 @@ sealed class LoginState {
     data object Idle : LoginState()
     data object Loading : LoginState()
     data object Success : LoginState()
-    data class Failure(val error: String = "No se ha podido iniciar tu sesión, prueba otra vez") : LoginState()
+    data class Failure(val error: String) : LoginState()
 }
