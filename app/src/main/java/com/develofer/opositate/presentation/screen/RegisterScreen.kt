@@ -156,7 +156,9 @@ fun RegisterScreen(
                     onFocusChange = { registerViewModel.onUsernameFocusChanged(it) },
                     isPasswordField = false,
                     supportingText = usernameValidateFieldError,
-                    isDarkTheme = isDarkTheme
+                    isDarkTheme = isDarkTheme,
+                    haveToolTip = true,
+                    toolTipText = stringResource(id = R.string.register_screen__user_text_field__tool_tip)
                 )
 
                 CustomLoginTextField(

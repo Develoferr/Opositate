@@ -1,12 +1,21 @@
 package com.develofer.opositate.presentation.custom
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Info
+import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -17,23 +26,35 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.layout.LayoutCoordinates
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.IntOffset
+import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Popup
 import com.develofer.opositate.R
 import com.develofer.opositate.presentation.viewmodel.TextFieldErrors.ValidateFieldErrors
+import kotlinx.coroutines.delay
 
 @Composable
 fun CustomLoginTextField(
@@ -47,10 +68,51 @@ fun CustomLoginTextField(
     isDarkTheme: Boolean,
     textLetterSpacing: TextUnit = 2.sp,
     labelFontSize: TextUnit = 15.sp,
-    textFieldPaddingBottom: Dp = 0.dp
+    textFieldPaddingBottom: Dp = 0.dp,
+    haveToolTip: Boolean = false,
+    toolTipText: String = "Test tooltip"
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
     val fieldColors = getLoginFieldColors(isDarkTheme)
+    var showTooltip by remember { mutableStateOf(false) }
+    var tooltipPosition by remember { mutableStateOf(Offset.Zero) }
+    var iconSize by remember { mutableStateOf(IntSize.Zero) }
+    val trailingIcon: @Composable (() -> Unit)? =
+        if (isPasswordField) {{
+            val padding = if (isPasswordVisible) (-4).dp else 0.dp
+            IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
+                val modifier =
+                    if (isFocused || value.isNotEmpty()) Modifier.offset(y = 8.dp)
+                    else Modifier.offset(y = 12.dp)
+                Image(
+                    painter = if (isPasswordVisible) painterResource(id = R.drawable.ic_open_eye)
+                    else painterResource(id = R.drawable.ic_closed_eye),
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
+                    contentDescription = stringResource(id = R.string.custom_login_text_field_password_eye_image_content_description),
+                    modifier = modifier.size(24.dp).offset(y = padding)
+                )
+            }
+        }} else if (haveToolTip) {{
+            Icon(
+                imageVector = Icons.Default.Info,
+                contentDescription = "Info Icon",
+                modifier = Modifier
+                    .offset(y = 8.dp)
+                    .onGloballyPositioned { coordinates: LayoutCoordinates ->
+                        iconSize = coordinates.size
+                        tooltipPosition = coordinates.localToWindow(Offset.Zero)
+                    }
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onPress = {
+                                showTooltip = true
+                                delay(4500)
+                                showTooltip = false
+                            }
+                        )
+                    }
+            )
+        }} else null
 
     TextField(
         singleLine = true,
@@ -121,27 +183,39 @@ fun CustomLoginTextField(
         visualTransformation =
             if (isPasswordField && !isPasswordVisible) PasswordVisualTransformation()
             else VisualTransformation.None,
-        trailingIcon =
-        if (isPasswordField) {
-            {
-                val padding = if (isPasswordVisible) (-4).dp else 0.dp
-                IconButton(onClick = {isPasswordVisible = !isPasswordVisible}) {
-                    val modifier =
-                        if (isFocused || value.isNotEmpty()) Modifier.offset(y = 8.dp)
-                        else Modifier.offset(y = 12.dp)
-                    Image(
-                        painter =
-                            if (isPasswordVisible) painterResource(id = R.drawable.ic_open_eye)
-                            else painterResource(id = R.drawable.ic_closed_eye),
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
-                        contentDescription = stringResource(id = R.string.custom_login_text_field_password_eye_image_content_description),
-                        modifier = modifier.size(24.dp).offset(y = padding)
-                    )
-                }
-            }
-        }
-        else null
+        trailingIcon = trailingIcon
+        ,
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Email,
+            imeAction = ImeAction.Next
+        ),
+        keyboardActions = KeyboardActions(onNext = { onValueChange("") })
     )
+    if (showTooltip) {
+        Tooltip(tooltipPosition, iconSize, toolTipText = toolTipText)
+    }
+}
+
+
+@Composable
+fun Tooltip(position: Offset, iconSize: IntSize, toolTipText: String) {
+    val density = LocalDensity.current
+    Popup(
+        alignment = Alignment.TopStart,
+        offset = IntOffset((position.x.toInt()-150), (position.y.toInt() + 50))
+    ) {
+        Box(
+            modifier = Modifier
+                .background(Color.Gray)
+                .wrapContentSize()
+        ) {
+            Text(
+                text = toolTipText,
+                color = Color.White,
+                modifier = Modifier.padding(8.dp)
+            )
+        }
+    }
 }
 
 

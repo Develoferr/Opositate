@@ -27,6 +27,7 @@
     <string name="register_screen_password_label_text_field">Contraseña</string>
     <string name="register_screen_register_text_btn">Registrarse</string>
     <string name="register_screen_already_have_account_text_btn">¿Ya tienes una cuenta?\nInicia sesión"</string>
+    <string name="register_screen__user_text_field__tool_tip">Tu usuario solo se utilizará en tu perfil, no guardamos esta información con otros usos"</string>
 
     // Reset Password Dialog
     <string name="resetPassword_dialog__supporting_text__emails_do_not_match">Los correos no coinciden</string>
