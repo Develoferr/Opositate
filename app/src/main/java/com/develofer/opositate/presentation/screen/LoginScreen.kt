@@ -71,7 +71,9 @@ fun LoginScreen(
     mainViewModel.hideSystemUI()
 
     Box(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .pointerInput(Unit) { detectTapGestures(onTap = { focusManager.clearFocus() }) }
     ) {
         LoginLogo(isKeyboardVisible, isDarkTheme, Modifier.align(Alignment.TopCenter))
@@ -439,6 +441,52 @@ private fun GoToRegisterButton(navController: NavHostController, isDarkTheme: Bo
             fontWeight = if (isDarkTheme) FontWeight.Medium else FontWeight.Light
         )
     }
+}
+
+@Composable
+fun ErrorDialog(
+    onDismiss: () -> Unit,
+    errorMessage: String = "No se ha podido iniciar tu sesión, prueba otra vez") {
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = {
+            Text(text = "Login Error")
+        },
+        text = {
+            Text(errorMessage)
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) {
+                Text("OK")
+            }
+        }
+    )
+}
+
+@Composable
+fun SuccessDialog(isSuccessDialogVisible: Boolean,onDismiss: () -> Unit) {
+    if (isSuccessDialogVisible) {
+        AlertDialog(
+            modifier = Modifier.background(Color.Transparent),
+            onDismissRequest = onDismiss,
+            title = {
+                Text(text = "Login Successful")
+            },
+            text = {
+                Text("You have successfully logged in.")
+            },
+            confirmButton = {
+                TextButton(onClick = {}) {
+                    Text("")
+                }
+            }
+        )
+    }
+    LaunchedEffect(isSuccessDialogVisible) {
+        delay(3000)
+        onDismiss()
+    }
+
 }
 
 private fun clearFocus(focusManager: FocusManager, loginViewModel: LoginViewModel) {
