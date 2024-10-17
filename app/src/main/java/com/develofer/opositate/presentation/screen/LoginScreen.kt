@@ -41,6 +41,8 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.develofer.opositate.R
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
+import com.develofer.opositate.presentation.custom.ErrorDialog
+import com.develofer.opositate.presentation.custom.SuccessDialog
 import com.develofer.opositate.presentation.dialog.ResetPasswordDialog
 import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
 import com.develofer.opositate.presentation.navigation.navigateToHome
@@ -50,7 +52,6 @@ import com.develofer.opositate.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.presentation.viewmodel.MainViewModel
 import com.develofer.opositate.ui.theme.Gray200
 import com.develofer.opositate.ui.theme.OpositateTheme
-import kotlinx.coroutines.delay
 import java.util.Locale
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -67,6 +68,7 @@ fun LoginScreen(
 
     var animationState: AnimationState by remember { mutableStateOf(AnimationState.Idle) }
     var isSuccessDialogVisible by remember { mutableStateOf(false) }
+    var isErrorDialogVisible by remember { mutableStateOf(false) }
 
     mainViewModel.hideSystemUI()
 
@@ -92,15 +94,17 @@ fun LoginScreen(
             loginState = uiState.loginState,
             animationState = animationState,
             loginViewModel = loginViewModel,
-            modifier = Modifier.align(Alignment.Center),
+            modifier = Modifier.align(Alignment.BottomCenter),
             onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState }
         )
         LoginFinishedDialog(
             animationState = animationState,
             loginState = uiState.loginState,
             isSuccessDialogVisible = isSuccessDialogVisible,
+            isErrorDialogVisible = isErrorDialogVisible,
             onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState },
             onSuccessDialogVisibilityChanged = { newSuccessDialogVisibility -> isSuccessDialogVisible = newSuccessDialogVisibility },
+            onErrorDialogVisibilityChanged = { newErrorDialogVisibility -> isErrorDialogVisible = newErrorDialogVisibility },
             goToHome = { navigateToHome(navController) }
         )
     }
@@ -111,8 +115,10 @@ private fun LoginFinishedDialog(
     animationState: AnimationState,
     loginState: LoginState,
     isSuccessDialogVisible: Boolean,
+    isErrorDialogVisible: Boolean,
     onAnimationStateChanged: (animationState: AnimationState) -> Unit,
     onSuccessDialogVisibilityChanged: (isSuccessDialogVisible: Boolean) -> Unit,
+    onErrorDialogVisibilityChanged: (isErrorDialogVisible: Boolean) -> Unit,
     goToHome: () -> Unit
 
 ) {
@@ -126,18 +132,48 @@ private fun LoginFinishedDialog(
                         onSuccessDialogVisibilityChanged(false)
                         goToHome()
                     },
-                    isSuccessDialogVisible = isSuccessDialogVisible
+                    isDialogVisible = isSuccessDialogVisible,
+                    delayTime = 3000,
+                    title = { Text(text = "Login Successful") },
+                    text = { Text("You have successfully logged in.") },
+                    confirmButton = { TextButton(onClick = {}) { Text("") } },
                 )
             }
             is LoginState.Failure -> {
+                onErrorDialogVisibilityChanged(true)
                 ErrorDialog(
-                    onDismiss = { onAnimationStateChanged(AnimationState.Idle) },
-                    errorMessage = loginState.error
+                    title = { Text(text = "Login Error") },
+                    text = { Text(text = loginState.error) },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            onAnimationStateChanged(AnimationState.Idle)
+                            onErrorDialogVisibilityChanged(false)
+                        }) {
+                            Text("OK")
+                        }
+                    },
+                    onDismiss = {
+                        onAnimationStateChanged(AnimationState.Idle)
+                        onErrorDialogVisibilityChanged(false)
+                    },
+                    isDialogVisible = isErrorDialogVisible
                 )
             }
             else -> {
+                onErrorDialogVisibilityChanged(true)
                 ErrorDialog(
-                    onDismiss = { }
+                    onDismiss = {
+                        onAnimationStateChanged(AnimationState.Idle)
+                        onErrorDialogVisibilityChanged(false)
+                    },
+                    confirmButton = {
+                        TextButton(onClick = {
+                            onAnimationStateChanged(AnimationState.Idle)
+                            onErrorDialogVisibilityChanged(false)
+                        }) {
+                            Text("OK")
+                        }
+                    },
                 )
             }
         }
@@ -441,52 +477,6 @@ private fun GoToRegisterButton(navController: NavHostController, isDarkTheme: Bo
             fontWeight = if (isDarkTheme) FontWeight.Medium else FontWeight.Light
         )
     }
-}
-
-@Composable
-fun ErrorDialog(
-    onDismiss: () -> Unit,
-    errorMessage: String = "No se ha podido iniciar tu sesión, prueba otra vez") {
-    AlertDialog(
-        onDismissRequest = onDismiss,
-        title = {
-            Text(text = "Login Error")
-        },
-        text = {
-            Text(errorMessage)
-        },
-        confirmButton = {
-            TextButton(onClick = onDismiss) {
-                Text("OK")
-            }
-        }
-    )
-}
-
-@Composable
-fun SuccessDialog(isSuccessDialogVisible: Boolean,onDismiss: () -> Unit) {
-    if (isSuccessDialogVisible) {
-        AlertDialog(
-            modifier = Modifier.background(Color.Transparent),
-            onDismissRequest = onDismiss,
-            title = {
-                Text(text = "Login Successful")
-            },
-            text = {
-                Text("You have successfully logged in.")
-            },
-            confirmButton = {
-                TextButton(onClick = {}) {
-                    Text("")
-                }
-            }
-        )
-    }
-    LaunchedEffect(isSuccessDialogVisible) {
-        delay(3000)
-        onDismiss()
-    }
-
 }
 
 private fun clearFocus(focusManager: FocusManager, loginViewModel: LoginViewModel) {
