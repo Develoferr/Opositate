@@ -69,6 +69,7 @@ fun LoginScreen(
     val focusManager = LocalFocusManager.current
 
     val uiState by loginViewModel.uiState.collectAsState()
+    var passwordResetFinished by remember { mutableStateOf(false) }
     val dialogState = loginViewModel.getDialogState()
     var animationState: AnimationState by remember { mutableStateOf(AnimationState.Idle) }
     var errorMessage: String? by remember { mutableStateOf(null) }
@@ -94,7 +95,8 @@ fun LoginScreen(
             focusManager = focusManager,
             loginViewModel = loginViewModel,
             hideDialog = { loginViewModel.toggleResetPasswordDialogVisibility(false) },
-            { newErrorMessage -> errorMessage = newErrorMessage}
+            { newErrorMessage -> errorMessage = newErrorMessage },
+            { passwordResetFinished = true}
         )
         LoginLoadingAnimation(
             loginState = uiState.loginState,
@@ -112,8 +114,10 @@ fun LoginScreen(
             uiState = uiState,
             errorMessage = errorMessage,
             dialogState = dialogState,
+            passwordResetFinished = passwordResetFinished,
             onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState },
-            goToHome = { navigateToHome(navController) }
+            goToHome = { navigateToHome(navController) },
+            onDialogDismissed = { passwordResetFinished = false }
         )
     }
 }
@@ -155,18 +159,26 @@ fun LottieLoginAnimation(
 
 @Composable
 fun LoginResetPasswordDialog(
-    showResetPasswordDialog: Boolean, focusManager: FocusManager,
-     loginViewModel: LoginViewModel, hideDialog: () -> Unit, saveErrorMessage: (String) -> Unit
+    showResetPasswordDialog: Boolean,
+    focusManager: FocusManager,
+    loginViewModel: LoginViewModel,
+    hideDialog: () -> Unit,
+    saveErrorMessage: (String) -> Unit,
+    onPasswordFinished: () -> Unit
 ) {
     if (showResetPasswordDialog) {
         clearFocus(focusManager, loginViewModel)
         ResetPasswordDialog(
             onDismissRequest = { hideDialog() },
             onSuccess = {
+                hideDialog()
+                onPasswordFinished()
                 loginViewModel.showDialog(LoginDialogType.RESET_PASSWORD_SUCCESS)
             },
             onFailure = { newErrorMessage ->
                 saveErrorMessage(newErrorMessage)
+                hideDialog()
+                onPasswordFinished()
                 loginViewModel.showDialog(LoginDialogType.RESET_PASSWORD_SUCCESS)
             }
         )
@@ -343,9 +355,12 @@ private fun HandleDialog(
     animationState: AnimationState, uiState: LoginUiState, errorMessage: String?,
     onAnimationStateChanged: (animationState: AnimationState) -> Unit,
     goToHome: () -> Unit, dialogState: StateFlow<DialogState<LoginDialogType>>,
-    hideDialog: () -> Unit
+    hideDialog: () -> Unit,
+    passwordResetFinished: Boolean,
+    onDialogDismissed: () -> Unit
 ) {
-    if (animationState == AnimationState.Finish || animationState == AnimationState.Dialog) {
+    if (animationState == AnimationState.Finish || animationState == AnimationState.Dialog ||
+        passwordResetFinished) {
         onAnimationStateChanged(AnimationState.Dialog)
         if (dialogState.collectAsState().value.isVisible) {
             when (dialogState.collectAsState().value.dialogType) {
@@ -378,12 +393,18 @@ private fun HandleDialog(
                 }
                 LoginDialogType.RESET_PASSWORD_SUCCESS -> {
                     SuccessDialog(
-                        onDismiss = { hideDialog() },
+                        onDismiss = {
+                            onDialogDismissed()
+                            hideDialog()
+                                    },
                         isDialogVisible = dialogState.collectAsState().value.isVisible,
                         delayTime = 3000,
                         title = { Text(text = "Reset Password Successful") },
                         text = { Text("The password reset email has successfully sent.") },
-                        confirmButton = { TextButton(onClick = { hideDialog() }) { Text("") } },
+                        confirmButton = { TextButton(onClick = {
+                            onDialogDismissed()
+                            hideDialog()
+                        }) { Text("") } },
                     )
                 }
                 LoginDialogType.RESET_PASSWORD_ERROR -> {
@@ -391,9 +412,15 @@ private fun HandleDialog(
                         title = { Text(text = "Login Error") },
                         text = { Text(text = errorMessage ?: "Ha ocurrido un error. Inténtalo de nuevo.") },
                         confirmButton = {
-                            TextButton(onClick = { hideDialog() }) { Text("OK") }
+                            TextButton(onClick = {
+                                onDialogDismissed()
+                                hideDialog()
+                            }) { Text("OK") }
                         },
-                        onDismiss = { hideDialog() },
+                        onDismiss = {
+                            onDialogDismissed()
+                            hideDialog()
+                        },
                         isDialogVisible = dialogState.collectAsState().value.isVisible
                     )
                 }
