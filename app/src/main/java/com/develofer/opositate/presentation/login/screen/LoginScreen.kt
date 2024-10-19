@@ -33,7 +33,6 @@ import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.develofer.opositate.R
 import com.develofer.opositate.presentation.login.custom.CustomLoginButton
-import com.develofer.opositate.presentation.login.custom.CustomLoginLogoImage
 import com.develofer.opositate.presentation.login.custom.CustomLoginTextButton
 import com.develofer.opositate.presentation.login.custom.CustomLoginTextField
 import com.develofer.opositate.presentation.login.custom.CustomSubtitleText
@@ -41,9 +40,11 @@ import com.develofer.opositate.presentation.login.custom.CustomTitleText
 import com.develofer.opositate.presentation.custom.DialogState
 import com.develofer.opositate.presentation.custom.ErrorDialog
 import com.develofer.opositate.presentation.custom.SuccessDialog
+import com.develofer.opositate.presentation.login.custom.CustomLoginLogo
 import com.develofer.opositate.presentation.login.model.LoginDialogType
 import com.develofer.opositate.presentation.login.model.LoginState
 import com.develofer.opositate.presentation.login.model.LoginUiState
+import com.develofer.opositate.presentation.login.resetpassword.ResetPasswordDialog
 import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
 import com.develofer.opositate.presentation.navigation.navigateToHome
 import com.develofer.opositate.presentation.login.viewmodel.LoginViewModel
@@ -76,31 +77,25 @@ fun LoginScreen(
             .fillMaxSize().background(MaterialTheme.colorScheme.background)
             .pointerInput(Unit) { detectTapGestures(onTap = { focusManager.clearFocus() }) }
     ) {
-        CustomLoginLogoImage(
-            isDarkTheme = isDarkTheme,
-            isKeyboardVisible = isKeyboardVisible,
+        CustomLoginLogo(
+            isDarkTheme = isDarkTheme, isKeyboardVisible = isKeyboardVisible,
             modifier = Modifier.align(Alignment.TopCenter)
         )
         LoginContent(
             uiState = uiState, loginViewModel = loginViewModel, isDarkTheme = isDarkTheme,
-            isKeyBoardVisible = isKeyboardVisible,
+            isKeyBoardVisible = isKeyboardVisible, clearFocus = { focusManager.clearFocus() },
             onForgotPasswordClick = { loginViewModel.toggleResetPasswordDialogVisibility(true) },
-            clearFocus = { focusManager.clearFocus() },
             navigateToRegister = { navController.navigate(Destination.REGISTER.route) }
         )
         LoginResetPasswordDialog(
-            showResetPasswordDialog = uiState.showResetPasswordDialog,
-            focusManager = focusManager,
-            loginViewModel = loginViewModel,
+            showResetPasswordDialog = uiState.showResetPasswordDialog, focusManager = focusManager,
+            loginViewModel = loginViewModel, onPasswordFinished = { passwordResetFinished = true},
             hideDialog = { loginViewModel.toggleResetPasswordDialogVisibility(false) },
             saveErrorMessage = { newErrorMessage -> registerErrorMessage = newErrorMessage },
-            onPasswordFinished = { passwordResetFinished = true}
         )
         LoginLoadingAnimation(
-            loginState = uiState.loginState,
-            animationState = animationState,
-            loginViewModel = loginViewModel,
-            modifier = Modifier.align(Alignment.BottomCenter),
+            loginState = uiState.loginState, animationState = animationState,
+            loginViewModel = loginViewModel, modifier = Modifier.align(Alignment.BottomCenter),
             onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState }
         )
         HandleDialog(
@@ -108,14 +103,10 @@ fun LoginScreen(
                 animationState = AnimationState.Idle
                 loginViewModel.hideDialog()
             },
-            animationState = animationState,
-            uiState = uiState,
-            errorMessage = registerErrorMessage,
-            dialogState = dialogState,
-            passwordResetFinished = passwordResetFinished,
+            animationState = animationState, uiState = uiState, errorMessage = registerErrorMessage,
+            dialogState = dialogState, passwordResetFinished = passwordResetFinished,
             onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState },
-            navigateToHome = { navigateToHome(navController) },
-            onDialogDismissed = { passwordResetFinished = false }
+            navigateToHome = { navigateToHome(navController) }, onDialogDismissed = { passwordResetFinished = false }
         )
     }
 }

@@ -1,10 +1,13 @@
-package com.develofer.opositate.presentation.register
+package com.develofer.opositate.presentation.register.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.domain.usecase.CreateUserUseCase
 import com.develofer.opositate.presentation.custom.DialogStateCoordinator
 import com.develofer.opositate.presentation.login.model.TextFieldErrors.ValidateFieldErrors
+import com.develofer.opositate.presentation.register.model.RegisterDialogType
+import com.develofer.opositate.presentation.register.model.RegisterState
+import com.develofer.opositate.presentation.register.model.RegisterUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -112,29 +115,4 @@ class RegisterViewModel @Inject constructor(
     private fun isFieldEmpty(value: String): Boolean {
         return value.isBlank()
     }
-}
-
-enum class RegisterDialogType {
-    REGISTER_SUCCESS,
-    REGISTER_ERROR
-}
-
-data class RegisterUiState(
-    val username: String = "",
-    val email: String = "",
-    val password: String = "",
-    val isUsernameFocused: Boolean = false,
-    val isEmailFocused: Boolean = false,
-    val isPasswordFocused: Boolean = false,
-    val usernameValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
-    val emailValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
-    val passwordValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
-    val registerState: RegisterState = RegisterState.Idle
-)
-
-sealed class RegisterState {
-    data object Idle : RegisterState()
-    data object Loading : RegisterState()
-    data object Success : RegisterState()
-    data class Failure(val error: String) : RegisterState()
 }

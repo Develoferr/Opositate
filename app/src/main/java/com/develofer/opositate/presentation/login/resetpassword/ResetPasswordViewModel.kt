@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.login.viewmodel
+package com.develofer.opositate.presentation.login.resetpassword
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

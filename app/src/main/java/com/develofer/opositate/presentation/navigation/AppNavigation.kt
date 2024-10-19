@@ -7,7 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.develofer.opositate.presentation.home.HomeScreen
 import com.develofer.opositate.presentation.login.screen.LoginScreen
-import com.develofer.opositate.presentation.register.RegisterScreen
+import com.develofer.opositate.presentation.register.screen.RegisterScreen
 import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
 import com.develofer.opositate.presentation.main.MainViewModel
 

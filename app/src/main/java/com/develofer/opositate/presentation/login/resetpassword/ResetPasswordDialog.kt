@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.login.screen
+package com.develofer.opositate.presentation.login.resetpassword
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.presentation.login.custom.CustomLoginTextField
 import com.develofer.opositate.R
-import com.develofer.opositate.presentation.login.viewmodel.ResetPasswordViewModel
 
 @Composable
 fun ResetPasswordDialog(
