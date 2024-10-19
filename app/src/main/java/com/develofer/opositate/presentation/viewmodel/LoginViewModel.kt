@@ -25,6 +25,10 @@ class LoginViewModel @Inject constructor(
 
     fun getDialogState() = loginDialogStateCoordinator.dialogState
 
+    fun showDialog(dialogType: LoginDialogType) {
+        loginDialogStateCoordinator.showDialog(dialogType)
+    }
+
     fun hideDialog() {
         loginDialogStateCoordinator.hideDialog()
     }

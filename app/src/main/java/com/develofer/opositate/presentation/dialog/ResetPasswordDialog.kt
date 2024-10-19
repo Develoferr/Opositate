@@ -23,7 +23,7 @@ import com.develofer.opositate.R
 fun ResetPasswordDialog(
     resetPasswordViewModel: ResetPasswordViewModel = hiltViewModel(),
     onSuccess: () -> Unit,
-    onFailure: () -> Unit,
+    onFailure: (errorMessage: String) -> Unit,
     onDismissRequest: () -> Unit
 ) {
     val uiState by resetPasswordViewModel.uiState.collectAsState()
@@ -67,7 +67,7 @@ fun ResetPasswordDialog(
             Button(onClick = {
                 resetPasswordViewModel.resetPassword(
                     onSuccess = { onSuccess() },
-                    onFailure = { onFailure() }
+                    onFailure = { errorMessage -> onFailure(errorMessage) }
                 )
             }) {
                 Text(text = stringResource(id = R.string.resetPassword_dialog__btn_text__send_email).uppercase())
