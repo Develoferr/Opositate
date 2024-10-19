@@ -22,7 +22,6 @@ class LoginViewModel @Inject constructor(
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
 
     private val loginDialogStateCoordinator: DialogStateCoordinator<LoginDialogType> = DialogStateCoordinator()
-
     fun getDialogState() = loginDialogStateCoordinator.dialogState
 
     fun showDialog(dialogType: LoginDialogType) {

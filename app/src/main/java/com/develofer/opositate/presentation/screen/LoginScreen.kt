@@ -1,7 +1,6 @@
 package com.develofer.opositate.presentation.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -20,8 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
@@ -40,6 +37,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.develofer.opositate.R
+import com.develofer.opositate.presentation.custom.CustomLoginLogoImage
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
 import com.develofer.opositate.presentation.custom.DialogState
 import com.develofer.opositate.presentation.custom.ErrorDialog
@@ -83,9 +81,9 @@ fun LoginScreen(
             .background(MaterialTheme.colorScheme.background)
             .pointerInput(Unit) { detectTapGestures(onTap = { focusManager.clearFocus() }) }
     ) {
-        LoginLogo(
-            isKeyboardVisible = isKeyboardVisible,
+        CustomLoginLogoImage(
             isDarkTheme = isDarkTheme,
+            isKeyboardVisible = isKeyboardVisible,
             modifier = Modifier.align(Alignment.TopCenter)
         )
         LoginContent(
@@ -98,8 +96,8 @@ fun LoginScreen(
             focusManager = focusManager,
             loginViewModel = loginViewModel,
             hideDialog = { loginViewModel.toggleResetPasswordDialogVisibility(false) },
-            { newErrorMessage -> errorMessage = newErrorMessage },
-            { passwordResetFinished = true}
+            saveErrorMessage = { newErrorMessage -> errorMessage = newErrorMessage },
+            onPasswordFinished = { passwordResetFinished = true}
         )
         LoginLoadingAnimation(
             loginState = uiState.loginState,
@@ -112,7 +110,7 @@ fun LoginScreen(
             hideDialog = {
                 animationState = AnimationState.Idle
                 loginViewModel.hideDialog()
-                         },
+            },
             animationState = animationState,
             uiState = uiState,
             errorMessage = errorMessage,
@@ -191,41 +189,13 @@ fun LoginResetPasswordDialog(
 }
 
 @Composable
-private fun LoginLogo(
-    isKeyboardVisible: Boolean, isDarkTheme: Boolean, modifier: Modifier
-) {
-    val logoAlphaLight = if (isKeyboardVisible) 0f else 1f
-    val logoAlphaDark = if (isKeyboardVisible) 0f else .19f
-    val colorFilter = if (isDarkTheme) null else ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
-    val modifierCopy = if (!isDarkTheme) modifier
-        .size(120.dp)
-        .alpha(logoAlphaLight)
-        .offset(y = 120.dp, x = 0.dp)
-        else Modifier
-        .size(550.dp)
-        .alpha(logoAlphaDark)
-        .offset(y = (-60).dp, x = (-100).dp)
-        .graphicsLayer { rotationX = 180f }
-    Image(
-        painter = painterResource(id = R.drawable.brain_icon__2_),
-        contentDescription = stringResource(id = R.string.login_screen__content_description__brain_image),
-        colorFilter = colorFilter,
-        modifier = modifierCopy.background(Color.Transparent),
-        alignment = if (isDarkTheme) Alignment.BottomCenter else Alignment.TopCenter
-    )
-}
-
-@Composable
 private fun LoginContent(
     uiState: LoginUiState, navController: NavHostController, loginViewModel: LoginViewModel,
     isDarkTheme: Boolean, isKeyBoardVisible: Boolean, onForgotPasswordClick: () -> Unit, clearFocus: () -> Unit
 ) {
     val columnPaddingTop = if (isKeyBoardVisible) 50.dp else if (isDarkTheme) 330.dp else 240.dp
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 16.dp)
-            .padding(top = columnPaddingTop),
+        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).padding(top = columnPaddingTop),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LoginHeader(isDarkTheme)
@@ -280,7 +250,6 @@ private fun LoginButtons(
     isDarkTheme: Boolean, clearFocus: () -> Unit = {}
 ) {
     val buttonBackgroundColor = if (isDarkTheme) MaterialTheme.colorScheme.primary else Color.Black
-
     LoginButton(
         onClick = {
             loginViewModel.login()
