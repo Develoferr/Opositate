@@ -32,14 +32,14 @@ fun ResetPasswordDialog(
     AlertDialog(
         onDismissRequest = onDismissRequest,
         title = {
-            Text(text = stringResource(id = R.string.resetPassword_dialog___text__reset_password).uppercase() )
+            Text(text = stringResource(id = R.string.reset_password_dialog__text__reset_password).uppercase() )
         },
         text = {
             Column {
                 CustomLoginTextField(
                     value = uiState.email,
                     onValueChange = { resetPasswordViewModel.onEmailChanged(it) },
-                    label = stringResource(id = R.string.resetPassword_dialog__text__email).uppercase(),
+                    label = stringResource(id = R.string.reset_password_dialog__text__email).uppercase(),
                     isFocused = uiState.isEmailFocused,
                     onFocusChange = { resetPasswordViewModel.onEmailFocusChanged(it) },
                     isPasswordField = false,
@@ -52,7 +52,7 @@ fun ResetPasswordDialog(
                 CustomLoginTextField(
                     value = uiState.confirmEmail,
                     onValueChange = { resetPasswordViewModel.onConfirmEmailChanged(it) },
-                    label = stringResource(id = R.string.resetPassword_dialog__text__repeat_email).uppercase(),
+                    label = stringResource(id = R.string.reset_password_dialog__text__repeat_email).uppercase(),
                     isFocused = uiState.isConfirmEmailFocused,
                     onFocusChange = { resetPasswordViewModel.onConfirmEmailFocusChanged(it) },
                     isPasswordField = false,
@@ -70,12 +70,12 @@ fun ResetPasswordDialog(
                     onFailure = { errorMessage -> onFailure(errorMessage) }
                 )
             }) {
-                Text(text = stringResource(id = R.string.resetPassword_dialog__btn_text__send_email).uppercase())
+                Text(text = stringResource(id = R.string.reset_password_dialog__btn_text__send_email).uppercase())
             }
         },
         dismissButton = {
             TextButton(onClick = onDismissRequest) {
-                Text(text = stringResource(id = R.string.resetPassword_dialog__btn_text__cancel).uppercase())
+                Text(text = stringResource(id = R.string.reset_password_dialog__btn_text__cancel).uppercase())
             }
         }
     )

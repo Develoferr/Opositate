@@ -171,7 +171,7 @@ fun getTrailingIcon(
                     Image(
                         painter = if (isPasswordVisible) painterResource(id = R.drawable.ic_open_eye) else painterResource(id = R.drawable.ic_closed_eye),
                         colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
-                        contentDescription = stringResource(id = R.string.custom_login_text_field_password_eye_image_content_description),
+                        contentDescription = stringResource(id = R.string.custom_login_text_field__content_description__password_eye_image),
                         modifier = modifier.size(24.dp).offset(y = padding)
                     )
                 }
@@ -181,7 +181,7 @@ fun getTrailingIcon(
             {
                 Icon(
                     painter = painter,
-                    contentDescription = stringResource(id = R.string.custom_login_text_field__content_description_ic_info),
+                    contentDescription = stringResource(id = R.string.custom_login_text_field__content_description__ic_info),
                     modifier = Modifier
                         .offset(y = 8.dp).size(16.dp)
                         .onGloballyPositioned(onGloballyPositioned)

@@ -208,7 +208,7 @@ private fun LoginLogo(
         .graphicsLayer { rotationX = 180f }
     Image(
         painter = painterResource(id = R.drawable.brain_icon__2_),
-        contentDescription = stringResource(id = R.string.login_screen_brain_image_content_description),
+        contentDescription = stringResource(id = R.string.login_screen__content_description__brain_image),
         colorFilter = colorFilter,
         modifier = modifierCopy.background(Color.Transparent),
         alignment = if (isDarkTheme) Alignment.BottomCenter else Alignment.TopCenter
@@ -238,15 +238,15 @@ private fun LoginContent(
 private fun LoginHeader(
     isDarkTheme: Boolean
 ) {
-    val displayText = if (isDarkTheme) stringResource(id = R.string.login_screen_welcome_text_title).uppercase()
-        else stringResource(id = R.string.login_screen_welcome_text_title)
+    val displayText = if (isDarkTheme) stringResource(id = R.string.login_screen__title_text__welcome).uppercase()
+        else stringResource(id = R.string.login_screen__title_text__welcome)
     Text(
         text = displayText, fontSize = if (isDarkTheme) 36.sp else 50.sp,
         color = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
         style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 24.dp)
     )
     Text(
-        text = stringResource(id = R.string.login_screen_sign_in_text_subtitle).uppercase(Locale.getDefault()),
+        text = stringResource(id = R.string.login_screen__text__sign_in).uppercase(Locale.getDefault()),
         fontSize = 13.sp, fontWeight = FontWeight.W400, style = MaterialTheme.typography.labelMedium,
         color = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
         modifier = Modifier.padding(top = 4.dp), letterSpacing = 2.7.sp
@@ -261,13 +261,13 @@ private fun LoginFields(
 ) {
     CustomLoginTextField(
         value = uiState.username, onValueChange = { loginViewModel.onUsernameChanged(it) },
-        label = stringResource(id = R.string.login_screen_user_label_text_field).uppercase(), isFocused = uiState.isUsernameFocused,
+        label = stringResource(id = R.string.login_screen__label_text_field__user).uppercase(), isFocused = uiState.isUsernameFocused,
         onFocusChange = { loginViewModel.onUsernameFocusChanged(it) }, isPasswordField = false,
         supportingText = uiState.usernameValidateFieldError, isDarkTheme = isDarkTheme
     )
     CustomLoginTextField(
         value = uiState.password, onValueChange = { loginViewModel.onPasswordChanged(it) },
-        label = stringResource(id = R.string.login_screen_password_label_text_field).uppercase(), isFocused = uiState.isPasswordFocused,
+        label = stringResource(id = R.string.login_screen__label_text_field__password).uppercase(), isFocused = uiState.isPasswordFocused,
         onFocusChange = { loginViewModel.onPasswordFocusChanged(it) }, isPasswordField = true,
         supportingText = uiState.passwordValidateFieldError, isDarkTheme = isDarkTheme
     )
@@ -300,7 +300,7 @@ private fun ForgotPasswordButton(
         onClick = { onForgotPasswordClick() }, modifier = modifier.padding(bottom = 5.dp)
     ) {
         Text(
-            text = stringResource(id = R.string.login_screen_forget_your_password_text_body).uppercase(), fontSize = 12.sp,
+            text = stringResource(id = R.string.login_screen__text__forget_your_password).uppercase(), fontSize = 12.sp,
             style = MaterialTheme.typography.bodyMedium, textAlign = TextAlign.Center, letterSpacing = 0.2.sp,
             color = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
             fontWeight = if (isDarkTheme) FontWeight.Medium else FontWeight.Light, modifier = Modifier.padding(top = 0.dp)
@@ -317,7 +317,7 @@ private fun LoginButton(
         colors = ButtonDefaults.buttonColors(containerColor = buttonBackgroundColor)
     ) {
         Text(
-            text = stringResource(id = R.string.login_screen_go_text_btn).uppercase(), fontSize = if (isDarkTheme) 20.sp else 25.sp,
+            text = stringResource(id = R.string.login_screen__text_btn__go).uppercase(), fontSize = if (isDarkTheme) 20.sp else 25.sp,
             style = MaterialTheme.typography.titleMedium, color = if (isDarkTheme) Color.Black else Gray200,
         )
     }
@@ -340,7 +340,7 @@ private fun GoogleLoginButton(
                 .size(25.dp),
         )
         Text(
-            text = stringResource(id = R.string.login_screen_google_text_btn).uppercase(),
+            text = stringResource(id = R.string.login_screen__text_btn__google).uppercase(),
             fontSize = if (isDarkTheme) 20.sp else 25.sp,
             style = MaterialTheme.typography.titleMedium,
             color = if (isDarkTheme) Color.Black else Gray200,
@@ -357,7 +357,7 @@ private fun GoToRegisterButton(
         modifier = Modifier.padding(vertical = 5.dp)
     ) {
         Text(
-            text = stringResource(id = R.string.login_screen_new_user_text_btn).uppercase(), textAlign = TextAlign.Center,
+            text = stringResource(id = R.string.login_screen__text_btn__new_user).uppercase(), textAlign = TextAlign.Center,
             fontSize = 12.sp, style = MaterialTheme.typography.bodyMedium, letterSpacing = 0.2.sp,
             lineHeight = 14.sp, fontWeight = if (isDarkTheme) FontWeight.Medium else FontWeight.Light,
             color = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
@@ -387,8 +387,8 @@ private fun HandleDialog(
                         },
                         isDialogVisible = dialogState.collectAsState().value.isVisible,
                         delayTime = 3000,
-                        title = { Text(text = stringResource(id = R.string.login_screen__text__login_successful_title)) },
-                        text = { Text(stringResource(id = R.string.login_screen__text__login_successful_text)) },
+                        title = { Text(text = stringResource(id = R.string.login_screen__title_text__login_successful)) },
+                        text = { Text(stringResource(id = R.string.login_screen__text__login_successful)) },
                         confirmButton = { TextButton(onClick = {}) { Text(EMPTY_TEXT) } },
                     )
                 }
@@ -397,11 +397,11 @@ private fun HandleDialog(
                         uiState.loginState.error
                     } else null
                     ErrorDialog(
-                        title = { Text(text = stringResource(id = R.string.login_screen__text__login_error_title)) },
-                        text = { Text(text = error ?: stringResource(id = R.string.login_screen__text__generic_error_text)) },
+                        title = { Text(text = stringResource(id = R.string.login_screen__title_text__login_error)) },
+                        text = { Text(text = error ?: stringResource(id = R.string.login_screen__text__generic_error)) },
                         confirmButton = {
                             TextButton(onClick = { hideDialog() }) { Text(
-                                stringResource(id = R.string.login_screen__text__ok)
+                                stringResource(id = R.string.login_screen__text_btn__ok)
                             ) }
                         },
                         onDismiss = { hideDialog() },
@@ -416,8 +416,8 @@ private fun HandleDialog(
                                     },
                         isDialogVisible = dialogState.collectAsState().value.isVisible,
                         delayTime = 3000,
-                        title = { Text(text = stringResource(id = R.string.login_screen__text__reset_password_successful_title)) },
-                        text = { Text(stringResource(id = R.string.login_screen__text__reset_password_successful_text)) },
+                        title = { Text(text = stringResource(id = R.string.login_screen__title_text__reset_password_successful)) },
+                        text = { Text(stringResource(id = R.string.login_screen__text__reset_password_successful)) },
                         confirmButton = { TextButton(onClick = {
                             onDialogDismissed()
                             hideDialog()
@@ -426,12 +426,12 @@ private fun HandleDialog(
                 }
                 LoginDialogType.RESET_PASSWORD_ERROR -> {
                     ErrorDialog(
-                        title = { Text(text = stringResource(id = R.string.login_screen__text__reset_password_error_title)) },
-                        text = { Text(text = errorMessage ?: stringResource(id = R.string.login_screen__text__generic_error_text)) },
+                        title = { Text(text = stringResource(id = R.string.login_screen__text__reset_password_error)) },
+                        text = { Text(text = errorMessage ?: stringResource(id = R.string.login_screen__text__generic_error)) },
                         confirmButton = {
                             TextButton(onClick = { hideDialog() }) {
                                 Text(
-                                    stringResource(id = R.string.login_screen__text__ok)
+                                    stringResource(id = R.string.login_screen__text_btn__ok)
                                 )
                             }
                         },
@@ -445,11 +445,11 @@ private fun HandleDialog(
                 else -> {
                     ErrorDialog(
                         onDismiss = { hideDialog() },
-                        text = { Text(text = stringResource(id = R.string.login_screen__text__generic_error_text)) },
+                        text = { Text(text = stringResource(id = R.string.login_screen__text__generic_error)) },
                         confirmButton = {
                             TextButton(onClick = { hideDialog() }) {
                                 Text(
-                                    stringResource(id = R.string.login_screen__text__ok)
+                                    stringResource(id = R.string.login_screen__text_btn__ok)
                                 )
                             }
                         },

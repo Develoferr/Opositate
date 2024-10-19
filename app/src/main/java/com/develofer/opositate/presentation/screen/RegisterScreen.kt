@@ -104,7 +104,7 @@ fun RegisterScreen(
         }
         Image(
             painter = painterResource(id = R.drawable.brain_icon__2_),
-            contentDescription = stringResource(id = R.string.register_screen_brain_image_content_description),
+            contentDescription = stringResource(id = R.string.register_screen__content_description__brain_image),
             colorFilter = colorFilter,
             modifier = modifier,
             alignment = if (isSystemInDarkTheme()) Alignment.BottomCenter else Alignment.TopCenter
@@ -121,8 +121,8 @@ fun RegisterScreen(
         ) {
 
             val displayText =
-                if (isSystemInDarkTheme()) stringResource(id = R.string.register_screen_register_text_title).uppercase()
-            else stringResource(id = R.string.register_screen_register_text_title)
+                if (isSystemInDarkTheme()) stringResource(id = R.string.register_screen__title_text__register).uppercase()
+            else stringResource(id = R.string.register_screen__title_text__register)
             Text(
                 text = displayText,
                 fontSize = if (isSystemInDarkTheme()) 36.sp else 50.sp,
@@ -131,7 +131,7 @@ fun RegisterScreen(
                 modifier = Modifier
                     .padding(top = (24).dp)
             )
-            val text = stringResource(id = R.string.register_screen_journey_begins_text_subtitle)
+            val text = stringResource(id = R.string.register_screen__text__journey_begins)
             Text(
                 text = text.uppercase(Locale.getDefault()),
                 fontSize = 13.sp,
@@ -151,7 +151,7 @@ fun RegisterScreen(
                 CustomLoginTextField(
                     value = username,
                     onValueChange = { registerViewModel.onUsernameChanged(it) },
-                    label = stringResource(id = R.string.register_screen_user_label_text_field).uppercase(),
+                    label = stringResource(id = R.string.register_screen__label_text_field__user).uppercase(),
                     isFocused = isUsernameFocused,
                     onFocusChange = { registerViewModel.onUsernameFocusChanged(it) },
                     isPasswordField = false,
@@ -164,7 +164,7 @@ fun RegisterScreen(
                 CustomLoginTextField(
                     value = email,
                     onValueChange = { registerViewModel.onEmailChanged(it) },
-                    label = stringResource(id = R.string.register_screen_email_label_text_field).uppercase(),
+                    label = stringResource(id = R.string.register_screen__label_text_field__email).uppercase(),
                     isFocused = isEmailFocused,
                     onFocusChange = { registerViewModel.onEmailFocusChanged(it) },
                     isPasswordField = false,
@@ -175,7 +175,7 @@ fun RegisterScreen(
                 CustomLoginTextField(
                     value = password,
                     onValueChange = { registerViewModel.onPasswordChanged(it) },
-                    label = stringResource(id = R.string.register_screen_password_label_text_field).uppercase(),
+                    label = stringResource(id = R.string.register_screen__label_text_field__password).uppercase(),
                     isFocused = isPasswordFocused,
                     onFocusChange = { registerViewModel.onPasswordFocusChanged(it) },
                     isPasswordField = true,
@@ -209,7 +209,7 @@ fun RegisterScreen(
                 ) {
 
                     Text(
-                        text = stringResource(id = R.string.register_screen_register_text_btn).uppercase(),
+                        text = stringResource(id = R.string.register_screen__text_btn__register).uppercase(),
                         fontSize = if (isSystemInDarkTheme()) 20.sp else 25.sp,
                         style = MaterialTheme.typography.titleMedium,
                         color = if (isSystemInDarkTheme()) Color.Black else Gray200,
@@ -221,7 +221,7 @@ fun RegisterScreen(
                     modifier = Modifier.padding(vertical = 5.dp)
                 ) {
                     Text(
-                        text = stringResource(id = R.string.register_screen_already_have_account_text_btn).uppercase(),
+                        text = stringResource(id = R.string.register_screen__text_btn__already_have_account).uppercase(),
                         textAlign = TextAlign.Center,
                         fontSize = 12.sp,
                         style = MaterialTheme.typography.bodyMedium,
