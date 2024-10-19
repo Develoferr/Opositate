@@ -78,8 +78,8 @@ fun CustomLoginTextField(
         singleLine = true,
         value = value,
         onValueChange = onValueChange,
-        label = { getLabel(label, isFocused, value, labelFontSize) },
-        supportingText = { GetSupportingText(supportingText, textLetterSpacing) },
+        label = getLabel(label, isFocused, value, labelFontSize),
+        supportingText = getSupportingText(supportingText, textLetterSpacing),
         colors = TextFieldDefaults.colors(
             focusedContainerColor = fieldColors.containerColor,
             unfocusedContainerColor = fieldColors.containerColor,
@@ -131,21 +131,23 @@ fun getLabel(
 }
 
 @Composable
-fun GetSupportingText(
+fun getSupportingText(
     supportingText: ValidateFieldErrors, letterSpacing: TextUnit
-) {
+): @Composable () -> Unit {
     val supportingTextFieldError = when (supportingText) {
         ValidateFieldErrors.INVALID_EMAIL -> stringResource(id = R.string.custom_login_text_field__supporting_text__invalid_email)
         ValidateFieldErrors.EMPTY_TEXT -> stringResource(id = R.string.custom_login_text_field__supporting_text__empty_field)
         ValidateFieldErrors.EMAILS_DO_NOT_MATCH -> stringResource(id = R.string.custom_login_text_field__supporting_text__emails_do_not_match)
         else -> ""
     }
-    Text(
-        text = supportingTextFieldError,
-        fontSize = 10.sp,
-        letterSpacing = letterSpacing,
-        color = MaterialTheme.colorScheme.error
-    )
+    return {
+        Text(
+            text = supportingTextFieldError,
+            fontSize = 10.sp,
+            letterSpacing = letterSpacing,
+            color = MaterialTheme.colorScheme.error
+        )
+    }
 }
 
 @Composable

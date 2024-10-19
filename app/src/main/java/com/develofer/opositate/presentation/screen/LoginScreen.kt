@@ -37,7 +37,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.develofer.opositate.R
-import com.develofer.opositate.presentation.custom.CustomLoginLogoImage
+import com.develofer.opositate.presentation.custom.CustomLogoImage
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
 import com.develofer.opositate.presentation.custom.DialogState
 import com.develofer.opositate.presentation.custom.ErrorDialog
@@ -71,17 +71,16 @@ fun LoginScreen(
     val dialogState = loginViewModel.getDialogState()
     var passwordResetFinished by remember { mutableStateOf(false) }
     var animationState: AnimationState by remember { mutableStateOf(AnimationState.Idle) }
-    var errorMessage: String? by remember { mutableStateOf(null) }
+    var registerErrorMessage: String? by remember { mutableStateOf(null) }
 
     mainViewModel.hideSystemUI()
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background)
+            .fillMaxSize().background(MaterialTheme.colorScheme.background)
             .pointerInput(Unit) { detectTapGestures(onTap = { focusManager.clearFocus() }) }
     ) {
-        CustomLoginLogoImage(
+        CustomLogoImage(
             isDarkTheme = isDarkTheme,
             isKeyboardVisible = isKeyboardVisible,
             modifier = Modifier.align(Alignment.TopCenter)
@@ -96,7 +95,7 @@ fun LoginScreen(
             focusManager = focusManager,
             loginViewModel = loginViewModel,
             hideDialog = { loginViewModel.toggleResetPasswordDialogVisibility(false) },
-            saveErrorMessage = { newErrorMessage -> errorMessage = newErrorMessage },
+            saveErrorMessage = { newErrorMessage -> registerErrorMessage = newErrorMessage },
             onPasswordFinished = { passwordResetFinished = true}
         )
         LoginLoadingAnimation(
@@ -113,7 +112,7 @@ fun LoginScreen(
             },
             animationState = animationState,
             uiState = uiState,
-            errorMessage = errorMessage,
+            errorMessage = registerErrorMessage,
             dialogState = dialogState,
             passwordResetFinished = passwordResetFinished,
             onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState },

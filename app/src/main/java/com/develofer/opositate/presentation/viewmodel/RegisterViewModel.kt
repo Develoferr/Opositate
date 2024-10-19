@@ -3,10 +3,13 @@ package com.develofer.opositate.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.domain.usecase.CreateUserUseCase
+import com.develofer.opositate.presentation.custom.DialogStateCoordinator
 import com.develofer.opositate.presentation.viewmodel.TextFieldErrors.ValidateFieldErrors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,93 +18,95 @@ class RegisterViewModel @Inject constructor(
     private val createUserUseCase: CreateUserUseCase
 ) : ViewModel() {
 
-    private val _username = MutableStateFlow("")
-    val username: StateFlow<String> get() = _username
+    private val _uiState = MutableStateFlow(RegisterUiState())
+    val uiState: StateFlow<RegisterUiState> = _uiState.asStateFlow()
 
-    private val _email = MutableStateFlow("")
-    val email: StateFlow<String> get() = _email
+    private val registerDialogStateCoordinator: DialogStateCoordinator<RegisterDialogType> = DialogStateCoordinator()
+    fun getDialogState() = registerDialogStateCoordinator.dialogState
 
-    private val _password = MutableStateFlow("")
-    val password: StateFlow<String> get() = _password
+    fun showDialog(dialogType: RegisterDialogType) {
+        registerDialogStateCoordinator.showDialog(dialogType)
+    }
 
-    private val _isUsernameFocused = MutableStateFlow(false)
-    val isUsernameFocused: StateFlow<Boolean> get() = _isUsernameFocused
-
-    private val _isEmailFocused = MutableStateFlow(false)
-    val isEmailFocused: StateFlow<Boolean> get() = _isEmailFocused
-
-    private val _isPasswordFocused = MutableStateFlow(false)
-    val isPasswordFocused: StateFlow<Boolean> get() = _isPasswordFocused
-
-    var registerState: RegisterState = RegisterState.Idle
-        private set
-
-    private val _usernameValidateFieldError = MutableStateFlow(ValidateFieldErrors.NONE)
-    val usernameValidateFieldError: StateFlow<ValidateFieldErrors> = _usernameValidateFieldError
-
-    private val _emailValidateFieldError = MutableStateFlow(ValidateFieldErrors.NONE)
-    val emailValidateFieldError: StateFlow<ValidateFieldErrors> = _emailValidateFieldError
-
-    private val _passwordValidateFieldError = MutableStateFlow(ValidateFieldErrors.NONE)
-    val passwordValidateFieldError: StateFlow<ValidateFieldErrors> = _passwordValidateFieldError
-
-    fun validateFields() {
-        _usernameValidateFieldError.value =
-            if (isFieldEmpty(username.value)) ValidateFieldErrors.EMPTY_TEXT
-            else ValidateFieldErrors.NONE
-
-        _emailValidateFieldError.value = when {
-            isFieldEmpty(email.value) -> ValidateFieldErrors.EMPTY_TEXT
-            !isEmailValid(email.value) -> ValidateFieldErrors.INVALID_EMAIL
-            else -> ValidateFieldErrors.NONE
-        }
-
-        _passwordValidateFieldError.value =
-            if (isFieldEmpty(password.value)) ValidateFieldErrors.EMPTY_TEXT
-            else ValidateFieldErrors.NONE
+    fun hideDialog() {
+        registerDialogStateCoordinator.hideDialog()
     }
 
     fun onUsernameChanged(newUsername: String) {
-        _username.value = newUsername
+        _uiState.update { it.copy(username = newUsername) }
     }
 
     fun onEmailChanged(newEmail: String) {
-        _email.value = newEmail
+        _uiState.update { it.copy(email = newEmail) }
     }
 
     fun onPasswordChanged(newPassword: String) {
-        _password.value = newPassword
+        _uiState.update { it.copy(password = newPassword) }
     }
 
     fun onUsernameFocusChanged(isFocused: Boolean) {
-        _isUsernameFocused.value = isFocused
+        _uiState.update { it.copy(isUsernameFocused = isFocused) }
     }
 
     fun onEmailFocusChanged(isFocused: Boolean) {
-        _isEmailFocused.value = isFocused
+        _uiState.update { it.copy(isEmailFocused = isFocused) }
     }
 
     fun onPasswordFocusChanged(isFocused: Boolean) {
-        _isPasswordFocused.value = isFocused
+        _uiState.update { it.copy(isPasswordFocused = isFocused) }
     }
 
-    fun register(onRegisterSuccess: () -> Unit, onRegisterFailure: (String) -> Unit) {
-        viewModelScope.launch {
-            registerState = RegisterState.Loading
-            createUserUseCase.createUser(
-                username = _username.value,
-                email = _email.value,
-                password = _password.value,
-                onSuccess = {
-                    registerState = RegisterState.Success
-                    onRegisterSuccess()
-                },
-                onFailure = { errorMessage ->
-                    registerState = RegisterState.Failure(errorMessage)
-                    onRegisterFailure(errorMessage)
-                }
-            )
+    fun register() {
+        if (areFieldsValid()) {
+            viewModelScope.launch {
+                _uiState.update { it.copy(registerState = RegisterState.Loading) }
+                createUserUseCase.createUser(
+                    username = _uiState.value.username,
+                    email = _uiState.value.email,
+                    password = _uiState.value.password,
+                    onSuccess = {
+                        _uiState.update { it.copy(registerState = RegisterState.Success) }
+                        registerDialogStateCoordinator.showDialog(RegisterDialogType.REGISTER_SUCCESS)
+                    },
+                    onFailure = { errorMessage ->
+                        _uiState.update { it.copy(registerState = RegisterState.Failure(errorMessage)) }
+                        registerDialogStateCoordinator.showDialog(RegisterDialogType.REGISTER_ERROR)
+                    }
+                )
+            }
         }
+    }
+
+    fun areFieldsValid(): Boolean {
+        val validatedState = validateFields(_uiState.value)
+        _uiState.update { validatedState }
+        return validatedState.usernameValidateFieldError == ValidateFieldErrors.NONE &&
+                validatedState.emailValidateFieldError == ValidateFieldErrors.NONE &&
+                validatedState.passwordValidateFieldError == ValidateFieldErrors.NONE
+    }
+
+    private fun validateFields(state: RegisterUiState): RegisterUiState {
+        val usernameError = when {
+            isFieldEmpty(state.username) -> ValidateFieldErrors.EMPTY_TEXT
+            else -> ValidateFieldErrors.NONE
+        }
+
+        val emailError = when {
+            isFieldEmpty(state.email) -> ValidateFieldErrors.EMPTY_TEXT
+            !isEmailValid(state.email) -> ValidateFieldErrors.INVALID_EMAIL
+            else -> ValidateFieldErrors.NONE
+        }
+
+        val passwordError = when {
+            isFieldEmpty(state.password) -> ValidateFieldErrors.EMPTY_TEXT
+            else -> ValidateFieldErrors.NONE
+        }
+
+        return state.copy(
+            usernameValidateFieldError = usernameError,
+            emailValidateFieldError = emailError,
+            passwordValidateFieldError = passwordError
+        )
     }
 
     private fun isEmailValid(email: String): Boolean {
@@ -111,11 +116,29 @@ class RegisterViewModel @Inject constructor(
     private fun isFieldEmpty(value: String): Boolean {
         return value.isBlank()
     }
+}
 
-    sealed class RegisterState {
-        data object Idle : RegisterState()
-        data object Loading : RegisterState()
-        data object Success : RegisterState()
-        data class Failure(val error: String) : RegisterState()
-    }
+enum class RegisterDialogType {
+    REGISTER_SUCCESS,
+    REGISTER_ERROR
+}
+
+data class RegisterUiState(
+    val username: String = "",
+    val email: String = "",
+    val password: String = "",
+    val isUsernameFocused: Boolean = false,
+    val isEmailFocused: Boolean = false,
+    val isPasswordFocused: Boolean = false,
+    val usernameValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
+    val emailValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
+    val passwordValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
+    val registerState: RegisterState = RegisterState.Idle
+)
+
+sealed class RegisterState {
+    data object Idle : RegisterState()
+    data object Loading : RegisterState()
+    data object Success : RegisterState()
+    data class Failure(val error: String) : RegisterState()
 }
