@@ -41,7 +41,7 @@ class ResetPasswordViewModel @Inject constructor(
             viewModelScope.launch {
                 _uiState.update { it.copy(resetState = ResetPasswordState.Loading) }
                 resetPasswordUseCase(
-                    email = _uiState.value.email,
+                    email = _uiState.value.email.trim(),
                     onSuccess = {
                         _uiState.update { it.copy(resetState = ResetPasswordState.Success) }
                         onSuccess()
@@ -93,21 +93,3 @@ class ResetPasswordViewModel @Inject constructor(
         return value.isBlank()
     }
 }
-
-data class ResetPasswordUiState(
-    val email: String = "",
-    val confirmEmail: String = "",
-    val isEmailFocused: Boolean = false,
-    val isConfirmEmailFocused: Boolean = false,
-    val emailValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
-    val confirmEmailValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
-    val resetState: ResetPasswordState = ResetPasswordState.Idle
-)
-
-sealed class ResetPasswordState {
-    data object Idle : ResetPasswordState()
-    data object Loading : ResetPasswordState()
-    data object Success : ResetPasswordState()
-    data class Failure(val error: String) : ResetPasswordState()
-}
-

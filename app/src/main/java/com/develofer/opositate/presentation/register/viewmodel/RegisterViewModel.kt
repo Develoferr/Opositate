@@ -60,9 +60,9 @@ class RegisterViewModel @Inject constructor(
             viewModelScope.launch {
                 _uiState.update { it.copy(registerState = RegisterState.Loading) }
                 createUserUseCase.createUser(
-                    username = _uiState.value.username,
-                    email = _uiState.value.email,
-                    password = _uiState.value.password,
+                    username = _uiState.value.username.trim(),
+                    email = _uiState.value.email.trim(),
+                    password = _uiState.value.password.trim(),
                     onSuccess = {
                         _uiState.update { it.copy(registerState = RegisterState.Success) }
                         registerDialogStateCoordinator.showDialog(RegisterDialogType.REGISTER_SUCCESS)

@@ -60,8 +60,8 @@ class LoginViewModel @Inject constructor(
             viewModelScope.launch {
                 _uiState.update { it.copy(loginState = LoginState.Loading) }
                 loginUseCase.login(
-                    username = _uiState.value.username,
-                    password = _uiState.value.password,
+                    username = _uiState.value.username.trim(),
+                    password = _uiState.value.password.trim(),
                     onSuccess = {
                         _uiState.update { it.copy(loginState = LoginState.Success) }
                         loginDialogStateCoordinator.showDialog(LoginDialogType.LOGIN_SUCCESS)
