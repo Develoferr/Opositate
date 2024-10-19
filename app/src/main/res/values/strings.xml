@@ -3,7 +3,10 @@
 
     // Custom Login Text Field
     <string name="custom_login_text_field_password_eye_image_content_description">Botón alternar visibilidad de la contraseña</string>
-
+    <string name="custom_login_text_field__content_description_ic_info">Info Icon</string>
+    <string name="custom_login_text_field__supporting_text__empty_field">Antes debes rellenar este campo</string>
+    <string name="custom_login_text_field__supporting_text__invalid_email">Debes introducir un correo válido</string>
+    <string name="custom_login_text_field__supporting_text__emails_do_not_match">Los correos no coinciden</string>
 
     // Login Screen
     <string name="login_screen_welcome_text_title">Bienvenido</string>
@@ -15,8 +18,6 @@
     <string name="login_screen_google_text_btn">Login con Google</string>
     <string name="login_screen_new_user_text_btn">¿Nuevo usuario?\nRegístrate</string>
     <string name="login_screen_brain_image_content_description">Imagen Cerebro</string>
-    <string name="login_screen__supporting_text__empty_field">Antes debes rellenar este campo</string>
-    <string name="login_screen__supporting_text__invalid_email">Debes introducir un correo válido</string>
 
     // Register Screen
     <string name="register_screen_brain_image_content_description">Imagen Cerebro</string>
@@ -30,7 +31,6 @@
     <string name="register_screen__user_text_field__tool_tip">Tu usuario solo se utilizará en tu perfil, no guardamos esta información con otros usos"</string>
 
     // Reset Password Dialog
-    <string name="resetPassword_dialog__supporting_text__emails_do_not_match">Los correos no coinciden</string>
     <string name="resetPassword_dialog___text__reset_password">Reestablece tu contraseña</string>
     <string name="resetPassword_dialog__text__email">Correo</string>
     <string name="resetPassword_dialog__text__repeat_email">Confirmación</string>
