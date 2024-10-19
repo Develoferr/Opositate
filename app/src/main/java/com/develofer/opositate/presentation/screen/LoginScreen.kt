@@ -77,7 +77,9 @@ fun LoginScreen(
     mainViewModel.hideSystemUI()
 
     Box(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .pointerInput(Unit) { detectTapGestures(onTap = { focusManager.clearFocus() }) }
     ) {
         LoginLogo(
@@ -147,11 +149,16 @@ fun LottieLoginAnimation(
             onFinish()
         }
     }
-    Surface(modifier = modifier.fillMaxSize().alpha(1f),
+    Surface(modifier = modifier
+        .fillMaxSize()
+        .alpha(1f),
         color = MaterialTheme.colorScheme.background
     ) {
         LottieAnimation(composition = composition, progress = { progress },
-            modifier = modifier.size(200.dp).alpha(1f).offset(y = (50).dp)
+            modifier = modifier
+                .size(200.dp)
+                .alpha(1f)
+                .offset(y = (50).dp)
         )
     }
 }
@@ -192,8 +199,15 @@ private fun LoginLogo(
     val logoAlphaLight = if (isKeyboardVisible) 0f else 1f
     val logoAlphaDark = if (isKeyboardVisible) 0f else .19f
     val colorFilter = if (isDarkTheme) null else ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
-    val modifierCopy = if (!isDarkTheme) modifier.size(120.dp).alpha(logoAlphaLight).offset(y = 120.dp, x = 0.dp)
-        else Modifier.size(550.dp).alpha(logoAlphaDark).offset(y = (-60).dp, x = (-100).dp).graphicsLayer { rotationX = 180f }
+    val modifierCopy = if (!isDarkTheme) modifier
+        .size(120.dp)
+        .alpha(logoAlphaLight)
+        .offset(y = 120.dp, x = 0.dp)
+        else Modifier
+        .size(550.dp)
+        .alpha(logoAlphaDark)
+        .offset(y = (-60).dp, x = (-100).dp)
+        .graphicsLayer { rotationX = 180f }
     Image(
         painter = painterResource(id = R.drawable.brain_icon__2_),
         contentDescription = stringResource(id = R.string.login_screen_brain_image_content_description),
@@ -210,7 +224,10 @@ private fun LoginContent(
 ) {
     val columnPaddingTop = if (isKeyBoardVisible) 50.dp else if (isDarkTheme) 330.dp else 240.dp
     Column(
-        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).padding(top = columnPaddingTop),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp)
+            .padding(top = columnPaddingTop),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LoginHeader(isDarkTheme)
@@ -372,8 +389,8 @@ private fun HandleDialog(
                         },
                         isDialogVisible = dialogState.collectAsState().value.isVisible,
                         delayTime = 3000,
-                        title = { Text(text = "Login Successful") },
-                        text = { Text("You have successfully logged in.") },
+                        title = { Text(text = stringResource(id = R.string.login_screen__text__login_successful_title)) },
+                        text = { Text(stringResource(id = R.string.login_screen__text__login_successful_text)) },
                         confirmButton = { TextButton(onClick = {}) { Text("") } },
                     )
                 }
@@ -382,10 +399,12 @@ private fun HandleDialog(
                         uiState.loginState.error
                     } else null
                     ErrorDialog(
-                        title = { Text(text = "Login Error") },
-                        text = { Text(text = error ?: "Ha ocurrido un error. Inténtalo de nuevo.") },
+                        title = { Text(text = stringResource(id = R.string.login_screen__text__login_error_title)) },
+                        text = { Text(text = error ?: stringResource(id = R.string.login_screen__text__generic_error_text)) },
                         confirmButton = {
-                            TextButton(onClick = { hideDialog() }) { Text("OK") }
+                            TextButton(onClick = { hideDialog() }) { Text(
+                                stringResource(id = R.string.login_screen__text__ok)
+                            ) }
                         },
                         onDismiss = { hideDialog() },
                         isDialogVisible = dialogState.collectAsState().value.isVisible
@@ -399,8 +418,8 @@ private fun HandleDialog(
                                     },
                         isDialogVisible = dialogState.collectAsState().value.isVisible,
                         delayTime = 3000,
-                        title = { Text(text = "Reset Password Successful") },
-                        text = { Text("The password reset email has successfully sent.") },
+                        title = { Text(text = stringResource(id = R.string.login_screen__text__reset_password_successful_title)) },
+                        text = { Text(stringResource(id = R.string.login_screen__text__reset_password_successful_text)) },
                         confirmButton = { TextButton(onClick = {
                             onDialogDismissed()
                             hideDialog()
@@ -409,13 +428,14 @@ private fun HandleDialog(
                 }
                 LoginDialogType.RESET_PASSWORD_ERROR -> {
                     ErrorDialog(
-                        title = { Text(text = "Login Error") },
-                        text = { Text(text = errorMessage ?: "Ha ocurrido un error. Inténtalo de nuevo.") },
+                        title = { Text(text = stringResource(id = R.string.login_screen__text__reset_password_error_title)) },
+                        text = { Text(text = errorMessage ?: stringResource(id = R.string.login_screen__text__generic_error_text)) },
                         confirmButton = {
-                            TextButton(onClick = {
-                                onDialogDismissed()
-                                hideDialog()
-                            }) { Text("OK") }
+                            TextButton(onClick = { hideDialog() }) {
+                                Text(
+                                    stringResource(id = R.string.login_screen__text__ok)
+                                )
+                            }
                         },
                         onDismiss = {
                             onDialogDismissed()
@@ -427,7 +447,14 @@ private fun HandleDialog(
                 else -> {
                     ErrorDialog(
                         onDismiss = { hideDialog() },
-                        confirmButton = { TextButton(onClick = { hideDialog() }) { Text("OK") } },
+                        text = { Text(text = stringResource(id = R.string.login_screen__text__generic_error_text)) },
+                        confirmButton = {
+                            TextButton(onClick = { hideDialog() }) {
+                                Text(
+                                    stringResource(id = R.string.login_screen__text__ok)
+                                )
+                            }
+                        },
                     )
                 }
             }
