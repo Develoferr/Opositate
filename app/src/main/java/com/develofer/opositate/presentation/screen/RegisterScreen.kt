@@ -15,9 +15,6 @@ import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -32,15 +29,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -54,6 +47,8 @@ import com.develofer.opositate.presentation.custom.CustomLoginButton
 import com.develofer.opositate.presentation.custom.CustomLoginLogoImage
 import com.develofer.opositate.presentation.custom.CustomLoginTextButton
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
+import com.develofer.opositate.presentation.custom.CustomSubtitleText
+import com.develofer.opositate.presentation.custom.CustomTitleText
 import com.develofer.opositate.presentation.custom.DialogState
 import com.develofer.opositate.presentation.custom.ErrorDialog
 import com.develofer.opositate.presentation.custom.SuccessDialog
@@ -62,11 +57,9 @@ import com.develofer.opositate.presentation.viewmodel.RegisterDialogType
 import com.develofer.opositate.presentation.viewmodel.RegisterState
 import com.develofer.opositate.presentation.viewmodel.RegisterUiState
 import com.develofer.opositate.presentation.viewmodel.RegisterViewModel
-import com.develofer.opositate.ui.theme.Gray200
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.develofer.opositate.utils.Constants.EMPTY_TEXT
 import kotlinx.coroutines.flow.StateFlow
-import java.util.Locale
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -139,19 +132,13 @@ private fun RegisterContent(
 
 @Composable
 fun RegisterHeader(isDarkTheme: Boolean) {
-    val displayText =
-        if (isDarkTheme) stringResource(id = R.string.register_screen__title_text__register).uppercase()
-        else stringResource(id = R.string.register_screen__title_text__register)
-    Text(
-        text = displayText, fontSize = if (isDarkTheme) 36.sp else 50.sp,
-        color = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
-        style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = (24).dp)
+    CustomTitleText(
+        text = stringResource(id = R.string.register_screen__title_text__register),
+        isDarkTheme = isDarkTheme
     )
-    val text = stringResource(id = R.string.register_screen__text__journey_begins)
-    Text(
-        text = text.uppercase(Locale.getDefault()), fontSize = 13.sp, fontWeight = FontWeight.W400,
-        color = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
-        style = MaterialTheme.typography.labelMedium, modifier = Modifier.padding(top = 4.dp), letterSpacing = 3.sp
+    CustomSubtitleText(
+        text = stringResource(id = R.string.register_screen__text__journey_begins),
+        isDarkTheme = isDarkTheme
     )
     Spacer(modifier = Modifier.height(20.dp))
 }

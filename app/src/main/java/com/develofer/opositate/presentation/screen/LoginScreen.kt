@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -18,16 +17,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusManager
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -41,6 +36,8 @@ import com.develofer.opositate.presentation.custom.CustomLoginButton
 import com.develofer.opositate.presentation.custom.CustomLoginLogoImage
 import com.develofer.opositate.presentation.custom.CustomLoginTextButton
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
+import com.develofer.opositate.presentation.custom.CustomSubtitleText
+import com.develofer.opositate.presentation.custom.CustomTitleText
 import com.develofer.opositate.presentation.custom.DialogState
 import com.develofer.opositate.presentation.custom.ErrorDialog
 import com.develofer.opositate.presentation.custom.SuccessDialog
@@ -52,11 +49,9 @@ import com.develofer.opositate.presentation.viewmodel.LoginState
 import com.develofer.opositate.presentation.viewmodel.LoginUiState
 import com.develofer.opositate.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.presentation.viewmodel.MainViewModel
-import com.develofer.opositate.ui.theme.Gray200
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.develofer.opositate.utils.Constants.EMPTY_TEXT
 import kotlinx.coroutines.flow.StateFlow
-import java.util.Locale
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -127,67 +122,6 @@ fun LoginScreen(
 }
 
 @Composable
-private fun LoginLoadingAnimation(
-    loginState: LoginState, animationState: AnimationState, loginViewModel: LoginViewModel,
-    modifier: Modifier, onAnimationStateChanged: (animationsState: AnimationState) -> Unit
-) {
-    if (loginState == LoginState.Loading || animationState == AnimationState.Loading) {
-        onAnimationStateChanged(AnimationState.Loading)
-        LottieLoadingAnimation(
-            modifier = modifier.zIndex(2f),
-            loginViewModel
-        ) { onAnimationStateChanged(AnimationState.Finish) }
-    }
-}
-
-@Composable
-private fun LottieLoadingAnimation(
-    modifier: Modifier = Modifier, loginViewModel: LoginViewModel, onFinish: () -> Unit
-) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_anim7))
-    val progress by animateLottieCompositionAsState(composition = composition, iterations = 1)
-    if (progress >= 1f && loginViewModel.areFieldsValid()) {
-        LaunchedEffect(Unit) {
-            onFinish()
-        }
-    }
-    Surface(
-        modifier = modifier.fillMaxSize().alpha(1f),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        LottieAnimation(
-            composition = composition, progress = { progress },
-            modifier = modifier.size(200.dp).alpha(1f).offset(y = (50).dp)
-        )
-    }
-}
-
-
-@Composable
-fun LoginResetPasswordDialog(
-    showResetPasswordDialog: Boolean, focusManager: FocusManager, loginViewModel: LoginViewModel,
-    hideDialog: () -> Unit, saveErrorMessage: (String) -> Unit, onPasswordFinished: () -> Unit
-) {
-    if (showResetPasswordDialog) {
-        clearFocus(focusManager, loginViewModel)
-        ResetPasswordDialog(
-            onDismissRequest = { hideDialog() },
-            onSuccess = {
-                hideDialog()
-                onPasswordFinished()
-                loginViewModel.showDialog(LoginDialogType.RESET_PASSWORD_SUCCESS)
-            },
-            onFailure = { newErrorMessage ->
-                saveErrorMessage(newErrorMessage)
-                hideDialog()
-                onPasswordFinished()
-                loginViewModel.showDialog(LoginDialogType.RESET_PASSWORD_SUCCESS)
-            }
-        )
-    }
-}
-
-@Composable
 private fun LoginContent(
     uiState: LoginUiState, loginViewModel: LoginViewModel, isDarkTheme: Boolean, isKeyBoardVisible: Boolean,
     onForgotPasswordClick: () -> Unit, clearFocus: () -> Unit, navigateToRegister: () -> Unit,
@@ -205,18 +139,13 @@ private fun LoginContent(
 
 @Composable
 private fun LoginHeader(isDarkTheme: Boolean) {
-    val displayText = if (isDarkTheme) stringResource(id = R.string.login_screen__title_text__welcome).uppercase()
-        else stringResource(id = R.string.login_screen__title_text__welcome)
-    Text(
-        text = displayText, fontSize = if (isDarkTheme) 36.sp else 50.sp,
-        color = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
-        style = MaterialTheme.typography.titleMedium, modifier = Modifier.padding(top = 24.dp)
+    CustomTitleText(
+        text = stringResource(id = R.string.login_screen__title_text__welcome),
+        isDarkTheme = isDarkTheme
     )
-    Text(
-        text = stringResource(id = R.string.login_screen__text__sign_in).uppercase(Locale.getDefault()),
-        fontSize = 13.sp, fontWeight = FontWeight.W400, style = MaterialTheme.typography.labelMedium,
-        color = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
-        modifier = Modifier.padding(top = 4.dp), letterSpacing = 2.7.sp
+    CustomSubtitleText(
+        text = stringResource(id = R.string.login_screen__text__sign_in),
+        isDarkTheme = isDarkTheme
     )
     Spacer(modifier = Modifier.height(20.dp))
 }
@@ -293,6 +222,66 @@ private fun GoToRegisterButton(onClick: () -> Unit, isDarkTheme: Boolean) {
         onClick = { onClick() }, isDarkTheme = isDarkTheme,
         text = stringResource(id = R.string.login_screen__text_btn__new_user).uppercase()
     )
+}
+
+@Composable
+fun LoginResetPasswordDialog(
+    showResetPasswordDialog: Boolean, focusManager: FocusManager, loginViewModel: LoginViewModel,
+    hideDialog: () -> Unit, saveErrorMessage: (String) -> Unit, onPasswordFinished: () -> Unit
+) {
+    if (showResetPasswordDialog) {
+        clearFocus(focusManager, loginViewModel)
+        ResetPasswordDialog(
+            onDismissRequest = { hideDialog() },
+            onSuccess = {
+                hideDialog()
+                onPasswordFinished()
+                loginViewModel.showDialog(LoginDialogType.RESET_PASSWORD_SUCCESS)
+            },
+            onFailure = { newErrorMessage ->
+                saveErrorMessage(newErrorMessage)
+                hideDialog()
+                onPasswordFinished()
+                loginViewModel.showDialog(LoginDialogType.RESET_PASSWORD_SUCCESS)
+            }
+        )
+    }
+}
+
+@Composable
+private fun LoginLoadingAnimation(
+    loginState: LoginState, animationState: AnimationState, loginViewModel: LoginViewModel,
+    modifier: Modifier, onAnimationStateChanged: (animationsState: AnimationState) -> Unit
+) {
+    if (loginState == LoginState.Loading || animationState == AnimationState.Loading) {
+        onAnimationStateChanged(AnimationState.Loading)
+        LottieLoadingAnimation(
+            modifier = modifier.zIndex(2f),
+            loginViewModel
+        ) { onAnimationStateChanged(AnimationState.Finish) }
+    }
+}
+
+@Composable
+private fun LottieLoadingAnimation(
+    modifier: Modifier = Modifier, loginViewModel: LoginViewModel, onFinish: () -> Unit
+) {
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_anim7))
+    val progress by animateLottieCompositionAsState(composition = composition, iterations = 1)
+    if (progress >= 1f && loginViewModel.areFieldsValid()) {
+        LaunchedEffect(Unit) {
+            onFinish()
+        }
+    }
+    Surface(
+        modifier = modifier.fillMaxSize().alpha(1f),
+        color = MaterialTheme.colorScheme.background
+    ) {
+        LottieAnimation(
+            composition = composition, progress = { progress },
+            modifier = modifier.size(200.dp).alpha(1f).offset(y = (50).dp)
+        )
+    }
 }
 
 @Composable
