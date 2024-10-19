@@ -116,7 +116,7 @@ fun LoginScreen(
             dialogState = dialogState,
             passwordResetFinished = passwordResetFinished,
             onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState },
-            goToHome = { navigateToHome(navController) },
+            navigateToHome = { navigateToHome(navController) },
             onDialogDismissed = { passwordResetFinished = false }
         )
     }
@@ -129,7 +129,7 @@ private fun LoginLoadingAnimation(
 ) {
     if (loginState == LoginState.Loading || animationState == AnimationState.Loading) {
         onAnimationStateChanged(AnimationState.Loading)
-        LottieLoginAnimation(
+        LottieLoadingAnimation(
             modifier = modifier.zIndex(2f),
             loginViewModel
         ) { onAnimationStateChanged(AnimationState.Finish) }
@@ -137,7 +137,7 @@ private fun LoginLoadingAnimation(
 }
 
 @Composable
-fun LottieLoginAnimation(
+private fun LottieLoadingAnimation(
     modifier: Modifier = Modifier, loginViewModel: LoginViewModel, onFinish: () -> Unit
 ) {
     val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_anim7))
@@ -161,12 +161,8 @@ fun LottieLoginAnimation(
 
 @Composable
 fun LoginResetPasswordDialog(
-    showResetPasswordDialog: Boolean,
-    focusManager: FocusManager,
-    loginViewModel: LoginViewModel,
-    hideDialog: () -> Unit,
-    saveErrorMessage: (String) -> Unit,
-    onPasswordFinished: () -> Unit
+    showResetPasswordDialog: Boolean, focusManager: FocusManager, loginViewModel: LoginViewModel,
+    hideDialog: () -> Unit, saveErrorMessage: (String) -> Unit, onPasswordFinished: () -> Unit
 ) {
     if (showResetPasswordDialog) {
         clearFocus(focusManager, loginViewModel)
@@ -204,9 +200,7 @@ private fun LoginContent(
 }
 
 @Composable
-private fun LoginHeader(
-    isDarkTheme: Boolean
-) {
+private fun LoginHeader(isDarkTheme: Boolean) {
     val displayText = if (isDarkTheme) stringResource(id = R.string.login_screen__title_text__welcome).uppercase()
         else stringResource(id = R.string.login_screen__title_text__welcome)
     Text(
@@ -337,10 +331,8 @@ private fun GoToRegisterButton(
 private fun HandleDialog(
     animationState: AnimationState, uiState: LoginUiState, errorMessage: String?,
     onAnimationStateChanged: (animationState: AnimationState) -> Unit,
-    goToHome: () -> Unit, dialogState: StateFlow<DialogState<LoginDialogType>>,
-    hideDialog: () -> Unit,
-    passwordResetFinished: Boolean,
-    onDialogDismissed: () -> Unit
+    navigateToHome: () -> Unit, dialogState: StateFlow<DialogState<LoginDialogType>>,
+    hideDialog: () -> Unit, passwordResetFinished: Boolean, onDialogDismissed: () -> Unit
 ) {
     if (animationState == AnimationState.Finish || animationState == AnimationState.Dialog ||
         passwordResetFinished) {
@@ -351,7 +343,7 @@ private fun HandleDialog(
                     SuccessDialog(
                         onDismiss = {
                             hideDialog()
-                            goToHome()
+                            navigateToHome()
                         },
                         isDialogVisible = dialogState.collectAsState().value.isVisible,
                         delayTime = 3000,

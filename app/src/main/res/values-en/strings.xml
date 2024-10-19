@@ -37,6 +37,10 @@
     <string name="register_screen__text_btn__register">Register</string>
     <string name="register_screen__text_btn__already_have_account">Already have an account?\nSign in</string>
     <string name="register_screen__user_text_field__tool_tip">Your username will only be used in your profile; we do not store this information for other uses</string>
+    <string name="register_screen__title_text__login_successful">Registration successful</string>
+    <string name="register_screen__text__login_successful">Your registration has been completed successfully</string>
+    <string name="register_screen__title_text__login_error">Registration error</string>
+    <string name="register_screen__text__reset_password_successful">There was an error completing the registration</string>
 
     // Reset Password Dialog
     <string name="reset_password_dialog__text__reset_password">Reset your password</string>
