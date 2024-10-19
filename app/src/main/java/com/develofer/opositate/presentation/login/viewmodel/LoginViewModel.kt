@@ -1,10 +1,13 @@
-package com.develofer.opositate.presentation.viewmodel
+package com.develofer.opositate.presentation.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.domain.usecase.LoginUseCase
 import com.develofer.opositate.presentation.custom.DialogStateCoordinator
-import com.develofer.opositate.presentation.viewmodel.TextFieldErrors.ValidateFieldErrors
+import com.develofer.opositate.presentation.login.model.LoginDialogType
+import com.develofer.opositate.presentation.login.model.LoginState
+import com.develofer.opositate.presentation.login.model.LoginUiState
+import com.develofer.opositate.presentation.login.model.TextFieldErrors.ValidateFieldErrors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -103,29 +106,4 @@ class LoginViewModel @Inject constructor(
     private fun isFieldEmpty(value: String): Boolean {
         return value.isBlank()
     }
-}
-
-enum class LoginDialogType {
-    LOGIN_SUCCESS,
-    LOGIN_ERROR,
-    RESET_PASSWORD_SUCCESS,
-    RESET_PASSWORD_ERROR
-}
-
-data class LoginUiState(
-    val username: String = "",
-    val password: String = "",
-    val isUsernameFocused: Boolean = false,
-    val isPasswordFocused: Boolean = false,
-    val usernameValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
-    val passwordValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
-    val showResetPasswordDialog: Boolean = false,
-    val loginState: LoginState = LoginState.Idle,
-)
-
-sealed class LoginState {
-    data object Idle : LoginState()
-    data object Loading : LoginState()
-    data object Success : LoginState()
-    data class Failure(val error: String) : LoginState()
 }

@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.screen
+package com.develofer.opositate.presentation.register
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
@@ -43,20 +43,17 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.develofer.opositate.R
-import com.develofer.opositate.presentation.custom.CustomLoginButton
-import com.develofer.opositate.presentation.custom.CustomLoginLogoImage
-import com.develofer.opositate.presentation.custom.CustomLoginTextButton
-import com.develofer.opositate.presentation.custom.CustomLoginTextField
-import com.develofer.opositate.presentation.custom.CustomSubtitleText
-import com.develofer.opositate.presentation.custom.CustomTitleText
+import com.develofer.opositate.presentation.login.custom.CustomLoginButton
+import com.develofer.opositate.presentation.login.custom.CustomLoginLogoImage
+import com.develofer.opositate.presentation.login.custom.CustomLoginTextButton
+import com.develofer.opositate.presentation.login.custom.CustomLoginTextField
+import com.develofer.opositate.presentation.login.custom.CustomSubtitleText
+import com.develofer.opositate.presentation.login.custom.CustomTitleText
 import com.develofer.opositate.presentation.custom.DialogState
 import com.develofer.opositate.presentation.custom.ErrorDialog
 import com.develofer.opositate.presentation.custom.SuccessDialog
+import com.develofer.opositate.presentation.login.screen.AnimationState
 import com.develofer.opositate.presentation.navigation.navigateToLogin
-import com.develofer.opositate.presentation.viewmodel.RegisterDialogType
-import com.develofer.opositate.presentation.viewmodel.RegisterState
-import com.develofer.opositate.presentation.viewmodel.RegisterUiState
-import com.develofer.opositate.presentation.viewmodel.RegisterViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.develofer.opositate.utils.Constants.EMPTY_TEXT
 import kotlinx.coroutines.flow.StateFlow

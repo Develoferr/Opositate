@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.screen
+package com.develofer.opositate.presentation.login.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
@@ -32,23 +32,22 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.develofer.opositate.R
-import com.develofer.opositate.presentation.custom.CustomLoginButton
-import com.develofer.opositate.presentation.custom.CustomLoginLogoImage
-import com.develofer.opositate.presentation.custom.CustomLoginTextButton
-import com.develofer.opositate.presentation.custom.CustomLoginTextField
-import com.develofer.opositate.presentation.custom.CustomSubtitleText
-import com.develofer.opositate.presentation.custom.CustomTitleText
+import com.develofer.opositate.presentation.login.custom.CustomLoginButton
+import com.develofer.opositate.presentation.login.custom.CustomLoginLogoImage
+import com.develofer.opositate.presentation.login.custom.CustomLoginTextButton
+import com.develofer.opositate.presentation.login.custom.CustomLoginTextField
+import com.develofer.opositate.presentation.login.custom.CustomSubtitleText
+import com.develofer.opositate.presentation.login.custom.CustomTitleText
 import com.develofer.opositate.presentation.custom.DialogState
 import com.develofer.opositate.presentation.custom.ErrorDialog
 import com.develofer.opositate.presentation.custom.SuccessDialog
-import com.develofer.opositate.presentation.dialog.ResetPasswordDialog
+import com.develofer.opositate.presentation.login.model.LoginDialogType
+import com.develofer.opositate.presentation.login.model.LoginState
+import com.develofer.opositate.presentation.login.model.LoginUiState
 import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
 import com.develofer.opositate.presentation.navigation.navigateToHome
-import com.develofer.opositate.presentation.viewmodel.LoginDialogType
-import com.develofer.opositate.presentation.viewmodel.LoginState
-import com.develofer.opositate.presentation.viewmodel.LoginUiState
-import com.develofer.opositate.presentation.viewmodel.LoginViewModel
-import com.develofer.opositate.presentation.viewmodel.MainViewModel
+import com.develofer.opositate.presentation.login.viewmodel.LoginViewModel
+import com.develofer.opositate.presentation.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.develofer.opositate.utils.Constants.EMPTY_TEXT
 import kotlinx.coroutines.flow.StateFlow
@@ -383,17 +382,17 @@ private fun clearFocus(focusManager: FocusManager, loginViewModel: LoginViewMode
     loginViewModel.onPasswordFocusChanged(false)
 }
 
+sealed class AnimationState {
+    data object Idle : AnimationState()
+    data object Loading : AnimationState()
+    data object Finish : AnimationState()
+    data object Dialog : AnimationState()
+}
+
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun LoginPreview() {
     OpositateTheme {
         LoginScreen(rememberNavController())
     }
-}
-
-sealed class AnimationState {
-    data object Idle : AnimationState()
-    data object Loading : AnimationState()
-    data object Finish : AnimationState()
-    data object Dialog : AnimationState()
 }

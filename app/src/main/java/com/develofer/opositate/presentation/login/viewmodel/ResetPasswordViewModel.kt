@@ -1,9 +1,9 @@
-package com.develofer.opositate.presentation.dialog
+package com.develofer.opositate.presentation.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.domain.usecase.ResetPasswordUseCase
-import com.develofer.opositate.presentation.viewmodel.TextFieldErrors.ValidateFieldErrors
+import com.develofer.opositate.presentation.login.model.TextFieldErrors.ValidateFieldErrors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -47,7 +47,10 @@ class ResetPasswordViewModel @Inject constructor(
                         onSuccess()
                     },
                     onFailure = { errorMessage ->
-                        _uiState.update { it.copy(resetState = ResetPasswordState.Failure(errorMessage)) }
+                        _uiState.update { it.copy(resetState = ResetPasswordState.Failure(
+                            errorMessage
+                        )
+                        ) }
                         onFailure(errorMessage)
                     }
                 )

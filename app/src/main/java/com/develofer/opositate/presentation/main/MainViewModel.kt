@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.viewmodel
+package com.develofer.opositate.presentation.main
 
 import androidx.lifecycle.ViewModel
 import com.develofer.opositate.domain.usecase.GetUserUseCase

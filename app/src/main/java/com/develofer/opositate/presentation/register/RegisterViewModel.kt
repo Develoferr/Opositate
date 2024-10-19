@@ -1,10 +1,10 @@
-package com.develofer.opositate.presentation.viewmodel
+package com.develofer.opositate.presentation.register
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.domain.usecase.CreateUserUseCase
 import com.develofer.opositate.presentation.custom.DialogStateCoordinator
-import com.develofer.opositate.presentation.viewmodel.TextFieldErrors.ValidateFieldErrors
+import com.develofer.opositate.presentation.login.model.TextFieldErrors.ValidateFieldErrors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -23,10 +23,6 @@ class RegisterViewModel @Inject constructor(
 
     private val registerDialogStateCoordinator: DialogStateCoordinator<RegisterDialogType> = DialogStateCoordinator()
     fun getDialogState() = registerDialogStateCoordinator.dialogState
-
-    fun showDialog(dialogType: RegisterDialogType) {
-        registerDialogStateCoordinator.showDialog(dialogType)
-    }
 
     fun hideDialog() {
         registerDialogStateCoordinator.hideDialog()

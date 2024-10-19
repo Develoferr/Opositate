@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.custom
+package com.develofer.opositate.presentation.login.custom
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -51,7 +51,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.develofer.opositate.R
-import com.develofer.opositate.presentation.viewmodel.TextFieldErrors.ValidateFieldErrors
+import com.develofer.opositate.presentation.login.model.TextFieldErrors.ValidateFieldErrors
 import kotlinx.coroutines.delay
 
 @Composable

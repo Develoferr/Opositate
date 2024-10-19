@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.viewmodel
+package com.develofer.opositate.presentation.login.model
 
 object TextFieldErrors {
     enum class ValidateFieldErrors {

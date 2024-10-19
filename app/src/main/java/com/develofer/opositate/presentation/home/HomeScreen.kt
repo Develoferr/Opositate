@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.screen
+package com.develofer.opositate.presentation.home
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
@@ -13,8 +13,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.presentation.navigation.navigateToLogin
-import com.develofer.opositate.presentation.viewmodel.HomeViewModel
-import com.develofer.opositate.presentation.viewmodel.MainViewModel
+import com.develofer.opositate.presentation.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 
 @Composable

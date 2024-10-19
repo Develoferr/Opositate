@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.custom
+package com.develofer.opositate.presentation.login.custom
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

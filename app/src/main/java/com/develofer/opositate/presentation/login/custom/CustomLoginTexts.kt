@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.custom
+package com.develofer.opositate.presentation.login.custom
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
