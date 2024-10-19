@@ -3,6 +3,7 @@ package com.develofer.opositate.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.domain.usecase.LoginUseCase
+import com.develofer.opositate.presentation.custom.DialogStateCoordinator
 import com.develofer.opositate.presentation.viewmodel.TextFieldErrors.ValidateFieldErrors
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -19,6 +20,14 @@ class LoginViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
+
+    private val loginDialogStateCoordinator: DialogStateCoordinator<LoginDialogType> = DialogStateCoordinator()
+
+    fun getDialogState() = loginDialogStateCoordinator.dialogState
+
+    fun hideDialog() {
+        loginDialogStateCoordinator.hideDialog()
+    }
 
     fun onUsernameChanged(newUsername: String) {
         _uiState.update { it.copy(username = newUsername) }
@@ -49,9 +58,11 @@ class LoginViewModel @Inject constructor(
                     password = _uiState.value.password,
                     onSuccess = {
                         _uiState.update { it.copy(loginState = LoginState.Success) }
+                        loginDialogStateCoordinator.showDialog(LoginDialogType.LOGIN_SUCCESS)
                     },
                     onFailure = { errorMessage ->
                         _uiState.update { it.copy(loginState = LoginState.Failure(errorMessage)) }
+                        loginDialogStateCoordinator.showDialog(LoginDialogType.LOGIN_ERROR)
                     }
                 )
             }
@@ -91,6 +102,13 @@ class LoginViewModel @Inject constructor(
     }
 }
 
+enum class LoginDialogType {
+    LOGIN_SUCCESS,
+    LOGIN_ERROR,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_ERROR
+}
+
 data class LoginUiState(
     val username: String = "",
     val password: String = "",
@@ -99,7 +117,7 @@ data class LoginUiState(
     val usernameValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
     val passwordValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
     val showResetPasswordDialog: Boolean = false,
-    val loginState: LoginState = LoginState.Idle
+    val loginState: LoginState = LoginState.Idle,
 )
 
 sealed class LoginState {
