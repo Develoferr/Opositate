@@ -50,7 +50,9 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.develofer.opositate.R
-import com.develofer.opositate.presentation.custom.CustomLogoImage
+import com.develofer.opositate.presentation.custom.CustomLoginButton
+import com.develofer.opositate.presentation.custom.CustomLoginLogoImage
+import com.develofer.opositate.presentation.custom.CustomLoginTextButton
 import com.develofer.opositate.presentation.custom.CustomLoginTextField
 import com.develofer.opositate.presentation.custom.DialogState
 import com.develofer.opositate.presentation.custom.ErrorDialog
@@ -85,7 +87,7 @@ fun RegisterScreen(
             .fillMaxSize().background(MaterialTheme.colorScheme.background)
             .pointerInput(Unit) { detectTapGestures(onTap = { focusManager.clearFocus() }) }
     ) {
-        CustomLogoImage(
+        CustomLoginLogoImage(
             isDarkTheme = isDarkTheme,
             isKeyboardVisible = isKeyboardVisible,
             modifier = Modifier.align(Alignment.TopCenter)
@@ -131,7 +133,7 @@ private fun RegisterContent(
     ) {
         RegisterHeader(isDarkTheme)
         RegisterFields(uiState, registerViewModel, isDarkTheme)
-        RegisterButtons(registerViewModel, navigateToLogin, clearFocus)
+        RegisterButtons(isDarkTheme, registerViewModel, navigateToLogin, clearFocus)
     }
 }
 
@@ -180,32 +182,20 @@ fun RegisterFields(uiState: RegisterUiState, registerViewModel: RegisterViewMode
 }
 
 @Composable
-fun RegisterButtons(registerViewModel: RegisterViewModel, navigateToLogin: () -> Unit, clearFocus: () -> Unit) {
-    val buttonBackgroundColor = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary else Color.Black
-    Button(
+fun RegisterButtons(isDarkTheme: Boolean, registerViewModel: RegisterViewModel, navigateToLogin: () -> Unit, clearFocus: () -> Unit) {
+    CustomLoginButton(
         onClick = {
             registerViewModel.register()
             clearFocus()
         },
-        shape = RoundedCornerShape(13.dp), modifier = Modifier.padding(top = 50.dp),
-        colors = ButtonDefaults.buttonColors(containerColor = buttonBackgroundColor)
-    ) {
-        Text(
-            text = stringResource(id = R.string.register_screen__text_btn__register).uppercase(), fontSize = if (isSystemInDarkTheme()) 20.sp else 25.sp,
-            style = MaterialTheme.typography.titleMedium, color = if (isSystemInDarkTheme()) Color.Black else Gray200,
-        )
-    }
-    TextButton(
+        text = stringResource(id = R.string.register_screen__text_btn__register),
+        isDarkTheme = isDarkTheme
+    )
+    CustomLoginTextButton(
         onClick = { navigateToLogin() },
-        modifier = Modifier.padding(vertical = 5.dp)
-    ) {
-        Text(
-            text = stringResource(id = R.string.register_screen__text_btn__already_have_account).uppercase(), textAlign = TextAlign.Center,
-            fontSize = 12.sp, style = MaterialTheme.typography.bodyMedium, letterSpacing = 0.2.sp,
-            color = if (isSystemInDarkTheme()) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
-            fontWeight = if (isSystemInDarkTheme()) FontWeight.Medium else FontWeight.Light, lineHeight = 14.sp,
-        )
-    }
+        text = stringResource(id = R.string.register_screen__text_btn__already_have_account),
+        isDarkTheme = isDarkTheme
+    )
 }
 
 @Composable

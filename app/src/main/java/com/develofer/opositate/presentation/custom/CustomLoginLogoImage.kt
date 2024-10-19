@@ -19,7 +19,7 @@ import androidx.compose.ui.unit.dp
 import com.develofer.opositate.R
 
 @Composable
-fun CustomLogoImage(isDarkTheme: Boolean, isKeyboardVisible: Boolean, modifier: Modifier) {
+fun CustomLoginLogoImage(isDarkTheme: Boolean, isKeyboardVisible: Boolean, modifier: Modifier) {
 
     val colorFilter = if (isDarkTheme) null
         else ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
