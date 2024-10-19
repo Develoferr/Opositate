@@ -54,6 +54,7 @@ import com.develofer.opositate.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.presentation.viewmodel.MainViewModel
 import com.develofer.opositate.ui.theme.Gray200
 import com.develofer.opositate.ui.theme.OpositateTheme
+import com.develofer.opositate.utils.Constants.EMPTY_TEXT
 import kotlinx.coroutines.flow.StateFlow
 import java.util.Locale
 
@@ -69,8 +70,8 @@ fun LoginScreen(
     val focusManager = LocalFocusManager.current
 
     val uiState by loginViewModel.uiState.collectAsState()
-    var passwordResetFinished by remember { mutableStateOf(false) }
     val dialogState = loginViewModel.getDialogState()
+    var passwordResetFinished by remember { mutableStateOf(false) }
     var animationState: AnimationState by remember { mutableStateOf(AnimationState.Idle) }
     var errorMessage: String? by remember { mutableStateOf(null) }
 
@@ -149,16 +150,13 @@ fun LottieLoginAnimation(
             onFinish()
         }
     }
-    Surface(modifier = modifier
-        .fillMaxSize()
-        .alpha(1f),
+    Surface(
+        modifier = modifier.fillMaxSize().alpha(1f),
         color = MaterialTheme.colorScheme.background
     ) {
-        LottieAnimation(composition = composition, progress = { progress },
-            modifier = modifier
-                .size(200.dp)
-                .alpha(1f)
-                .offset(y = (50).dp)
+        LottieAnimation(
+            composition = composition, progress = { progress },
+            modifier = modifier.size(200.dp).alpha(1f).offset(y = (50).dp)
         )
     }
 }
@@ -391,7 +389,7 @@ private fun HandleDialog(
                         delayTime = 3000,
                         title = { Text(text = stringResource(id = R.string.login_screen__text__login_successful_title)) },
                         text = { Text(stringResource(id = R.string.login_screen__text__login_successful_text)) },
-                        confirmButton = { TextButton(onClick = {}) { Text("") } },
+                        confirmButton = { TextButton(onClick = {}) { Text(EMPTY_TEXT) } },
                     )
                 }
                 LoginDialogType.LOGIN_ERROR -> {
@@ -423,7 +421,7 @@ private fun HandleDialog(
                         confirmButton = { TextButton(onClick = {
                             onDialogDismissed()
                             hideDialog()
-                        }) { Text("") } },
+                        }) { Text(EMPTY_TEXT) } },
                     )
                 }
                 LoginDialogType.RESET_PASSWORD_ERROR -> {
