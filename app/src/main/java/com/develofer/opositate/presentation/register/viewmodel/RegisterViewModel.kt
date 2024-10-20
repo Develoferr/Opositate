@@ -77,35 +77,58 @@ class RegisterViewModel @Inject constructor(
     }
 
     fun areFieldsValid(): Boolean {
-        val validatedState = validateFields(_uiState.value)
-        _uiState.update { validatedState }
-        return validatedState.usernameValidateFieldError == ValidateFieldErrors.NONE &&
-                validatedState.emailValidateFieldError == ValidateFieldErrors.NONE &&
-                validatedState.passwordValidateFieldError == ValidateFieldErrors.NONE
+        validateUsername()
+        validateEmail()
+        validatePassword()
+        return _uiState.value.usernameValidateFieldError == ValidateFieldErrors.NONE &&
+                _uiState.value.emailValidateFieldError == ValidateFieldErrors.NONE &&
+                _uiState.value.passwordValidateFieldError == ValidateFieldErrors.NONE
     }
 
-    private fun validateFields(state: RegisterUiState): RegisterUiState {
-        val usernameError = when {
-            isFieldEmpty(state.username) -> ValidateFieldErrors.EMPTY_TEXT
-            else -> ValidateFieldErrors.NONE
+    fun validateUsername() {
+        _uiState.update {
+            it.copy(
+                usernameValidateFieldError =
+                when {
+                    isFieldEmpty(it.username) -> {
+                        if (_uiState.value.registerState is RegisterState.Idle) ValidateFieldErrors.NONE
+                        else ValidateFieldErrors.EMPTY_TEXT
+                    }
+                    else -> ValidateFieldErrors.NONE
+                }
+            )
         }
+    }
 
-        val emailError = when {
-            isFieldEmpty(state.email) -> ValidateFieldErrors.EMPTY_TEXT
-            !isEmailValid(state.email) -> ValidateFieldErrors.INVALID_EMAIL
-            else -> ValidateFieldErrors.NONE
+    fun validateEmail() {
+        _uiState.update {
+            it.copy(
+                emailValidateFieldError =
+                when {
+                    isFieldEmpty(it.email) -> {
+                        if (_uiState.value.registerState is RegisterState.Idle) ValidateFieldErrors.NONE
+                        else ValidateFieldErrors.EMPTY_TEXT
+                    }
+                    !isEmailValid(it.email) -> ValidateFieldErrors.INVALID_EMAIL
+                    else -> ValidateFieldErrors.NONE
+                }
+            )
         }
+    }
 
-        val passwordError = when {
-            isFieldEmpty(state.password) -> ValidateFieldErrors.EMPTY_TEXT
-            else -> ValidateFieldErrors.NONE
+    fun validatePassword() {
+        _uiState.update {
+            it.copy(
+                passwordValidateFieldError =
+                when {
+                    isFieldEmpty(it.password) -> {
+                        if (_uiState.value.registerState is RegisterState.Idle) ValidateFieldErrors.NONE
+                        else ValidateFieldErrors.EMPTY_TEXT
+                    }
+                    else -> ValidateFieldErrors.NONE
+                }
+            )
         }
-
-        return state.copy(
-            usernameValidateFieldError = usernameError,
-            emailValidateFieldError = emailError,
-            passwordValidateFieldError = passwordError
-        )
     }
 
     private fun isEmailValid(email: String): Boolean {

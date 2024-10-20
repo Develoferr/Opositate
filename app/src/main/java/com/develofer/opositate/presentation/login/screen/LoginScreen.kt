@@ -146,13 +146,21 @@ private fun LoginFields(
     isDarkTheme: Boolean, onForgotPasswordClick: () -> Unit
 ) {
     CustomLoginTextField(
-        value = uiState.username, onValueChange = { loginViewModel.onUsernameChanged(it) },
+        value = uiState.username,
+        onValueChange = {
+            loginViewModel.onUsernameChanged(it)
+            loginViewModel.validateUsername()
+        },
         label = stringResource(id = R.string.login_screen__label_text_field__user).uppercase(), isFocused = uiState.isUsernameFocused,
         onFocusChange = { loginViewModel.onUsernameFocusChanged(it) }, isPasswordField = false,
         supportingText = uiState.usernameValidateFieldError, isDarkTheme = isDarkTheme
     )
     CustomLoginTextField(
-        value = uiState.password, onValueChange = { loginViewModel.onPasswordChanged(it) },
+        value = uiState.password,
+        onValueChange = {
+            loginViewModel.onPasswordChanged(it)
+            loginViewModel.validatePassword()
+        },
         label = stringResource(id = R.string.login_screen__label_text_field__password).uppercase(), isFocused = uiState.isPasswordFocused,
         onFocusChange = { loginViewModel.onPasswordFocusChanged(it) }, isPasswordField = true,
         supportingText = uiState.passwordValidateFieldError, isDarkTheme = isDarkTheme

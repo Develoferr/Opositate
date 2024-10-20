@@ -76,27 +76,38 @@ class LoginViewModel @Inject constructor(
     }
 
     fun areFieldsValid(): Boolean {
-        val validatedState = validateFields(_uiState.value)
-        _uiState.update { validatedState }
-        return validatedState.usernameValidateFieldError == ValidateFieldErrors.NONE &&
-                validatedState.passwordValidateFieldError == ValidateFieldErrors.NONE
+        validateUsername()
+        validatePassword()
+        return _uiState.value.usernameValidateFieldError == ValidateFieldErrors.NONE &&
+                _uiState.value.passwordValidateFieldError == ValidateFieldErrors.NONE
     }
 
-    private fun validateFields(state: LoginUiState): LoginUiState {
-        val usernameError = when {
-            isFieldEmpty(state.username) -> ValidateFieldErrors.EMPTY_TEXT
-            !isEmailValid(state.username) -> ValidateFieldErrors.INVALID_EMAIL
-            else -> ValidateFieldErrors.NONE
+    fun validateUsername() {
+        _uiState.update {
+            it.copy(
+                usernameValidateFieldError =
+                    when {
+                        isFieldEmpty(it.username) -> {
+                            if (_uiState.value.loginState is LoginState.Idle) ValidateFieldErrors.NONE
+                            else ValidateFieldErrors.EMPTY_TEXT
+                        }
+                        !isEmailValid(it.username) -> ValidateFieldErrors.INVALID_EMAIL
+                        else -> ValidateFieldErrors.NONE
+                    }
+            )
         }
+    }
 
-        val passwordError = if (isFieldEmpty(state.password)) {
-            ValidateFieldErrors.EMPTY_TEXT
-        } else ValidateFieldErrors.NONE
-
-        return state.copy(
-            usernameValidateFieldError = usernameError,
-            passwordValidateFieldError = passwordError
-        )
+    fun validatePassword() {
+        _uiState.update {
+            it.copy(
+                passwordValidateFieldError =
+                    if (isFieldEmpty(it.password)) {
+                        if (_uiState.value.loginState is LoginState.Idle) ValidateFieldErrors.NONE
+                        else ValidateFieldErrors.EMPTY_TEXT
+                    } else ValidateFieldErrors.NONE
+            )
+        }
     }
 
     private fun isEmailValid(email: String): Boolean {

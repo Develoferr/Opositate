@@ -147,7 +147,10 @@ fun RegisterHeader(isDarkTheme: Boolean) {
 @Composable
 fun RegisterFields(uiState: RegisterUiState, registerViewModel: RegisterViewModel, isDarkTheme: Boolean) {
     CustomLoginTextField(
-        value = uiState.username, onValueChange = { registerViewModel.onUsernameChanged(it) },
+        value = uiState.username, onValueChange = {
+            registerViewModel.onUsernameChanged(it)
+            registerViewModel.validateUsername()
+        },
         label = stringResource(id = R.string.register_screen__label_text_field__user).uppercase(), isFocused = uiState.isUsernameFocused,
         onFocusChange = { registerViewModel.onUsernameFocusChanged(it) }, isPasswordField = false,
         supportingText = uiState.usernameValidateFieldError, isDarkTheme = isDarkTheme,
@@ -155,14 +158,19 @@ fun RegisterFields(uiState: RegisterUiState, registerViewModel: RegisterViewMode
     )
 
     CustomLoginTextField(
-        value = uiState.email, onValueChange = { registerViewModel.onEmailChanged(it) },
-        label = stringResource(id = R.string.register_screen__label_text_field__email).uppercase(), isFocused = uiState.isEmailFocused,
+        value = uiState.email, onValueChange = {
+            registerViewModel.onEmailChanged(it)
+            registerViewModel.validateEmail()
+        }, label = stringResource(id = R.string.register_screen__label_text_field__email).uppercase(), isFocused = uiState.isEmailFocused,
         onFocusChange = { registerViewModel.onEmailFocusChanged(it) }, isPasswordField = false,
         supportingText = uiState.emailValidateFieldError, isDarkTheme = isDarkTheme
     )
 
     CustomLoginTextField(
-        value = uiState.password, onValueChange = { registerViewModel.onPasswordChanged(it) },
+        value = uiState.password, onValueChange = {
+            registerViewModel.onPasswordChanged(it)
+            registerViewModel.validatePassword()
+        },
         label = stringResource(id = R.string.register_screen__label_text_field__password).uppercase(), isFocused = uiState.isPasswordFocused,
         onFocusChange = { registerViewModel.onPasswordFocusChanged(it) }, isPasswordField = true,
         supportingText = uiState.passwordValidateFieldError, isDarkTheme = isDarkTheme
