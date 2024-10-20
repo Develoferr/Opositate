@@ -50,7 +50,6 @@ import com.develofer.opositate.presentation.navigation.navigateToHome
 import com.develofer.opositate.presentation.login.viewmodel.LoginViewModel
 import com.develofer.opositate.presentation.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
-import com.develofer.opositate.utils.Constants.EMPTY_TEXT
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -304,7 +303,6 @@ private fun HandleDialog(
                         delayTime = 3000,
                         title = { Text(text = stringResource(id = R.string.login_screen__title_text__login_successful)) },
                         text = { Text(stringResource(id = R.string.login_screen__text__login_successful)) },
-                        confirmButton = { TextButton(onClick = {}) { Text(EMPTY_TEXT) } },
                     )
                 }
                 LoginDialogType.LOGIN_ERROR -> {
@@ -333,10 +331,6 @@ private fun HandleDialog(
                         delayTime = 3000,
                         title = { Text(text = stringResource(id = R.string.login_screen__title_text__reset_password_successful)) },
                         text = { Text(stringResource(id = R.string.login_screen__text__reset_password_successful)) },
-                        confirmButton = { TextButton(onClick = {
-                            onDialogDismissed()
-                            hideDialog()
-                        }) { Text(EMPTY_TEXT) } },
                     )
                 }
                 LoginDialogType.RESET_PASSWORD_ERROR -> {

@@ -2,7 +2,6 @@
 <resources>
 
     <style name="Theme.Opositate" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:background">@color/black</item>
     </style>
 
     <style name="Theme.MySplashScreen" parent="Theme.SplashScreen">

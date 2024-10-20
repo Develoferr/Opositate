@@ -28,6 +28,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
@@ -60,7 +61,7 @@ fun CustomLoginTextField(
     onFocusChange: (Boolean) -> Unit, isPasswordField: Boolean = false,
     supportingText: ValidateFieldErrors, isDarkTheme: Boolean, textLetterSpacing: TextUnit = 2.sp,
     labelFontSize: TextUnit = 15.sp, textFieldPaddingBottom: Dp = 0.dp, haveToolTip: Boolean = false,
-    toolTipText: String = "", painter: Painter = painterResource(id = R.drawable.ic_info_bold),
+    toolTipText: String = "", painter: Painter = painterResource(id = R.drawable.ic_info_bold)
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
     var showTooltip by remember { mutableStateOf(false) }
@@ -152,7 +153,7 @@ fun getSupportingText(
 
 @Composable
 private fun getLoginFieldColors(isDarkTheme: Boolean): LoginFieldColors {
-    val containerColor = if (isDarkTheme) Color.Black else MaterialTheme.colorScheme.primary
+    val containerColor = Transparent
     val indicatorColor = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
     val cursorColor = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground
     return LoginFieldColors(containerColor, indicatorColor, cursorColor)

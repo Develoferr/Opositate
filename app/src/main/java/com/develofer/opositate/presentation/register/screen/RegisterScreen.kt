@@ -59,7 +59,6 @@ import com.develofer.opositate.presentation.register.model.RegisterState
 import com.develofer.opositate.presentation.register.model.RegisterUiState
 import com.develofer.opositate.presentation.register.viewmodel.RegisterViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
-import com.develofer.opositate.utils.Constants.EMPTY_TEXT
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalLayoutApi::class)
@@ -249,7 +248,6 @@ private fun HandleRegisterDialog(
                         isDialogVisible = dialogState.collectAsState().value.isVisible, delayTime = 3000,
                         title = { Text(text = stringResource(id = R.string.register_screen__title_text__login_successful)) },
                         text = { Text(stringResource(id = R.string.register_screen__text__login_successful)) },
-                        confirmButton = { TextButton(onClick = {}) { Text(EMPTY_TEXT) } },
                     )
                 }
                 RegisterDialogType.REGISTER_ERROR -> {
