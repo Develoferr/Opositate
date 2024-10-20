@@ -33,7 +33,7 @@ fun CustomLoginButton(
         colors = ButtonDefaults.buttonColors(
             containerColor = if (isDarkTheme) MaterialTheme.colorScheme.primary else Color.Black
         ),
-        modifier = modifier.padding(vertical = 15.dp)
+        modifier = modifier
     ) {
         icon?.let {
             Icon(
@@ -60,7 +60,7 @@ fun CustomLoginTextButton(
 ) {
     TextButton(
         onClick = onClick,
-        modifier = modifier.padding(vertical = 5.dp)
+        modifier = modifier
     ) {
         Text(
             text = text.uppercase(),

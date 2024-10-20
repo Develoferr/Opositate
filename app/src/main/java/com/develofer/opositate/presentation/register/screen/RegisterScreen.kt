@@ -178,6 +178,7 @@ fun RegisterFields(uiState: RegisterUiState, registerViewModel: RegisterViewMode
 
 @Composable
 fun RegisterButtons(isDarkTheme: Boolean, registerViewModel: RegisterViewModel, navigateToLogin: () -> Unit, clearFocus: () -> Unit) {
+    Spacer(modifier = Modifier.height(26.dp))
     CustomLoginButton(
         onClick = {
             registerViewModel.register()
@@ -186,6 +187,7 @@ fun RegisterButtons(isDarkTheme: Boolean, registerViewModel: RegisterViewModel, 
         text = stringResource(id = R.string.register_screen__text_btn__register),
         isDarkTheme = isDarkTheme
     )
+    Spacer(modifier = Modifier.height(12.dp))
     CustomLoginTextButton(
         onClick = { navigateToLogin() },
         text = stringResource(id = R.string.register_screen__text_btn__already_have_account),

@@ -73,7 +73,8 @@ fun LoginScreen(
 
     Box(
         modifier = Modifier
-            .fillMaxSize().background(MaterialTheme.colorScheme.background)
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
             .pointerInput(Unit) { detectTapGestures(onTap = { focusManager.clearFocus() }) }
     ) {
         CustomLoginLogo(
@@ -117,7 +118,10 @@ private fun LoginContent(
 ) {
     val columnPaddingTop = if (isKeyBoardVisible) 50.dp else if (isDarkTheme) 330.dp else 240.dp
     Column(
-        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).padding(top = columnPaddingTop),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp)
+            .padding(top = columnPaddingTop),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         LoginHeader(isDarkTheme)
@@ -170,7 +174,7 @@ private fun LoginFields(
 @Composable
 private fun ForgotPasswordButton(modifier: Modifier, isDarkTheme: Boolean, onForgotPasswordClick: () -> Unit) {
     CustomLoginTextButton(
-        onClick = { onForgotPasswordClick() }, isDarkTheme = isDarkTheme, modifier = modifier,
+        onClick = { onForgotPasswordClick() }, isDarkTheme = isDarkTheme, modifier = modifier.offset(y = (-14).dp),
         text = stringResource(id = R.string.login_screen__text__forget_your_password),
     )
 }
@@ -180,6 +184,7 @@ private fun LoginButtons(
     loginViewModel: LoginViewModel, isDarkTheme: Boolean,
     clearFocus: () -> Unit = {}, navigateToRegister: () -> Unit
 ) {
+    Spacer(modifier = Modifier.height(16.dp))
     LoginButton(
         onClick = {
             loginViewModel.login()
@@ -187,10 +192,12 @@ private fun LoginButtons(
         },
         isDarkTheme = isDarkTheme
     )
+    Spacer(modifier = Modifier.height(16.dp))
     GoogleLoginButton(
         onClick = {
 
         }, isDarkTheme = isDarkTheme)
+    Spacer(modifier = Modifier.height(12.dp))
     GoToRegisterButton(onClick = { navigateToRegister() }, isDarkTheme)
 }
 
@@ -271,12 +278,17 @@ private fun LottieLoadingAnimation(
         }
     }
     Surface(
-        modifier = modifier.fillMaxSize().alpha(1f),
+        modifier = modifier
+            .fillMaxSize()
+            .alpha(1f),
         color = MaterialTheme.colorScheme.background
     ) {
         LottieAnimation(
             composition = composition, progress = { progress },
-            modifier = modifier.size(200.dp).alpha(1f).offset(y = (50).dp)
+            modifier = modifier
+                .size(200.dp)
+                .alpha(1f)
+                .offset(y = (50).dp)
         )
     }
 }
