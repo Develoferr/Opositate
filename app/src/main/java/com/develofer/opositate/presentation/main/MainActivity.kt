@@ -18,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.animation.doOnEnd
@@ -73,6 +74,7 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     private fun SetupAppContent() {
+        val appBarTitle = mainViewModel.appBarTitle.collectAsState()
         val isSystemUIVisible by mainViewModel.isSystemUIVisible.collectAsState()
 
         LaunchedEffect(isSystemUIVisible) {
@@ -82,7 +84,12 @@ class MainActivity : ComponentActivity() {
         OpositateTheme {
             Surface(modifier = Modifier.fillMaxSize()) {
                 val startDestination = getStartDestination()
-                AppNavigation(navHostController = navHostController, startDestination, mainViewModel)
+                AppNavigation(
+                    navHostController = navHostController,
+                    startDestination,
+                    mainViewModel,
+                    appBarTitle
+                )
             }
         }
     }
@@ -116,10 +123,14 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun MainPreview() {
-    OpositateTheme {
-        AppNavigation(navHostController = rememberNavController(), startDestination = AppRoutes.Destination.LOGIN.route)
-    }
-}
+//@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
+//@Composable
+//fun MainPreview() {
+//    OpositateTheme {
+//        AppNavigation(
+//            navHostController = rememberNavController(),
+//            startDestination = AppRoutes.Destination.LOGIN.route,
+//            appBarTitle = mutableStateOf(""),
+//        )
+//    }
+//}

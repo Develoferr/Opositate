@@ -1,5 +1,8 @@
 package com.develofer.opositate.presentation.main
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import com.develofer.opositate.domain.usecase.GetUserUseCase
 import com.google.firebase.auth.FirebaseUser
@@ -22,7 +25,14 @@ class MainViewModel @Inject constructor(
     private val _isSystemUIVisible = MutableStateFlow(false)
     val isSystemUIVisible: StateFlow<Boolean> get() = _isSystemUIVisible
 
+    private val _appBarTitle = MutableStateFlow("App Title")
+    val appBarTitle: StateFlow<String> get() = _appBarTitle
+
     init { getUserAuth() }
+
+    fun setAppBarTitle(title: String) {
+        _appBarTitle.value = title
+    }
 
     private fun getUserAuth() {
         _currentUser = getUserUseCase.getUser()

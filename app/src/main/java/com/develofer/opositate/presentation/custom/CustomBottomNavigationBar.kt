@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.home
+package com.develofer.opositate.presentation.custom
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Assessment
@@ -15,7 +15,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
 
 @Composable
-fun BottomNavigationBar(navController: NavHostController) {
+fun CustomBottomNavigationBar(navController: NavHostController) {
     val items = listOf(
         Destination.HOME,
         Destination.TEST,
