@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.register.model
+package com.develofer.opositate.presentation.login.model
 
 import com.develofer.opositate.presentation.login.model.TextFieldErrors.ValidateFieldErrors
 

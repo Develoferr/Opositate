@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.custom
+package com.develofer.opositate.ui.custom
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Assessment
@@ -12,7 +12,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
-import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
+import com.develofer.opositate.ui.navigation.AppRoutes.Destination
 
 @Composable
 fun CustomBottomNavigationBar(navController: NavHostController) {

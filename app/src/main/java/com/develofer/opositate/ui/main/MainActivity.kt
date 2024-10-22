@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.main
+package com.develofer.opositate.ui.main
 
 import android.animation.ObjectAnimator
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
@@ -26,8 +26,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.splashscreen.SplashScreenViewProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.develofer.opositate.presentation.navigation.AppNavigation
-import com.develofer.opositate.presentation.navigation.AppRoutes
+import com.develofer.opositate.ui.navigation.AppNavigation
+import com.develofer.opositate.ui.navigation.AppRoutes
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint

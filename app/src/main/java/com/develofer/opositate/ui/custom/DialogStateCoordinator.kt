@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.custom
+package com.develofer.opositate.ui.custom
 
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

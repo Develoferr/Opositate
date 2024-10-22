@@ -1,13 +1,13 @@
-package com.develofer.opositate.presentation.register.viewmodel
+package com.develofer.opositate.presentation.login.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.domain.usecase.CreateUserUseCase
-import com.develofer.opositate.presentation.custom.DialogStateCoordinator
+import com.develofer.opositate.ui.custom.DialogStateCoordinator
 import com.develofer.opositate.presentation.login.model.TextFieldErrors.ValidateFieldErrors
-import com.develofer.opositate.presentation.register.model.RegisterDialogType
-import com.develofer.opositate.presentation.register.model.RegisterState
-import com.develofer.opositate.presentation.register.model.RegisterUiState
+import com.develofer.opositate.presentation.login.model.RegisterDialogType
+import com.develofer.opositate.presentation.login.model.RegisterState
+import com.develofer.opositate.presentation.login.model.RegisterUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

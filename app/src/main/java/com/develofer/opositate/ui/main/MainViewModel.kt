@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.main
+package com.develofer.opositate.ui.main
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

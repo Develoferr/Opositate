@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.register.screen
+package com.develofer.opositate.presentation.login.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
@@ -49,15 +49,14 @@ import com.develofer.opositate.presentation.login.custom.CustomLoginTextButton
 import com.develofer.opositate.presentation.login.custom.CustomLoginTextField
 import com.develofer.opositate.presentation.login.custom.CustomSubtitleText
 import com.develofer.opositate.presentation.login.custom.CustomTitleText
-import com.develofer.opositate.presentation.custom.DialogState
-import com.develofer.opositate.presentation.custom.ErrorDialog
-import com.develofer.opositate.presentation.custom.SuccessDialog
-import com.develofer.opositate.presentation.login.screen.AnimationState
-import com.develofer.opositate.presentation.navigation.navigateToLogin
-import com.develofer.opositate.presentation.register.model.RegisterDialogType
-import com.develofer.opositate.presentation.register.model.RegisterState
-import com.develofer.opositate.presentation.register.model.RegisterUiState
-import com.develofer.opositate.presentation.register.viewmodel.RegisterViewModel
+import com.develofer.opositate.ui.custom.DialogState
+import com.develofer.opositate.ui.custom.ErrorDialog
+import com.develofer.opositate.ui.custom.SuccessDialog
+import com.develofer.opositate.ui.navigation.navigateToLogin
+import com.develofer.opositate.presentation.login.model.RegisterDialogType
+import com.develofer.opositate.presentation.login.model.RegisterState
+import com.develofer.opositate.presentation.login.model.RegisterUiState
+import com.develofer.opositate.presentation.login.viewmodel.RegisterViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 import kotlinx.coroutines.flow.StateFlow
 

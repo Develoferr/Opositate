@@ -37,18 +37,18 @@ import com.develofer.opositate.presentation.login.custom.CustomLoginTextButton
 import com.develofer.opositate.presentation.login.custom.CustomLoginTextField
 import com.develofer.opositate.presentation.login.custom.CustomSubtitleText
 import com.develofer.opositate.presentation.login.custom.CustomTitleText
-import com.develofer.opositate.presentation.custom.DialogState
-import com.develofer.opositate.presentation.custom.ErrorDialog
-import com.develofer.opositate.presentation.custom.SuccessDialog
+import com.develofer.opositate.ui.custom.DialogState
+import com.develofer.opositate.ui.custom.ErrorDialog
+import com.develofer.opositate.ui.custom.SuccessDialog
 import com.develofer.opositate.presentation.login.custom.CustomLoginLogo
 import com.develofer.opositate.presentation.login.model.LoginDialogType
 import com.develofer.opositate.presentation.login.model.LoginState
 import com.develofer.opositate.presentation.login.model.LoginUiState
 import com.develofer.opositate.presentation.login.resetpassword.ResetPasswordDialog
-import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
-import com.develofer.opositate.presentation.navigation.navigateToHome
+import com.develofer.opositate.ui.navigation.AppRoutes.Destination
+import com.develofer.opositate.ui.navigation.navigateToHome
 import com.develofer.opositate.presentation.login.viewmodel.LoginViewModel
-import com.develofer.opositate.presentation.main.MainViewModel
+import com.develofer.opositate.ui.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 import kotlinx.coroutines.flow.StateFlow
 

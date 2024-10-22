@@ -1,6 +1,5 @@
-package com.develofer.opositate.presentation.custom
+package com.develofer.opositate.ui.custom
 
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.MoreVert

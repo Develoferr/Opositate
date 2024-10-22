@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.custom
+package com.develofer.opositate.ui.custom
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Column

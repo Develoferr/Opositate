@@ -13,8 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.develofer.opositate.presentation.navigation.navigateToLogin
-import com.develofer.opositate.presentation.main.MainViewModel
+import com.develofer.opositate.ui.navigation.navigateToLogin
+import com.develofer.opositate.ui.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 
 @Composable

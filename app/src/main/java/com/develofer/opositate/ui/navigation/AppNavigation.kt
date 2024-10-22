@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.navigation
+package com.develofer.opositate.ui.navigation
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -11,14 +11,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.develofer.opositate.presentation.calendar.CalendarScreen
-import com.develofer.opositate.presentation.custom.CustomAppBar
-import com.develofer.opositate.presentation.custom.CustomBottomNavigationBar
+import com.develofer.opositate.ui.custom.CustomAppBar
+import com.develofer.opositate.ui.custom.CustomBottomNavigationBar
 import com.develofer.opositate.presentation.home.HomeScreen
 import com.develofer.opositate.presentation.lesson.LessonScreen
 import com.develofer.opositate.presentation.login.screen.LoginScreen
-import com.develofer.opositate.presentation.register.screen.RegisterScreen
-import com.develofer.opositate.presentation.navigation.AppRoutes.Destination
-import com.develofer.opositate.presentation.main.MainViewModel
+import com.develofer.opositate.presentation.login.screen.RegisterScreen
+import com.develofer.opositate.ui.navigation.AppRoutes.Destination
+import com.develofer.opositate.ui.main.MainViewModel
 import com.develofer.opositate.presentation.test.TestScreen
 
 @Composable

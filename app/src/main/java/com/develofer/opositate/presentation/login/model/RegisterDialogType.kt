@@ -1,4 +1,4 @@
-package com.develofer.opositate.presentation.register.model
+package com.develofer.opositate.presentation.login.model
 
 enum class RegisterDialogType {
     REGISTER_SUCCESS,

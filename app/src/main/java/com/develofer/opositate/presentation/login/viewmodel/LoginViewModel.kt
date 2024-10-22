@@ -3,7 +3,7 @@ package com.develofer.opositate.presentation.login.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.domain.usecase.LoginUseCase
-import com.develofer.opositate.presentation.custom.DialogStateCoordinator
+import com.develofer.opositate.ui.custom.DialogStateCoordinator
 import com.develofer.opositate.presentation.login.model.LoginDialogType
 import com.develofer.opositate.presentation.login.model.LoginState
 import com.develofer.opositate.presentation.login.model.LoginUiState
