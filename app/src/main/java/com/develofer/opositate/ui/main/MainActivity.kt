@@ -1,7 +1,6 @@
 package com.develofer.opositate.ui.main
 
 import android.animation.ObjectAnimator
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import android.os.Build
 import android.os.Bundle
 import android.util.Property
@@ -12,15 +11,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.splashscreen.SplashScreenViewProvider
@@ -76,6 +74,7 @@ class MainActivity : ComponentActivity() {
     private fun SetupAppContent() {
         val appBarTitle = mainViewModel.appBarTitle.collectAsState()
         val isSystemUIVisible by mainViewModel.isSystemUIVisible.collectAsState()
+        val isDarkTheme = isSystemInDarkTheme()
 
         LaunchedEffect(isSystemUIVisible) {
             if (isSystemUIVisible) showSystemUI() else hideSystemUI()
@@ -88,7 +87,8 @@ class MainActivity : ComponentActivity() {
                     navHostController = navHostController,
                     startDestination,
                     mainViewModel,
-                    appBarTitle
+                    appBarTitle,
+                    isDarkTheme
                 )
             }
         }

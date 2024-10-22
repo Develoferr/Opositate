@@ -131,8 +131,9 @@ private fun RegisterContent(
 
 @Composable
 fun RegisterHeader(isDarkTheme: Boolean) {
+    val text = stringResource(id = R.string.register_screen__title_text__register)
     CustomTitleText(
-        text = stringResource(id = R.string.register_screen__title_text__register),
+        text = if (isDarkTheme) text.uppercase() else text,
         isDarkTheme = isDarkTheme
     )
     CustomSubtitleText(

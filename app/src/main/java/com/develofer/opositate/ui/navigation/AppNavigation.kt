@@ -26,7 +26,8 @@ fun AppNavigation(
     navHostController: NavHostController,
     startDestination: String,
     mainViewModel: MainViewModel = hiltViewModel(),
-    appBarTitle: State<String>
+    appBarTitle: State<String>,
+    isDarkTheme: Boolean
 ) {
     val currentRoute = navHostController.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
@@ -49,7 +50,7 @@ fun AppNavigation(
                     Destination.CALENDAR.route
                 )
             ) {
-                CustomAppBar(appBarTitle)
+                CustomAppBar(appBarTitle, isDarkTheme)
             }
         }
     ) { paddingValues ->

@@ -132,8 +132,9 @@ private fun LoginContent(
 
 @Composable
 private fun LoginHeader(isDarkTheme: Boolean) {
+    val text = stringResource(id = R.string.login_screen__title_text__welcome)
     CustomTitleText(
-        text = stringResource(id = R.string.login_screen__title_text__welcome),
+        text = if (isDarkTheme) text.uppercase() else text,
         isDarkTheme = isDarkTheme
     )
     CustomSubtitleText(

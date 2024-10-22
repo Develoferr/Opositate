@@ -11,9 +11,8 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun CustomTitleText(text: String, isDarkTheme: Boolean) {
-    val displayText = if (isDarkTheme) text.uppercase() else text
     Text(
-        text = displayText,
+        text = text,
         fontSize = if (isDarkTheme) 36.sp else 50.sp,
         color = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
         style = MaterialTheme.typography.titleMedium,
