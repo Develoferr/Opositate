@@ -1,6 +1,5 @@
 package com.develofer.opositate.presentation.home
 
-
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Assessment
 import androidx.compose.material.icons.filled.CalendarToday
@@ -40,9 +39,11 @@ fun BottomNavigationBar(navController: NavHostController) {
                 label = { Text(destination.name) },
                 selected = currentRoute == destination.route,
                 onClick = {
-                    navController.navigate(destination.route) {
-                        launchSingleTop = true
-                        restoreState = true
+                    if (currentRoute != destination.route) {
+                        navController.navigate(destination.route) {
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
                 }
             )

@@ -8,6 +8,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import com.develofer.opositate.presentation.calendar.CalendarScreen
 import com.develofer.opositate.presentation.home.BottomNavigationBar
 import com.develofer.opositate.presentation.home.HomeScreen
@@ -24,7 +25,7 @@ fun AppNavigation(
     startDestination: String,
     mainViewModel: MainViewModel = hiltViewModel()
 ) {
-    val currentRoute = navHostController.currentBackStackEntry?.destination?.route
+    val currentRoute = navHostController.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
         bottomBar =  {
             if (currentRoute in listOf(
