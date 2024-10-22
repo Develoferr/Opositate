@@ -4,6 +4,9 @@ object AppRoutes {
     enum class Destination (val route: String) {
         LOGIN("login"),
         REGISTER("register"),
-        HOME("home")
+        HOME("home"),
+        TEST("test"),
+        LESSON("lesson"),
+        CALENDAR("calendar")
     }
 }
