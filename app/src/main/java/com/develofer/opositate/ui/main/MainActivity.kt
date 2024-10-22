@@ -55,7 +55,7 @@ class MainActivity : ComponentActivity() {
 
     private fun setupSplashScreen() {
         installSplashScreen().apply {
-            setKeepOnScreenCondition { !mainViewModel.isUserRetrieved.value }
+            setKeepOnScreenCondition { mainViewModel.isUserNotRetrieved.value }
 
             if (Build.VERSION.SDK_INT >= 34) {
                 setOnExitAnimationListener { screen ->

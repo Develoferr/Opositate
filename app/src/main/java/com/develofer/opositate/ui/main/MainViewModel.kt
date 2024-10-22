@@ -16,8 +16,8 @@ class MainViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase
 ) : ViewModel() {
 
-    private val _isUserRetrieved = MutableStateFlow(false)
-    val isUserRetrieved: StateFlow<Boolean> get() = _isUserRetrieved
+    private val _isUserNotRetrieved = MutableStateFlow(true)
+    val isUserNotRetrieved: StateFlow<Boolean> get() = _isUserNotRetrieved
 
     private var _currentUser: FirebaseUser? = null
     val currentUser: FirebaseUser? get() = _currentUser
@@ -36,7 +36,7 @@ class MainViewModel @Inject constructor(
 
     private fun getUserAuth() {
         _currentUser = getUserUseCase.getUser()
-        _isUserRetrieved.value = true
+        _isUserNotRetrieved.value = false
     }
 
     fun hideSystemUI() {
