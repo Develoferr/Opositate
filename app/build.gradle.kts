@@ -110,6 +110,8 @@ dependencies {
     // Lottie
     implementation(libs.lottie.compose)
 
+    implementation(libs.chart)
+
     // Testing
     implementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

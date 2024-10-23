@@ -22,6 +22,7 @@ firebaseBom = "33.5.0"
 googleServices = "4.4.2"
 crashlytics = "3.0.2"
 lottie = "6.3.0"
+chart = "Beta-0.0.5"
 
 [libraries]
 # Core Libraries
@@ -64,6 +65,8 @@ accompanist-insets = { module = "com.google.accompanist:accompanist-insets", ver
 androidx-core-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "coreSplashScreen" }
 # Lottie
 lottie-compose = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie" }
+# Chart
+chart = { group = "io.github.thechance101", name = "chart", version.ref = "chart" }
 # Testing
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

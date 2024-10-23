@@ -1,6 +1,5 @@
 package com.develofer.opositate.presentation.login.custom
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
@@ -29,7 +28,6 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Color.Companion.Transparent
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.LayoutCoordinates
@@ -232,7 +230,7 @@ fun CustomLoginTextFieldPreview() {
     CustomLoginTextField(
         value = "",
         onValueChange = {},
-        label = "USUARIO",
+        label = "USER",
         isFocused = false,
         onFocusChange = {},
         isPasswordField = true,
