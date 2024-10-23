@@ -151,7 +151,7 @@ fun RegisterFields(uiState: RegisterUiState, registerViewModel: RegisterViewMode
             registerViewModel.validateUsername()
         },
         label = stringResource(id = R.string.register_screen__label_text_field__user).uppercase(), isFocused = uiState.isUsernameFocused,
-        onFocusChange = { registerViewModel.onUsernameFocusChanged(it) }, isPasswordField = false,
+        onFocusChange = { registerViewModel.onUsernameFocusChanged(it) },
         supportingText = uiState.usernameValidateFieldError, isDarkTheme = isDarkTheme,
         haveToolTip = true, toolTipText = stringResource(id = R.string.register_screen__user_text_field__tool_tip)
     )
@@ -161,7 +161,7 @@ fun RegisterFields(uiState: RegisterUiState, registerViewModel: RegisterViewMode
             registerViewModel.onEmailChanged(it)
             registerViewModel.validateEmail()
         }, label = stringResource(id = R.string.register_screen__label_text_field__email).uppercase(), isFocused = uiState.isEmailFocused,
-        onFocusChange = { registerViewModel.onEmailFocusChanged(it) }, isPasswordField = false,
+        onFocusChange = { registerViewModel.onEmailFocusChanged(it) },
         supportingText = uiState.emailValidateFieldError, isDarkTheme = isDarkTheme
     )
 
