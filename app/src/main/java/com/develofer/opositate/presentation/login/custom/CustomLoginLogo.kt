@@ -35,7 +35,7 @@ fun CustomLoginLogo(isDarkTheme: Boolean, isKeyboardVisible: Boolean, modifier: 
     }
 
     Image(
-        painter = painterResource(id = R.drawable.brain_icon__2_),
+        painter = painterResource(id = R.drawable.brain_icon),
         contentDescription = stringResource(id = R.string.register_screen__content_description__brain_image),
         colorFilter = colorFilter,
         modifier = modifierCopy,
