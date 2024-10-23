@@ -1,5 +1,6 @@
 package com.develofer.opositate.ui.custom
 
+import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Assessment
 import androidx.compose.material.icons.filled.CalendarToday
@@ -10,8 +11,12 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.develofer.opositate.R
 import com.develofer.opositate.ui.navigation.AppRoutes.Destination
 
 @Composable
@@ -29,10 +34,10 @@ fun CustomBottomNavigationBar(navController: NavHostController) {
             NavigationBarItem(
                 icon = {
                     when (destination) {
-                        Destination.HOME -> Icon(Icons.Default.Home, contentDescription = null)
-                        Destination.TEST -> Icon(Icons.Default.Assessment, contentDescription = null)
-                        Destination.LESSON -> Icon(Icons.Default.School, contentDescription = null)
-                        Destination.CALENDAR -> Icon(Icons.Default.CalendarToday, contentDescription = null)
+                        Destination.HOME -> Icon(painter = painterResource(id = R.drawable.ic_home), contentDescription = "", modifier = Modifier.size(24.dp))
+                        Destination.TEST -> Icon(painter = painterResource(id = R.drawable.ic_test), contentDescription = "", modifier = Modifier.size(24.dp))
+                        Destination.LESSON -> Icon(painter = painterResource(id = R.drawable.ic_lesson), contentDescription = "", modifier = Modifier.size(24.dp))
+                        Destination.CALENDAR -> Icon(painter = painterResource(id = R.drawable.ic_calendar), contentDescription = "", modifier = Modifier.size(24.dp))
                         else -> null
                     }
                 },

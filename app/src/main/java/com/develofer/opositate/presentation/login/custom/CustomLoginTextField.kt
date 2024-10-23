@@ -61,7 +61,7 @@ fun CustomLoginTextField(
     onFocusChange: (Boolean) -> Unit, isPasswordField: Boolean = false,
     supportingText: ValidateFieldErrors, isDarkTheme: Boolean, textLetterSpacing: TextUnit = 2.sp,
     labelFontSize: TextUnit = 15.sp, textFieldPaddingBottom: Dp = 0.dp, haveToolTip: Boolean = false,
-    toolTipText: String = "", painter: Painter = painterResource(id = R.drawable.ic_info_bold)
+    toolTipText: String = "", painter: Painter = painterResource(id = R.drawable.ic_info)
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
     var showTooltip by remember { mutableStateOf(false) }
@@ -171,9 +171,8 @@ fun getTrailingIcon(
             {
                 IconButton(onClick = onPasswordToggle) {
                     val modifier = if (isFocused || value.isNotEmpty()) Modifier.offset(y = 8.dp) else Modifier.offset(y = 12.dp)
-                    Image(
+                    Icon(
                         painter = if (isPasswordVisible) painterResource(id = R.drawable.ic_open_eye) else painterResource(id = R.drawable.ic_closed_eye),
-                        colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onBackground),
                         contentDescription = stringResource(id = R.string.custom_login_text_field__content_description__password_eye_image),
                         modifier = modifier.size(24.dp).offset(y = padding)
                     )
@@ -186,7 +185,7 @@ fun getTrailingIcon(
                     painter = painter,
                     contentDescription = stringResource(id = R.string.custom_login_text_field__content_description__ic_info),
                     modifier = Modifier
-                        .offset(y = 8.dp).size(16.dp)
+                        .offset(y = 8.dp).size(24.dp)
                         .onGloballyPositioned(onGloballyPositioned)
                         .pointerInput(Unit) { detectTapGestures(onPress = {
                             toggleToolTipVisibility(true)
