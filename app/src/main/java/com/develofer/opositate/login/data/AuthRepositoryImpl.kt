@@ -2,6 +2,7 @@ package com.develofer.opositate.login.data
 
 import com.develofer.opositate.login.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.UserProfileChangeRequest
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,10 +17,29 @@ class AuthRepositoryImpl @Inject constructor(
         if (username.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+                    updateUsername(username, onSuccess, onFailure)
                     onSuccess()
                 } else {
                     onFailure(task.exception?.message ?: "Registration failed")
                 }
+            }
+        }
+    }
+
+    override fun updateUsername(
+        username: String,
+        onSuccess: () -> Unit,
+        onFailure: (String) -> Unit
+    ) {
+        auth.currentUser?.updateProfile(
+            UserProfileChangeRequest.Builder()
+                .setDisplayName(username)
+                .build()
+        )?.addOnCompleteListener { updateTask ->
+            if (updateTask.isSuccessful) {
+                onSuccess()
+            } else {
+                onFailure(updateTask.exception?.message ?: "Profile update failed")
             }
         }
     }
