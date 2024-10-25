@@ -1,7 +1,7 @@
 package com.develofer.opositate.di
 
-import com.develofer.opositate.data.datarepository.AuthRepositoryImpl
-import com.develofer.opositate.domain.repository.AuthRepository
+import com.develofer.opositate.login.data.AuthRepositoryImpl
+import com.develofer.opositate.login.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
