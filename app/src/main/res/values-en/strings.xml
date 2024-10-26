@@ -50,7 +50,17 @@
     <string name="reset_password_dialog__btn_text__cancel">Cancel</string>
 
     // Home Screen
+    <string name="home_screen__app_bar_title__home">Home</string>
     <string name="home_screen__title_text__scores">Scores</string>
     <string name="home_screen__title_text__chart">Chart</string>
+
+    // Test Screen
+    <string name="test_screen__app_bar_title__test">Test</string>
+
+    // Lesson Screen
+    <string name="lesson_screen__app_bar_title__lesson">Lesson</string>
+
+    // Calendar Screen
+    <string name="calendar_screen__app_bar_title__calendar">Calendar</string>
 
 </resources>

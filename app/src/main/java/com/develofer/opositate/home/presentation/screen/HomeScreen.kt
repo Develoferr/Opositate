@@ -35,7 +35,8 @@ fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
     mainViewModel.showSystemUI()
-    LaunchedEffect(Unit) { mainViewModel.setAppBarTitle("Home") }
+    val screenTitle = stringResource(id = R.string.home_screen__app_bar_title__home)
+    LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }
 
     Column(
         modifier = Modifier
