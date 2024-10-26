@@ -14,11 +14,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.develofer.opositate.R
 import com.develofer.opositate.home.components.CustomDualProgressBar
 import com.develofer.opositate.home.components.CustomRadarChart
 import com.develofer.opositate.home.presentation.model.ScoreData
@@ -42,7 +44,10 @@ fun HomeScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val tabTitles = listOf("Puntuaciones", "Gráfica")
+        val tabTitles = listOf(
+            stringResource(id = R.string.home_screen__title_text__scores),
+            stringResource(id = R.string.home_screen__title_text__chart)
+        )
         var selectedTabIndex by remember { mutableIntStateOf(0) }
 
         val items = listOf(

@@ -49,4 +49,8 @@
     <string name="reset_password_dialog__btn_text__send_email">Send email</string>
     <string name="reset_password_dialog__btn_text__cancel">Cancel</string>
 
+    // Home Screen
+    <string name="home_screen__title_text__scores">Scores</string>
+    <string name="home_screen__title_text__chart">Chart</string>
+
 </resources>
