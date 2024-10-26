@@ -96,7 +96,7 @@ class MainActivity : ComponentActivity() {
 
     private fun getStartDestination(): String {
         return if (mainViewModel.currentUser != null) {
-            AppRoutes.Destination.HOME.route
+            AppRoutes.Destination.PROFILE.route
         } else {
             AppRoutes.Destination.LOGIN.route
         }

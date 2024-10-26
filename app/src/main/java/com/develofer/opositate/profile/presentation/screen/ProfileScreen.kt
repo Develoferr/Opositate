@@ -1,4 +1,4 @@
-package com.develofer.opositate.home.presentation.screen
+package com.develofer.opositate.profile.presentation.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
@@ -21,21 +21,21 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
-import com.develofer.opositate.home.components.CustomDualProgressBar
-import com.develofer.opositate.home.components.CustomRadarChart
-import com.develofer.opositate.home.presentation.model.ScoreData
-import com.develofer.opositate.home.presentation.viewmodel.HomeViewModel
+import com.develofer.opositate.profile.components.CustomDualProgressBar
+import com.develofer.opositate.profile.components.CustomRadarChart
+import com.develofer.opositate.profile.presentation.model.ScoreData
+import com.develofer.opositate.profile.presentation.viewmodel.ProfileViewModel
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 
 @Composable
-fun HomeScreen(
+fun ProfileScreen(
     navHostController: NavHostController,
     mainViewModel: MainViewModel = hiltViewModel(),
-    homeViewModel: HomeViewModel = hiltViewModel()
+    profileViewModel: ProfileViewModel = hiltViewModel()
 ) {
     mainViewModel.showSystemUI()
-    val screenTitle = stringResource(id = R.string.home_screen__app_bar_title__home)
+    val screenTitle = stringResource(id = R.string.profile_screen__app_bar_title__profile)
     LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }
 
     Column(
@@ -46,8 +46,8 @@ fun HomeScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         val tabTitles = listOf(
-            stringResource(id = R.string.home_screen__title_text__scores),
-            stringResource(id = R.string.home_screen__title_text__chart)
+            stringResource(id = R.string.profile_screen__title_text__scores),
+            stringResource(id = R.string.profile_screen__title_text__chart)
         )
         var selectedTabIndex by remember { mutableIntStateOf(0) }
 
@@ -119,8 +119,8 @@ fun ChartContent(items: List<ScoreData> = emptyList()) {
 
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
-fun HomeScreenPreview() {
+fun ProfileScreenPreview() {
     OpositateTheme {
-        HomeScreen(rememberNavController())
+        ProfileScreen(rememberNavController())
     }
 }

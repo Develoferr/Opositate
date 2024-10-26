@@ -13,7 +13,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.develofer.opositate.calendar.CalendarScreen
 import com.develofer.opositate.main.custom.CustomAppBar
 import com.develofer.opositate.main.custom.CustomBottomNavigationBar
-import com.develofer.opositate.home.presentation.screen.HomeScreen
+import com.develofer.opositate.profile.presentation.screen.ProfileScreen
 import com.develofer.opositate.lesson.LessonScreen
 import com.develofer.opositate.login.presentation.screen.LoginScreen
 import com.develofer.opositate.login.presentation.screen.RegisterScreen
@@ -33,7 +33,7 @@ fun AppNavigation(
     Scaffold(
         bottomBar =  {
             if (currentRoute in listOf(
-                    Destination.HOME.route,
+                    Destination.PROFILE.route,
                     Destination.TEST.route,
                     Destination.LESSON.route,
                     Destination.CALENDAR.route
@@ -44,7 +44,7 @@ fun AppNavigation(
         },
         topBar = {
             if (currentRoute in listOf(
-                    Destination.HOME.route,
+                    Destination.PROFILE.route,
                     Destination.TEST.route,
                     Destination.LESSON.route,
                     Destination.CALENDAR.route
@@ -61,7 +61,7 @@ fun AppNavigation(
         ) {
             composable(Destination.LOGIN.route) { LoginScreen(navHostController, mainViewModel) }
             composable(Destination.REGISTER.route) { RegisterScreen(navHostController) }
-            composable(Destination.HOME.route) { HomeScreen(navHostController, mainViewModel) }
+            composable(Destination.PROFILE.route) { ProfileScreen(navHostController, mainViewModel) }
             composable(Destination.TEST.route) { TestScreen(navHostController, mainViewModel) }
             composable(Destination.LESSON.route) { LessonScreen(navHostController, mainViewModel) }
             composable(Destination.CALENDAR.route) { CalendarScreen(navHostController, mainViewModel) }
@@ -69,8 +69,8 @@ fun AppNavigation(
     }
 }
 
-fun navigateToHome(navController: NavHostController) {
-    navController.navigate(Destination.HOME.route) {
+fun navigateToProfile(navController: NavHostController) {
+    navController.navigate(Destination.PROFILE.route) {
         popUpTo(0) { inclusive = true }
         launchSingleTop = true
     }

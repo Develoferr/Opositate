@@ -1,4 +1,4 @@
-package com.develofer.opositate.home.components
+package com.develofer.opositate.profile.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box

@@ -1,4 +1,4 @@
-package com.develofer.opositate.home.components
+package com.develofer.opositate.profile.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import androidx.compose.foundation.layout.fillMaxSize

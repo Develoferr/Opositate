@@ -17,7 +17,7 @@ import com.develofer.opositate.main.navigation.AppRoutes.Destination
 @Composable
 fun CustomBottomNavigationBar(navController: NavHostController) {
     val items = listOf(
-        Destination.HOME,
+        Destination.PROFILE,
         Destination.TEST,
         Destination.LESSON,
         Destination.CALENDAR
@@ -29,7 +29,7 @@ fun CustomBottomNavigationBar(navController: NavHostController) {
             NavigationBarItem(
                 icon = {
                     when (destination) {
-                        Destination.HOME -> Icon(painter = painterResource(id = R.drawable.ic_home), contentDescription = "", modifier = Modifier.size(24.dp))
+                        Destination.PROFILE -> Icon(painter = painterResource(id = R.drawable.ic_home), contentDescription = "", modifier = Modifier.size(24.dp))
                         Destination.TEST -> Icon(painter = painterResource(id = R.drawable.ic_test), contentDescription = "", modifier = Modifier.size(24.dp))
                         Destination.LESSON -> Icon(painter = painterResource(id = R.drawable.ic_lesson), contentDescription = "", modifier = Modifier.size(24.dp))
                         Destination.CALENDAR -> Icon(painter = painterResource(id = R.drawable.ic_calendar), contentDescription = "", modifier = Modifier.size(24.dp))

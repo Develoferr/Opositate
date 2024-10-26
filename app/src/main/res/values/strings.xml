@@ -49,10 +49,10 @@
     <string name="reset_password_dialog__btn_text__send_email">Enviar correo</string>
     <string name="reset_password_dialog__btn_text__cancel">Cancelar</string>
 
-    // Home Screen
-    <string name="home_screen__app_bar_title__home">Home</string>
-    <string name="home_screen__title_text__scores">Puntuaciones</string>
-    <string name="home_screen__title_text__chart">Gráfica</string>
+    // Profile Screen
+    <string name="profile_screen__app_bar_title__profile">Perfil</string>
+    <string name="profile_screen__title_text__scores">Puntuaciones</string>
+    <string name="profile_screen__title_text__chart">Gráfica</string>
 
     // Test Screen
     <string name="test_screen__app_bar_title__test">Tests</string>

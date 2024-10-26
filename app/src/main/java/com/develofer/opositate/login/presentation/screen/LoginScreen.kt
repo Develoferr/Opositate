@@ -46,7 +46,7 @@ import com.develofer.opositate.login.presentation.model.LoginState
 import com.develofer.opositate.login.presentation.model.LoginUiState
 import com.develofer.opositate.login.presentation.resetpassword.ResetPasswordDialog
 import com.develofer.opositate.main.navigation.AppRoutes.Destination
-import com.develofer.opositate.main.navigation.navigateToHome
+import com.develofer.opositate.main.navigation.navigateToProfile
 import com.develofer.opositate.login.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
@@ -106,7 +106,7 @@ fun LoginScreen(
             animationState = animationState, uiState = uiState, errorMessage = registerErrorMessage,
             dialogState = dialogState, passwordResetFinished = passwordResetFinished,
             onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState },
-            navigateToHome = { navigateToHome(navController) }, onDialogDismissed = { passwordResetFinished = false }
+            navigateToProfile = { navigateToProfile(navController) }, onDialogDismissed = { passwordResetFinished = false }
         )
     }
 }
@@ -298,7 +298,7 @@ private fun LottieLoadingAnimation(
 private fun HandleDialog(
     animationState: AnimationState, uiState: LoginUiState, errorMessage: String?,
     onAnimationStateChanged: (animationState: AnimationState) -> Unit,
-    navigateToHome: () -> Unit, dialogState: StateFlow<DialogState<LoginDialogType>>,
+    navigateToProfile: () -> Unit, dialogState: StateFlow<DialogState<LoginDialogType>>,
     hideDialog: () -> Unit, passwordResetFinished: Boolean, onDialogDismissed: () -> Unit
 ) {
     if (animationState == AnimationState.Finish || animationState == AnimationState.Dialog ||
@@ -310,7 +310,7 @@ private fun HandleDialog(
                     SuccessDialog(
                         onDismiss = {
                             hideDialog()
-                            navigateToHome()
+                            navigateToProfile()
                         },
                         isDialogVisible = dialogState.collectAsState().value.isVisible,
                         delayTime = 3000,

@@ -1,4 +1,4 @@
-package com.develofer.opositate.home.presentation.model
+package com.develofer.opositate.profile.presentation.model
 
 data class ScoreData(
     val ability: String,
