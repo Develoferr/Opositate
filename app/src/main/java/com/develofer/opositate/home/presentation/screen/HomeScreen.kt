@@ -2,10 +2,15 @@ package com.develofer.opositate.home.presentation.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.*
-import androidx.compose.material3.Button
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -14,7 +19,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.home.presentation.viewmodel.HomeViewModel
-import com.develofer.opositate.main.navigation.navigateToLogin
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 
@@ -34,17 +38,23 @@ fun HomeScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Welcome to the Home Screen!")
+        val tabTitles = listOf("Puntuaciones", "Gráfica")
+        var selectedTabIndex by remember { mutableIntStateOf(0) }
+
 
         Spacer(modifier = Modifier.height(24.dp))
 
-        Button(
-            onClick = {
-                homeViewModel.logout()
-                navigateToLogin(navHostController)
+        Column(modifier = Modifier.fillMaxSize()) {
+             TabRow(selectedTabIndex = selectedTabIndex) {
+                tabTitles.forEachIndexed { index, title ->
+                    Tab(
+                        selected = selectedTabIndex == index,
+                        onClick = { selectedTabIndex = index },
+                        text = { Text(title) }
+                    )
+                }
             }
-        ) {
-            Text(text = "Log Out")
+
         }
     }
 }

@@ -53,7 +53,7 @@ fun CustomRadarChart(radarLabels: List<String>, values: List<Double>, values2: L
                 unit = "",
                 style = PolygonStyle(
                     fillColor = MaterialTheme.colorScheme.primary,
-                    fillColorAlpha = 0.5f,
+                    fillColorAlpha = 0.3f,
                     borderColor = MaterialTheme.colorScheme.primary,
                     borderColorAlpha = 0.8f,
                     borderStrokeWidth = 5f,
@@ -65,7 +65,7 @@ fun CustomRadarChart(radarLabels: List<String>, values: List<Double>, values2: L
                 unit = "",
                 style = PolygonStyle(
                     fillColor = MaterialTheme.colorScheme.secondary,
-                    fillColorAlpha = 0.4f,
+                    fillColorAlpha = 0.3f,
                     borderColor = MaterialTheme.colorScheme.secondary,
                     borderColorAlpha = 1f,
                     borderStrokeWidth = 5f,

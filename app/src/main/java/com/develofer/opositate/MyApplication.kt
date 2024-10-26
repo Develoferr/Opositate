@@ -1,4 +1,4 @@
-package com.develofer.opositate.main
+package com.develofer.opositate
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp
