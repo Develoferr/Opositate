@@ -27,8 +27,10 @@ fun StudyItemList(studyItemList: List<StudyItem>) {
             Card(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 24.dp)
-                    .padding(vertical = 8.dp),
+                    .padding(start = 24.dp)
+                    .padding(end = 24.dp)
+                    .padding(top = if (it == 0) 24.dp else 8.dp)
+                    .padding(bottom = if (it == studyItemList.size - 1) 24.dp else 8.dp)
             ) {
                 Row(
                     modifier = Modifier
@@ -36,14 +38,16 @@ fun StudyItemList(studyItemList: List<StudyItem>) {
                         .padding(16.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
+                    Spacer(modifier = Modifier.width(8.dp))
+
                     Text(
                         text = studyItemList[it].number.toString(),
-                        fontSize = 16.sp,
+                        fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                         color = Color.Gray
                     )
 
-                    Spacer(modifier = Modifier.width(16.dp))
+                    Spacer(modifier = Modifier.width(32.dp))
 
                     Text(
                         text = studyItemList[it].title,
