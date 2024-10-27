@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.develofer.opositate.feature.calendar.presentation.model.CalendarUiState
@@ -21,6 +22,9 @@ import com.develofer.opositate.feature.calendar.utils.daysOfWeek
 import com.develofer.opositate.feature.calendar.utils.getLocalizedMonthName
 import com.develofer.opositate.ui.theme.Gray500
 import com.develofer.opositate.ui.theme.Gray700
+import com.develofer.opositate.ui.theme.Primary
+import com.develofer.opositate.ui.theme.Primary600
+import com.develofer.opositate.ui.theme.Secondary
 import java.time.YearMonth
 
 @Composable
@@ -33,6 +37,7 @@ fun CalendarContent(
     isDarkTheme: Boolean
 ) {
     Column {
+        Spacer(modifier = Modifier.size(32.dp))
         Row(modifier = Modifier.fillMaxWidth()) {
             daysOfWeek.forEach { day ->
                 ContentItem(day, modifier = Modifier.weight(1f))
@@ -76,6 +81,7 @@ fun Header(
             text = "${getLocalizedMonthName(yearMonth).lowercase().replaceFirstChar { it.uppercase() }} ${yearMonth.year}",
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyLarge,
+            fontWeight = FontWeight.W500,
             modifier = Modifier.weight(1f)
         )
         IconButton(onClick = onNextMonthClicked) {
@@ -88,8 +94,9 @@ fun Header(
 fun ContentItem(day: String, modifier: Modifier) {
     Box (modifier = modifier) {
         Text(
-            text = day,
+            text = day.replaceFirstChar { it.uppercase() },
             style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.W500,
             modifier = Modifier
                 .align(Alignment.Center)
                 .padding(10.dp)
