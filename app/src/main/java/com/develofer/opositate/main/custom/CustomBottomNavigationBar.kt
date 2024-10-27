@@ -33,7 +33,8 @@ fun CustomBottomNavigationBar(navController: NavHostController) {
                         Destination.TEST -> Icon(painter = painterResource(id = R.drawable.ic_test), contentDescription = "", modifier = Modifier.size(24.dp))
                         Destination.LESSON -> Icon(painter = painterResource(id = R.drawable.ic_lesson), contentDescription = "", modifier = Modifier.size(24.dp))
                         Destination.CALENDAR -> Icon(painter = painterResource(id = R.drawable.ic_calendar), contentDescription = "", modifier = Modifier.size(24.dp))
-                        else -> null
+                        Destination.LOGIN -> {}
+                        Destination.REGISTER -> {}
                     }
                 },
                 label = { Text(destination.name) },
