@@ -1,7 +1,7 @@
 package com.develofer.opositate.main
 
 import androidx.lifecycle.ViewModel
-import com.develofer.opositate.login.domain.usecase.GetUserUseCase
+import com.develofer.opositate.feature.login.domain.usecase.GetUserUseCase
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

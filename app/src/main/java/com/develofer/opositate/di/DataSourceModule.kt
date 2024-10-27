@@ -1,6 +1,6 @@
 package com.develofer.opositate.di
 
-import com.develofer.opositate.features.calendar.data.local.CalendarDataSource
+import com.develofer.opositate.feature.calendar.data.local.CalendarDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

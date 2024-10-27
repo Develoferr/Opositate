@@ -1,10 +1,10 @@
 package com.develofer.opositate.di
 
-import com.develofer.opositate.features.calendar.data.local.CalendarDataSource
-import com.develofer.opositate.features.calendar.data.repository.CalendarRepositoryImpl
-import com.develofer.opositate.features.calendar.domain.repository.CalendarRepository
-import com.develofer.opositate.features.login.data.AuthRepositoryImpl
-import com.develofer.opositate.features.login.domain.repository.AuthRepository
+import com.develofer.opositate.feature.calendar.data.local.CalendarDataSource
+import com.develofer.opositate.feature.calendar.data.repository.CalendarRepositoryImpl
+import com.develofer.opositate.feature.calendar.domain.repository.CalendarRepository
+import com.develofer.opositate.feature.login.data.AuthRepositoryImpl
+import com.develofer.opositate.feature.login.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
