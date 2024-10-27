@@ -64,6 +64,7 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun RegisterScreen(
     navController: NavHostController,
+    isDarkTheme: Boolean,
     registerViewModel: RegisterViewModel =  hiltViewModel()
 ) {
     val isDarkTheme = isSystemInDarkTheme()
@@ -290,6 +291,6 @@ private fun HandleRegisterDialog(
 @Composable
 fun RegisterPreview() {
     OpositateTheme {
-        RegisterScreen(rememberNavController())
+        RegisterScreen(rememberNavController(), isDarkTheme = true)
     }
 }

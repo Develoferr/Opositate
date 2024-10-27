@@ -3,7 +3,6 @@ package com.develofer.opositate.login.presentation.screen
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -56,10 +55,10 @@ import kotlinx.coroutines.flow.StateFlow
 @Composable
 fun LoginScreen(
     navController: NavHostController,
+    isDarkTheme: Boolean,
     mainViewModel: MainViewModel = hiltViewModel(),
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
-    val isDarkTheme = isSystemInDarkTheme()
     val isKeyboardVisible = WindowInsets.isImeVisible
     val focusManager = LocalFocusManager.current
 
@@ -399,6 +398,6 @@ sealed class AnimationState {
 @Composable
 fun LoginPreview() {
     OpositateTheme {
-        LoginScreen(rememberNavController())
+        LoginScreen(rememberNavController(), true, hiltViewModel())
     }
 }

@@ -59,12 +59,12 @@ fun AppNavigation(
             startDestination = startDestination,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable(Destination.LOGIN.route) { LoginScreen(navHostController, mainViewModel) }
-            composable(Destination.REGISTER.route) { RegisterScreen(navHostController) }
-            composable(Destination.PROFILE.route) { ProfileScreen(navHostController, mainViewModel) }
-            composable(Destination.TEST.route) { TestScreen(navHostController, mainViewModel) }
-            composable(Destination.LESSON.route) { LessonScreen(navHostController, mainViewModel) }
-            composable(Destination.CALENDAR.route) { CalendarScreen(navHostController, mainViewModel) }
+            composable(Destination.LOGIN.route) { LoginScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable(Destination.REGISTER.route) { RegisterScreen(navHostController, isDarkTheme) }
+            composable(Destination.PROFILE.route) { ProfileScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable(Destination.TEST.route) { TestScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable(Destination.LESSON.route) { LessonScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable(Destination.CALENDAR.route) { CalendarScreen(navHostController, isDarkTheme, mainViewModel) }
         }
     }
 }

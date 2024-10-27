@@ -11,15 +11,19 @@ import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.R
 
 @Composable
-fun TestScreen(navHostController: NavHostController, mainViewModel: MainViewModel) {
+fun TestScreen(
+    navHostController: NavHostController,
+    isDarkTheme: Boolean,
+    mainViewModel: MainViewModel = hiltViewModel()
+) {
     val screenTitle = stringResource(id = R.string.test_screen__app_bar_title__test)
     LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }
     val testsList: List<TestItem> = listOf(
-        TestItem(1, "Test", false),
+        TestItem(1, "Test", true),
         TestItem(2, "Test 1", true),
-        TestItem(3, "Test 2", false),
-        TestItem(4, "Test 3", false),
-        TestItem(5, "Test 4", false),
+        TestItem(3, "Test 2", true),
+        TestItem(4, "Test 3", true),
+        TestItem(5, "Test 4", true),
         TestItem(6, "Test 5", false),
         TestItem(7, "Test 6", false),
         TestItem(8, "Test 7", false),
@@ -30,11 +34,11 @@ fun TestScreen(navHostController: NavHostController, mainViewModel: MainViewMode
         TestItem(13, "Test 12", false),
         TestItem(14, "Test 13", false),
     )
-    StudyItemList(testsList)
+    StudyItemList(testsList, isDarkTheme)
 }
 
 @Preview(showBackground = true)
 @Composable
 fun TestScreenPreview() {
-    TestScreen(rememberNavController(), hiltViewModel())
+    TestScreen(rememberNavController(), isDarkTheme = true)
 }

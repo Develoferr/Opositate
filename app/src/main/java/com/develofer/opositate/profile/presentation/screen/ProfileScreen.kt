@@ -21,18 +21,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
+import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.profile.components.CustomDualProgressBar
 import com.develofer.opositate.profile.components.CustomRadarChart
 import com.develofer.opositate.profile.presentation.model.ScoreData
-import com.develofer.opositate.profile.presentation.viewmodel.ProfileViewModel
-import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 
 @Composable
 fun ProfileScreen(
     navHostController: NavHostController,
+    isDarkTheme: Boolean,
     mainViewModel: MainViewModel = hiltViewModel(),
-    profileViewModel: ProfileViewModel = hiltViewModel()
 ) {
     mainViewModel.showSystemUI()
     val screenTitle = stringResource(id = R.string.profile_screen__app_bar_title__profile)
@@ -121,6 +120,6 @@ fun ChartContent(items: List<ScoreData> = emptyList()) {
 @Composable
 fun ProfileScreenPreview() {
     OpositateTheme {
-        ProfileScreen(rememberNavController())
+        ProfileScreen(rememberNavController(), true)
     }
 }
