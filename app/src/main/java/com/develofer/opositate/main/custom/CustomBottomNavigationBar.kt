@@ -29,7 +29,7 @@ fun CustomBottomNavigationBar(navController: NavHostController) {
             NavigationBarItem(
                 icon = {
                     when (destination) {
-                        Destination.PROFILE -> Icon(painter = painterResource(id = R.drawable.ic_brain), contentDescription = "", modifier = Modifier.size(24.dp))
+                        Destination.PROFILE -> Icon(painter = painterResource(id = R.drawable.ic_brain_6), contentDescription = "", modifier = Modifier.size(24.dp))
                         Destination.TEST -> Icon(painter = painterResource(id = R.drawable.ic_test), contentDescription = "", modifier = Modifier.size(24.dp))
                         Destination.LESSON -> Icon(painter = painterResource(id = R.drawable.ic_lesson), contentDescription = "", modifier = Modifier.size(24.dp))
                         Destination.CALENDAR -> Icon(painter = painterResource(id = R.drawable.ic_calendar), contentDescription = "", modifier = Modifier.size(24.dp))
