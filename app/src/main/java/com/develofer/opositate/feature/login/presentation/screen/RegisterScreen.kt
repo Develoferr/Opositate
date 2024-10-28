@@ -134,7 +134,8 @@ fun RegisterHeader(isDarkTheme: Boolean) {
     val text = stringResource(id = R.string.register_screen__title_text__register)
     CustomTitleText(
         text = if (isDarkTheme) text.uppercase() else text,
-        isDarkTheme = isDarkTheme
+        isDarkTheme = isDarkTheme,
+        modifier = Modifier.padding(top = 24.dp)
     )
     CustomSubtitleText(
         text = stringResource(id = R.string.register_screen__text__journey_begins),

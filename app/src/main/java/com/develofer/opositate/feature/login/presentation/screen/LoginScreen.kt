@@ -147,7 +147,8 @@ private fun LoginHeader(isDarkTheme: Boolean) {
     val text = stringResource(id = R.string.login_screen__title_text__welcome)
     CustomTitleText(
         text = if (isDarkTheme) text.uppercase() else text,
-        isDarkTheme = isDarkTheme
+        isDarkTheme = isDarkTheme,
+        modifier = Modifier.padding(top = 24.dp)
     )
     CustomSubtitleText(
         text = stringResource(id = R.string.login_screen__text__sign_in),
