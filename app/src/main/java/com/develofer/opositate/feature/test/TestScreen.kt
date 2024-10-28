@@ -7,8 +7,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.R
+import com.develofer.opositate.main.MainViewModel
 
 @Composable
 fun TestScreen(

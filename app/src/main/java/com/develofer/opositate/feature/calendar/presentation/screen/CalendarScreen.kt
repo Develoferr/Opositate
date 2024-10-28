@@ -1,20 +1,16 @@
 package com.develofer.opositate.feature.calendar.presentation.screen
 
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.calendar.presentation.components.CalendarContent
 import com.develofer.opositate.feature.calendar.presentation.viewmodel.CalendarViewModel
+import com.develofer.opositate.main.MainViewModel
 
 @Composable
 fun CalendarScreen(

@@ -1,7 +1,7 @@
 package com.develofer.opositate.feature.calendar.presentation.model
 
-import java.time.YearMonth
 import java.time.LocalDate
+import java.time.YearMonth
 
 data class CalendarUiState (
     val yearMonth: YearMonth,

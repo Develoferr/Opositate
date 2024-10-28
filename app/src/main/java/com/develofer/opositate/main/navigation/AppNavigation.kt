@@ -11,15 +11,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.develofer.opositate.feature.calendar.presentation.screen.CalendarScreen
-import com.develofer.opositate.main.components.CustomAppBar
-import com.develofer.opositate.main.components.CustomBottomNavigationBar
-import com.develofer.opositate.feature.profile.presentation.screen.ProfileScreen
 import com.develofer.opositate.feature.lesson.LessonScreen
 import com.develofer.opositate.feature.login.presentation.screen.LoginScreen
 import com.develofer.opositate.feature.login.presentation.screen.RegisterScreen
-import com.develofer.opositate.main.navigation.AppRoutes.Destination
-import com.develofer.opositate.main.MainViewModel
+import com.develofer.opositate.feature.profile.presentation.screen.ProfileScreen
 import com.develofer.opositate.feature.test.TestScreen
+import com.develofer.opositate.main.MainViewModel
+import com.develofer.opositate.main.components.CustomAppBar
+import com.develofer.opositate.main.components.CustomBottomNavigationBar
+import com.develofer.opositate.main.navigation.AppRoutes.Destination
 
 @Composable
 fun AppNavigation(

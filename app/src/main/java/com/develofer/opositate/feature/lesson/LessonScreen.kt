@@ -11,10 +11,10 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.test.LessonItem
 import com.develofer.opositate.feature.test.StudyItemList
+import com.develofer.opositate.main.MainViewModel
 
 
 @Composable

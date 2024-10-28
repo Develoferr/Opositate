@@ -1,7 +1,15 @@
 package com.develofer.opositate.feature.profile.presentation.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -21,10 +29,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
-import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.feature.profile.components.CustomDualProgressBar
 import com.develofer.opositate.feature.profile.components.CustomRadarChart
 import com.develofer.opositate.feature.profile.presentation.model.ScoreData
+import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 
 @Composable
