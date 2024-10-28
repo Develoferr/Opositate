@@ -41,37 +41,37 @@ fun CalendarContent(
 ) {
     Column {
         Spacer(modifier = Modifier.size(32.dp))
-        Row(modifier = Modifier.fillMaxWidth()) {
-            daysOfWeek.forEach { day ->
-                ContentItem(day, modifier = Modifier.weight(1f))
-            }
-        }
-        Header(
-            yearMonth = yearMonth,
-            onPreviousMonthClicked = onPreviousMonthClicked,
-            onNextMonthClicked = onNextMonthClicked
-        )
+        WeekDays()
+        MonthYearSelector(yearMonth, onPreviousMonthClicked, onNextMonthClicked)
+        DaysOfMonth(dates, onDateClick, isDarkTheme)
+    }
+}
 
-        var index = 0
-        repeat(6) {
-            Row {
-                repeat(7) {
-                    val element = if (index < dates.size) dates[index] else CalendarUiState.Date.Empty
-                    ContentDateItem(
-                        date = element,
-                        onClickListener = onDateClick,
-                        modifier = Modifier.weight(1f),
-                        isDarkTheme = isDarkTheme
-                    )
-                    index++
-                }
-            }
+@Composable
+fun WeekDays() {
+    Row(modifier = Modifier.fillMaxWidth()) {
+        daysOfWeek.forEach { day ->
+            DayOfWeekItem(day, modifier = Modifier.weight(1f))
         }
     }
 }
 
 @Composable
-fun Header(
+fun DayOfWeekItem(day: String, modifier: Modifier) {
+    Box (modifier = modifier) {
+        Text(
+            text = day.replaceFirstChar { it.uppercase() },
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.W500,
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(10.dp)
+        )
+    }
+}
+
+@Composable
+fun MonthYearSelector(
     yearMonth: YearMonth,
     onPreviousMonthClicked: () -> Unit,
     onNextMonthClicked: () -> Unit
@@ -94,21 +94,30 @@ fun Header(
 }
 
 @Composable
-fun ContentItem(day: String, modifier: Modifier) {
-    Box (modifier = modifier) {
-        Text(
-            text = day.replaceFirstChar { it.uppercase() },
-            style = MaterialTheme.typography.bodyMedium,
-            fontWeight = FontWeight.W500,
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(10.dp)
-        )
+private fun DaysOfMonth(
+    dates: List<CalendarUiState.Date>,
+    onDateClick: (CalendarUiState.Date) -> Unit,
+    isDarkTheme: Boolean
+) {
+    var index = 0
+    repeat(6) {
+        Row {
+            repeat(7) {
+                val date = if (index < dates.size) dates[index] else CalendarUiState.Date.Empty
+                DayOfMonthItem(
+                    date = date,
+                    onClickListener = onDateClick,
+                    modifier = Modifier.weight(1f),
+                    isDarkTheme = isDarkTheme
+                )
+                index++
+            }
+        }
     }
 }
 
 @Composable
-fun ContentDateItem(
+fun DayOfMonthItem(
     date: CalendarUiState.Date,
     onClickListener: (CalendarUiState.Date) -> Unit,
     modifier: Modifier = Modifier,
@@ -118,23 +127,16 @@ fun ContentDateItem(
         else { if (isDarkTheme) Gray700 else Gray500 }
     Box(
         modifier = modifier
-            .background(
-                color = if (date.isSelected) {
-                    MaterialTheme.colorScheme.secondaryContainer
-                } else {
-                    Color.Transparent
-                }
+            .background( color =
+                if (date.isSelected) MaterialTheme.colorScheme.secondaryContainer
+                else Color.Transparent
             )
-            .clickable {
-                onClickListener(date)
-            }
+            .clickable { onClickListener(date) }
     ) {
         Text(
             text = date.dayOfMonth,
             style = MaterialTheme.typography.bodyMedium.copy(color = textColor),
-            modifier = Modifier
-                .align(Alignment.Center)
-                .padding(10.dp)
+            modifier = Modifier.align(Alignment.Center).padding(10.dp)
         )
     }
 }
