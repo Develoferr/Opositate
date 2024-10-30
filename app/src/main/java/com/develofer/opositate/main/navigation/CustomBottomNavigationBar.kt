@@ -1,4 +1,4 @@
-package com.develofer.opositate.main.components
+package com.develofer.opositate.main.navigation
 
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
