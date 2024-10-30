@@ -18,7 +18,6 @@ import com.develofer.opositate.feature.profile.presentation.screen.ProfileScreen
 import com.develofer.opositate.feature.test.TestScreen
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.main.components.CustomAppBar
-import com.develofer.opositate.main.components.CustomBottomNavigationBar
 import com.develofer.opositate.main.navigation.AppRoutes.Destination
 
 @Composable
@@ -50,7 +49,14 @@ fun AppNavigation(
                     Destination.CALENDAR.route
                 )
             ) {
-                CustomAppBar(appBarTitle, isDarkTheme)
+                CustomAppBar(
+                    title = appBarTitle,
+                    isDarkTheme = isDarkTheme,
+                    logout = {
+                        mainViewModel.logout()
+                        navigateToLogin(navHostController)
+                    }
+                )
             }
         }
     ) { paddingValues ->

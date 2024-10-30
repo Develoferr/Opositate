@@ -10,7 +10,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
-    private val getUserUseCase: GetUserUseCase
+    private val getUserUseCase: GetUserUseCase,
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
     private val _isUserNotRetrieved = MutableStateFlow(true)
@@ -34,6 +35,11 @@ class MainViewModel @Inject constructor(
     private fun getUserAuth() {
         _currentUser = getUserUseCase.getUser()
         _isUserNotRetrieved.value = false
+    }
+
+    fun logout() {
+        logoutUseCase()
+        _isUserNotRetrieved.value = true
     }
 
     fun hideSystemUI() {

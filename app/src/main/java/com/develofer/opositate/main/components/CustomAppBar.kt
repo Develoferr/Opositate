@@ -33,7 +33,8 @@ import com.develofer.opositate.feature.login.presentation.component.CustomTitleT
 fun CustomAppBar(
     title: State<String>,
     isDarkTheme: Boolean,
-    actions: @Composable () -> Unit = {}
+    actions: @Composable () -> Unit = {},
+    logout: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
@@ -79,8 +80,9 @@ fun CustomAppBar(
                     onDismissRequest = { expanded = false }
                 ) {
                     DropdownMenuItem(
-                        text = { Text("Opción 1") },
+                        text = { Text("Cerrar sesión") },
                         onClick = {
+                            logout()
                             expanded = false
                         }
                     )
