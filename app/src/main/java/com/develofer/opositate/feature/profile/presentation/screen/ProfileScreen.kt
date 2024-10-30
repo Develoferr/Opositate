@@ -16,6 +16,7 @@ import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -25,13 +26,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
+import com.develofer.opositate.feature.login.presentation.component.CustomBodyText
 import com.develofer.opositate.feature.profile.components.CustomDualProgressBar
 import com.develofer.opositate.feature.profile.components.CustomRadarChart
 import com.develofer.opositate.feature.profile.presentation.model.ScoreData
+import com.develofer.opositate.feature.profile.presentation.viewmodel.ProfileViewModel
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
 
@@ -40,10 +44,13 @@ fun ProfileScreen(
     navHostController: NavHostController,
     isDarkTheme: Boolean,
     mainViewModel: MainViewModel = hiltViewModel(),
+    profileViewModel: ProfileViewModel = hiltViewModel()
 ) {
     mainViewModel.showSystemUI()
     val screenTitle = stringResource(id = R.string.profile_screen__app_bar_title__profile)
     LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }
+
+    val userName by profileViewModel.userName.collectAsState()
 
     Column(
         modifier = Modifier
@@ -52,6 +59,10 @@ fun ProfileScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        CustomBodyText(text = userName, isDarkTheme = isDarkTheme, textSize = 25.sp)
+        Spacer(modifier = Modifier.height(16.dp))
+        Text(text = "Nivel 2")
+        Spacer(modifier = Modifier.height(16.dp))
         val tabTitles = listOf(
             stringResource(id = R.string.profile_screen__title_text__scores),
             stringResource(id = R.string.profile_screen__title_text__chart)
