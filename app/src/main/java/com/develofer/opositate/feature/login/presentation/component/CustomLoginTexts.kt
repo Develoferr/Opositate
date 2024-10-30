@@ -6,6 +6,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
@@ -30,5 +31,15 @@ fun CustomSubtitleText(text: String, isDarkTheme: Boolean) {
         style = MaterialTheme.typography.labelMedium,
         modifier = Modifier.padding(top = 4.dp),
         letterSpacing = 3.sp
+    )
+}
+
+@Composable
+fun CustomBodyText(text: String, isDarkTheme: Boolean, textSize: TextUnit) {
+    Text(
+        text = text,
+        fontSize = textSize,
+        color = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
+        style = MaterialTheme.typography.bodyMedium,
     )
 }
