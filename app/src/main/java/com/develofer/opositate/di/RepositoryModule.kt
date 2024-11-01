@@ -5,6 +5,8 @@ import com.develofer.opositate.feature.calendar.data.repository.CalendarReposito
 import com.develofer.opositate.feature.calendar.domain.repository.CalendarRepository
 import com.develofer.opositate.feature.login.data.AuthRepositoryImpl
 import com.develofer.opositate.feature.login.domain.repository.AuthRepository
+import com.develofer.opositate.feature.profile.UserRepository
+import com.develofer.opositate.feature.profile.UserRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
@@ -47,4 +49,21 @@ object RepositoryModule {
     ): CalendarRepositoryImpl {
         return CalendarRepositoryImpl(calendarDataSource)
     }
+
+    @Provides
+    @Singleton
+    fun provideUserRepository(
+        userRepositoryImpl: UserRepositoryImpl
+    ): UserRepository {
+        return userRepositoryImpl
+    }
+
+    @Provides
+    @Singleton
+    fun provideUserRepositoryImpl(
+        auth: FirebaseAuth
+    ): UserRepositoryImpl {
+        return UserRepositoryImpl(auth)
+    }
+
 }

@@ -6,7 +6,7 @@ import javax.inject.Singleton
 
 @Singleton
 class GetUserNameUseCase @Inject constructor(
-    private val authRepository: AuthRepository
+    private val userRepository: UserRepository
 ) {
-    operator fun invoke(): String = authRepository.getUserName()
+    operator fun invoke(): String = userRepository.getUserName()
 }
