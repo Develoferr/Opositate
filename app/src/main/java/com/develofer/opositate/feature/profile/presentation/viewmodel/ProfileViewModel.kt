@@ -2,7 +2,6 @@ package com.develofer.opositate.feature.profile.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.develofer.opositate.feature.login.domain.usecase.LogoutUseCase
 import com.develofer.opositate.feature.profile.GetUserNameUseCase
 import com.develofer.opositate.feature.profile.GetUserScoresDocument
 import com.develofer.opositate.feature.profile.UserScores
@@ -14,7 +13,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
-    private val logoutUseCase: LogoutUseCase,
     private val getUserNameUseCase: GetUserNameUseCase,
     private val getUserScoresDocument: GetUserScoresDocument
 ) : ViewModel() {

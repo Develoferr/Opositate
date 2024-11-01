@@ -35,7 +35,6 @@ import com.develofer.opositate.feature.login.presentation.component.CustomBodyTe
 import com.develofer.opositate.feature.profile.Score
 import com.develofer.opositate.feature.profile.components.CustomDualProgressBar
 import com.develofer.opositate.feature.profile.components.CustomRadarChart
-import com.develofer.opositate.feature.profile.presentation.model.ScoreData
 import com.develofer.opositate.feature.profile.presentation.viewmodel.ProfileViewModel
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
