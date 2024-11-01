@@ -32,6 +32,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.presentation.component.CustomBodyText
+import com.develofer.opositate.feature.profile.Score
 import com.develofer.opositate.feature.profile.components.CustomDualProgressBar
 import com.develofer.opositate.feature.profile.components.CustomRadarChart
 import com.develofer.opositate.feature.profile.presentation.model.ScoreData
@@ -51,6 +52,7 @@ fun ProfileScreen(
     LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }
 
     val userName by profileViewModel.userName.collectAsState()
+    val userScores by profileViewModel.scores.collectAsState()
 
     Column(
         modifier = Modifier
@@ -61,22 +63,13 @@ fun ProfileScreen(
     ) {
         CustomBodyText(text = userName, isDarkTheme = isDarkTheme, textSize = 25.sp)
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Nivel 2")
+        Text(text = "Nivel : ${userScores.level}")
         Spacer(modifier = Modifier.height(16.dp))
         val tabTitles = listOf(
             stringResource(id = R.string.profile_screen__title_text__scores),
             stringResource(id = R.string.profile_screen__title_text__chart)
         )
         var selectedTabIndex by remember { mutableIntStateOf(0) }
-
-        val items = listOf(
-            ScoreData("Habilidad 1", 0.6f, 0.2f),
-            ScoreData("Habilidad 2", 0.5f, 0.1f),
-            ScoreData("Habilidad 3", 0.7f, 0.3f),
-            ScoreData("Habilidad 4", 0.5f, 0.2f),
-            ScoreData("Habilidad 5", 0.8f, 0.2f),
-            ScoreData("Habilidad 6", 0.6f, 0.1f),
-        )
 
         Spacer(modifier = Modifier.height(24.dp))
 
@@ -91,15 +84,15 @@ fun ProfileScreen(
                 }
             }
             when (selectedTabIndex) {
-                0 -> ScoresContent(items)
-                1 -> ChartContent(items)
+                0 -> ScoresContent(userScores.scores)
+                1 -> ChartContent(userScores.scores)
             }
         }
     }
 }
 
 @Composable
-fun ScoresContent(items: List<ScoreData> = emptyList()) {
+fun ScoresContent(items: List<Score> = emptyList()) {
     Spacer(modifier = Modifier.size(16.dp))
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
@@ -109,8 +102,8 @@ fun ScoresContent(items: List<ScoreData> = emptyList()) {
             Text(text = items[it].ability)
             Spacer(modifier = Modifier.size(0.dp))
             CustomDualProgressBar(
-                primaryProgress = items[it].primaryProgress,
-                secondaryProgress = items[it].secondaryProgress
+                primaryProgress = ( items[it].startScore / 10 ).toFloat(),
+                secondaryProgress = ( items[it].presentScore / 10 ).toFloat()
             )
             Spacer(modifier = Modifier.size(8.dp))
         }
@@ -118,10 +111,10 @@ fun ScoresContent(items: List<ScoreData> = emptyList()) {
 }
 
 @Composable
-fun ChartContent(items: List<ScoreData> = emptyList()) {
+fun ChartContent(items: List<Score> = emptyList()) {
     val radarLabels = items.map { it.ability }
-    val values = items.map { (it.primaryProgress * 10).toDouble() }
-    val values2 = items.map { (it.secondaryProgress * 10).toDouble() }
+    val values = items.map { it.startScore.toDouble() }
+    val values2 = items.map { it.presentScore.toDouble() }
     Box(
         modifier = Modifier
             .fillMaxSize()
