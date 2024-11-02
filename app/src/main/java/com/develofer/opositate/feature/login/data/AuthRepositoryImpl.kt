@@ -3,7 +3,6 @@ package com.develofer.opositate.feature.login.data
 import com.develofer.opositate.feature.login.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
-import com.google.firebase.firestore.FirebaseFirestore
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -20,71 +19,9 @@ class AuthRepositoryImpl @Inject constructor(
         if (username.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
             auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    updateUsername(username, onSuccess, onFailure)
-                    createUserScoreDocument(onSuccess, onFailure)
-                } else {
-                    onFailure(task.exception?.message ?: "Registration failed")
-                }
-            }
-        }
-    }
-    private fun createUserScoreDocument(onSuccess: () -> Unit, onFailure: (String) -> Unit) {
-        val userId = getUser()?.uid
-        if (userId != null) {
-            val firestore = FirebaseFirestore.getInstance()
-            val scoresCollection = firestore.collection("scores")
-            val userScoreDocument = scoresCollection.document(userId)
-            userScoreDocument.set(
-                mapOf(
-                    "level" to 0,
-                    "scores" to listOf(
-                        mapOf(
-                            "ability" to "1",
-                            "start_score" to 0,
-                            "present_score" to 0,
-                        ),
-                        mapOf(
-                            "ability" to "2",
-                            "start_score" to 0,
-                            "present_score" to 0,
-                        ),
-                        mapOf(
-                            "ability" to "3",
-                            "start_score" to 0,
-                            "present_score" to 0,
-                        ),
-                        mapOf(
-                            "ability" to "4",
-                            "start_score" to 0,
-                            "present_score" to 0,
-                        ),
-                        mapOf(
-                            "ability" to "5",
-                            "start_score" to 0,
-                            "present_score" to 0,
-                        ),
-                        mapOf(
-                            "ability" to "6",
-                            "start_score" to 0,
-                            "present_score" to 0,
-                        ),
-                        mapOf(
-                            "ability" to "7",
-                            "start_score" to 0,
-                            "present_score" to 0,
-                        ),
-                        mapOf(
-                            "ability" to "8",
-                            "start_score" to 0,
-                            "present_score" to 0,
-                        ),
-                    )
-                )
-            ).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
                     onSuccess()
                 } else {
-                    onFailure(task.exception?.message ?: "Failed to create user score document")
+                    onFailure(task.exception?.message ?: "Registration failed")
                 }
             }
         }

@@ -20,19 +20,14 @@ class UserRepositoryImpl @Inject constructor(
             val firestore = FirebaseFirestore.getInstance()
             val scoresCollection = firestore.collection("scores")
             val userScoreDocument = scoresCollection.document(userId)
+            val userScores: MutableList<Map<String, Any>> = mutableListOf()
+            Abilities.entries.forEach {
+                userScores.add(mapOf("ability" to it.ability, "startScore" to 0, "presentScore" to 0))
+            }
             userScoreDocument.set(
                 mapOf(
                     "level" to 0,
-                    "scores" to listOf(
-                        mapOf("ability" to "1", "startScore" to 0, "presentScore" to 0,),
-                        mapOf("ability" to "2", "startScore" to 0, "presentScore" to 0,),
-                        mapOf("ability" to "3", "startScore" to 0, "presentScore" to 0,),
-                        mapOf("ability" to "4", "startScore" to 0, "presentScore" to 0,),
-                        mapOf("ability" to "5", "startScore" to 0, "presentScore" to 0,),
-                        mapOf("ability" to "6", "startScore" to 0, "presentScore" to 0,),
-                        mapOf("ability" to "7", "startScore" to 0, "presentScore" to 0,),
-                        mapOf("ability" to "8", "startScore" to 0, "presentScore" to 0,),
-                    )
+                    "scores" to userScores
                 )
             ).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
