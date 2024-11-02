@@ -26,14 +26,14 @@ fun CustomDualProgressBar(
     ) {
 
         ProgressBar(
-            progress = primaryProgress,
+            progress = secondaryProgress,
             color = Primary,
             modifier = Modifier
                 .height(20.dp)
         )
 
         ProgressBar(
-            progress = secondaryProgress,
+            progress = primaryProgress,
             color = Secondary,
             modifier = Modifier
                 .height(20.dp)
