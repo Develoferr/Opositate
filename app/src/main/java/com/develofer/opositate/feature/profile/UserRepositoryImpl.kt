@@ -21,8 +21,8 @@ class UserRepositoryImpl @Inject constructor(
             val scoresCollection = firestore.collection("scores")
             val userScoreDocument = scoresCollection.document(userId)
             val userScores: MutableList<Map<String, Any>> = mutableListOf()
-            Abilities.entries.forEach {
-                userScores.add(mapOf("ability" to it.ability, "startScore" to 0, "presentScore" to 0))
+            Abilities.entries.forEach { ability ->
+                userScores.add(mapOf("ability" to ability.abilityName, "startScore" to 0, "presentScore" to 0))
             }
             userScoreDocument.set(
                 mapOf(

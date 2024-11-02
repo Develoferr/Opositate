@@ -1,6 +1,6 @@
 package com.develofer.opositate.feature.profile
 
-enum class Abilities(val ability: String) {
+enum class Abilities(val abilityName: String) {
     LOGICAL_REASONING("Logical Reasoning"),
     VERBAL_REASONING("Verbal Reasoning"),
     NUMERICAL_REASONING("Numerical Reasoning"),
