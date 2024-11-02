@@ -53,6 +53,7 @@
     <string name="profile_screen__app_bar_title__profile">Profile</string>
     <string name="profile_screen__title_text__scores">Scores</string>
     <string name="profile_screen__title_text__chart">Chart</string>
+    <string name="profile_screen__text__level">Level  %1$d</string>
 
     // Test Screen
     <string name="test_screen__app_bar_title__test">Test</string>

@@ -62,7 +62,7 @@ fun ProfileScreen(
     ) {
         CustomBodyText(text = userName, isDarkTheme = isDarkTheme, textSize = 25.sp)
         Spacer(modifier = Modifier.height(16.dp))
-        Text(text = "Nivel : ${userScores.level}")
+        Text(text = stringResource(id = R.string.profile_screen__text__level, userScores.level))
         Spacer(modifier = Modifier.height(16.dp))
         val tabTitles = listOf(
             stringResource(id = R.string.profile_screen__title_text__scores),
