@@ -1,5 +1,6 @@
 package com.develofer.opositate.main.navigation
 
+import androidx.compose.animation.core.Spring
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -13,10 +14,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.develofer.opositate.R
+import com.develofer.opositate.main.navigation.AppRoutes.Destination
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.graphicsLayer
-import com.develofer.opositate.main.navigation.AppRoutes.Destination
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.spring
+import androidx.compose.runtime.getValue
 
 @Composable
 fun CustomBottomNavigationBar(navController: NavHostController) {
@@ -79,13 +83,17 @@ fun GradientIcon(
     modifier: Modifier = Modifier,
     isSelected: Boolean
 ) {
-    val colors = listOf(
-        MaterialTheme.colorScheme.primary,
-        MaterialTheme.colorScheme.secondary
+    val scale by animateFloatAsState(
+        targetValue = if (isSelected) 1.15f else 1f,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy,
+            stiffness = Spring.StiffnessLow
+        ),
+        label = "scale"
     )
+    val colors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.secondary)
     val iconTint = if (isSelected) {
-        Modifier
-            .graphicsLayer(alpha = 0.99f)
+        Modifier.graphicsLayer(alpha = 0.99f, scaleX = scale, scaleY = scale)
             .drawWithCache {
                 onDrawWithContent {
                     drawContent()
@@ -100,9 +108,8 @@ fun GradientIcon(
                 }
             }
     } else {
-        Modifier
+        Modifier.graphicsLayer(scaleX = scale, scaleY = scale)
     }
-
     Icon(
         painter = painter,
         contentDescription = contentDescription,
