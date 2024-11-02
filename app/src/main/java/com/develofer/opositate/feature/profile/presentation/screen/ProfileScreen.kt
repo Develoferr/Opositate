@@ -101,8 +101,8 @@ fun ScoresContent(items: List<Score> = emptyList()) {
             Text(text = items[it].abilityName)
             Spacer(modifier = Modifier.size(0.dp))
             CustomDualProgressBar(
-                primaryProgress = ( items[it].startScore / 10 ).toFloat(),
-                secondaryProgress = ( items[it].presentScore / 10 ).toFloat()
+                primaryProgress = ( items[it].startScore.toFloat() / 10 ),
+                secondaryProgress = ( items[it].presentScore.toFloat() / 10 )
             )
             Spacer(modifier = Modifier.size(8.dp))
         }
