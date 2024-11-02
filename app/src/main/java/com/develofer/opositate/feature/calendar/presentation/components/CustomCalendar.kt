@@ -41,8 +41,8 @@ fun CalendarContent(
 ) {
     Column {
         Spacer(modifier = Modifier.size(32.dp))
-        WeekDays()
         MonthYearSelector(yearMonth, onPreviousMonthClicked, onNextMonthClicked)
+        WeekDays()
         DaysOfMonth(dates, onDateClick, isDarkTheme)
     }
 }
