@@ -23,7 +23,6 @@ import com.develofer.opositate.ui.theme.OpositateTheme
 fun CustomRadarChart(radarLabels: List<String>, values: List<Double>, values2: List<Double>) {
     val labelsStyle = TextStyle(
         color = MaterialTheme.colorScheme.onBackground,
-        fontFamily = FontFamily.Serif,
         fontWeight = FontWeight.Medium,
         fontSize = 10.sp
     )
@@ -37,7 +36,7 @@ fun CustomRadarChart(radarLabels: List<String>, values: List<Double>, values2: L
 
     RadarChart(
         modifier = Modifier.fillMaxSize(),
-        radarLabels = radarLabels,
+        radarLabels = radarLabels.map { label -> label.filter { letter -> letter.isUpperCase() }},
         labelsStyle = labelsStyle,
         netLinesStyle = NetLinesStyle(
             netLineColor = MaterialTheme.colorScheme.secondaryContainer,
