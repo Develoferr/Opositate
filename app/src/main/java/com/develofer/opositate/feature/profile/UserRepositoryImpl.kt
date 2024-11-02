@@ -22,7 +22,7 @@ class UserRepositoryImpl @Inject constructor(
             val userScoreDocument = scoresCollection.document(userId)
             val userScores: MutableList<Map<String, Any>> = mutableListOf()
             Abilities.entries.forEach { ability ->
-                userScores.add(mapOf("ability" to ability.abilityName, "startScore" to 0, "presentScore" to 0))
+                userScores.add(mapOf("abilityName" to ability.abilityName, "startScore" to 0, "presentScore" to 0))
             }
             userScoreDocument.set(
                 mapOf(
