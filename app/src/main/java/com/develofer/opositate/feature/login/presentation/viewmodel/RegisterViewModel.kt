@@ -59,7 +59,7 @@ class RegisterViewModel @Inject constructor(
         if (areFieldsValid()) {
             viewModelScope.launch {
                 _uiState.update { it.copy(registerState = RegisterState.Loading) }
-                createUserUseCase.createUser(
+                createUserUseCase(
                     username = _uiState.value.username.trim(),
                     email = _uiState.value.email.trim(),
                     password = _uiState.value.password.trim(),

@@ -15,14 +15,12 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun getUserName(): String = getUser()?.displayName ?: ""
 
-    override fun createUser(username: String, email: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
-        if (username.isNotBlank() && email.isNotBlank() && password.isNotBlank()) {
-            auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    onSuccess()
-                } else {
-                    onFailure(task.exception?.message ?: "Registration failed")
-                }
+    override fun createUser(email: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { createTask ->
+            if (createTask.isSuccessful) {
+                onSuccess()
+            } else {
+                onFailure(createTask.exception?.message ?: "Registration failed")
             }
         }
     }
@@ -47,11 +45,11 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun login(username: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
         if (username.isNotBlank() && password.isNotBlank()) {
-            auth.signInWithEmailAndPassword(username, password).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+            auth.signInWithEmailAndPassword(username, password).addOnCompleteListener { loginTask ->
+                if (loginTask.isSuccessful) {
                     onSuccess()
                 } else {
-                    onFailure(task.exception?.message ?: "Login failed")
+                    onFailure(loginTask.exception?.message ?: "Login failed")
                 }
             }
         }
@@ -63,11 +61,11 @@ class AuthRepositoryImpl @Inject constructor(
         onFailure: (String) -> Unit
     ) {
         auth.sendPasswordResetEmail(email)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+            .addOnCompleteListener { sendTask ->
+                if (sendTask.isSuccessful) {
                     onSuccess()
                 } else {
-                    onFailure(task.exception?.message ?: "Failed to send reset email")
+                    onFailure(sendTask.exception?.message ?: "Failed to send reset email")
                 }
             }
     }

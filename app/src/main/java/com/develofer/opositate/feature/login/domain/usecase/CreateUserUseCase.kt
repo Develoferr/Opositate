@@ -12,9 +12,9 @@ class CreateUserUseCase @Inject constructor(
     private val updateUserNameUseCase: UpdateUserNameUseCase,
     private val createUserScoreDocumentUseCase: CreateUserScoreDocumentUseCase
 ) {
-    fun createUser(username: String, email: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+    operator fun invoke(username: String, email: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
         authRepository.createUser(
-            username, email, password,
+            email, password,
             onSuccess = {
                 updateUserNameUseCase(
                     username,
