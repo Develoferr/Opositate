@@ -170,7 +170,7 @@ fun getTrailingIcon(
                 IconButton(onClick = onPasswordToggle) {
                     val modifier = if (isFocused || value.isNotEmpty()) Modifier.offset(y = 8.dp) else Modifier.offset(y = 12.dp)
                     Icon(
-                        painter = if (isPasswordVisible) painterResource(id = R.drawable.ic_open_eye) else painterResource(id = R.drawable.ic_closed_eye),
+                        painter = if (isPasswordVisible) painterResource(id = R.drawable.ic_open_eye) else painterResource(id = R.drawable.ic_closed_eye_png),
                         contentDescription = stringResource(id = R.string.custom_login_text_field__content_description__password_eye_image),
                         modifier = modifier.size(24.dp).offset(y = padding)
                     )

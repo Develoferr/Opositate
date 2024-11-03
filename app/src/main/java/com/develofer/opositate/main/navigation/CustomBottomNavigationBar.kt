@@ -38,22 +38,22 @@ fun CustomBottomNavigationBar(navController: NavHostController) {
                 icon = {
                     when (destination) {
                         Destination.PROFILE -> GradientIcon(
-                            painter = painterResource(id = R.drawable.ic_brain_profile),
+                            painter = painterResource(id = R.drawable.ic_brain_profile_png),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
                         )
                         Destination.TEST -> GradientIcon(
-                            painter = painterResource(id = R.drawable.ic_test),
+                            painter = painterResource(id = R.drawable.ic_test_png),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
                         )
                         Destination.LESSON -> GradientIcon(
-                            painter = painterResource(id = R.drawable.ic_lesson),
+                            painter = painterResource(id = R.drawable.ic_lesson_png),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
                         )
                         Destination.CALENDAR -> GradientIcon(
-                            painter = painterResource(id = R.drawable.ic_calendar),
+                            painter = painterResource(id = R.drawable.ic_calendar_png),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
                         )
