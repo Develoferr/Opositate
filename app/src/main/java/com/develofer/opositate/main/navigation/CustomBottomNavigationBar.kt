@@ -38,7 +38,7 @@ fun CustomBottomNavigationBar(navController: NavHostController) {
                 icon = {
                     when (destination) {
                         Destination.PROFILE -> GradientIcon(
-                            painter = painterResource(id = R.drawable.ic_brain_6),
+                            painter = painterResource(id = R.drawable.ic_brain_profile),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
                         )
