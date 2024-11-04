@@ -64,4 +64,13 @@
     // Calendar Screen
     <string name="calendar_screen__app_bar_title__calendar">Calendario</string>
 
+    // Test Solving Screen
+    <string name="test_solving_screen__text__time">%1$d:%2$d</string>
+    <string name="test_solving_screen__content_description_before_button">Botón Anterior</string>
+    <string name="test_solving_screen__content_description__after_button">Botón Siguiente</string>
+    <string name="test_solving_screen__text_btn__finish">Finalizar test</string>
+    <string name="test_solving_screen__text_btn__start">Let\'s Go</string>
+    <string name="test_solving_screen__text_title">Instrucciones del test</string>
+    <string name="test_solving_screen__text_description">- Puedes contestar a las preguntas en el orden que desees, utiliza los botones inferiores para navegar entre preguntas.\n- Puedes dejar preguntas en blanco pero te recomendamos que contestes al mayor número de preguntas posible.\n- Si no has seleccionado un tiempo máximo de realización del Test, puedes tardar el tiempo que necesites. Si lo has seleccionado, el tiempo empezará a contar cuando cierres esta ventana.</string>
+
 </resources>
