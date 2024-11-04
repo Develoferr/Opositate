@@ -20,7 +20,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.profile.Question
-import com.develofer.opositate.feature.profile.Test
+import com.develofer.opositate.feature.profile.PsTest
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.develofer.opositate.utils.Constants.TWO_DIGITS_FORMAT
 import kotlinx.coroutines.delay
@@ -28,9 +28,9 @@ import java.util.Locale
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
-fun TestSolvingScreen(test: Test) {
-    val testSize = test.questions.size
-    val maxTime = test.maxTime
+fun TestSolvingScreen(psTest: PsTest) {
+    val testSize = psTest.questions.size
+    val maxTime = psTest.maxTime
     var currentQuestionIndex by remember { mutableIntStateOf(0) }
     var showStartDialog by remember { mutableStateOf(true) }
     var timeCount by remember { mutableIntStateOf(0) }
@@ -45,7 +45,7 @@ fun TestSolvingScreen(test: Test) {
                 delay(1.seconds)
                 timeCount++
             }
-            if (timeCount == test.maxTime) isTestActive = false
+            if (timeCount == psTest.maxTime) isTestActive = false
         }
     }
 
@@ -107,14 +107,14 @@ fun TestSolvingScreen(test: Test) {
                 ),
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
-                color = if (test.maxTime == 0) MaterialTheme.colorScheme.primary
+                color = if (psTest.maxTime == 0) MaterialTheme.colorScheme.secondary
                         else
                             if (timeCount > (psTest.maxTime * 0.84)) Color.Red
                             else MaterialTheme.colorScheme.secondary
             )
         }
 
-        val currentQuestion = test.questions[currentQuestionIndex]
+        val currentQuestion = psTest.questions[currentQuestionIndex]
         Text(
             text = currentQuestion.question,
             fontSize = 20.sp,
@@ -196,7 +196,7 @@ fun TestSolvingScreen(test: Test) {
 @Composable
 fun PsychometricTestScreenPreview() {
     OpositateTheme { TestSolvingScreen(
-        test = Test(
+        psTest = PsTest(
             id = 1,
             questions = listOf(
                 Question(
