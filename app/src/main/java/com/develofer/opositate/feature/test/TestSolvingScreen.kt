@@ -109,8 +109,8 @@ fun TestSolvingScreen(test: Test) {
                 fontWeight = FontWeight.Bold,
                 color = if (test.maxTime == 0) MaterialTheme.colorScheme.primary
                         else
-                            if (timeCount > (test.maxTime * 0.84)) Color.Red
-                            else MaterialTheme.colorScheme.primary
+                            if (timeCount > (psTest.maxTime * 0.84)) Color.Red
+                            else MaterialTheme.colorScheme.secondary
             )
         }
 
