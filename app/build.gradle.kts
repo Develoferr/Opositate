@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    alias(libs.plugins.kotlinxSerialization)
+    alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.google.services)
     alias(libs.plugins.crashlytics)
     alias(libs.plugins.hilt)
@@ -110,7 +112,11 @@ dependencies {
     // Lottie
     implementation(libs.lottie.compose)
 
+    // Chart
     implementation(libs.chart)
+
+    // Serialization
+    implementation(libs.kotlixSerializationJson)
 
     // Testing
     implementation(libs.junit)
