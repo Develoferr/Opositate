@@ -7,7 +7,10 @@ import com.develofer.opositate.feature.login.data.AuthRepositoryImpl
 import com.develofer.opositate.feature.login.domain.repository.AuthRepository
 import com.develofer.opositate.feature.profile.UserRepository
 import com.develofer.opositate.feature.profile.UserRepositoryImpl
+import com.develofer.opositate.feature.test.TestRepository
+import com.develofer.opositate.feature.test.TestRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,52 +21,57 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object RepositoryModule {
 
+    // Auth Repository
     @Provides
     @Singleton
     fun provideAuthRepository(
         authRepositoryImpl: AuthRepositoryImpl
-    ): AuthRepository {
-        return authRepositoryImpl
-    }
+    ): AuthRepository = authRepositoryImpl
 
     @Provides
     @Singleton
     fun provideAuthRepositoryImpl(
         auth: FirebaseAuth
-    ): AuthRepositoryImpl {
-        return AuthRepositoryImpl(auth)
-    }
+    ): AuthRepositoryImpl = AuthRepositoryImpl(auth)
 
+    // Calendar Repository
     @Provides
     @Singleton
     fun provideCalendarRepository(
         calendarRepositoryImpl: CalendarRepositoryImpl
-    ): CalendarRepository {
-        return calendarRepositoryImpl
-    }
+    ): CalendarRepository = calendarRepositoryImpl
 
     @Provides
     @Singleton
     fun provideCalendarRepositoryImpl(
         calendarDataSource: CalendarDataSource
-    ): CalendarRepositoryImpl {
-        return CalendarRepositoryImpl(calendarDataSource)
-    }
+    ): CalendarRepositoryImpl = CalendarRepositoryImpl(calendarDataSource)
 
+    // User Repository
     @Provides
     @Singleton
     fun provideUserRepository(
         userRepositoryImpl: UserRepositoryImpl
-    ): UserRepository {
-        return userRepositoryImpl
-    }
+    ): UserRepository = userRepositoryImpl
 
     @Provides
     @Singleton
     fun provideUserRepositoryImpl(
-        auth: FirebaseAuth
-    ): UserRepositoryImpl {
-        return UserRepositoryImpl(auth)
-    }
+        auth: FirebaseAuth,
+        firestore: FirebaseFirestore
+    ): UserRepositoryImpl = UserRepositoryImpl(auth, firestore)
+
+    // Test Repository
+    @Provides
+    @Singleton
+    fun provideTestRepository(
+        testRepositoryImpl: TestRepositoryImpl
+    ): TestRepository = testRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideTestRepositoryImpl(
+        firestore: FirebaseFirestore
+    ): TestRepositoryImpl = TestRepositoryImpl(firestore)
 
 }

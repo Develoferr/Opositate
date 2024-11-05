@@ -8,7 +8,8 @@ import javax.inject.Singleton
 
 @Singleton
 class UserRepositoryImpl @Inject constructor(
-    private val auth: FirebaseAuth
+    private val auth: FirebaseAuth,
+    private val firestore: FirebaseFirestore
 ) : UserRepository {
     override fun getUser() = auth.currentUser
 
@@ -17,7 +18,6 @@ class UserRepositoryImpl @Inject constructor(
     override fun createUserScoreDocument(onSuccess: () -> Unit, onFailure: (String) -> Unit) {
         val userId = getUser()?.uid
         if (userId != null) {
-            val firestore = FirebaseFirestore.getInstance()
             val scoresCollection = firestore.collection("scores")
             val userScoreDocument = scoresCollection.document(userId)
             val userScores: MutableList<Map<String, Any>> = mutableListOf()
@@ -42,7 +42,6 @@ class UserRepositoryImpl @Inject constructor(
     override fun getUserScoreDocument(onSuccess: (DocumentSnapshot) -> Unit, onFailure: (String) -> Unit) {
         val userId = getUser()?.uid
         if (userId != null) {
-            val firestore = FirebaseFirestore.getInstance()
             val scoresCollection = firestore.collection("scores")
             scoresCollection.document(userId).get()
                 .addOnSuccessListener { document ->
