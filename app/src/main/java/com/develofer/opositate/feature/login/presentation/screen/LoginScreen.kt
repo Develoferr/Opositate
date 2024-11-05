@@ -38,8 +38,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
@@ -60,14 +58,13 @@ import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.main.components.DialogState
 import com.develofer.opositate.main.components.ErrorDialog
 import com.develofer.opositate.main.components.SuccessDialog
-import com.develofer.opositate.main.navigation.Register
-import com.develofer.opositate.main.navigation.navigateToProfile
 import com.develofer.opositate.ui.theme.OpositateTheme
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun LoginScreen(
-    navController: NavHostController,
+    navigateToRegister: () -> Unit,
+    navigateToProfile: () -> Unit,
     isDarkTheme: Boolean,
     mainViewModel: MainViewModel = hiltViewModel(),
     loginViewModel: LoginViewModel = hiltViewModel()
@@ -97,7 +94,7 @@ fun LoginScreen(
             uiState = uiState, loginViewModel = loginViewModel, isDarkTheme = isDarkTheme,
             isKeyBoardVisible = isKeyboardVisible, clearFocus = { focusManager.clearFocus() },
             onForgotPasswordClick = { loginViewModel.toggleResetPasswordDialogVisibility(true) },
-            navigateToRegister = { navController.navigate(Register) }
+            navigateToRegister = { navigateToRegister() }
         )
         LoginResetPasswordDialog(
             showResetPasswordDialog = uiState.showResetPasswordDialog, focusManager = focusManager,
@@ -118,7 +115,7 @@ fun LoginScreen(
             animationState = animationState, uiState = uiState, errorMessage = registerErrorMessage,
             dialogState = dialogState, passwordResetFinished = passwordResetFinished,
             onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState },
-            navigateToProfile = { navigateToProfile(navController) }, onDialogDismissed = { passwordResetFinished = false }
+            navigateToProfile = { navigateToProfile() }, onDialogDismissed = { passwordResetFinished = false }
         )
     }
 }
@@ -412,6 +409,6 @@ sealed class AnimationState {
 @Composable
 fun LoginPreview() {
     OpositateTheme {
-        LoginScreen(rememberNavController(), true, hiltViewModel())
+        LoginScreen({}, {}, true, hiltViewModel())
     }
 }

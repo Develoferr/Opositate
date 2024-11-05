@@ -36,8 +36,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
@@ -56,14 +54,13 @@ import com.develofer.opositate.feature.login.presentation.viewmodel.RegisterView
 import com.develofer.opositate.main.components.DialogState
 import com.develofer.opositate.main.components.ErrorDialog
 import com.develofer.opositate.main.components.SuccessDialog
-import com.develofer.opositate.main.navigation.navigateToLogin
 import com.develofer.opositate.ui.theme.OpositateTheme
 import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RegisterScreen(
-    navController: NavHostController,
+    navigateToLogin: () -> Unit,
     isDarkTheme: Boolean,
     registerViewModel: RegisterViewModel =  hiltViewModel()
 ) {
@@ -89,7 +86,7 @@ fun RegisterScreen(
             isDarkTheme = isDarkTheme,
             isKeyboardVisible = isKeyboardVisible,
             registerViewModel = registerViewModel,
-            navigateToLogin = { navigateToLogin(navController) },
+            navigateToLogin = { navigateToLogin() },
             clearFocus = { focusManager.clearFocus() }
         )
         RegisterLoadingAnimation(
@@ -108,7 +105,7 @@ fun RegisterScreen(
             uiState = uiState,
             dialogState = dialogState,
             onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState },
-            navigateToLogin = { navigateToLogin(navController) },
+            navigateToLogin = { navigateToLogin() },
         )
     }
 }
@@ -291,6 +288,6 @@ private fun HandleRegisterDialog(
 @Composable
 fun RegisterPreview() {
     OpositateTheme {
-        RegisterScreen(rememberNavController(), isDarkTheme = true)
+        RegisterScreen({}, isDarkTheme = true)
     }
 }

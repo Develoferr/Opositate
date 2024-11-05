@@ -6,7 +6,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.calendar.presentation.components.CalendarContent
 import com.develofer.opositate.feature.calendar.presentation.viewmodel.CalendarViewModel
@@ -14,7 +13,6 @@ import com.develofer.opositate.main.MainViewModel
 
 @Composable
 fun CalendarScreen(
-    navHostController: NavHostController,
     isDarkTheme: Boolean,
     mainViewModel: MainViewModel = hiltViewModel(),
     calendarViewModel: CalendarViewModel = hiltViewModel()

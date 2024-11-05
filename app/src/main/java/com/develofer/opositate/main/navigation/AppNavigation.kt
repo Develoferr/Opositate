@@ -66,9 +66,26 @@ fun AppNavigation(
             startDestination = startDestination,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable<Login> { LoginScreen(navHostController, isDarkTheme, mainViewModel) }
-            composable<Register> { RegisterScreen(navHostController, isDarkTheme) }
-            composable<Profile> { ProfileScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable<Login> {
+                LoginScreen(
+                    navigateToRegister = { navHostController.navigate(Register) },
+                    navigateToProfile = { navigateToProfile(navHostController) },
+                    isDarkTheme = isDarkTheme,
+                    mainViewModel = mainViewModel
+                )
+            }
+            composable<Register> {
+                RegisterScreen(
+                    navigateToLogin = { navigateToLogin(navHostController) },
+                    isDarkTheme = isDarkTheme
+                )
+            }
+            composable<Profile> {
+                ProfileScreen(
+                    isDarkTheme = isDarkTheme,
+                    mainViewModel = mainViewModel
+                )
+            }
             composable<Test> {
                 TestScreen(
                     navigateToTestSolving = { testId -> navHostController.navigate(TestSolving(testId))},
@@ -76,24 +93,36 @@ fun AppNavigation(
                     mainViewModel = mainViewModel
                 )
             }
-            composable<Lesson> { LessonScreen(navHostController, isDarkTheme, mainViewModel) }
-            composable<Calendar> { CalendarScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable<Lesson> {
+                LessonScreen(
+                    isDarkTheme = isDarkTheme,
+                    mainViewModel = mainViewModel
+                )
+            }
+            composable<Calendar> {
+                CalendarScreen(
+                    isDarkTheme = isDarkTheme,
+                    mainViewModel = mainViewModel
+                )
+            }
             composable<TestSolving> { backStackEntry ->
                 val testSolving: TestSolving = backStackEntry.toRoute()
-                TestSolvingScreen(testSolving.testId)
+                TestSolvingScreen(
+                    testId = testSolving.testId
+                )
             }
         }
     }
 }
 
-fun navigateToProfile(navController: NavHostController) {
+private fun navigateToProfile(navController: NavHostController) {
     navController.navigate(Profile) {
         popUpTo(navController.graph.startDestinationId) { inclusive = true }
         launchSingleTop = true
     }
 }
 
-fun navigateToLogin(navController: NavHostController) {
+private fun navigateToLogin(navController: NavHostController) {
     navController.navigate(Login) {
         popUpTo(navController.graph.startDestinationId) { inclusive = true }
         launchSingleTop = true

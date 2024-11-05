@@ -28,8 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.presentation.component.CustomBodyText
 import com.develofer.opositate.feature.profile.Score
@@ -41,7 +39,6 @@ import com.develofer.opositate.ui.theme.OpositateTheme
 
 @Composable
 fun ProfileScreen(
-    navHostController: NavHostController,
     isDarkTheme: Boolean,
     mainViewModel: MainViewModel = hiltViewModel(),
     profileViewModel: ProfileViewModel = hiltViewModel()
@@ -131,6 +128,6 @@ fun ChartContent(items: List<Score> = emptyList()) {
 @Composable
 fun ProfileScreenPreview() {
     OpositateTheme {
-        ProfileScreen(rememberNavController(), true)
+        ProfileScreen(true)
     }
 }
