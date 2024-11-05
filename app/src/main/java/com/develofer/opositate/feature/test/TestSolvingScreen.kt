@@ -14,38 +14,40 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
-import com.develofer.opositate.feature.profile.Question
-import com.develofer.opositate.feature.profile.PsTest
-import com.develofer.opositate.ui.theme.OpositateTheme
 import com.develofer.opositate.utils.Constants.TWO_DIGITS_FORMAT
 import kotlinx.coroutines.delay
 import java.util.Locale
 import kotlin.time.Duration.Companion.seconds
 
 @Composable
-fun TestSolvingScreen(psTest: PsTest) {
-    val testSize = psTest.questions.size
-    val maxTime = psTest.maxTime
+fun TestSolvingScreen(
+    testId: String,
+    testSolvingViewModel: TestSolvingViewModel = hiltViewModel()
+) {
+    val psTest by testSolvingViewModel.test.collectAsState()
+    val testSize = psTest?.questions?.size
+    val maxTime = psTest?.maxTime
     var currentQuestionIndex by remember { mutableIntStateOf(0) }
     var showStartDialog by remember { mutableStateOf(true) }
     var timeCount by remember { mutableIntStateOf(0) }
     var isTestActive by remember { mutableStateOf(false) }
 
     val condition = if (maxTime == 0) true
-                    else timeCount < maxTime
+                    else timeCount < (maxTime ?: 0)
 
     LaunchedEffect(isTestActive) {
+        testSolvingViewModel.getTest(testId)
         if (isTestActive) {
             while (condition) {
                 delay(1.seconds)
                 timeCount++
             }
-            if (timeCount == psTest.maxTime) isTestActive = false
+            if (timeCount == maxTime) isTestActive = false
         }
     }
 
@@ -83,154 +85,122 @@ fun TestSolvingScreen(psTest: PsTest) {
         }
     }
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = "${currentQuestionIndex + 1}/${testSize}",
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = stringResource(id = R.string.test_solving_screen__text__time,
-                    String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, timeCount / 60),
-                    String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, timeCount % 60)
-                ),
-                fontSize = 18.sp,
-                fontWeight = FontWeight.Bold,
-                color = if (psTest.maxTime == 0) MaterialTheme.colorScheme.secondary
-                        else
-                            if (timeCount > (psTest.maxTime * 0.84)) Color.Red
-                            else MaterialTheme.colorScheme.secondary
-            )
-        }
-
-        val currentQuestion = psTest.questions[currentQuestionIndex]
-        Text(
-            text = currentQuestion.question,
-            fontSize = 20.sp,
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 24.dp),
-            textAlign = TextAlign.Center
-        )
-
+    psTest?.let {
         Column(
             modifier = Modifier
-                .weight(1f)
-                .fillMaxWidth(),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+                .fillMaxSize()
+                .padding(16.dp)
         ) {
-            currentQuestion.options.forEachIndexed { index, option ->
-                Card(
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Text(
+                    text = "${currentQuestionIndex + 1}/${testSize}",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold
+                )
+                if (maxTime != null) {
+                    Text(
+                        text = stringResource(id = R.string.test_solving_screen__text__time,
+                            String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, timeCount / 60),
+                            String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, timeCount % 60)
+                        ),
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = if (maxTime == 0) MaterialTheme.colorScheme.secondary
+                        else
+                            if (timeCount > (maxTime * 0.84)) Color.Red
+                            else MaterialTheme.colorScheme.secondary
+                    )
+                }
+            }
+
+            val currentQuestion = psTest?.questions?.get(currentQuestionIndex)
+            if (currentQuestion != null) {
+                Text(
+                    text = currentQuestion.question,
+                    fontSize = 20.sp,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .selectable(
-                            selected = currentQuestion.selectedAnswer == index,
-                            onClick = { currentQuestion.selectedAnswer = index }
-                        ),
-                    border = BorderStroke(
-                        1.dp,
-                        if (currentQuestion.selectedAnswer == index) MaterialTheme.colorScheme.primary
-                        else MaterialTheme.colorScheme.outline
-                    )
-                ) {
-                    Text(
-                        text = option,
+                        .padding(vertical = 24.dp),
+                    textAlign = TextAlign.Center
+                )
+            }
+
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                currentQuestion?.options?.forEachIndexed { index, option ->
+                    Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(16.dp),
-                        textAlign = TextAlign.Center
-                    )
-                }
-            }
-        }
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            if (currentQuestionIndex > 0) {
-                IconButton(onClick = { currentQuestionIndex-- }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack,
-                        stringResource(R.string.test_solving_screen__content_description_before_button))
-                }
-            } else {
-                Spacer(modifier = Modifier.width(48.dp))
-            }
-
-            if (currentQuestionIndex == testSize - 1) {
-                Button(
-                    onClick = {
-                        isTestActive = false
+                            .selectable(
+                                selected = currentQuestion.selectedAnswer == index,
+                                onClick = { currentQuestion.selectedAnswer = index }
+                            ),
+                        border = BorderStroke(
+                            1.dp,
+                            if (currentQuestion.selectedAnswer == index) MaterialTheme.colorScheme.primary
+                            else MaterialTheme.colorScheme.outline
+                        )
+                    ) {
+                        Text(
+                            text = option,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(16.dp),
+                            textAlign = TextAlign.Center
+                        )
                     }
-                ) {
-                    Text(stringResource(R.string.test_solving_screen__text_btn__finish).uppercase())
                 }
             }
 
-            if (currentQuestionIndex < testSize - 1) {
-                IconButton(onClick = { currentQuestionIndex++ }) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowForward,
-                        stringResource(R.string.test_solving_screen__content_description__after_button))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                if (currentQuestionIndex > 0) {
+                    IconButton(onClick = { currentQuestionIndex-- }) {
+                        Icon(Icons.AutoMirrored.Filled.ArrowBack,
+                            stringResource(R.string.test_solving_screen__content_description_before_button))
+                    }
+                } else {
+                    Spacer(modifier = Modifier.width(48.dp))
                 }
-            } else {
-                Spacer(modifier = Modifier.width(48.dp))
+
+                if (testSize != null) {
+                    if (currentQuestionIndex == testSize - 1) {
+                        Button(
+                            onClick = {
+                                isTestActive = false
+                            }
+                        ) {
+                            Text(stringResource(R.string.test_solving_screen__text_btn__finish).uppercase())
+                        }
+                    }
+                }
+
+                if (testSize != null) {
+                    if (currentQuestionIndex < testSize - 1) {
+                        IconButton(onClick = { currentQuestionIndex++ }) {
+                            Icon(Icons.AutoMirrored.Filled.ArrowForward,
+                                stringResource(R.string.test_solving_screen__content_description__after_button))
+                        }
+                    } else {
+                        Spacer(modifier = Modifier.width(48.dp))
+                    }
+                }
             }
         }
     }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun PsychometricTestScreenPreview() {
-    OpositateTheme { TestSolvingScreen(
-        psTest = PsTest(
-            id = 1,
-            questions = listOf(
-                Question(
-                    id = 1,
-                    question = "Question 1",
-                    options = listOf("Option 1", "Option 2", "Option 3", "Option 4"),
-                    correctAnswer = 1
-                ),
-                Question(
-                    id = 2,
-                    question = "Question 2",
-                    options = listOf("Option 1", "Option 2", "Option 3", "Option 4"),
-                    correctAnswer = 2
-                ),
-                Question(
-                    id = 3,
-                    question = "Question 3",
-                    options = listOf("Option 1", "Option 2", "Option 3", "Option 4"),
-                    correctAnswer = 3
-                ),
-                Question(
-                    id = 4,
-                    question = "Question 4",
-                    options = listOf("Option 1", "Option 2", "Option 3", "Option 4"),
-                    correctAnswer = 4
-                ),
-                Question(
-                    id = 5,
-                    question = "Question 5",
-                    options = listOf("Option 1", "Option 2", "Option 3", "Option 4"),
-                    correctAnswer = 1
-                )
-            ),
-            name = "Test 1"
-        )
-    ) }
 }
