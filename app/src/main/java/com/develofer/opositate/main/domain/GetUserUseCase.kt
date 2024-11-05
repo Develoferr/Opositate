@@ -1,4 +1,4 @@
-package com.develofer.opositate.feature.login.domain.usecase
+package com.develofer.opositate.main.domain
 
 import com.develofer.opositate.feature.login.domain.repository.AuthRepository
 import com.google.firebase.auth.FirebaseUser
