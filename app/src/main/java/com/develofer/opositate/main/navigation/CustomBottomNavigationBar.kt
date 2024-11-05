@@ -76,8 +76,8 @@ fun CustomBottomNavigationBar(navController: NavHostController) {
                 onClick = {
                     if (currentRoute != destination.route) {
                         navController.navigate(destination) {
-                            popUpTo(route = destination) { inclusive = true }
-                            restoreState = false
+                            popUpTo(destination) { inclusive = false }
+                            launchSingleTop = true
                         }
                     }
                 }

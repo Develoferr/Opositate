@@ -85,14 +85,14 @@ fun AppNavigation(
 
 fun navigateToProfile(navController: NavHostController) {
     navController.navigate(Profile) {
-        popUpTo<Profile> { inclusive = true }
+        popUpTo(navController.graph.startDestinationId) { inclusive = true }
         launchSingleTop = true
     }
 }
 
 fun navigateToLogin(navController: NavHostController) {
     navController.navigate(Login) {
-        popUpTo<Login> { inclusive = true }
+        popUpTo(navController.graph.startDestinationId) { inclusive = true }
         launchSingleTop = true
     }
 }
