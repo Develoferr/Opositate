@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -62,7 +63,6 @@ import com.develofer.opositate.main.components.SuccessDialog
 import com.develofer.opositate.main.navigation.Register
 import com.develofer.opositate.main.navigation.navigateToProfile
 import com.develofer.opositate.ui.theme.OpositateTheme
-import kotlinx.coroutines.flow.StateFlow
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable
@@ -76,7 +76,7 @@ fun LoginScreen(
     val focusManager = LocalFocusManager.current
 
     val uiState by loginViewModel.uiState.collectAsState()
-    val dialogState = loginViewModel.getDialogState()
+    val dialogState = loginViewModel.getDialogState().collectAsState()
     var passwordResetFinished by remember { mutableStateOf(false) }
     var animationState: AnimationState by remember { mutableStateOf(AnimationState.Idle) }
     var registerErrorMessage: String? by remember { mutableStateOf(null) }
@@ -311,21 +311,21 @@ private fun LottieLoadingAnimation(
 private fun HandleDialog(
     animationState: AnimationState, uiState: LoginUiState, errorMessage: String?,
     onAnimationStateChanged: (animationState: AnimationState) -> Unit,
-    navigateToProfile: () -> Unit, dialogState: StateFlow<DialogState<LoginDialogType>>,
+    navigateToProfile: () -> Unit, dialogState: State<DialogState<LoginDialogType>>,
     hideDialog: () -> Unit, passwordResetFinished: Boolean, onDialogDismissed: () -> Unit
 ) {
     if (animationState == AnimationState.Finish || animationState == AnimationState.Dialog ||
         passwordResetFinished) {
         onAnimationStateChanged(AnimationState.Dialog)
-        if (dialogState.collectAsState().value.isVisible) {
-            when (dialogState.collectAsState().value.dialogType) {
+        if (dialogState.value.isVisible) {
+            when (dialogState.value.dialogType) {
                 LoginDialogType.LOGIN_SUCCESS -> {
                     SuccessDialog(
                         onDismiss = {
                             hideDialog()
                             navigateToProfile()
                         },
-                        isDialogVisible = dialogState.collectAsState().value.isVisible,
+                        isDialogVisible = dialogState.value.isVisible,
                         delayTime = 3000,
                         title = { Text(text = stringResource(id = R.string.login_screen__title_text__login_successful)) },
                         text = { Text(stringResource(id = R.string.login_screen__text__login_successful)) },
@@ -344,7 +344,7 @@ private fun HandleDialog(
                             ) }
                         },
                         onDismiss = { hideDialog() },
-                        isDialogVisible = dialogState.collectAsState().value.isVisible
+                        isDialogVisible = dialogState.value.isVisible
                     )
                 }
                 LoginDialogType.RESET_PASSWORD_SUCCESS -> {
@@ -353,7 +353,7 @@ private fun HandleDialog(
                             onDialogDismissed()
                             hideDialog()
                                     },
-                        isDialogVisible = dialogState.collectAsState().value.isVisible,
+                        isDialogVisible = dialogState.value.isVisible,
                         delayTime = 3000,
                         title = { Text(text = stringResource(id = R.string.login_screen__title_text__reset_password_successful)) },
                         text = { Text(stringResource(id = R.string.login_screen__text__reset_password_successful)) },
@@ -374,7 +374,7 @@ private fun HandleDialog(
                             onDialogDismissed()
                             hideDialog()
                         },
-                        isDialogVisible = dialogState.collectAsState().value.isVisible
+                        isDialogVisible = dialogState.value.isVisible
                     )
                 }
                 else -> {
