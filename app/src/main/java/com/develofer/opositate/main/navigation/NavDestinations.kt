@@ -1,6 +1,5 @@
 package com.develofer.opositate.main.navigation
 
-import com.develofer.opositate.feature.profile.PsTest
 import kotlinx.serialization.Serializable
 
 interface Route {
@@ -39,7 +38,7 @@ object Calendar: Route {
 
 @Serializable
 data class TestSolving(
-    val psTest: PsTest
+    val testId: String
 ) {
     companion object: Route {
         override val route = this::class.qualifiedName

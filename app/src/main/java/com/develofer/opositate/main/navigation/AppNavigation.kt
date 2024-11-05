@@ -15,14 +15,11 @@ import com.develofer.opositate.feature.calendar.presentation.screen.CalendarScre
 import com.develofer.opositate.feature.lesson.LessonScreen
 import com.develofer.opositate.feature.login.presentation.screen.LoginScreen
 import com.develofer.opositate.feature.login.presentation.screen.RegisterScreen
-import com.develofer.opositate.feature.profile.PsTest
 import com.develofer.opositate.feature.profile.presentation.screen.ProfileScreen
-import com.develofer.opositate.feature.profile.psTestNavType
 import com.develofer.opositate.feature.test.TestScreen
 import com.develofer.opositate.feature.test.TestSolvingScreen
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.main.components.CustomAppBar
-import kotlin.reflect.typeOf
 
 @Composable
 fun AppNavigation(
@@ -72,12 +69,18 @@ fun AppNavigation(
             composable<Login> { LoginScreen(navHostController, isDarkTheme, mainViewModel) }
             composable<Register> { RegisterScreen(navHostController, isDarkTheme) }
             composable<Profile> { ProfileScreen(navHostController, isDarkTheme, mainViewModel) }
-            composable<Test> { TestScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable<Test> {
+                TestScreen(
+                    navigateToTestSolving = { testId -> navHostController.navigate(TestSolving(testId))},
+                    isDarkTheme = isDarkTheme,
+                    mainViewModel = mainViewModel
+                )
+            }
             composable<Lesson> { LessonScreen(navHostController, isDarkTheme, mainViewModel) }
             composable<Calendar> { CalendarScreen(navHostController, isDarkTheme, mainViewModel) }
-            composable<TestSolving>(typeMap = mapOf(typeOf<PsTest>() to psTestNavType)) { backStackEntry ->
+            composable<TestSolving> { backStackEntry ->
                 val testSolving: TestSolving = backStackEntry.toRoute()
-                TestSolvingScreen(testSolving.psTest)
+                TestSolvingScreen(testSolving.testId)
             }
         }
     }

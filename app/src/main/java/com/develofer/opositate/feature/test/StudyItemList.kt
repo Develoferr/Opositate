@@ -29,7 +29,7 @@ import com.develofer.opositate.ui.theme.Gray800
 import com.develofer.opositate.ui.theme.Gray900
 
 @Composable
-fun StudyItemList(studyItemList: List<StudyItem>, isDarkTheme: Boolean, onClickItem: () -> Unit = {}) {
+fun StudyItemList(studyItemList: List<StudyItem>, isDarkTheme: Boolean, onClickItem: (testId: String) -> Unit = {}) {
     LazyColumn {
         items(studyItemList.size) {
             Card(
@@ -50,7 +50,7 @@ fun StudyItemList(studyItemList: List<StudyItem>, isDarkTheme: Boolean, onClickI
                     .padding(bottom = if (it == studyItemList.size - 1) 16.dp else 8.dp)
                     .clickable(
                         enabled = studyItemList[it].isEnabled,
-                        onClick = onClickItem
+                        onClick = { onClickItem((studyItemList[it].number - 1).toString()) }
                     )
             ) {
                 Row(
