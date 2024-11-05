@@ -59,7 +59,7 @@ import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.main.components.DialogState
 import com.develofer.opositate.main.components.ErrorDialog
 import com.develofer.opositate.main.components.SuccessDialog
-import com.develofer.opositate.main.navigation.AppRoutes.Destination
+import com.develofer.opositate.main.navigation.Register
 import com.develofer.opositate.main.navigation.navigateToProfile
 import com.develofer.opositate.ui.theme.OpositateTheme
 import kotlinx.coroutines.flow.StateFlow
@@ -97,7 +97,7 @@ fun LoginScreen(
             uiState = uiState, loginViewModel = loginViewModel, isDarkTheme = isDarkTheme,
             isKeyBoardVisible = isKeyboardVisible, clearFocus = { focusManager.clearFocus() },
             onForgotPasswordClick = { loginViewModel.toggleResetPasswordDialogVisibility(true) },
-            navigateToRegister = { navController.navigate(Destination.REGISTER.route) }
+            navigateToRegister = { navController.navigate(Register) }
         )
         LoginResetPasswordDialog(
             showResetPasswordDialog = uiState.showResetPasswordDialog, focusManager = focusManager,

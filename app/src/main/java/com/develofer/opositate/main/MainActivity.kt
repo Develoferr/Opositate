@@ -25,7 +25,9 @@ import androidx.core.splashscreen.SplashScreenViewProvider
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.main.navigation.AppNavigation
-import com.develofer.opositate.main.navigation.AppRoutes
+import com.develofer.opositate.main.navigation.Login
+import com.develofer.opositate.main.navigation.Profile
+import com.develofer.opositate.main.navigation.Route
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -82,7 +84,7 @@ class MainActivity : ComponentActivity() {
 
         OpositateTheme {
             Surface(modifier = Modifier.fillMaxSize()) {
-                val startDestination = getStartDestination()
+                val startDestination = mainViewModel.getStartDestination()
                 AppNavigation(
                     navHostController = navHostController,
                     startDestination,
@@ -91,14 +93,6 @@ class MainActivity : ComponentActivity() {
                     isDarkTheme
                 )
             }
-        }
-    }
-
-    private fun getStartDestination(): String {
-        return if (mainViewModel.currentUser != null) {
-            AppRoutes.Destination.PROFILE.route
-        } else {
-            AppRoutes.Destination.LOGIN.route
         }
     }
 
@@ -122,15 +116,3 @@ class MainActivity : ComponentActivity() {
         createZoomAnimator(View.SCALE_Y).start()
     }
 }
-
-//@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-//@Composable
-//fun MainPreview() {
-//    OpositateTheme {
-//        AppNavigation(
-//            navHostController = rememberNavController(),
-//            startDestination = AppRoutes.Destination.LOGIN.route,
-//            appBarTitle = mutableStateOf(""),
-//        )
-//    }
-//}

@@ -10,20 +10,24 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.toRoute
 import com.develofer.opositate.feature.calendar.presentation.screen.CalendarScreen
 import com.develofer.opositate.feature.lesson.LessonScreen
 import com.develofer.opositate.feature.login.presentation.screen.LoginScreen
 import com.develofer.opositate.feature.login.presentation.screen.RegisterScreen
+import com.develofer.opositate.feature.profile.PsTest
 import com.develofer.opositate.feature.profile.presentation.screen.ProfileScreen
+import com.develofer.opositate.feature.profile.psTestNavType
 import com.develofer.opositate.feature.test.TestScreen
+import com.develofer.opositate.feature.test.TestSolvingScreen
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.main.components.CustomAppBar
-import com.develofer.opositate.main.navigation.AppRoutes.Destination
+import kotlin.reflect.typeOf
 
 @Composable
 fun AppNavigation(
     navHostController: NavHostController,
-    startDestination: String,
+    startDestination: Route,
     mainViewModel: MainViewModel = hiltViewModel(),
     appBarTitle: State<String>,
     isDarkTheme: Boolean
@@ -32,10 +36,10 @@ fun AppNavigation(
     Scaffold(
         bottomBar =  {
             if (currentRoute in listOf(
-                    Destination.PROFILE.route,
-                    Destination.TEST.route,
-                    Destination.LESSON.route,
-                    Destination.CALENDAR.route
+                    Profile.route,
+                    Test.route,
+                    Lesson.route,
+                    Calendar.route
                 )
             ) {
                 CustomBottomNavigationBar(navHostController)
@@ -43,10 +47,10 @@ fun AppNavigation(
         },
         topBar = {
             if (currentRoute in listOf(
-                    Destination.PROFILE.route,
-                    Destination.TEST.route,
-                    Destination.LESSON.route,
-                    Destination.CALENDAR.route
+                    Profile.route,
+                    Test.route,
+                    Lesson.route,
+                    Calendar.route
                 )
             ) {
                 CustomAppBar(
@@ -65,26 +69,30 @@ fun AppNavigation(
             startDestination = startDestination,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable(Destination.LOGIN.route) { LoginScreen(navHostController, isDarkTheme, mainViewModel) }
-            composable(Destination.REGISTER.route) { RegisterScreen(navHostController, isDarkTheme) }
-            composable(Destination.PROFILE.route) { ProfileScreen(navHostController, isDarkTheme, mainViewModel) }
-            composable(Destination.TEST.route) { TestScreen(navHostController, isDarkTheme, mainViewModel) }
-            composable(Destination.LESSON.route) { LessonScreen(navHostController, isDarkTheme, mainViewModel) }
-            composable(Destination.CALENDAR.route) { CalendarScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable<Login> { LoginScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable<Register> { RegisterScreen(navHostController, isDarkTheme) }
+            composable<Profile> { ProfileScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable<Test> { TestScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable<Lesson> { LessonScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable<Calendar> { CalendarScreen(navHostController, isDarkTheme, mainViewModel) }
+            composable<TestSolving>(typeMap = mapOf(typeOf<PsTest>() to psTestNavType)) { backStackEntry ->
+                val testSolving: TestSolving = backStackEntry.toRoute()
+                TestSolvingScreen(testSolving.psTest)
+            }
         }
     }
 }
 
 fun navigateToProfile(navController: NavHostController) {
-    navController.navigate(Destination.PROFILE.route) {
-        popUpTo(0) { inclusive = true }
+    navController.navigate(Profile) {
+        popUpTo<Profile> { inclusive = true }
         launchSingleTop = true
     }
 }
 
 fun navigateToLogin(navController: NavHostController) {
-    navController.navigate(Destination.LOGIN.route) {
-        popUpTo(0) { inclusive = true }
+    navController.navigate(Login) {
+        popUpTo<Login> { inclusive = true }
         launchSingleTop = true
     }
 }

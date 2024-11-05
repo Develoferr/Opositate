@@ -3,6 +3,9 @@ package com.develofer.opositate.main
 import androidx.lifecycle.ViewModel
 import com.develofer.opositate.main.domain.GetUserUseCase
 import com.develofer.opositate.main.domain.LogoutUseCase
+import com.develofer.opositate.main.navigation.Login
+import com.develofer.opositate.main.navigation.Profile
+import com.develofer.opositate.main.navigation.Route
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -49,5 +52,13 @@ class MainViewModel @Inject constructor(
 
     fun showSystemUI() {
         _isSystemUIVisible.value = true
+    }
+
+    fun getStartDestination(): Route {
+        return if (_currentUser != null) {
+            Profile
+        } else {
+            Login
+        }
     }
 }

@@ -14,21 +14,21 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.develofer.opositate.R
-import com.develofer.opositate.main.navigation.AppRoutes.Destination
 import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.BlendMode
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 
 @Composable
 fun CustomBottomNavigationBar(navController: NavHostController) {
     val items = listOf(
-        Destination.PROFILE,
-        Destination.TEST,
-        Destination.LESSON,
-        Destination.CALENDAR
+        Profile,
+        Test,
+        Lesson,
+        Calendar
     )
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
@@ -37,37 +37,47 @@ fun CustomBottomNavigationBar(navController: NavHostController) {
             NavigationBarItem(
                 icon = {
                     when (destination) {
-                        Destination.PROFILE -> GradientIcon(
+                        Profile -> GradientIcon(
                             painter = painterResource(id = R.drawable.ic_brain_profile_png),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
                         )
-                        Destination.TEST -> GradientIcon(
+                        Test -> GradientIcon(
                             painter = painterResource(id = R.drawable.ic_test_png),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
                         )
-                        Destination.LESSON -> GradientIcon(
+                        Lesson -> GradientIcon(
                             painter = painterResource(id = R.drawable.ic_lesson_png),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
                         )
-                        Destination.CALENDAR -> GradientIcon(
+                        Calendar -> GradientIcon(
                             painter = painterResource(id = R.drawable.ic_calendar_png),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
                         )
-                        Destination.LOGIN -> {}
-                        Destination.REGISTER -> {}
+                        else -> GradientIcon(
+                            painter = painterResource(id = R.drawable.ic_test_png),
+                            contentDescription = "",
+                            isSelected = currentRoute == destination.route
+                        )
                     }
                 },
-                label = { Text(destination.name) },
+                label = {
+                    Text(text = when (destination) {
+                        Profile -> stringResource(id = R.string.profile_screen__app_bar_title__profile).uppercase()
+                        Test -> stringResource(id = R.string.test_screen__app_bar_title__test).uppercase()
+                        Lesson -> stringResource(id = R.string.lesson_screen__app_bar_title__lesson).uppercase()
+                        Calendar -> stringResource(id = R.string.calendar_screen__app_bar_title__calendar).uppercase()
+                        else -> stringResource(id = R.string.test_screen__app_bar_title__test).uppercase()})
+                },
                 selected = currentRoute == destination.route,
                 onClick = {
                     if (currentRoute != destination.route) {
-                        navController.navigate(destination.route) {
-                            launchSingleTop = true
-                            restoreState = true
+                        navController.navigate(destination) {
+                            popUpTo(route = destination) { inclusive = true }
+                            restoreState = false
                         }
                     }
                 }
@@ -93,7 +103,8 @@ fun GradientIcon(
     )
     val colors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.secondary)
     val iconTint = if (isSelected) {
-        Modifier.graphicsLayer(alpha = 0.99f, scaleX = scale, scaleY = scale)
+        Modifier
+            .graphicsLayer(alpha = 0.99f, scaleX = scale, scaleY = scale)
             .drawWithCache {
                 onDrawWithContent {
                     drawContent()
