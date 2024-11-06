@@ -9,7 +9,10 @@ data class PsTest(
     val questions: List<Question> = emptyList(),
     val maxTime: Int = 0,
     var isEnabled: Boolean = false
-)
+) {
+    val number: Int
+        get() = id + 1
+}
 
 data class Question(
     val id: Int = 0,
@@ -90,8 +93,11 @@ data class PsTestVO(
     val id: Int = 0,
     val name: String = "",
     var isEnabled: Boolean = false
-)
+) {
+    val number: Int
+        get() = id + 1
+}
 
 fun PsTestVO.toTestItem(): TestItem {
-    return TestItem(number = this.id + 1, title = this.name, isEnabled = this.isEnabled)
+    return TestItem(number = this.number, title = this.name, isEnabled = this.isEnabled)
 }
