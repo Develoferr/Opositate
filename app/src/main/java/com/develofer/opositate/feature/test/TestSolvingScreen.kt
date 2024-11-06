@@ -11,6 +11,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -34,16 +35,17 @@ fun TestSolvingScreen(
     val maxTime = psTest?.maxTime
     var currentQuestionIndex by remember { mutableIntStateOf(0) }
     var showStartDialog by remember { mutableStateOf(true) }
+    var showPauseDialog by remember { mutableStateOf(false) }
     var timeCount by remember { mutableIntStateOf(0) }
     var isTestActive by remember { mutableStateOf(false) }
 
-    val condition = if (maxTime == 0) true
+    val testFinishModeCondition = if (maxTime == 0) true
                     else timeCount < (maxTime ?: 0)
 
     LaunchedEffect(isTestActive) {
         testSolvingViewModel.getTest(testId)
         if (isTestActive) {
-            while (condition) {
+            while (testFinishModeCondition) {
                 delay(1.seconds)
                 timeCount++
             }
@@ -85,6 +87,54 @@ fun TestSolvingScreen(
         }
     }
 
+    if (showPauseDialog) {
+        Dialog(onDismissRequest = { }) {
+            Card(
+                modifier = Modifier
+                    .padding(16.dp)
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(24.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "¿A ti también te cansa?",
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(top = 24.dp),
+                        textAlign = TextAlign.Center
+                    )
+                    Text(
+                        text = "A nosotros también nos pasa, tomate un descanso y retómalo cuándo quieras.\n" +
+                                "Si crees que vas a tardar mucho y no quieres perder tu progreso, te recomendamos que guardes tus avances.\n" +
+                                "Podrás abrir la aplicación en cualquier momento y conservaremos tel estado del test.",
+                        modifier = Modifier.padding(vertical = 24.dp),
+                        textAlign = TextAlign.Center
+                    )
+                    Button(
+                        onClick = {
+//                                testSolvingViewModel.saveProgress()
+//                                showPauseDialog = false
+//                                isTestActive = false
+                        }
+                    ) {
+                        Text("Guardar Progreso")
+                    }
+                    Button(
+                        onClick = {
+                            showPauseDialog = false
+                            isTestActive = true
+                        }
+                    ) {
+                        Text("Continuar")
+                    }
+                }
+            }
+        }
+    }
+
     psTest?.let {
         Column(
             modifier = Modifier
@@ -115,6 +165,16 @@ fun TestSolvingScreen(
                         else
                             if (timeCount > (maxTime * 0.84)) Color.Red
                             else MaterialTheme.colorScheme.secondary
+                    )
+                }
+                IconButton(onClick = {
+                    isTestActive = false
+                    showPauseDialog = true
+                }) {
+                    Icon(
+                        modifier = Modifier.size(24.dp),
+                        painter = painterResource(id = R.drawable.ic_pause),
+                        contentDescription = stringResource(R.string.test_solving_screen__content_description_before_button)
                     )
                 }
             }
