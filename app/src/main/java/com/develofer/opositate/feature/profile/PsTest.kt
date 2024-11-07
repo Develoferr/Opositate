@@ -2,6 +2,7 @@ package com.develofer.opositate.feature.profile
 
 import com.develofer.opositate.feature.test.TestItem
 import com.google.firebase.Timestamp
+import java.util.UUID
 
 data class PsTest(
     val id: Int = 0,
@@ -22,8 +23,28 @@ data class Question(
     var selectedAnswer: Int? = null
 )
 
+data class TestResultDocument(
+    val solvedTests: List<TestResult> = emptyList()
+)
+
+data class TestResult(
+    val id: String = "",
+    val testId: Int = 0,
+    val questions : List<QuestionResult> = emptyList(),
+    val maxTime : Int = 0,
+    val completionTime : Int = 0,
+    val timestamp: Timestamp? = null,
+    val score: Float = 0f
+)
+
+data class QuestionResult(
+    val id: Int = 0,
+    val correctAnswer: Int = 0,
+    val selectedAnswer: Int? = null,
+)
+
 data class SolvedTest(
-    val id: Timestamp,
+    val id: String,
     val testId: Int,
     val name: String,
     val questions : List<SolvedQuestion>,
@@ -36,45 +57,26 @@ data class SolvedQuestion (
     val id: Int,
     val question: String,
     val options: List<String>,
-    val correctAnswer: Int,
-    val selectedAnswer: Int?,
-    val result: QuestionResult
+    val correctAnswer: Int?,
+    val selectedAnswer: Int?
 )
 
-enum class QuestionResult {
-    CORRECT, INCORRECT, UNANSWERED
-}
-
-fun PsTest.correctTest(completionTime: Int, timestamp: Timestamp): SolvedTest =
-    SolvedTest(
-        id = timestamp,
+fun PsTest.correctTest(completionTime: Int, timestamp: Timestamp): TestResult =
+    TestResult(
+        id = UUID.randomUUID().toString(),
         testId = this.id,
-        name = this.name,
         questions = this.questions.map { question ->
-            SolvedQuestion(
+            QuestionResult(
                 id = question.id,
-                question = question.question,
-                options = question.options,
                 correctAnswer = question.correctAnswer,
                 selectedAnswer = question.selectedAnswer,
-                result = solveQuestion(
-                    correctAnswer = question.correctAnswer,
-                    selectedAnswer = question.selectedAnswer
-                )
             )
         },
         maxTime = this.maxTime,
         completionTime = completionTime,
-        score = calculateScore(this.questions)
+        score = calculateScore(this.questions),
+        timestamp = timestamp
     )
-
-fun solveQuestion(correctAnswer: Int, selectedAnswer: Int?): QuestionResult {
-    return when (selectedAnswer) {
-        null -> QuestionResult.UNANSWERED
-        correctAnswer -> QuestionResult.CORRECT
-        else -> QuestionResult.INCORRECT
-    }
-}
 
 fun calculateScore(questions: List<Question>): Float {
     var correctAnswers = 0f
