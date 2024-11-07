@@ -15,6 +15,8 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun getUserName(): String = getUser()?.displayName ?: ""
 
+    override fun getUserId(): String = getUser()?.uid ?: ""
+
     override fun createUserScoreDocument(onSuccess: () -> Unit, onFailure: (String) -> Unit) {
         val userId = getUser()?.uid
         if (userId != null) {

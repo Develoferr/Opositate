@@ -6,6 +6,7 @@ import com.google.firebase.firestore.DocumentSnapshot
 interface UserRepository {
     fun getUser(): FirebaseUser?
     fun getUserName(): String
+    fun getUserId(): String
     fun createUserScoreDocument(onSuccess: () -> Unit, onFailure: (String) -> Unit)
     fun getUserScoreDocument(onSuccess: (DocumentSnapshot) -> Unit, onFailure: (String) -> Unit)
 }
