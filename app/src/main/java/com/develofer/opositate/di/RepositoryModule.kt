@@ -7,6 +7,8 @@ import com.develofer.opositate.feature.login.data.AuthRepositoryImpl
 import com.develofer.opositate.feature.login.domain.repository.AuthRepository
 import com.develofer.opositate.feature.profile.UserRepository
 import com.develofer.opositate.feature.profile.UserRepositoryImpl
+import com.develofer.opositate.feature.test.SolvedTestRepository
+import com.develofer.opositate.feature.test.SolvedTestRepositoryImpl
 import com.develofer.opositate.feature.test.TestRepository
 import com.develofer.opositate.feature.test.TestRepositoryImpl
 import com.google.firebase.auth.FirebaseAuth
@@ -73,5 +75,18 @@ object RepositoryModule {
     fun provideTestRepositoryImpl(
         firestore: FirebaseFirestore
     ): TestRepositoryImpl = TestRepositoryImpl(firestore)
+
+    // Solved Test Repository
+    @Provides
+    @Singleton
+    fun provideSolvedTestRepository(
+        solvedTestRepositoryImpl: SolvedTestRepositoryImpl
+    ): SolvedTestRepository = solvedTestRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideSolvedTestRepositoryImpl(
+        firestore: FirebaseFirestore
+    ): SolvedTestRepositoryImpl = SolvedTestRepositoryImpl(firestore)
 
 }
