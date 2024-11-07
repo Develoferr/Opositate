@@ -85,15 +85,11 @@ class LoginViewModel @Inject constructor(
     fun validateUsername() {
         _uiState.update {
             it.copy(
-                usernameValidateFieldError =
-                    when {
-                        isFieldEmpty(it.username) -> {
-                            if (_uiState.value.loginState is LoginState.Idle) ValidateFieldErrors.NONE
-                            else ValidateFieldErrors.EMPTY_TEXT
-                        }
-                        !isEmailValid(it.username) -> ValidateFieldErrors.INVALID_EMAIL
-                        else -> ValidateFieldErrors.NONE
-                    }
+                usernameValidateFieldError = when {
+                    isFieldEmpty(it.username) -> ValidateFieldErrors.EMPTY_TEXT
+                    !isEmailValid(it.username) -> ValidateFieldErrors.INVALID_EMAIL
+                    else -> ValidateFieldErrors.NONE
+                }
             )
         }
     }
@@ -102,10 +98,8 @@ class LoginViewModel @Inject constructor(
         _uiState.update {
             it.copy(
                 passwordValidateFieldError =
-                    if (isFieldEmpty(it.password)) {
-                        if (_uiState.value.loginState is LoginState.Idle) ValidateFieldErrors.NONE
-                        else ValidateFieldErrors.EMPTY_TEXT
-                    } else ValidateFieldErrors.NONE
+                    if (isFieldEmpty(it.password)) ValidateFieldErrors.EMPTY_TEXT
+                    else ValidateFieldErrors.NONE
             )
         }
     }

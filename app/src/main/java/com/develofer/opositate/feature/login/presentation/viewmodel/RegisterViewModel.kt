@@ -88,8 +88,7 @@ class RegisterViewModel @Inject constructor(
     fun validateUsername() {
         _uiState.update {
             it.copy(
-                usernameValidateFieldError =
-                when {
+                usernameValidateFieldError = when {
                     isFieldEmpty(it.username) -> {
                         if (_uiState.value.registerState is RegisterState.Idle) ValidateFieldErrors.NONE
                         else ValidateFieldErrors.EMPTY_TEXT
@@ -103,12 +102,8 @@ class RegisterViewModel @Inject constructor(
     fun validateEmail() {
         _uiState.update {
             it.copy(
-                emailValidateFieldError =
-                when {
-                    isFieldEmpty(it.email) -> {
-                        if (_uiState.value.registerState is RegisterState.Idle) ValidateFieldErrors.NONE
-                        else ValidateFieldErrors.EMPTY_TEXT
-                    }
+                emailValidateFieldError = when {
+                    isFieldEmpty(it.email) -> ValidateFieldErrors.EMPTY_TEXT
                     !isEmailValid(it.email) -> ValidateFieldErrors.INVALID_EMAIL
                     else -> ValidateFieldErrors.NONE
                 }
@@ -119,12 +114,8 @@ class RegisterViewModel @Inject constructor(
     fun validatePassword() {
         _uiState.update {
             it.copy(
-                passwordValidateFieldError =
-                when {
-                    isFieldEmpty(it.password) -> {
-                        if (_uiState.value.registerState is RegisterState.Idle) ValidateFieldErrors.NONE
-                        else ValidateFieldErrors.EMPTY_TEXT
-                    }
+                passwordValidateFieldError = when {
+                    isFieldEmpty(it.password) -> ValidateFieldErrors.EMPTY_TEXT
                     else -> ValidateFieldErrors.NONE
                 }
             )
