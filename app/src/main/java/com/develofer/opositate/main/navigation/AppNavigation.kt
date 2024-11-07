@@ -16,6 +16,7 @@ import com.develofer.opositate.feature.lesson.LessonScreen
 import com.develofer.opositate.feature.login.presentation.screen.LoginScreen
 import com.develofer.opositate.feature.login.presentation.screen.RegisterScreen
 import com.develofer.opositate.feature.profile.presentation.screen.ProfileScreen
+import com.develofer.opositate.feature.test.TestResultScreen
 import com.develofer.opositate.feature.test.TestScreen
 import com.develofer.opositate.feature.test.TestSolvingScreen
 import com.develofer.opositate.main.MainViewModel
@@ -111,6 +112,13 @@ fun AppNavigation(
                     isDarkTheme = isDarkTheme,
                     testId = testSolvingNavigation.testId,
                     navigateToTestResult = { testResultId -> navHostController.navigate(TestResultNavigation(testResultId)) }
+                )
+            }
+            composable<TestResultNavigation> { backStackEntry ->
+                val testResultNavigation: TestResultNavigation = backStackEntry.toRoute()
+                TestResultScreen(
+                    testResultId = testResultNavigation.testResultId,
+                    isDarkTheme = isDarkTheme
                 )
             }
         }
