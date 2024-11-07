@@ -13,8 +13,6 @@ class AuthRepositoryImpl @Inject constructor(
 
     override fun getUser() = auth.currentUser
 
-    override fun getUserName(): String = getUser()?.displayName ?: ""
-
     override fun createUser(email: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
         auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { createTask ->
             if (createTask.isSuccessful) {
