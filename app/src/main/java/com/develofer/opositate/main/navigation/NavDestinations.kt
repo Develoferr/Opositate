@@ -7,37 +7,37 @@ interface Route {
 }
 
 @Serializable
-object Login: Route {
+object LoginNavigation: Route {
     override val route = this::class.qualifiedName
 }
 
 @Serializable
-object Register: Route {
+object RegisterNavigation: Route {
     override val route = this::class.qualifiedName
 }
 
 @Serializable
-object Profile: Route {
+object ProfileNavigation: Route {
     override val route = this::class.qualifiedName
 }
 
 @Serializable
-object Test: Route {
+object TestNavigation: Route {
     override val route = this::class.qualifiedName
 }
 
 @Serializable
-object Lesson: Route {
+object LessonNavigation: Route {
     override val route = this::class.qualifiedName
 }
 
 @Serializable
-object Calendar: Route {
+object CalendarNavigation: Route {
     override val route = this::class.qualifiedName
 }
 
 @Serializable
-data class TestSolving(
+data class TestSolvingNavigation(
     val testId: String
 ) {
     companion object: Route {

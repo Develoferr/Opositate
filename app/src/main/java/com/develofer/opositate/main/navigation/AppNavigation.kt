@@ -33,10 +33,10 @@ fun AppNavigation(
     Scaffold(
         bottomBar =  {
             if (currentRoute in listOf(
-                    Profile.route,
-                    Test.route,
-                    Lesson.route,
-                    Calendar.route
+                    ProfileNavigation.route,
+                    TestNavigation.route,
+                    LessonNavigation.route,
+                    CalendarNavigation.route
                 )
             ) {
                 CustomBottomNavigationBar(navHostController)
@@ -44,10 +44,10 @@ fun AppNavigation(
         },
         topBar = {
             if (currentRoute in listOf(
-                    Profile.route,
-                    Test.route,
-                    Lesson.route,
-                    Calendar.route
+                    ProfileNavigation.route,
+                    TestNavigation.route,
+                    LessonNavigation.route,
+                    CalendarNavigation.route
                 )
             ) {
                 CustomAppBar(
@@ -66,49 +66,51 @@ fun AppNavigation(
             startDestination = startDestination,
             modifier = Modifier.padding(paddingValues)
         ) {
-            composable<Login> {
+            composable<LoginNavigation> {
                 LoginScreen(
-                    navigateToRegister = { navHostController.navigate(Register) },
+                    navigateToRegister = { navHostController.navigate(RegisterNavigation) },
                     navigateToProfile = { navigateToProfile(navHostController) },
                     isDarkTheme = isDarkTheme,
                     mainViewModel = mainViewModel
                 )
             }
-            composable<Register> {
+            composable<RegisterNavigation> {
                 RegisterScreen(
                     navigateToLogin = { navigateToLogin(navHostController) },
                     isDarkTheme = isDarkTheme
                 )
             }
-            composable<Profile> {
+            composable<ProfileNavigation> {
                 ProfileScreen(
                     isDarkTheme = isDarkTheme,
                     mainViewModel = mainViewModel
                 )
             }
-            composable<Test> {
+            composable<TestNavigation> {
                 TestScreen(
-                    navigateToTestSolving = { testId -> navHostController.navigate(TestSolving(testId))},
+                    navigateToTestSolving = { testId -> navHostController.navigate(TestSolvingNavigation(testId)) },
                     isDarkTheme = isDarkTheme,
                     mainViewModel = mainViewModel
                 )
             }
-            composable<Lesson> {
+            composable<LessonNavigation> {
                 LessonScreen(
                     isDarkTheme = isDarkTheme,
                     mainViewModel = mainViewModel
                 )
             }
-            composable<Calendar> {
+            composable<CalendarNavigation> {
                 CalendarScreen(
                     isDarkTheme = isDarkTheme,
                     mainViewModel = mainViewModel
                 )
             }
-            composable<TestSolving> { backStackEntry ->
-                val testSolving: TestSolving = backStackEntry.toRoute()
+            composable<TestSolvingNavigation> { backStackEntry ->
+                val testSolvingNavigation: TestSolvingNavigation = backStackEntry.toRoute()
                 TestSolvingScreen(
-                    testId = testSolving.testId
+                    isDarkTheme = isDarkTheme,
+                    testId = testSolvingNavigation.testId,
+                    navigateToTestResult = { testResultId -> navHostController.navigate(TestResultNavigation(testResultId)) }
                 )
             }
         }
@@ -116,14 +118,14 @@ fun AppNavigation(
 }
 
 private fun navigateToProfile(navController: NavHostController) {
-    navController.navigate(Profile) {
+    navController.navigate(ProfileNavigation) {
         popUpTo(navController.graph.startDestinationId) { inclusive = true }
         launchSingleTop = true
     }
 }
 
 private fun navigateToLogin(navController: NavHostController) {
-    navController.navigate(Login) {
+    navController.navigate(LoginNavigation) {
         popUpTo(navController.graph.startDestinationId) { inclusive = true }
         launchSingleTop = true
     }

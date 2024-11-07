@@ -25,10 +25,10 @@ import androidx.compose.ui.res.stringResource
 @Composable
 fun CustomBottomNavigationBar(navController: NavHostController) {
     val items = listOf(
-        Profile,
-        Test,
-        Lesson,
-        Calendar
+        ProfileNavigation,
+        TestNavigation,
+        LessonNavigation,
+        CalendarNavigation
     )
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
@@ -37,22 +37,22 @@ fun CustomBottomNavigationBar(navController: NavHostController) {
             NavigationBarItem(
                 icon = {
                     when (destination) {
-                        Profile -> GradientIcon(
+                        ProfileNavigation -> GradientIcon(
                             painter = painterResource(id = R.drawable.ic_brain_profile_png),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
                         )
-                        Test -> GradientIcon(
+                        TestNavigation -> GradientIcon(
                             painter = painterResource(id = R.drawable.ic_test_png),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
                         )
-                        Lesson -> GradientIcon(
+                        LessonNavigation -> GradientIcon(
                             painter = painterResource(id = R.drawable.ic_lesson_png),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
                         )
-                        Calendar -> GradientIcon(
+                        CalendarNavigation -> GradientIcon(
                             painter = painterResource(id = R.drawable.ic_calendar_png),
                             contentDescription = "",
                             isSelected = currentRoute == destination.route
@@ -66,10 +66,10 @@ fun CustomBottomNavigationBar(navController: NavHostController) {
                 },
                 label = {
                     Text(text = when (destination) {
-                        Profile -> stringResource(id = R.string.profile_screen__app_bar_title__profile).uppercase()
-                        Test -> stringResource(id = R.string.test_screen__app_bar_title__test).uppercase()
-                        Lesson -> stringResource(id = R.string.lesson_screen__app_bar_title__lesson).uppercase()
-                        Calendar -> stringResource(id = R.string.calendar_screen__app_bar_title__calendar).uppercase()
+                        ProfileNavigation -> stringResource(id = R.string.profile_screen__app_bar_title__profile).uppercase()
+                        TestNavigation -> stringResource(id = R.string.test_screen__app_bar_title__test).uppercase()
+                        LessonNavigation -> stringResource(id = R.string.lesson_screen__app_bar_title__lesson).uppercase()
+                        CalendarNavigation -> stringResource(id = R.string.calendar_screen__app_bar_title__calendar).uppercase()
                         else -> stringResource(id = R.string.test_screen__app_bar_title__test).uppercase()})
                 },
                 selected = currentRoute == destination.route,
