@@ -1,8 +1,8 @@
 package com.develofer.opositate.feature.login.domain.usecase
 
 import com.develofer.opositate.feature.login.domain.repository.AuthRepository
-import com.develofer.opositate.feature.profile.CreateUserScoreDocumentUseCase
-import com.develofer.opositate.feature.profile.UpdateUserNameUseCase
+import com.develofer.opositate.feature.profile.domain.usecase.CreateUserScoreDocumentUseCase
+import com.develofer.opositate.feature.profile.domain.usecase.UpdateUserNameUseCase
 import javax.inject.Inject
 import javax.inject.Singleton
 

@@ -2,9 +2,9 @@ package com.develofer.opositate.feature.profile.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.develofer.opositate.feature.profile.GetUserNameUseCase
-import com.develofer.opositate.feature.profile.GetUserScoresDocument
-import com.develofer.opositate.feature.profile.UserScores
+import com.develofer.opositate.feature.profile.domain.usecase.GetUserNameUseCase
+import com.develofer.opositate.feature.profile.domain.usecase.GetUserScoresDocumentUseCase
+import com.develofer.opositate.feature.profile.data.model.UserScores
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -14,7 +14,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getUserNameUseCase: GetUserNameUseCase,
-    private val getUserScoresDocument: GetUserScoresDocument
+    private val getUserScoresDocumentUseCase: GetUserScoresDocumentUseCase
 ) : ViewModel() {
 
     private val _userName = MutableStateFlow("")
@@ -36,7 +36,7 @@ class ProfileViewModel @Inject constructor(
 
     private fun fetchScores() {
         viewModelScope.launch {
-            getUserScoresDocument(
+            getUserScoresDocumentUseCase(
                 onSuccess = {
                     _scores.value = it
                 },

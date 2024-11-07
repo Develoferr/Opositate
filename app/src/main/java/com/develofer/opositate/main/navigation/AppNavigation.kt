@@ -16,9 +16,9 @@ import com.develofer.opositate.feature.lesson.LessonScreen
 import com.develofer.opositate.feature.login.presentation.screen.LoginScreen
 import com.develofer.opositate.feature.login.presentation.screen.RegisterScreen
 import com.develofer.opositate.feature.profile.presentation.screen.ProfileScreen
-import com.develofer.opositate.feature.test.TestResultScreen
-import com.develofer.opositate.feature.test.TestScreen
-import com.develofer.opositate.feature.test.TestSolvingScreen
+import com.develofer.opositate.feature.test.presentation.screen.TestResultScreen
+import com.develofer.opositate.feature.test.presentation.screen.TestScreen
+import com.develofer.opositate.feature.test.presentation.screen.TestSolvingScreen
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.main.components.CustomAppBar
 

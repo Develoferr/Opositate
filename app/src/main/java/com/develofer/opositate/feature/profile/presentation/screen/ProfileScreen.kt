@@ -30,9 +30,9 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.presentation.component.CustomBodyText
-import com.develofer.opositate.feature.profile.Score
-import com.develofer.opositate.feature.profile.components.CustomDualProgressBar
-import com.develofer.opositate.feature.profile.components.CustomRadarChart
+import com.develofer.opositate.feature.profile.data.model.Score
+import com.develofer.opositate.feature.profile.presentation.components.CustomDualProgressBar
+import com.develofer.opositate.feature.profile.presentation.components.CustomRadarChart
 import com.develofer.opositate.feature.profile.presentation.viewmodel.ProfileViewModel
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.ui.theme.OpositateTheme
