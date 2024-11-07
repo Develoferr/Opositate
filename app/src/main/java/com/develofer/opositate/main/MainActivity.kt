@@ -22,12 +22,10 @@ import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.splashscreen.SplashScreenViewProvider
+import androidx.core.view.WindowCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.main.navigation.AppNavigation
-import com.develofer.opositate.main.navigation.Login
-import com.develofer.opositate.main.navigation.Profile
-import com.develofer.opositate.main.navigation.Route
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
@@ -69,7 +67,7 @@ class MainActivity : ComponentActivity() {
 
     private fun setupEdgeToEdge() {
         enableEdgeToEdge()
-        window.setDecorFitsSystemWindows(false)
+        WindowCompat.setDecorFitsSystemWindows(window, false)
     }
 
     @Composable
