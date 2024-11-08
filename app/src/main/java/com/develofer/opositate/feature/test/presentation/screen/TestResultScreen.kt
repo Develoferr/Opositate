@@ -6,8 +6,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,14 +30,22 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.aay.compose.baseComponents.model.LegendPosition
+import com.aay.compose.donutChart.PieChart
+import com.aay.compose.donutChart.model.PieChartData
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.test.presentation.model.TestResultUiState
 import com.develofer.opositate.feature.test.presentation.viewmodel.TestResultViewModel
+import com.develofer.opositate.ui.theme.Gray600
 import com.develofer.opositate.utils.Constants.EMPTY_TEXT
 import com.develofer.opositate.utils.Constants.TWO_DECIMALS_FORMAT
 import com.develofer.opositate.utils.Constants.TWO_DIGITS_FORMAT
@@ -59,8 +69,8 @@ fun TestResultScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
-            TestHeader(uiState.currentQuestionIndex, testResult.questions.size, testResult.completionTime)
             if (uiState.currentQuestionIndex > -1) {
+                TestHeader(uiState.currentQuestionIndex, testResult.questions.size, testResult.completionTime)
                 CurrentQuestionContent(uiState, isDarkTheme)
             } else {
                 TestStatisticsContent(uiState, testResult.completionTime)
@@ -86,14 +96,17 @@ fun TestHeader(currentQuestionIndex: Int, totalQuestions: Int, completionTime: I
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        val questionText = if (showHeader) "${currentQuestionIndex + 1}/$totalQuestions" else EMPTY_TEXT
+        val questionText = if (showHeader) stringResource(
+            R.string.number_indicator_format,
+            currentQuestionIndex + 1, totalQuestions
+        ) else EMPTY_TEXT
         Text(
             text = questionText,
             fontSize = 18.sp,
             fontWeight = FontWeight.Bold
         )
         val timerText = if (showHeader) {
-            stringResource(id = R.string.test_solving_screen__text__time,
+            stringResource(id = R.string.time_format,
                 String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, (completionTime ?: 0) / 60),
                 String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, (completionTime ?: 0) % 60)
             )
@@ -132,7 +145,7 @@ fun CurrentQuestionContent(uiState: TestResultUiState, isDarkTheme: Boolean) {
                         (currentQuestion.correctAnswer == index) && (currentQuestion.selectedAnswer != index) -> MaterialTheme.colorScheme.secondary
                         (currentQuestion.correctAnswer != index) && (currentQuestion.selectedAnswer == index) -> MaterialTheme.colorScheme.error
                         else -> MaterialTheme.colorScheme.outlineVariant
-                    }, label = ""
+                    }, label = EMPTY_TEXT
                 )
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -159,24 +172,65 @@ fun TestStatisticsContent(uiState: TestResultUiState, completionTime: Int) {
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+            .padding(start = 16.dp)
+            .padding(end = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(uiState.testResult?.name ?: "", fontWeight = FontWeight.Bold, fontSize = 24.sp)
-        Text("Questions Correct: $numCorrect/${uiState.testResult?.questions?.size}", color = Color.Green)
-        Text("Questions Incorrect: $numIncorrect/${uiState.testResult?.questions?.size}", color = Color.Red)
-        Text("Questions Unanswered: $numUnanswered/${uiState.testResult?.questions?.size}", color = Color.Gray)
-        Text(String.format(Locale.getDefault(), TWO_DECIMALS_FORMAT, uiState.testResult?.score ?: 0.0f),
-            fontWeight = FontWeight.Bold, fontSize = 32.sp)
-        Text("Time Taken: " +
-            stringResource(
-                id = R.string.test_solving_screen__text__time,
-                String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, (completionTime) / 60),
-                String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, (completionTime) % 60)
-            )
+        Text(uiState.testResult?.name ?: EMPTY_TEXT, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+        Spacer(modifier = Modifier.height(20.dp))
+        Row {
+            Text(stringResource(R.string.test_result_screen__text__score), fontWeight = FontWeight.Bold, fontSize = 28.sp)
+            Spacer(modifier = Modifier.width(16.dp))
+            Text(
+                String.format(
+                    Locale.getDefault(),
+                    TWO_DECIMALS_FORMAT,
+                    uiState.testResult?.score?.times(10) ?: 0.0f),
+                fontWeight = FontWeight.Bold, fontSize = 32.sp)
+        }
+        Text(
+            stringResource(R.string.test_result_screen__text__time_taken) +
+                stringResource(
+                    id = R.string.time_format,
+                    String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, (completionTime) / 60),
+                    String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, (completionTime) % 60)
+                )
         )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            buildAnnotatedString {
+                withStyle(style = SpanStyle(fontSize = 12.sp)) {
+                    append(stringResource(R.string.test_result_screen__text__question_correct))
+                }
+                withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+                    append("$numCorrect/${uiState.testResult?.questions?.size}")
+                }
+            }
+        )
+        Text(
+            buildAnnotatedString {
+                withStyle(style = SpanStyle(fontSize = 12.sp)) {
+                    append(stringResource(R.string.test_result_screen__text__question_incorrect))
+                }
+                withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.error)) {
+                    append("$numIncorrect/${uiState.testResult?.questions?.size}")
+                }
+            }
+        )
+        Text(
+            buildAnnotatedString {
+                withStyle(style = SpanStyle(fontSize = 12.sp)) {
+                    append(stringResource(R.string.test_result_screen__text__question_unanswered))
+                }
+                withStyle(style = SpanStyle(fontSize = 16.sp, color = Gray600)) {
+                    append("$numUnanswered/${uiState.testResult?.questions?.size}")
+                }
+            }
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        PieChart(numCorrect, numIncorrect, numUnanswered)
     }
+
 }
 
 @Composable
@@ -210,3 +264,38 @@ fun NavigationButtons(
         }
     }
 }
+
+@Composable
+fun PieChart(numCorrect: Int?, numIncorrect: Int?, numUnanswered: Int?) {
+
+    val testPieChartData: List<PieChartData> = listOf(
+        PieChartData(
+            partName = "Correct",
+            data = numCorrect?.toDouble() ?: 0.0,
+            color = Color(0xFF22A699),
+        ),
+        PieChartData(
+            partName = "Incorrect",
+            data = numIncorrect?.toDouble() ?: 0.0,
+            color = Color(0xFFF24C3D),
+        ),
+        PieChartData(
+            partName = "Unanswered",
+            data = numUnanswered?.toDouble() ?: 0.0,
+            color = Gray600,
+        ),
+    )
+
+    Spacer(modifier = Modifier.height(16.dp))
+    PieChart(
+        modifier = Modifier.fillMaxWidth().fillMaxHeight(0.8f),
+        pieChartData = testPieChartData,
+        ratioLineColor = MaterialTheme.colorScheme.outlineVariant,
+        textRatioStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
+        outerCircularColor = MaterialTheme.colorScheme.onBackground,
+        descriptionStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),
+        legendPosition = LegendPosition.BOTTOM
+    )
+}
+
+

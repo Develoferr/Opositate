@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">opositate</string>
 
+    // General
+    <string name="number_indicator_format" translatable="false">%1$s/%2$s</string>
+    <string name="time_format" translatable="false">%1$s:%2$s</string>
+
     // Custom Login Text Field
     <string name="custom_login_text_field__content_description__password_eye_image">Botón alternar visibilidad de la contraseña</string>
     <string name="custom_login_text_field__content_description__ic_info">Icono de Información</string>
@@ -14,7 +18,6 @@
     <string name="login_screen__label_text_field__user">Usuario</string>
     <string name="login_screen__label_text_field__password">Contraseña</string>
     <string name="login_screen__text__forget_your_password">¿Hás olvidado tu contraseña?</string>
-    <string name="login_screen__text_btn__go">Go</string>
     <string name="login_screen__text_btn__google">Login con Google</string>
     <string name="login_screen__text_btn__new_user">¿Nuevo usuario?\nRegístrate</string>
     <string name="login_screen__content_description__brain_image">Imagen Cerebro</string>
@@ -25,7 +28,8 @@
     <string name="login_screen__text__reset_password_successful">El correo para restablecer la contraseña se ha enviado exitosamente</string>
     <string name="login_screen__text__reset_password_error">Error al restablecer la contraseña</string>
     <string name="login_screen__text__generic_error">Ha ocurrido un error. Inténtalo de nuevo</string>
-    <string name="login_screen__text_btn__ok">OK</string>
+    <string name="login_screen__text_btn__go" translatable="false">Go</string>
+    <string name="login_screen__text_btn__ok" translatable="false">OK</string>
 
     // Register Screen
     <string name="register_screen__content_description__brain_image">Imagen Cerebro</string>
@@ -65,12 +69,22 @@
     <string name="calendar_screen__app_bar_title__calendar">Calendario</string>
 
     // Test Solving Screen
-    <string name="test_solving_screen__text__time">%1$s:%2$s</string>
     <string name="test_solving_screen__content_description_before_button">Botón Anterior</string>
     <string name="test_solving_screen__content_description__after_button">Botón Siguiente</string>
     <string name="test_solving_screen__text_btn__finish">Finalizar test</string>
     <string name="test_solving_screen__text_btn__start">Comenzar</string>
     <string name="test_solving_screen__text_title">Instrucciones del test</string>
     <string name="test_solving_screen__text_description">- Puedes contestar a las preguntas en el orden que desees, utiliza los botones inferiores para navegar entre preguntas.\n- Puedes dejar preguntas en blanco pero te recomendamos que contestes al mayor número de preguntas posible.\n- Si no has seleccionado un tiempo máximo de realización del Test, puedes tardar el tiempo que necesites. Si lo has seleccionado, el tiempo empezará a contar cuando cierres esta ventana.</string>
+    <string name="test_solving_screen__text__pause_title">¿A ti también te cansa?</string>
+    <string name="test_solving_screen__text__pause_body"> A nosotros también nos pasa, tomate un descanso y retómalo cuándo quieras.\n Si crees que vas a tardar mucho y no quieres perder tu progreso, te recomendamos que guardes tus avances.\n Podrás abrir la aplicación en cualquier momento y conservaremos el estado del test.</string>
+    <string name="test_solving_screen__text__save_progress">Guardar Progreso</string>
+    <string name="test_solving_screen__text__continue">Continuar</string>
+
+    // Test Result Screen
+    <string name="test_result_screen__text__time_taken">"Tiempo Transcurrido: "</string>
+    <string name="test_result_screen__text__question_correct">"Preguntas Correctas: "</string>
+    <string name="test_result_screen__text__question_incorrect">"Preguntas Incorrectas: "</string>
+    <string name="test_result_screen__text__question_unanswered">"Preguntas Sin Responder: "</string>
+    <string name="test_result_screen__text__score">"Puntuación: "</string>
 
 </resources>

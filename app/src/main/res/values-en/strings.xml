@@ -14,7 +14,6 @@
     <string name="login_screen__label_text_field__user">User</string>
     <string name="login_screen__label_text_field__password">Password</string>
     <string name="login_screen__text__forget_your_password">Forgot your password?</string>
-    <string name="login_screen__text_btn__go">Go</string>
     <string name="login_screen__text_btn__google">Login with Google</string>
     <string name="login_screen__text_btn__new_user">New user?\nRegister</string>
     <string name="login_screen__content_description__brain_image">Brain Image</string>
@@ -25,7 +24,6 @@
     <string name="login_screen__text__reset_password_successful">The password reset email has been successfully sent</string>
     <string name="login_screen__text__reset_password_error">Reset Password Error</string>
     <string name="login_screen__text__generic_error">An error has occurred. Please try again</string>
-    <string name="login_screen__text_btn__ok">OK</string>
 
     // Register Screen
     <string name="register_screen__content_description__brain_image">Brain Image</string>
@@ -65,12 +63,22 @@
     <string name="calendar_screen__app_bar_title__calendar">Calendar</string>
 
     // Test solving screen
-    <string name="test_solving_screen__text__time">%1$s:%2$s</string>
     <string name="test_solving_screen__content_description_before_button">Before Button</string>
     <string name="test_solving_screen__content_description__after_button">After Button</string>
     <string name="test_solving_screen__text_btn__finish">Finish test</string>
     <string name="test_solving_screen__text_btn__start">Let\'s go</string>
     <string name="test_solving_screen__text_title">Test Instructions</string>
     <string name="test_solving_screen__text_description">- You can answer the questions in any order you wish; use the buttons below to navigate between questions. \n- You can leave questions unanswered, but we recommend that you answer as many questions as possible. \n- If you haven\'t selected a maximum time limit for the test, you can take as long as you need. If you have selected one, the timer will start counting down when you close this window.</string>
+    <string name="test_solving_screen__text__pause_title">Are you tired too?</string>
+    <string name="test_solving_screen__text__pause_body">We feel the same way, take a break and come back whenever you want.\nIf you think you\'ll take too long and don\'t want to lose your progress, we recommend saving your progress.\nYou can open the app at any time and we will preserve the state of the test.</string>
+    <string name="test_solving_screen__text__save_progress">Save Progress</string>
+    <string name="test_solving_screen__text__continue">Continue</string>
+
+    // Test Result Screen
+    <string name="test_result_screen__text__time_taken">"Time Elapsed: "</string>
+    <string name="test_result_screen__text__question_correct">"Questions Correct: "</string>
+    <string name="test_result_screen__text__question_incorrect">"Questions Incorrect: "</string>
+    <string name="test_result_screen__text__question_unanswered">"Questions Unanswered: "</string>
+    <string name="test_result_screen__text__score">"Score: "</string>
 
 </resources>

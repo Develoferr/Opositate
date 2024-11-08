@@ -117,16 +117,14 @@ fun TestSolvingScreen(
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     Text(
-                        text = "¿A ti también te cansa?",
+                        text = stringResource(R.string.test_solving_screen__text__pause_title),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(top = 24.dp),
                         textAlign = TextAlign.Center
                     )
                     Text(
-                        text = "A nosotros también nos pasa, tomate un descanso y retómalo cuándo quieras.\n" +
-                                "Si crees que vas a tardar mucho y no quieres perder tu progreso, te recomendamos que guardes tus avances.\n" +
-                                "Podrás abrir la aplicación en cualquier momento y conservaremos tel estado del test.",
+                        text = stringResource(R.string.test_solving_screen__text__pause_body),
                         modifier = Modifier.padding(vertical = 24.dp),
                         textAlign = TextAlign.Center
                     )
@@ -137,7 +135,7 @@ fun TestSolvingScreen(
 //                                isTestActive = false
                         }
                     ) {
-                        Text("Guardar Progreso")
+                        Text(stringResource(R.string.test_solving_screen__text__save_progress))
                     }
                     Button(
                         onClick = {
@@ -145,7 +143,7 @@ fun TestSolvingScreen(
                             testSolvingViewModel.toggleTestActive(true)
                         }
                     ) {
-                        Text("Continuar")
+                        Text(stringResource(R.string.test_solving_screen__text__continue))
                     }
                 }
             }
@@ -172,7 +170,7 @@ fun TestSolvingScreen(
                 )
                 if (maxTime != null) {
                     Text(
-                        text = stringResource(id = R.string.test_solving_screen__text__time,
+                        text = stringResource(id = R.string.time_format,
                             String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, timeCount / 60),
                             String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, timeCount % 60)
                         ),
@@ -224,7 +222,11 @@ fun TestSolvingScreen(
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .clickable { testSolvingViewModel.updateSelectedAnswer(currentQuestion.options.indexOf(option)) },
+                                .clickable {
+                                    testSolvingViewModel.updateSelectedAnswer(
+                                        currentQuestion.options.indexOf(option)
+                                    )
+                                },
                             border = BorderStroke(
                                 if (isSelected && !isDarkTheme) 2.dp else 1.dp,
                                 borderColor)
