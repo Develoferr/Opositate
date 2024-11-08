@@ -34,7 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
-import com.develofer.opositate.feature.test.presentation.viewmodel.TestResultUiState
+import com.develofer.opositate.feature.test.presentation.model.TestResultUiState
 import com.develofer.opositate.feature.test.presentation.viewmodel.TestResultViewModel
 import com.develofer.opositate.utils.Constants.EMPTY_TEXT
 import com.develofer.opositate.utils.Constants.TWO_DECIMALS_FORMAT

@@ -2,8 +2,8 @@ package com.develofer.opositate.feature.test.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.develofer.opositate.feature.profile.data.model.SolvedTest
 import com.develofer.opositate.feature.test.domain.usecase.GetTestResultUseCase
+import com.develofer.opositate.feature.test.presentation.model.TestResultUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,12 +30,3 @@ class TestResultViewModel @Inject constructor(
         }
     }
 }
-
-data class TestResultUiState(
-    val currentQuestionIndex: Int = -1,
-    val timeCount: Int = 0,
-    val isTestActive: Boolean = false,
-    val showStartDialog: Boolean = true,
-    val showPauseDialog: Boolean = false,
-    val testResult: SolvedTest? = null
-)
