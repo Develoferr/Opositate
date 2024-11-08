@@ -51,9 +51,9 @@ import com.develofer.opositate.feature.login.presentation.model.RegisterDialogTy
 import com.develofer.opositate.feature.login.presentation.model.RegisterState
 import com.develofer.opositate.feature.login.presentation.model.RegisterUiState
 import com.develofer.opositate.feature.login.presentation.viewmodel.RegisterViewModel
-import com.develofer.opositate.main.components.DialogState
 import com.develofer.opositate.main.components.ErrorDialog
 import com.develofer.opositate.main.components.SuccessDialog
+import com.develofer.opositate.main.coordinator.DialogState
 import com.develofer.opositate.ui.theme.OpositateTheme
 import kotlinx.coroutines.flow.StateFlow
 

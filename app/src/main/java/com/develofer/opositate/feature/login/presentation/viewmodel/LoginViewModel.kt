@@ -7,7 +7,7 @@ import com.develofer.opositate.feature.login.presentation.model.LoginDialogType
 import com.develofer.opositate.feature.login.presentation.model.LoginState
 import com.develofer.opositate.feature.login.presentation.model.LoginUiState
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
-import com.develofer.opositate.main.components.DialogStateCoordinator
+import com.develofer.opositate.main.coordinator.DialogStateCoordinator
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

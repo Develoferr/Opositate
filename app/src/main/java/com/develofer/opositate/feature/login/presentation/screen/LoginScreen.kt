@@ -55,9 +55,9 @@ import com.develofer.opositate.feature.login.presentation.model.LoginUiState
 import com.develofer.opositate.feature.login.presentation.resetpassword.ResetPasswordDialog
 import com.develofer.opositate.feature.login.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.main.MainViewModel
-import com.develofer.opositate.main.components.DialogState
 import com.develofer.opositate.main.components.ErrorDialog
 import com.develofer.opositate.main.components.SuccessDialog
+import com.develofer.opositate.main.coordinator.DialogState
 import com.develofer.opositate.ui.theme.OpositateTheme
 
 @OptIn(ExperimentalLayoutApi::class)
