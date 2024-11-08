@@ -2,10 +2,10 @@ package com.develofer.opositate.feature.test.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.develofer.opositate.feature.profile.data.model.PsTest
 import com.develofer.opositate.feature.profile.data.model.TestResult
 import com.develofer.opositate.feature.test.domain.usecase.GetTestUseCase
 import com.develofer.opositate.feature.test.domain.usecase.SaveTestResultUseCase
+import com.develofer.opositate.feature.test.presentation.model.TestSolvingUiState
 import com.develofer.opositate.feature.test.utils.correctTest
 import com.google.firebase.Timestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -51,7 +51,7 @@ class TestSolvingViewModel @Inject constructor(
             it.copy(
                 test = it.test?.copy(
                     questions = it.test.questions.mapIndexed { i, question ->
-                        if (i == question.id) question.copy(selectedAnswer = index) else question
+                        if (i == _uiState.value.currentQuestionIndex) question.copy(selectedAnswer = index) else question
                     }
                 )
             )
@@ -76,12 +76,3 @@ class TestSolvingViewModel @Inject constructor(
         }
     }
 }
-
-data class TestSolvingUiState(
-    val currentQuestionIndex: Int = 0,
-    val timeCount: Int = 0,
-    val isTestActive: Boolean = false,
-    val showStartDialog: Boolean = true,
-    val showPauseDialog: Boolean = false,
-    val test: PsTest? = null
-)
