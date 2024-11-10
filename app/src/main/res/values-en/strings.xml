@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">opositate</string>
 
+    // Abilities
+    <string name="ability_name__logical_reasoning">Logical Reasoning</string>
+    <string name="ability_name__verbal_reasoning">Verbal Reasoning</string>
+    <string name="ability_name__numerical_reasoning">Numerical Reasoning</string>
+    <string name="ability_name__spatial_perception">Spatial Perception</string>
+    <string name="ability_name__memory">Memory</string>
+    <string name="ability_name__attention_and_concentration">Attention and Concentration</string>
+    <string name="ability_name__processing_speed">Processing Speed</string>
+    <string name="ability_name__abstract_reasoning">Abstract Reasoning</string>
+    <string name="ability_name__stress_resilience">Stress and Resilience</string>
+    <string name="ability_name__visual_motor_skills">Visual Motor Skills</string>
+    <string name="ability_name__planning_and_organization_skills">Planning and Organization Skills</string>
+
     // Custom Login Text Field
     <string name="custom_login_text_field__content_description__password_eye_image">Toggle password visibility button</string>
     <string name="custom_login_text_field__content_description__ic_info">Info Icon</string>

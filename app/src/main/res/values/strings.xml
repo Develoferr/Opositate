@@ -5,6 +5,19 @@
     <string name="number_indicator_format" translatable="false">%1$s/%2$s</string>
     <string name="time_format" translatable="false">%1$s:%2$s</string>
 
+    // Abilities
+    <string name="ability_name__logical_reasoning">Razonamiento Lógico</string>
+    <string name="ability_name__verbal_reasoning">Razonamiento Verbal</string>
+    <string name="ability_name__numerical_reasoning">Razonamiento Numérico</string>
+    <string name="ability_name__spatial_perception">Percepción Espacial</string>
+    <string name="ability_name__memory">Memoria</string>
+    <string name="ability_name__attention_and_concentration">Atención y Concentración</string>
+    <string name="ability_name__processing_speed">Velocidad de Procesamiento</string>
+    <string name="ability_name__abstract_reasoning">Razonamiento Abstracto</string>
+    <string name="ability_name__stress_resilience">Resiliencia al Estrés</string>
+    <string name="ability_name__visual_motor_skills">Habilidades Visuales y Motoras</string>
+    <string name="ability_name__planning_and_organization_skills">Habilidades de Planificación y Organización</string>
+
     // Custom Login Text Field
     <string name="custom_login_text_field__content_description__password_eye_image">Botón alternar visibilidad de la contraseña</string>
     <string name="custom_login_text_field__content_description__ic_info">Icono de Información</string>
