@@ -40,7 +40,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.test.presentation.viewmodel.TestSolvingViewModel
-import com.develofer.opositate.utils.Constants.TWO_DIGITS_FORMAT
+import com.develofer.opositate.utils.StringConstants.TWO_DIGITS_FORMAT
 import kotlinx.coroutines.delay
 import java.util.Locale
 import kotlin.time.Duration.Companion.seconds

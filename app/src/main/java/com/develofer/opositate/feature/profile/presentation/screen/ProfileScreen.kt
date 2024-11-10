@@ -30,7 +30,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.presentation.component.CustomBodyText
-import com.develofer.opositate.feature.profile.data.model.Score
+import com.develofer.opositate.feature.profile.domain.model.ScoreVO
 import com.develofer.opositate.feature.profile.presentation.components.CustomDualProgressBar
 import com.develofer.opositate.feature.profile.presentation.components.CustomRadarChart
 import com.develofer.opositate.feature.profile.presentation.viewmodel.ProfileViewModel
@@ -88,18 +88,19 @@ fun ProfileScreen(
 }
 
 @Composable
-fun ScoresContent(items: List<Score> = emptyList()) {
+fun ScoresContent(items: List<ScoreVO> = emptyList()) {
     Spacer(modifier = Modifier.size(16.dp))
     LazyColumn(
         modifier = Modifier.fillMaxSize(),
         contentPadding = PaddingValues(16.dp)
     ) {
         items(items.size) {
-            Text(text = items[it].abilityName)
+            val score = items[it]
+            Text(text = score.abilityName)
             Spacer(modifier = Modifier.size(0.dp))
             CustomDualProgressBar(
-                primaryProgress = ( items[it].startScore.toFloat() / 10 ),
-                secondaryProgress = ( items[it].presentScore.toFloat() / 10 )
+                primaryProgress = ( score.startScore.toFloat() / 10 ),
+                secondaryProgress = ( score.presentScore.toFloat() / 10 )
             )
             Spacer(modifier = Modifier.size(8.dp))
         }
@@ -107,21 +108,24 @@ fun ScoresContent(items: List<Score> = emptyList()) {
 }
 
 @Composable
-fun ChartContent(items: List<Score> = emptyList()) {
-    val radarLabels = items.map { it.abilityName }
-    val values = items.map { it.startScore.toDouble() }
-    val values2 = items.map { it.presentScore.toDouble() }
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp)
-    ) {
-        CustomRadarChart(
-            radarLabels = radarLabels,
-            values = values,
-            values2 = values2
-        )
+fun ChartContent(items: List<ScoreVO> = emptyList()) {
+    if (items.isNotEmpty()) {
+        val radarLabels = items.map { score -> score.abilityName }
+        val values = items.map { score -> score.startScore.toDouble() }
+        val values2 = items.map { score -> score.presentScore.toDouble() }
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            CustomRadarChart(
+                radarLabels = radarLabels,
+                values = values,
+                values2 = values2
+            )
+        }
     }
+
 }
 
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)

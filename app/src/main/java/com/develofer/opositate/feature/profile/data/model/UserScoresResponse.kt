@@ -1,12 +1,12 @@
 package com.develofer.opositate.feature.profile.data.model
 
-data class UserScores(
+data class UserScoresResponse(
     val level: Int = 0,
-    val scores: List<Score> = emptyList(),
+    val scores: List<ScoreResponse> = emptyList(),
 )
 
-data class Score(
-    val abilityName: String = "",
+data class ScoreResponse(
+    val abilityId: Int = 0,
     val startScore: Int = 0,
     val presentScore: Int = 0
 )

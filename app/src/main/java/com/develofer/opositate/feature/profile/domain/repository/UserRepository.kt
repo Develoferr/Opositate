@@ -7,6 +7,6 @@ interface UserRepository {
     fun getUser(): FirebaseUser?
     fun getUserName(): String
     fun getUserId(): String
-    fun createUserScoreDocument(onSuccess: () -> Unit, onFailure: (String) -> Unit)
+    fun createUserScoreDocument(onSuccess: () -> Unit, onFailure: (String) -> Unit, abilityIdList: List<Int>)
     fun getUserScoreDocument(onSuccess: (DocumentSnapshot) -> Unit, onFailure: (String) -> Unit)
 }

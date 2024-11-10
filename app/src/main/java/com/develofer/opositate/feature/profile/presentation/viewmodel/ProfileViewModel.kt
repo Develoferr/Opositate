@@ -2,9 +2,9 @@ package com.develofer.opositate.feature.profile.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.develofer.opositate.feature.profile.domain.model.UserScoresVO
 import com.develofer.opositate.feature.profile.domain.usecase.GetUserNameUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetUserScoresDocumentUseCase
-import com.develofer.opositate.feature.profile.data.model.UserScores
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -20,8 +20,8 @@ class ProfileViewModel @Inject constructor(
     private val _userName = MutableStateFlow("")
     val userName: StateFlow<String> get() = _userName
 
-    private val _scores = MutableStateFlow(UserScores())
-    val scores: StateFlow<UserScores> get() = _scores
+    private val _scores = MutableStateFlow(UserScoresVO())
+    val scores: StateFlow<UserScoresVO> get() = _scores
 
     init {
         fetchUserName()

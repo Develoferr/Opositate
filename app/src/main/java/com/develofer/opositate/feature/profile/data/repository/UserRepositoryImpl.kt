@@ -1,8 +1,7 @@
 package com.develofer.opositate.feature.profile.data.repository
 
-import com.develofer.opositate.main.model.Abilities
 import com.develofer.opositate.feature.profile.domain.repository.UserRepository
-import com.develofer.opositate.utils.Constants.EMPTY_STRING
+import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -20,14 +19,14 @@ class UserRepositoryImpl @Inject constructor(
 
     override fun getUserId(): String = getUser()?.uid ?: ""
 
-    override fun createUserScoreDocument(onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+    override fun createUserScoreDocument(onSuccess: () -> Unit, onFailure: (String) -> Unit, abilityIdList: List<Int>) {
         val userId = getUser()?.uid
         if (userId != null) {
             val scoresCollection = firestore.collection("scores")
             val userScoreDocument = scoresCollection.document(userId)
             val userScores: MutableList<Map<String, Any>> = mutableListOf()
-            Abilities.entries.forEach { ability ->
-                userScores.add(mapOf("abilityName" to ability.abilityName, "startScore" to 0, "presentScore" to 0))
+            abilityIdList.forEach { abilityId ->
+                userScores.add(mapOf("abilityId" to abilityId, "startScore" to 0, "presentScore" to 0))
             }
             userScoreDocument.set(
                 mapOf(

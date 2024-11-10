@@ -6,9 +6,12 @@ import javax.inject.Singleton
 
 @Singleton
 class CreateUserScoreDocumentUseCase @Inject constructor(
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    private val getAbilityIdListUseCase: GetAbilityIdListUseCase
 ) {
     operator fun invoke(onSuccess: () -> Unit, onFailure: (String) -> Unit) {
-        userRepository.createUserScoreDocument(onSuccess, onFailure)
+        val abilityIdList = getAbilityIdListUseCase()
+        userRepository.createUserScoreDocument(onSuccess, onFailure, abilityIdList)
     }
+
 }

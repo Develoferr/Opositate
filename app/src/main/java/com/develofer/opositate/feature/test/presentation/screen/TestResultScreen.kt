@@ -46,9 +46,9 @@ import com.develofer.opositate.R
 import com.develofer.opositate.feature.test.presentation.model.TestResultUiState
 import com.develofer.opositate.feature.test.presentation.viewmodel.TestResultViewModel
 import com.develofer.opositate.ui.theme.Gray600
-import com.develofer.opositate.utils.Constants.EMPTY_STRING
-import com.develofer.opositate.utils.Constants.TWO_DECIMALS_FORMAT
-import com.develofer.opositate.utils.Constants.TWO_DIGITS_FORMAT
+import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
+import com.develofer.opositate.utils.StringConstants.TWO_DECIMALS_FORMAT
+import com.develofer.opositate.utils.StringConstants.TWO_DIGITS_FORMAT
 import java.util.Locale
 
 @Composable
@@ -69,6 +69,7 @@ fun TestResultScreen(
                 .fillMaxSize()
                 .padding(16.dp)
         ) {
+            Spacer(modifier = Modifier.height(16.dp))
             if (uiState.currentQuestionIndex > -1) {
                 TestHeader(uiState.currentQuestionIndex, testResult.questions.size, testResult.completionTime)
                 CurrentQuestionContent(uiState, isDarkTheme)
