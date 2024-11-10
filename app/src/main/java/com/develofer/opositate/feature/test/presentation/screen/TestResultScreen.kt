@@ -46,7 +46,7 @@ import com.develofer.opositate.R
 import com.develofer.opositate.feature.test.presentation.model.TestResultUiState
 import com.develofer.opositate.feature.test.presentation.viewmodel.TestResultViewModel
 import com.develofer.opositate.ui.theme.Gray600
-import com.develofer.opositate.utils.Constants.EMPTY_TEXT
+import com.develofer.opositate.utils.Constants.EMPTY_STRING
 import com.develofer.opositate.utils.Constants.TWO_DECIMALS_FORMAT
 import com.develofer.opositate.utils.Constants.TWO_DIGITS_FORMAT
 import java.util.Locale
@@ -99,7 +99,7 @@ fun TestHeader(currentQuestionIndex: Int, totalQuestions: Int, completionTime: I
         val questionText = if (showHeader) stringResource(
             R.string.number_indicator_format,
             currentQuestionIndex + 1, totalQuestions
-        ) else EMPTY_TEXT
+        ) else EMPTY_STRING
         Text(
             text = questionText,
             fontSize = 18.sp,
@@ -110,7 +110,7 @@ fun TestHeader(currentQuestionIndex: Int, totalQuestions: Int, completionTime: I
                 String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, (completionTime ?: 0) / 60),
                 String.format(Locale.getDefault(), TWO_DIGITS_FORMAT, (completionTime ?: 0) % 60)
             )
-        } else EMPTY_TEXT
+        } else EMPTY_STRING
         Text(
             text = timerText,
             fontSize = 18.sp,
@@ -145,7 +145,7 @@ fun CurrentQuestionContent(uiState: TestResultUiState, isDarkTheme: Boolean) {
                         (currentQuestion.correctAnswer == index) && (currentQuestion.selectedAnswer != index) -> MaterialTheme.colorScheme.secondary
                         (currentQuestion.correctAnswer != index) && (currentQuestion.selectedAnswer == index) -> MaterialTheme.colorScheme.error
                         else -> MaterialTheme.colorScheme.outlineVariant
-                    }, label = EMPTY_TEXT
+                    }, label = EMPTY_STRING
                 )
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -176,7 +176,7 @@ fun TestStatisticsContent(uiState: TestResultUiState, completionTime: Int) {
             .padding(end = 16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Text(uiState.testResult?.name ?: EMPTY_TEXT, fontWeight = FontWeight.Bold, fontSize = 24.sp)
+        Text(uiState.testResult?.name ?: EMPTY_STRING, fontWeight = FontWeight.Bold, fontSize = 24.sp)
         Spacer(modifier = Modifier.height(20.dp))
         Row {
             Text(stringResource(R.string.test_result_screen__text__score), fontWeight = FontWeight.Bold, fontSize = 28.sp)

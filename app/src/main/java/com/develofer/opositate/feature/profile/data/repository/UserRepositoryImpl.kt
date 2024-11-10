@@ -2,6 +2,7 @@ package com.develofer.opositate.feature.profile.data.repository
 
 import com.develofer.opositate.main.model.Abilities
 import com.develofer.opositate.feature.profile.domain.repository.UserRepository
+import com.develofer.opositate.utils.Constants.EMPTY_STRING
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.FirebaseFirestore
@@ -15,7 +16,7 @@ class UserRepositoryImpl @Inject constructor(
 ) : UserRepository {
     override fun getUser() = auth.currentUser
 
-    override fun getUserName(): String = getUser()?.displayName ?: ""
+    override fun getUserName(): String = getUser()?.displayName ?: EMPTY_STRING
 
     override fun getUserId(): String = getUser()?.uid ?: ""
 
