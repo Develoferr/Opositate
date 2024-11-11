@@ -15,10 +15,10 @@ class GetUserScoresDocumentUseCase @Inject constructor(
     operator fun invoke(onSuccess: (UserScoresVO) -> Unit, onFailure: (String) -> Unit) {
         userRepository.getUserScoreDocument(
             onSuccess = { document ->
-                document.toObject(UserScoresResponse::class.java)?.let {
+                document.toObject(UserScoresResponse::class.java)?.let { userScoresResponse ->
                     val userScoresVO = UserScoresVO(
-                        it.level,
-                        it.scores.map { scoreResponse ->
+                        userScoresResponse.level,
+                        userScoresResponse.scores.map { scoreResponse ->
                             ScoreVO(
                                 getAbilityStringIdUseCase(scoreResponse.abilityId),
                                 scoreResponse.startScore,
