@@ -6,7 +6,7 @@ data class UserScoresVO(
 )
 
 data class ScoreVO(
-    val abilityName: String = "",
+    val abilityName: Int = 0,
     val startScore: Int = 0,
     val presentScore: Int = 0
 )

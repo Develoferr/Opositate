@@ -10,7 +10,7 @@ import javax.inject.Singleton
 @Singleton
 class GetUserScoresDocumentUseCase @Inject constructor(
     private val userRepository: UserRepository,
-    private val getAbilityNameUseCase: GetAbilityNameUseCase
+    private val getAbilityStringIdUseCase: GetAbilityNameUseCase
 ) {
     operator fun invoke(onSuccess: (UserScoresVO) -> Unit, onFailure: (String) -> Unit) {
         userRepository.getUserScoreDocument(
@@ -20,7 +20,7 @@ class GetUserScoresDocumentUseCase @Inject constructor(
                         it.level,
                         it.scores.map { scoreResponse ->
                             ScoreVO(
-                                getAbilityNameUseCase(scoreResponse.abilityId),
+                                getAbilityStringIdUseCase(scoreResponse.abilityId),
                                 scoreResponse.startScore,
                                 scoreResponse.presentScore
                             )

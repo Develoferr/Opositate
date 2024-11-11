@@ -6,7 +6,7 @@ import javax.inject.Inject
 class GetAbilityNameUseCase @Inject constructor(
     private val abilityDataProvider: AbilityDataProvider
 ) {
-    operator fun invoke(abilityId: Int): String {
+    operator fun invoke(abilityId: Int): Int {
         return abilityDataProvider.getAbilityName(abilityId)
     }
 }

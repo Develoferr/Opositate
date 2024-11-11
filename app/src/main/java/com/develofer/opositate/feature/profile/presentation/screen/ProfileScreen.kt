@@ -96,7 +96,7 @@ fun ScoresContent(items: List<ScoreVO> = emptyList()) {
     ) {
         items(items.size) {
             val score = items[it]
-            Text(text = score.abilityName)
+            Text(text = stringResource(id = score.abilityName))
             Spacer(modifier = Modifier.size(0.dp))
             CustomDualProgressBar(
                 primaryProgress = ( score.startScore.toFloat() / 10 ),
@@ -110,7 +110,7 @@ fun ScoresContent(items: List<ScoreVO> = emptyList()) {
 @Composable
 fun ChartContent(items: List<ScoreVO> = emptyList()) {
     if (items.isNotEmpty()) {
-        val radarLabels = items.map { score -> score.abilityName }
+        val radarLabels = items.map { score -> stringResource(id = score.abilityName) }
         val values = items.map { score -> score.startScore.toDouble() }
         val values2 = items.map { score -> score.presentScore.toDouble() }
         Box(
