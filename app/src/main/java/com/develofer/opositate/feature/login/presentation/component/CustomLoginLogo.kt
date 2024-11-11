@@ -30,15 +30,18 @@ fun CustomLoginLogo(isDarkTheme: Boolean, isKeyboardVisible: Boolean, modifier: 
             .padding(top = 0.dp).offset(y = (120).dp, x = (0).dp)
     } else {
         Modifier.size(550.dp).alpha(logoAlphaDark).background(Color.Transparent)
-            .padding(top = 0.dp).offset(y = (-60).dp, x = (-100).dp)
+            .padding(top = 0.dp).offset(y = (-100).dp, x = (-100).dp)
             .graphicsLayer { rotationX = 180f }
     }
 
-    Image(
-        painter = painterResource(id = R.drawable.ic_brain_logo),
-        contentDescription = stringResource(id = R.string.register_screen__content_description__brain_image),
-        colorFilter = colorFilter,
-        modifier = modifierCopy,
-        alignment = if (isDarkTheme) Alignment.BottomCenter else Alignment.TopCenter
-    )
+    if (!isKeyboardVisible) {
+        Image(
+            painter = painterResource(id = R.drawable.ic_brain_logo),
+            contentDescription = stringResource(id = R.string.register_screen__content_description__brain_image),
+            colorFilter = colorFilter,
+            modifier = modifierCopy,
+            alignment = if (isDarkTheme) Alignment.BottomCenter else Alignment.TopCenter
+        )
+    }
+
 }

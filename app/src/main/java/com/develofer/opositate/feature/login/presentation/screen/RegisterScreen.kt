@@ -115,7 +115,7 @@ private fun RegisterContent(
     uiState: RegisterUiState, isDarkTheme: Boolean, isKeyboardVisible: Boolean,
     registerViewModel: RegisterViewModel, navigateToLogin: () -> Unit, clearFocus: () -> Unit
 ) {
-    val columnPaddingTop = if (isKeyboardVisible) 50.dp else if (isSystemInDarkTheme()) 330.dp else 240.dp
+    val columnPaddingTop = if (isKeyboardVisible) 50.dp else if (isSystemInDarkTheme()) 280.dp else 240.dp
     Column(
         modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).padding(top = columnPaddingTop),
         horizontalAlignment = Alignment.CenterHorizontally

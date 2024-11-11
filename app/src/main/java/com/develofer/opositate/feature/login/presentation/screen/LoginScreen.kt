@@ -125,7 +125,7 @@ private fun LoginContent(
     uiState: LoginUiState, loginViewModel: LoginViewModel, isDarkTheme: Boolean, isKeyBoardVisible: Boolean,
     onForgotPasswordClick: () -> Unit, clearFocus: () -> Unit, navigateToRegister: () -> Unit,
 ) {
-    val columnPaddingTop = if (isKeyBoardVisible) 50.dp else if (isDarkTheme) 330.dp else 240.dp
+    val columnPaddingTop = if (isKeyBoardVisible) 50.dp else if (isDarkTheme) 280.dp else 240.dp
     Column(
         modifier = Modifier
             .fillMaxSize()
