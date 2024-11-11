@@ -3,11 +3,11 @@ package com.develofer.opositate.feature.login.presentation.model
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
 
 data class LoginUiState(
-    val username: String = "",
+    val email: String = "",
     val password: String = "",
-    val isUsernameFocused: Boolean = false,
+    val isEmailFocused: Boolean = false,
     val isPasswordFocused: Boolean = false,
-    val usernameValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
+    val emailValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
     val passwordValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
     val showResetPasswordDialog: Boolean = false,
     val loginState: LoginState = LoginState.Idle,

@@ -8,7 +8,7 @@ import javax.inject.Singleton
 class LoginUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
-    fun login(username: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
-        authRepository.login(username, password, onSuccess, onFailure)
+    fun login(email: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+        authRepository.login(email, password, onSuccess, onFailure)
     }
 }

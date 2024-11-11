@@ -24,7 +24,7 @@
     // Login Screen
     <string name="login_screen__title_text__welcome">Welcome</string>
     <string name="login_screen__text__sign_in">Sign in to continue</string>
-    <string name="login_screen__label_text_field__user">User</string>
+    <string name="login_screen__label_text_field__email">Email</string>
     <string name="login_screen__label_text_field__password">Password</string>
     <string name="login_screen__text__forget_your_password">Forgot your password?</string>
     <string name="login_screen__text_btn__google">Login with Google</string>

@@ -35,16 +35,16 @@ class LoginViewModel @Inject constructor(
         loginDialogStateCoordinator.hideDialog()
     }
 
-    fun onUsernameChanged(newUsername: String) {
-        _uiState.update { it.copy(username = newUsername) }
+    fun onEmailChanged(newEmail: String) {
+        _uiState.update { it.copy(email = newEmail) }
     }
 
     fun onPasswordChanged(newPassword: String) {
         _uiState.update { it.copy(password = newPassword) }
     }
 
-    fun onUsernameFocusChanged(isFocused: Boolean) {
-        _uiState.update { it.copy(isUsernameFocused = isFocused) }
+    fun onEmailFocusChanged(isFocused: Boolean) {
+        _uiState.update { it.copy(isEmailFocused = isFocused) }
     }
 
     fun onPasswordFocusChanged(isFocused: Boolean) {
@@ -60,7 +60,7 @@ class LoginViewModel @Inject constructor(
             viewModelScope.launch {
                 _uiState.update { it.copy(loginState = LoginState.Loading) }
                 loginUseCase.login(
-                    username = _uiState.value.username.trim(),
+                    email = _uiState.value.email.trim(),
                     password = _uiState.value.password.trim(),
                     onSuccess = {
                         _uiState.update { it.copy(loginState = LoginState.Success) }
@@ -76,18 +76,18 @@ class LoginViewModel @Inject constructor(
     }
 
     fun areFieldsValid(): Boolean {
-        validateUsername()
+        validateEmail()
         validatePassword()
-        return _uiState.value.usernameValidateFieldError == ValidateFieldErrors.NONE &&
+        return _uiState.value.emailValidateFieldError == ValidateFieldErrors.NONE &&
                 _uiState.value.passwordValidateFieldError == ValidateFieldErrors.NONE
     }
 
-    fun validateUsername() {
+    fun validateEmail() {
         _uiState.update {
             it.copy(
-                usernameValidateFieldError = when {
-                    isFieldEmpty(it.username) -> ValidateFieldErrors.EMPTY_TEXT
-                    !isEmailValid(it.username) -> ValidateFieldErrors.INVALID_EMAIL
+                emailValidateFieldError = when {
+                    isFieldEmpty(it.email) -> ValidateFieldErrors.EMPTY_TEXT
+                    !isEmailValid(it.email) -> ValidateFieldErrors.INVALID_EMAIL
                     else -> ValidateFieldErrors.NONE
                 }
             )

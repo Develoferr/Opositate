@@ -41,9 +41,9 @@ class AuthRepositoryImpl @Inject constructor(
         }
     }
 
-    override fun login(username: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
-        if (username.isNotBlank() && password.isNotBlank()) {
-            auth.signInWithEmailAndPassword(username, password).addOnCompleteListener { loginTask ->
+    override fun login(email: String, password: String, onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+        if (email.isNotBlank() && password.isNotBlank()) {
+            auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { loginTask ->
                 if (loginTask.isSuccessful) {
                     onSuccess()
                 } else {

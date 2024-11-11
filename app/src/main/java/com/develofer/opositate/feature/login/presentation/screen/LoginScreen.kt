@@ -169,14 +169,14 @@ private fun LoginFields(
     isDarkTheme: Boolean, onForgotPasswordClick: () -> Unit
 ) {
     CustomLoginTextField(
-        value = uiState.username,
+        value = uiState.email,
         onValueChange = {
-            loginViewModel.onUsernameChanged(it)
-            loginViewModel.validateUsername()
+            loginViewModel.onEmailChanged(it)
+            loginViewModel.validateEmail()
         },
-        label = stringResource(id = R.string.login_screen__label_text_field__user).uppercase(), isFocused = uiState.isUsernameFocused,
-        onFocusChange = { loginViewModel.onUsernameFocusChanged(it) }, isPasswordField = false,
-        supportingText = uiState.usernameValidateFieldError, isDarkTheme = isDarkTheme
+        label = stringResource(id = R.string.login_screen__label_text_field__email).uppercase(), isFocused = uiState.isEmailFocused,
+        onFocusChange = { loginViewModel.onEmailFocusChanged(it) }, isPasswordField = false,
+        supportingText = uiState.emailValidateFieldError, isDarkTheme = isDarkTheme
     )
     CustomLoginTextField(
         value = uiState.password,
@@ -403,7 +403,7 @@ private fun HandleDialog(
 
 private fun clearFocus(focusManager: FocusManager, loginViewModel: LoginViewModel) {
     focusManager.clearFocus()
-    loginViewModel.onUsernameFocusChanged(false)
+    loginViewModel.onEmailFocusChanged(false)
     loginViewModel.onPasswordFocusChanged(false)
 }
 
