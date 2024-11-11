@@ -57,3 +57,6 @@ val ErrorDark = Color(0xFFB00020)
 
 // Background colors
 val BackgroundOriginal = Color(0xFF170616)
+val BackgroundVariant1 = Gray900
+val BackgroundVariant2 = Color(0xFF121212)
+val BackgroundVariant3 = Color(0xFF303030)
