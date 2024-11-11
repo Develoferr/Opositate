@@ -9,7 +9,6 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontFamily
 import androidx.core.view.WindowInsetsControllerCompat
@@ -20,10 +19,11 @@ val LightColorScheme = lightColorScheme(
     onBackground = TextPrimaryLight,
     surface = Gray100,
     onSurface = TextSecondaryLight,
-    primaryContainer = Gray400,
+    primaryContainer = Gray100,
     onPrimaryContainer = TextPrimaryLight,
-    secondaryContainer = Gray600,
+    secondaryContainer = Gray300,
     onSecondaryContainer = Color.Black,
+    tertiaryContainer = Gray500,
     outline = Gray600,
     outlineVariant = Gray800,
     // Accent Colors
@@ -41,10 +41,11 @@ val DarkColorScheme = darkColorScheme(
     onBackground = TextPrimaryDark,
     surface = Color(0xFF1E1E1E),
     onSurface = TextSecondaryDark,
-    primaryContainer = Gray800,
+    primaryContainer = Gray900,
     onPrimaryContainer = TextPrimaryDark,
-    secondaryContainer = Gray600,
+    secondaryContainer = Gray850,
     onSecondaryContainer = Color.White,
+    tertiaryContainer = Gray500,
     outline = Gray400,
     outlineVariant = Gray200,
     // Accent Colors

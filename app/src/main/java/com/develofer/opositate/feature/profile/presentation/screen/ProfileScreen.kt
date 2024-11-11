@@ -1,6 +1,7 @@
 package com.develofer.opositate.feature.profile.presentation.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -8,9 +9,9 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.Text
@@ -52,11 +53,11 @@ fun ProfileScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            .fillMaxSize(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Spacer(modifier = Modifier.height(16.dp))
         CustomBodyText(text = userName, isDarkTheme = isDarkTheme, textSize = 25.sp)
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = stringResource(id = R.string.profile_screen__text__level, userScores.level))
@@ -73,9 +74,17 @@ fun ProfileScreen(
              TabRow(selectedTabIndex = selectedTabIndex) {
                 tabTitles.forEachIndexed { index, title ->
                     Tab(
+                        modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer),
                         selected = selectedTabIndex == index,
                         onClick = { selectedTabIndex = index },
-                        text = { Text(title) }
+                        selectedContentColor = MaterialTheme.colorScheme.secondaryContainer,
+                        text = {
+                            Text(
+                                text = title.uppercase(),
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                fontSize = 16.sp
+                            )
+                        }
                     )
                 }
             }
@@ -89,13 +98,15 @@ fun ProfileScreen(
 
 @Composable
 fun ScoresContent(items: List<ScoreVO> = emptyList()) {
-    Spacer(modifier = Modifier.size(16.dp))
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.secondaryContainer),
         contentPadding = PaddingValues(16.dp)
     ) {
         items(items.size) {
             val score = items[it]
+            Spacer(modifier = Modifier.size(16.dp))
             Text(text = stringResource(id = score.abilityName))
             Spacer(modifier = Modifier.size(0.dp))
             CustomDualProgressBar(
@@ -116,7 +127,7 @@ fun ChartContent(items: List<ScoreVO> = emptyList()) {
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(16.dp)
+                .background(MaterialTheme.colorScheme.secondaryContainer)
         ) {
             CustomRadarChart(
                 radarLabels = radarLabels,

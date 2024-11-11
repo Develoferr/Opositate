@@ -114,7 +114,7 @@ fun CustomLoginTextField(
 }
 
 @Composable
-fun getLabel(
+private fun getLabel(
     label: String, isFocused: Boolean, value: String, labelFontSize: TextUnit): @Composable () -> Unit
 {
     return {
@@ -130,7 +130,7 @@ fun getLabel(
 }
 
 @Composable
-fun getSupportingText(
+private fun getSupportingText(
     supportingText: ValidateFieldErrors, letterSpacing: TextUnit
 ): @Composable () -> Unit {
     val supportingTextFieldError = when (supportingText) {
@@ -158,7 +158,7 @@ private fun getLoginFieldColors(isDarkTheme: Boolean): LoginFieldColors {
 }
 
 @Composable
-fun getTrailingIcon(
+private fun getTrailingIcon(
     isPasswordField: Boolean, haveToolTip: Boolean, isPasswordVisible: Boolean, isFocused: Boolean,
     value: String, painter: Painter, onPasswordToggle: () -> Unit, onGloballyPositioned: (LayoutCoordinates) -> Unit,
     toggleToolTipVisibility: (newVisibility: Boolean) -> Unit

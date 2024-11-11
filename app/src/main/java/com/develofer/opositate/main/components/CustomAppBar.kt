@@ -61,7 +61,7 @@ fun CustomAppBar(
                     onClick = { /* Handle navigation icon click */ },
                     modifier = Modifier.padding(start = 10.dp)
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Menu")
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Menu", tint = MaterialTheme.colorScheme.onBackground)
                 }
             },
             title = {
@@ -77,7 +77,7 @@ fun CustomAppBar(
                     onClick = { expanded = !expanded },
                     modifier = Modifier.padding(end = 10.dp)
                 ) {
-                    Icon(Icons.Default.MoreVert, contentDescription = "More options")
+                    Icon(Icons.Default.MoreVert, contentDescription = "More options", tint = MaterialTheme.colorScheme.onBackground)
                 }
                 DropdownMenu(
                     expanded = expanded,
