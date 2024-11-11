@@ -51,5 +51,9 @@ val TextSecondaryLight = Gray600
 val TextPrimaryDark = Gray100
 val TextSecondaryDark = Gray500
 
-// Background
+// Error colors
+val ErrorLight = Color(0xFFCF6679)
+val ErrorDark = Color(0xFFB00020)
+
+// Background colors
 val BackgroundOriginal = Color(0xFF170616)

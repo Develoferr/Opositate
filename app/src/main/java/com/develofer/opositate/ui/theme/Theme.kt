@@ -15,35 +15,44 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.core.view.WindowCompat
 
 val LightColorScheme = lightColorScheme(
-    primary = Primary400,
-    primaryContainer = Primary600,
-    secondary = Secondary400,
-    secondaryContainer = Gray300,
+    // Surface Colors
     background = Primary,
-    surface = Gray100,
-    error = Color(0xFFB00020),
-    onPrimary = Gray900,
-    onSecondary = Color.White,
     onBackground = TextPrimaryLight,
+    surface = Gray100,
     onSurface = TextSecondaryLight,
-    onError = Color.White
+    primaryContainer = Gray400,
+    onPrimaryContainer = TextPrimaryLight,
+    secondaryContainer = Gray600,
+    onSecondaryContainer = Color.Black,
+    outline = Gray600,
+    outlineVariant = Gray800,
+    // Accent Colors
+    primary = Primary400,
+    onPrimary = Gray900,
+    secondary = Secondary400,
+    onSecondary = Color.White,
+    error = ErrorLight,
+    onError = Color.White,
 )
 
 val DarkColorScheme = darkColorScheme(
-    primary = Primary300,
-    primaryContainer = Primary700,
-    secondary = Secondary300,
-    secondaryContainer = Gray900,
-//    background = Gray900,
-//    background = Color(0xFF121212),
+    // Surface Colors
     background = Color.Black,
-//    background = Color(0xFF303030),
-    surface = Color(0xFF1E1E1E),
-    error = Color(0xFFCF6679),
-    onPrimary = TextPrimaryDark,
-    onSecondary = TextPrimaryDark,
     onBackground = TextPrimaryDark,
+    surface = Color(0xFF1E1E1E),
     onSurface = TextSecondaryDark,
+    primaryContainer = Gray800,
+    onPrimaryContainer = TextPrimaryDark,
+    secondaryContainer = Gray600,
+    onSecondaryContainer = Color.White,
+    outline = Gray400,
+    outlineVariant = Gray200,
+    // Accent Colors
+    primary = Primary300,
+    onPrimary = TextPrimaryDark,
+    secondary = Secondary300,
+    onSecondary = TextPrimaryDark,
+    error = ErrorDark,
     onError = Color.Black
 )
 
