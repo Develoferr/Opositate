@@ -1,17 +1,14 @@
 package com.develofer.opositate.feature.login.presentation.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ExperimentalLayoutApi
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.isImeVisible
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -31,10 +28,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.zIndex
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -50,6 +50,7 @@ import com.develofer.opositate.feature.login.presentation.component.CustomTitleT
 import com.develofer.opositate.feature.login.presentation.model.RegisterDialogType
 import com.develofer.opositate.feature.login.presentation.model.RegisterState
 import com.develofer.opositate.feature.login.presentation.model.RegisterUiState
+import com.develofer.opositate.feature.login.presentation.utils.KeyboardAwareScreen
 import com.develofer.opositate.feature.login.presentation.viewmodel.RegisterViewModel
 import com.develofer.opositate.main.components.ErrorDialog
 import com.develofer.opositate.main.components.SuccessDialog
@@ -57,14 +58,17 @@ import com.develofer.opositate.main.coordinator.DialogState
 import com.develofer.opositate.ui.theme.OpositateTheme
 import kotlinx.coroutines.flow.StateFlow
 
-@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun RegisterScreen(
     navigateToLogin: () -> Unit,
     isDarkTheme: Boolean,
     registerViewModel: RegisterViewModel =  hiltViewModel()
 ) {
-    val isKeyboardVisible = WindowInsets.isImeVisible
+    var isKeyboardVisible by remember { mutableStateOf(false) }
+    ViewCompat.setOnApplyWindowInsetsListener(LocalView.current) { _, insets ->
+        isKeyboardVisible = insets.isVisible(WindowInsetsCompat.Type.ime())
+        insets
+    }
     val focusManager = LocalFocusManager.current
 
     val uiState by registerViewModel.uiState.collectAsState()
@@ -76,6 +80,7 @@ fun RegisterScreen(
             .fillMaxSize().background(MaterialTheme.colorScheme.background)
             .pointerInput(Unit) { detectTapGestures(onTap = { focusManager.clearFocus() }) }
     ) {
+        KeyboardAwareScreen()
         CustomLoginLogo(
             isDarkTheme = isDarkTheme,
             isKeyboardVisible = isKeyboardVisible,
@@ -115,9 +120,12 @@ private fun RegisterContent(
     uiState: RegisterUiState, isDarkTheme: Boolean, isKeyboardVisible: Boolean,
     registerViewModel: RegisterViewModel, navigateToLogin: () -> Unit, clearFocus: () -> Unit
 ) {
-    val columnPaddingTop = if (isKeyboardVisible) 50.dp else if (isSystemInDarkTheme()) 280.dp else 240.dp
+    val animatedPaddingTop by animateDpAsState(
+        targetValue  = if (isKeyboardVisible) 50.dp else if (isDarkTheme) 280.dp else 240.dp,
+        label = ""
+    )
     Column(
-        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).padding(top = columnPaddingTop),
+        modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).padding(top = animatedPaddingTop),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         RegisterHeader(isDarkTheme)

@@ -1,4 +1,4 @@
-package com.develofer.opositate.main.navigation
+package com.develofer.opositate.main.components
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
@@ -30,6 +30,10 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import com.develofer.opositate.R
+import com.develofer.opositate.main.navigation.CalendarNavigation
+import com.develofer.opositate.main.navigation.LessonNavigation
+import com.develofer.opositate.main.navigation.ProfileNavigation
+import com.develofer.opositate.main.navigation.TestNavigation
 
 @Composable
 fun CustomBottomNavigationBar(navController: NavHostController) {
@@ -42,7 +46,7 @@ fun CustomBottomNavigationBar(navController: NavHostController) {
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
     NavigationBar(
-        windowInsets = WindowInsets.safeContent.only(WindowInsetsSides.Bottom)
+        windowInsets = WindowInsets.safeContent.only(WindowInsetsSides.Bottom),
     ) {
         items.forEach { destination ->
             NavigationBarItem(

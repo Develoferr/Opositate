@@ -25,6 +25,7 @@ import com.develofer.opositate.feature.test.presentation.screen.TestScreen
 import com.develofer.opositate.feature.test.presentation.screen.TestSolvingScreen
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.main.components.CustomAppBar
+import com.develofer.opositate.main.components.CustomBottomNavigationBar
 
 @Composable
 fun AppNavigation(
