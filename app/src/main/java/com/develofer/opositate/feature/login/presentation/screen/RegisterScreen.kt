@@ -45,8 +45,7 @@ import com.develofer.opositate.feature.login.presentation.component.CustomLoginB
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginLogo
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginTextButton
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginTextField
-import com.develofer.opositate.feature.login.presentation.component.CustomSubtitleText
-import com.develofer.opositate.feature.login.presentation.component.CustomTitleText
+import com.develofer.opositate.feature.login.presentation.component.LoginHeader
 import com.develofer.opositate.feature.login.presentation.model.RegisterDialogType
 import com.develofer.opositate.feature.login.presentation.model.RegisterState
 import com.develofer.opositate.feature.login.presentation.model.RegisterUiState
@@ -128,25 +127,14 @@ private fun RegisterContent(
         modifier = Modifier.fillMaxSize().padding(horizontal = 16.dp).padding(top = animatedPaddingTop),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        RegisterHeader(isDarkTheme)
+        LoginHeader(
+            isDarkTheme,
+            R.string.register_screen__title_text__register,
+            R.string.register_screen__text__journey_begins
+        )
         RegisterFields(uiState, registerViewModel, isDarkTheme)
         RegisterButtons(isDarkTheme, registerViewModel, navigateToLogin, clearFocus)
     }
-}
-
-@Composable
-fun RegisterHeader(isDarkTheme: Boolean) {
-    val text = stringResource(id = R.string.register_screen__title_text__register)
-    CustomTitleText(
-        text = if (isDarkTheme) text.uppercase() else text,
-        isDarkTheme = isDarkTheme,
-        modifier = Modifier.padding(top = 24.dp)
-    )
-    CustomSubtitleText(
-        text = stringResource(id = R.string.register_screen__text__journey_begins),
-        isDarkTheme = isDarkTheme
-    )
-    Spacer(modifier = Modifier.height(20.dp))
 }
 
 @Composable
