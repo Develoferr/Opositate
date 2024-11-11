@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Property
 import android.view.View
 import android.view.WindowInsets
+import android.view.WindowInsetsController
 import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -96,6 +97,7 @@ class MainActivity : ComponentActivity() {
 
     private fun hideSystemUI() {
         window.insetsController?.hide(WindowInsets.Type.statusBars() or WindowInsets.Type.navigationBars())
+        window.insetsController?.systemBarsBehavior = WindowInsetsController.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
     }
 
     private fun showSystemUI() {

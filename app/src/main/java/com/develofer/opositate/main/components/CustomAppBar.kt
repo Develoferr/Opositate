@@ -2,8 +2,12 @@ package com.develofer.opositate.main.components
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
@@ -40,7 +44,7 @@ fun CustomAppBar(
 
     Column {
         TopAppBar(
-            modifier = Modifier.padding(top = 24.dp),
+            windowInsets = WindowInsets.safeContent.only(WindowInsetsSides.Top),
             colors = TopAppBarColors(
                 containerColor = if (isDarkTheme) {
                     Color.Black

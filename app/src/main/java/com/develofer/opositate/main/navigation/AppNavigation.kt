@@ -1,6 +1,10 @@
 package com.develofer.opositate.main.navigation
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -32,6 +36,7 @@ fun AppNavigation(
 ) {
     val currentRoute = navHostController.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
+        contentWindowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom),
         bottomBar =  {
             if (currentRoute in listOf(
                     ProfileNavigation.route,
