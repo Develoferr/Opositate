@@ -15,40 +15,43 @@ class GetTestResultUseCase @Inject constructor(
     private val getTestUseCase: GetTestUseCase
 ) {
     suspend operator fun invoke(solvedTestId: String): Result<SolvedTest> {
-        return when (val userIdResult = getUserIdUseCase()) {
-            is Result.Success -> {
-                val userId = userIdResult.data
-                when (val testResult = solvedTestRepository.getTestResult(solvedTestId, userId)) {
-                    is Result.Success -> {
-                        when (val test = getTestUseCase(testResult.data?.testId.toString())) {
-                            is Result.Success -> {
-                                if (testResult.data != null && test.data != null) {
-                                    Result.Success(
-                                        SolvedTest(
-                                            id = solvedTestId,
-                                            testId = testResult.data.testId,
-                                            completionTime = testResult.data.completionTime,
-                                            questions = mapQuestions(test.data, testResult.data),
-                                            name = test.data.name,
-                                            maxTime = test.data.maxTime,
-                                            score = testResult.data.score
-                                        )
-                                    )
-                                } else {
-                                    Result.Error(Exception("Test result or test data is missing"))
-                                }
-                            }
-                            is Result.Error -> Result.Error(test.exception)
-                            is Result.Loading -> Result.Loading
-                        }
-                    }
-                    is Result.Error -> Result.Error(testResult.exception)
-                    is Result.Loading -> Result.Loading
-                }
-            }
-            is Result.Error -> Result.Error(userIdResult.exception)
-            is Result.Loading -> Result.Loading
+        // Get User ID task
+        val userIdResult = getUserIdUseCase()
+        if (userIdResult is Result.Error) {
+            return Result.Error(userIdResult.exception)
         }
+
+        // Get Test Result task
+        val userId = (userIdResult as Result.Success).data
+        val testSolvedResult = solvedTestRepository.getTestResult(solvedTestId, userId)
+        if (testSolvedResult is Result.Error) {
+            return Result.Error(testSolvedResult.exception)
+        }
+
+        // Get Test task
+        val testResultId = (testSolvedResult as Result.Success).data?.testId.toString()
+        val testResult = getTestUseCase(testResultId)
+        if (testResult is Result.Error) {
+            return Result.Error(testResult.exception)
+        }
+
+        // Generate SolvedTest by combining the results and the base test
+        val testSolved = (testSolvedResult).data
+        val test = (testResult as Result.Success).data
+        return if (testSolved == null || test == null) Result.Error(Exception("Test data or test is missing"))
+            else {
+                Result.Success(
+                    SolvedTest(
+                        id = solvedTestId,
+                        testId = test.id,
+                        completionTime = testSolved.completionTime,
+                        questions = mapQuestions(test, testSolved),
+                        name = test.name,
+                        maxTime = test.maxTime,
+                        score = testSolved.score
+                    )
+                )
+            }
     }
 
     private fun mapQuestions(test: PsTest, testResult: TestResult): List<SolvedQuestion> =

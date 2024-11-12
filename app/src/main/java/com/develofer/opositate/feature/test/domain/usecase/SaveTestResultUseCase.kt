@@ -11,13 +11,14 @@ class SaveTestResultUseCase @Inject constructor(
     private val getUserIdUseCase: GetUserIdUseCase
 ) {
     suspend operator fun invoke(testResult: TestResult): Result<Unit> {
-        return when (val userIdResult = getUserIdUseCase()) {
-            is Result.Success -> {
-                solvedTestRepository.saveTestResult(testResult, userIdResult.data, true)
-                Result.Success(Unit)
-            }
-            is Result.Error -> userIdResult
-            Result.Loading -> Result.Loading
-        }
+        // Get User ID task
+        val userIdResult = getUserIdUseCase()
+        if (userIdResult is Result.Error) return Result.Error(userIdResult.exception)
+
+        // Save Test Result task
+        val userId = (userIdResult as Result.Success).data
+        val saveResult = solvedTestRepository.saveTestResult(testResult, userId, true)
+        return if (saveResult is Result.Error) Result.Error(saveResult.exception)
+            else Result.Success(Unit)
     }
 }

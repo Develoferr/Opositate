@@ -14,18 +14,17 @@ class CreateUserUseCase @Inject constructor(
     private val createUserScoreDocumentUseCase: CreateUserScoreDocumentUseCase
 ) {
     suspend operator fun invoke(username: String, email: String, password: String): Result<Unit> {
-        // User creation Task
+        // Create User Task
         val userCreationResult = authRepository.createUser(email, password)
         if (userCreationResult is Result.Error) return userCreationResult
 
-        // Username save Task
+        // Save Username Task
         val updateUsernameResult = updateUserNameUseCase(username)
         if (updateUsernameResult is Result.Error) return updateUsernameResult
 
-        // User score document creation Task
+        // Create User score document Task
         val createUserScoreDocumentResult = createUserScoreDocumentUseCase()
-        if (createUserScoreDocumentResult is Result.Error) return createUserScoreDocumentResult
-
-        return Result.Success(Unit)
+        return if (createUserScoreDocumentResult is Result.Error) Result.Error(createUserScoreDocumentResult.exception)
+            else Result.Success(Unit)
     }
 }
