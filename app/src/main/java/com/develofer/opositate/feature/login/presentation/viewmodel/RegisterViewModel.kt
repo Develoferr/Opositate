@@ -8,6 +8,7 @@ import com.develofer.opositate.feature.login.presentation.model.RegisterState
 import com.develofer.opositate.feature.login.presentation.model.RegisterUiState
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
 import com.develofer.opositate.main.coordinator.DialogStateCoordinator
+import com.develofer.opositate.main.data.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -59,19 +60,23 @@ class RegisterViewModel @Inject constructor(
         if (areFieldsValid()) {
             viewModelScope.launch {
                 _uiState.update { it.copy(registerState = RegisterState.Loading) }
-                createUserUseCase(
+                when (val result = createUserUseCase(
                     username = _uiState.value.username.trim(),
                     email = _uiState.value.email.trim(),
-                    password = _uiState.value.password.trim(),
-                    onSuccess = {
+                    password = _uiState.value.password.trim()
+                )) {
+                    is Result.Success -> {
                         _uiState.update { it.copy(registerState = RegisterState.Success) }
                         registerDialogStateCoordinator.showDialog(RegisterDialogType.REGISTER_SUCCESS)
-                    },
-                    onFailure = { errorMessage ->
-                        _uiState.update { it.copy(registerState = RegisterState.Failure(errorMessage)) }
+                    }
+                    is Result.Error -> {
+                        _uiState.update { it.copy(registerState = RegisterState.Failure(result.exception.message ?: "Register failed")) }
                         registerDialogStateCoordinator.showDialog(RegisterDialogType.REGISTER_ERROR)
                     }
-                )
+                    is Result.Loading -> {
+                        _uiState.update { it.copy(registerState = RegisterState.Loading) }
+                    }
+                }
             }
         }
     }

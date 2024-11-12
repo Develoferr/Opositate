@@ -1,6 +1,8 @@
 package com.develofer.opositate.main
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.develofer.opositate.main.data.model.Result
 import com.develofer.opositate.main.domain.GetUserUseCase
 import com.develofer.opositate.main.domain.LogoutUseCase
 import com.develofer.opositate.main.navigation.LoginNavigation
@@ -10,6 +12,7 @@ import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,14 +24,13 @@ class MainViewModel @Inject constructor(
     private val _isUserNotRetrieved = MutableStateFlow(true)
     val isUserNotRetrieved: StateFlow<Boolean> get() = _isUserNotRetrieved
 
-    private var _currentUser: FirebaseUser? = null
-    val currentUser: FirebaseUser? get() = _currentUser
-
     private val _isSystemUIVisible = MutableStateFlow(false)
     val isSystemUIVisible: StateFlow<Boolean> get() = _isSystemUIVisible
 
-    private val _appBarTitle = MutableStateFlow("App Title")
+    private val _appBarTitle = MutableStateFlow("Profile")
     val appBarTitle: StateFlow<String> get() = _appBarTitle
+
+    private var currentUser = MutableStateFlow<FirebaseUser?>(null)
 
     init { getUserAuth() }
 
@@ -37,13 +39,32 @@ class MainViewModel @Inject constructor(
     }
 
     private fun getUserAuth() {
-        _currentUser = getUserUseCase.getUser()
-        _isUserNotRetrieved.value = false
+        viewModelScope.launch {
+            when (val result = getUserUseCase()) {
+                is Result.Success -> {
+                    currentUser.value = result.data
+                    _isUserNotRetrieved.value = false
+                }
+                is Result.Error -> {
+                    _isUserNotRetrieved.value = false
+                }
+                is Result.Loading -> { }
+            }
+        }
+
     }
 
     fun logout() {
-        logoutUseCase()
-        _isUserNotRetrieved.value = true
+        viewModelScope.launch {
+            when (logoutUseCase()) {
+                is Result.Success -> {
+                    currentUser.value = null
+                    _isUserNotRetrieved.value = true
+                }
+                is Result.Error -> { /* Handle error */ }
+                is Result.Loading -> { /* Handle loading */ }
+            }
+        }
     }
 
     fun hideSystemUI() {
@@ -55,7 +76,7 @@ class MainViewModel @Inject constructor(
     }
 
     fun getStartDestination(): Route {
-        return if (_currentUser != null) {
+        return if (currentUser.value != null) {
             ProfileNavigation
         } else {
             LoginNavigation

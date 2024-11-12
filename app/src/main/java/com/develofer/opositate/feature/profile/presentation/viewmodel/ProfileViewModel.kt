@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.feature.profile.domain.model.UserScoresVO
 import com.develofer.opositate.feature.profile.domain.usecase.GetUserNameUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetUserScoresDocumentUseCase
+import com.develofer.opositate.main.data.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -30,18 +31,29 @@ class ProfileViewModel @Inject constructor(
 
     private fun fetchUserName() {
         viewModelScope.launch {
-            _userName.value = getUserNameUseCase()
+            when (val result = getUserNameUseCase()) {
+                is Result.Success -> {
+                    _userName.value = result.data
+                }
+                is Result.Error -> {
+                    // Handle error with dialog
+                }
+                is Result.Loading -> { }
+            }
         }
     }
 
     private fun fetchScores() {
         viewModelScope.launch {
-            getUserScoresDocumentUseCase(
-                onSuccess = {
-                    _scores.value = it
-                },
-                onFailure = {}
-            )
+            when (val result = getUserScoresDocumentUseCase()) {
+                is Result.Success -> {
+                    _scores.value = result.data
+                }
+                is Result.Error -> {
+                    // Handle error with dialog
+                }
+                is Result.Loading -> { }
+            }
         }
     }
 }

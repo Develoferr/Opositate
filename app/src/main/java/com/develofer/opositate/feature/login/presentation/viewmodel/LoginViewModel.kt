@@ -8,6 +8,7 @@ import com.develofer.opositate.feature.login.presentation.model.LoginState
 import com.develofer.opositate.feature.login.presentation.model.LoginUiState
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
 import com.develofer.opositate.main.coordinator.DialogStateCoordinator
+import com.develofer.opositate.main.data.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -59,18 +60,22 @@ class LoginViewModel @Inject constructor(
         if (areFieldsValid()) {
             viewModelScope.launch {
                 _uiState.update { it.copy(loginState = LoginState.Loading) }
-                loginUseCase.login(
+                when (val result = loginUseCase(
                     email = _uiState.value.email.trim(),
-                    password = _uiState.value.password.trim(),
-                    onSuccess = {
+                    password = _uiState.value.password.trim()
+                )) {
+                    is Result.Success -> {
                         _uiState.update { it.copy(loginState = LoginState.Success) }
                         loginDialogStateCoordinator.showDialog(LoginDialogType.LOGIN_SUCCESS)
-                    },
-                    onFailure = { errorMessage ->
-                        _uiState.update { it.copy(loginState = LoginState.Failure(errorMessage)) }
+                    }
+                    is Result.Error -> {
+                        _uiState.update { it.copy(loginState = LoginState.Failure(result.exception.message ?: "Login failed")) }
                         loginDialogStateCoordinator.showDialog(LoginDialogType.LOGIN_ERROR)
                     }
-                )
+                    is Result.Loading -> {
+                        _uiState.update { it.copy(loginState = LoginState.Loading) }
+                    }
+                }
             }
         }
     }

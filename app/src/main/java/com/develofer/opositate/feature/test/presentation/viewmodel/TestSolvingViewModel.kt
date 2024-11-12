@@ -7,6 +7,7 @@ import com.develofer.opositate.feature.test.domain.usecase.GetTestUseCase
 import com.develofer.opositate.feature.test.domain.usecase.SaveTestResultUseCase
 import com.develofer.opositate.feature.test.presentation.model.TestSolvingUiState
 import com.develofer.opositate.feature.test.utils.correctTest
+import com.develofer.opositate.main.data.model.Result
 import com.google.firebase.Timestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -72,7 +73,17 @@ class TestSolvingViewModel @Inject constructor(
 
     private fun saveTestResult(testResult: TestResult) {
         viewModelScope.launch {
-            saveTestResultUseCase(testResult)
+            when (saveTestResultUseCase(testResult)) {
+                is Result.Success -> {
+                    // Handle Success
+                }
+                is Result.Error -> {
+                    // Handle Error
+                }
+                is Result.Loading -> {
+                    // Handle Loading
+                }
+            }
         }
     }
 }

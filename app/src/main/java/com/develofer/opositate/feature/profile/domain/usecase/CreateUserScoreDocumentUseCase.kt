@@ -1,6 +1,7 @@
 package com.develofer.opositate.feature.profile.domain.usecase
 
 import com.develofer.opositate.feature.profile.domain.repository.UserRepository
+import com.develofer.opositate.main.data.model.Result
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -9,9 +10,9 @@ class CreateUserScoreDocumentUseCase @Inject constructor(
     private val userRepository: UserRepository,
     private val getAbilityIdListUseCase: GetAbilityIdListUseCase
 ) {
-    operator fun invoke(onSuccess: () -> Unit, onFailure: (String) -> Unit) {
+    suspend operator fun invoke(): Result<Unit> {
         val abilityIdList = getAbilityIdListUseCase()
-        userRepository.createUserScoreDocument(onSuccess, onFailure, abilityIdList)
+        return userRepository.createUserScoreDocument(abilityIdList)
     }
 
 }

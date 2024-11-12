@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.feature.login.domain.usecase.ResetPasswordUseCase
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
+import com.develofer.opositate.main.data.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -40,20 +41,24 @@ class ResetPasswordViewModel @Inject constructor(
         if (areFieldsValid()) {
             viewModelScope.launch {
                 _uiState.update { it.copy(resetState = ResetPasswordState.Loading) }
-                resetPasswordUseCase(
-                    email = _uiState.value.email.trim(),
-                    onSuccess = {
+                when (val result = resetPasswordUseCase(
+                    email = _uiState.value.email.trim()
+                )) {
+                    is Result.Success -> {
                         _uiState.update { it.copy(resetState = ResetPasswordState.Success) }
                         onSuccess()
-                    },
-                    onFailure = { errorMessage ->
-                        _uiState.update { it.copy(resetState = ResetPasswordState.Failure(
-                            errorMessage
-                        )
-                        ) }
-                        onFailure(errorMessage)
                     }
-                )
+                    is Result.Error -> {
+                        _uiState.update {
+                            it.copy(resetState = ResetPasswordState.Failure(
+                            result.exception.message ?: "Reset password failed"))
+                        }
+                        onFailure(result.exception.message ?: "Reset password failed")
+                    }
+                    is Result.Loading -> {
+                        _uiState.update { it.copy(resetState = ResetPasswordState.Loading) }
+                    }
+                }
             }
         }
     }

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.feature.test.domain.usecase.GetTestResultUseCase
 import com.develofer.opositate.feature.test.presentation.model.TestResultUiState
+import com.develofer.opositate.main.data.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,7 +27,15 @@ class TestResultViewModel @Inject constructor(
     }
     fun getTestResult(testResultId: String) {
         viewModelScope.launch {
-            _uiState.update { it.copy(testResult = getTestResultUseCase(testResultId)) }
+            when (val result = getTestResultUseCase(testResultId)) {
+                is Result.Success -> {
+                    _uiState.update { it.copy(testResult = result.data) }
+                }
+                is Result.Error -> {
+                    // Handle error with dialog
+                }
+                is Result.Loading -> { }
+            }
         }
     }
 }
