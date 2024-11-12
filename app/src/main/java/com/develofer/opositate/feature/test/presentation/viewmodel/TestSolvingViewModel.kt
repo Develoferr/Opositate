@@ -61,7 +61,11 @@ class TestSolvingViewModel @Inject constructor(
 
     fun getTest(testId: String) {
         viewModelScope.launch {
-            _uiState.update { it.copy(test = getTestUseCase(testId)) }
+            when (val result = getTestUseCase(testId)) {
+                is Result.Success -> _uiState.update { it.copy(test = result.data) }
+                is Result.Error -> { } // Handle Error
+                is Result.Loading -> { } // Handle Loading
+            }
         }
     }
 
@@ -74,15 +78,9 @@ class TestSolvingViewModel @Inject constructor(
     private fun saveTestResult(testResult: TestResult) {
         viewModelScope.launch {
             when (saveTestResultUseCase(testResult)) {
-                is Result.Success -> {
-                    // Handle Success
-                }
-                is Result.Error -> {
-                    // Handle Error
-                }
-                is Result.Loading -> {
-                    // Handle Loading
-                }
+                is Result.Success -> { }// Handle Success
+                is Result.Error -> { }// Handle Error
+                is Result.Loading -> { } // Handle Loading
             }
         }
     }

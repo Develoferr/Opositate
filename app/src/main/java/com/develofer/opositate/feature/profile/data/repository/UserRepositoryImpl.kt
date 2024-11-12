@@ -17,29 +17,23 @@ class UserRepositoryImpl @Inject constructor(
     private val auth: FirebaseAuth,
     private val firestore: FirebaseFirestore
 ) : UserRepository {
-    override suspend fun getUserName(): Result<String> =
-        try {
-            val user = getUser()
-            if (user?.displayName.isNullOrEmpty()) {
-                Result.Error(Exception("User has no display name"))
-            } else {
-                Result.Success(user?.displayName ?: "")
-            }
-        } catch (e: Exception) {
-            Result.Error(e)
+    override suspend fun getUserName(): Result<String> {
+        val user = getUser()
+        return if (user?.displayName.isNullOrEmpty()) {
+            Result.Error(Exception("User has no display name"))
+        } else {
+            Result.Success(user?.displayName ?: EMPTY_STRING)
         }
+    }
 
-    override suspend fun getUserId(): Result<String> =
-        try {
-            val user = getUser()
-            if (user?.uid.isNullOrBlank()) {
-                Result.Error(Exception("User is not authenticated"))
-            } else {
-                Result.Success(user?.uid ?: EMPTY_STRING)
-            }
-        } catch (e: Exception) {
-            Result.Error(e)
+    override suspend fun getUserId(): Result<String> {
+        val user = getUser()
+        return if (user?.uid.isNullOrBlank()) {
+            Result.Error(Exception("User is not authenticated"))
+        } else {
+            Result.Success(user?.uid ?: EMPTY_STRING)
         }
+    }
 
     override suspend fun createUserScoreDocument(abilityIdList: List<Int>): Result<Unit> {
         val userId = getUser()?.uid

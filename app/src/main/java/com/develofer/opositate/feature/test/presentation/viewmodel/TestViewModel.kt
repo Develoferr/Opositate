@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.feature.test.data.model.TestItem
 import com.develofer.opositate.feature.test.domain.usecase.GetTestListUseCase
 import com.develofer.opositate.feature.test.utils.toTestItem
+import com.develofer.opositate.main.data.model.Result
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,8 +27,17 @@ class TestViewModel @Inject constructor(
 
     private fun getTestList() {
         viewModelScope.launch {
-            val psTestList = getTestListUseCase()
-            _tests.value = psTestList.map { psTestVO -> psTestVO.toTestItem() }
+            when (val result = getTestListUseCase()) {
+                is Result.Success -> {
+                    _tests.value = result.data.map { psTestVO -> psTestVO.toTestItem() }
+                }
+                is Result.Error -> {
+                    // Handle error
+                }
+                is Result.Loading -> {
+                    // Handle loading
+                }
+            }
         }
     }
 }

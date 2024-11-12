@@ -18,25 +18,35 @@ class GetTestResultUseCase @Inject constructor(
         return when (val userIdResult = getUserIdUseCase()) {
             is Result.Success -> {
                 val userId = userIdResult.data
-                val testResult = solvedTestRepository.getTestResult(solvedTestId, userId)
-                val test = getTestUseCase(testResult?.testId.toString())
-                if (testResult != null && test != null) {
-                    Result.Success(
-                        SolvedTest(
-                            id = solvedTestId,
-                            testId = testResult.testId,
-                            completionTime = testResult.completionTime,
-                            questions = mapQuestions(test, testResult),
-                            name = test.name,
-                            maxTime = test.maxTime,
-                            score = testResult.score
-                        )
-                    )
-                } else {
-                    Result.Error(Exception("Test result or test data is missing"))
+                when (val testResult = solvedTestRepository.getTestResult(solvedTestId, userId)) {
+                    is Result.Success -> {
+                        when (val test = getTestUseCase(testResult.data?.testId.toString())) {
+                            is Result.Success -> {
+                                if (testResult.data != null && test.data != null) {
+                                    Result.Success(
+                                        SolvedTest(
+                                            id = solvedTestId,
+                                            testId = testResult.data.testId,
+                                            completionTime = testResult.data.completionTime,
+                                            questions = mapQuestions(test.data, testResult.data),
+                                            name = test.data.name,
+                                            maxTime = test.data.maxTime,
+                                            score = testResult.data.score
+                                        )
+                                    )
+                                } else {
+                                    Result.Error(Exception("Test result or test data is missing"))
+                                }
+                            }
+                            is Result.Error -> Result.Error(test.exception)
+                            is Result.Loading -> Result.Loading
+                        }
+                    }
+                    is Result.Error -> Result.Error(testResult.exception)
+                    is Result.Loading -> Result.Loading
                 }
             }
-            is Result.Error -> userIdResult
+            is Result.Error -> Result.Error(userIdResult.exception)
             is Result.Loading -> Result.Loading
         }
     }
@@ -52,3 +62,4 @@ class GetTestResultUseCase @Inject constructor(
             )
         }
 }
+

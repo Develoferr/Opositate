@@ -61,17 +61,11 @@ fun ProfileScreen(
         CustomBodyText(text = userName, isDarkTheme = isDarkTheme, textSize = 25.sp)
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = stringResource(id = R.string.profile_screen__text__level, userScores.level))
-        Spacer(modifier = Modifier.height(16.dp))
-        val tabTitles = listOf(
-            stringResource(id = R.string.profile_screen__title_text__scores),
-            stringResource(id = R.string.profile_screen__title_text__chart)
-        )
-        var selectedTabIndex by remember { mutableIntStateOf(0) }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
+        Spacer(modifier = Modifier.height(42.dp))
         Column(modifier = Modifier.fillMaxSize()) {
-             TabRow(selectedTabIndex = selectedTabIndex) {
+            val tabTitles = listOf(stringResource(id = R.string.profile_screen__title_text__scores), stringResource(id = R.string.profile_screen__title_text__chart))
+            var selectedTabIndex by remember { mutableIntStateOf(0) }
+            TabRow(selectedTabIndex = selectedTabIndex) {
                 tabTitles.forEachIndexed { index, title ->
                     Tab(
                         modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer),
