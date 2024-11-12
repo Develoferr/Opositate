@@ -19,6 +19,7 @@ fun LessonScreen(
     isDarkTheme: Boolean,
     mainViewModel: MainViewModel = hiltViewModel()
 ) {
+    mainViewModel.showSystemUI()
     val screenTitle = stringResource(id = R.string.lesson_screen__app_bar_title__lesson)
     LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }
     Spacer(modifier = Modifier.size(24.dp))

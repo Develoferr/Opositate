@@ -17,6 +17,7 @@ fun CalendarScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
     calendarViewModel: CalendarViewModel = hiltViewModel()
 ) {
+    mainViewModel.showSystemUI()
     val calendarState by calendarViewModel.uiState.collectAsState()
     val screenTitle = stringResource(id = R.string.calendar_screen__app_bar_title__calendar)
     LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }

@@ -117,6 +117,7 @@ fun AppNavigation(
                 TestSolvingScreen(
                     isDarkTheme = isDarkTheme,
                     testId = testSolvingNavigation.testId,
+                    mainViewModel = mainViewModel,
                     navigateToTestResult = { testResultId -> navHostController.navigate(TestResultNavigation(testResultId)) }
                 )
             }

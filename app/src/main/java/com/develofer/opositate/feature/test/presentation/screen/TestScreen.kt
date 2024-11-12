@@ -19,6 +19,7 @@ fun TestScreen(
     mainViewModel: MainViewModel = hiltViewModel(),
     testViewModel: TestViewModel = hiltViewModel()
 ) {
+    mainViewModel.showSystemUI()
     val screenTitle = stringResource(id = R.string.test_screen__app_bar_title__test)
     LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }
 

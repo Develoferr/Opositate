@@ -49,11 +49,6 @@ class MainActivity : ComponentActivity() {
         }
     }
 
-    override fun onStart() {
-        super.onStart()
-        hideSystemUI()
-    }
-
     private fun setupSplashScreen() {
         installSplashScreen().apply {
             setKeepOnScreenCondition { mainViewModel.isUserNotRetrieved.value }

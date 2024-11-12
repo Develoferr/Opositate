@@ -40,6 +40,7 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.test.presentation.viewmodel.TestSolvingViewModel
+import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.utils.StringConstants.TWO_DIGITS_FORMAT
 import kotlinx.coroutines.delay
 import java.util.Locale
@@ -50,7 +51,8 @@ fun TestSolvingScreen(
     testId: String,
     testSolvingViewModel: TestSolvingViewModel = hiltViewModel(),
     isDarkTheme: Boolean,
-    navigateToTestResult: (testResultId: String) -> Unit
+    navigateToTestResult: (testResultId: String) -> Unit,
+    mainViewModel: MainViewModel
 ) {
     val uiState by testSolvingViewModel.uiState.collectAsState()
     val maxTime = uiState.test?.maxTime
@@ -58,7 +60,7 @@ fun TestSolvingScreen(
 
     val testFinishModeCondition = if (maxTime == 0) true
                     else timeCount < (maxTime ?: 0)
-
+    mainViewModel.hideSystemUI()
     LaunchedEffect(uiState.isTestActive) {
         testSolvingViewModel.getTest(testId)
         if (uiState.isTestActive) {
