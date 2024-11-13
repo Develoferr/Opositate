@@ -2,7 +2,9 @@ package com.develofer.opositate.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.develofer.opositate.R
 import com.develofer.opositate.main.data.model.Result
+import com.develofer.opositate.main.data.provider.ResourceProvider
 import com.develofer.opositate.main.domain.GetUserUseCase
 import com.develofer.opositate.main.domain.LogoutUseCase
 import com.develofer.opositate.main.navigation.LoginNavigation
@@ -18,7 +20,8 @@ import javax.inject.Inject
 @HiltViewModel
 class MainViewModel @Inject constructor(
     private val getUserUseCase: GetUserUseCase,
-    private val logoutUseCase: LogoutUseCase
+    private val logoutUseCase: LogoutUseCase,
+    resourceProvider: ResourceProvider
 ) : ViewModel() {
 
     private val _isUserNotRetrieved = MutableStateFlow(true)
@@ -27,7 +30,7 @@ class MainViewModel @Inject constructor(
     private val _isSystemUIVisible = MutableStateFlow(false)
     val isSystemUIVisible: StateFlow<Boolean> get() = _isSystemUIVisible
 
-    private val _appBarTitle = MutableStateFlow("Profile")
+    private val _appBarTitle = MutableStateFlow(resourceProvider.getString(R.string.profile_screen__app_bar_title__profile))
     val appBarTitle: StateFlow<String> get() = _appBarTitle
 
     private var currentUser = MutableStateFlow<FirebaseUser?>(null)

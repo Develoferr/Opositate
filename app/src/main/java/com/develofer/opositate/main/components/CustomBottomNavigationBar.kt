@@ -54,27 +54,27 @@ fun CustomBottomNavigationBar(navController: NavHostController) {
                     when (destination) {
                         ProfileNavigation -> GradientIcon(
                             painter = painterResource(id = R.drawable.ic_brain_profile_png),
-                            contentDescription = "",
+                            contentDescription = stringResource(id = R.string.bottom_nav_bar__content_description__profile),
                             isSelected = currentRoute == destination.route
                         )
                         TestNavigation -> GradientIcon(
                             painter = painterResource(id = R.drawable.ic_test_png),
-                            contentDescription = "",
+                            contentDescription = stringResource(id = R.string.bottom_nav_bar__content_description__test),
                             isSelected = currentRoute == destination.route
                         )
                         LessonNavigation -> GradientIcon(
                             painter = painterResource(id = R.drawable.ic_lesson_png),
-                            contentDescription = "",
+                            contentDescription = stringResource(id = R.string.bottom_nav_bar__content_description__lesson),
                             isSelected = currentRoute == destination.route
                         )
                         CalendarNavigation -> GradientIcon(
                             painter = painterResource(id = R.drawable.ic_calendar_png),
-                            contentDescription = "",
+                            contentDescription = stringResource(id = R.string.bottom_nav_bar__content_description__calendar),
                             isSelected = currentRoute == destination.route
                         )
                         else -> GradientIcon(
-                            painter = painterResource(id = R.drawable.ic_test_png),
-                            contentDescription = "",
+                            painter = painterResource(id = R.drawable.ic_brain_profile_png),
+                            contentDescription = stringResource(id = R.string.bottom_nav_bar__content_description__profile),
                             isSelected = currentRoute == destination.route
                         )
                     }

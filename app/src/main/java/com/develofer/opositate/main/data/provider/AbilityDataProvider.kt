@@ -1,4 +1,4 @@
-package com.develofer.opositate.main.data.model
+package com.develofer.opositate.main.data.provider
 
 import com.develofer.opositate.R
 

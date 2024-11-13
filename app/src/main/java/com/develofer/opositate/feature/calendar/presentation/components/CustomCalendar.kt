@@ -20,9 +20,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.develofer.opositate.R
 import com.develofer.opositate.feature.calendar.presentation.model.CalendarUiState
 import com.develofer.opositate.feature.calendar.utils.daysOfWeek
 import com.develofer.opositate.feature.calendar.utils.getLocalizedMonthName
@@ -78,17 +80,21 @@ fun MonthYearSelector(
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         IconButton(onClick = onPreviousMonthClicked) {
-            Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = "Previous month")
+            Icon(Icons.AutoMirrored.Filled.KeyboardArrowLeft, contentDescription = stringResource(id = R.string.lesson_screen__content_description__previous_month))
         }
         Text(
-            text = "${getLocalizedMonthName(yearMonth).lowercase().replaceFirstChar { it.uppercase() }} ${yearMonth.year}",
+            text = stringResource(
+                id = R.string.month_year_format,
+                getLocalizedMonthName(yearMonth).lowercase().replaceFirstChar { it.uppercase() },
+                yearMonth.year
+            ),
             textAlign = TextAlign.Center,
             style = MaterialTheme.typography.bodyLarge,
             fontWeight = FontWeight.W500,
             modifier = Modifier.weight(1f)
         )
         IconButton(onClick = onNextMonthClicked) {
-            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = "Next month")
+            Icon(Icons.AutoMirrored.Filled.KeyboardArrowRight, contentDescription = stringResource(id = R.string.lesson_screen__content_description__next_month))
         }
     }
 }
@@ -127,7 +133,8 @@ fun DayOfMonthItem(
         else { if (isDarkTheme) Gray700 else Gray500 }
     Box(
         modifier = modifier
-            .background( color =
+            .background(
+                color =
                 if (date.isSelected) MaterialTheme.colorScheme.secondaryContainer
                 else Color.Transparent
             )
@@ -136,7 +143,9 @@ fun DayOfMonthItem(
         Text(
             text = date.dayOfMonth,
             style = MaterialTheme.typography.bodyMedium.copy(color = textColor),
-            modifier = Modifier.align(Alignment.Center).padding(10.dp)
+            modifier = Modifier
+                .align(Alignment.Center)
+                .padding(10.dp)
         )
     }
 }

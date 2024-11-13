@@ -8,7 +8,6 @@ import javax.inject.Inject
 class GetCalendarDatesUseCase @Inject constructor(
     private val repository: CalendarRepository
 ) {
-    operator fun invoke(yearMonth: YearMonth): List<CalendarUiState.Date> {
-        return repository.getDates(yearMonth)
-    }
+    operator fun invoke(yearMonth: YearMonth): List<CalendarUiState.Date> =
+        repository.getDates(yearMonth)
 }

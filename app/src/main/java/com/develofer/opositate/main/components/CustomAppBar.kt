@@ -29,7 +29,9 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.presentation.component.CustomTitleText
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -61,7 +63,7 @@ fun CustomAppBar(
                     onClick = { /* Handle navigation icon click */ },
                     modifier = Modifier.padding(start = 10.dp)
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Menu", tint = MaterialTheme.colorScheme.onBackground)
+                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.custom_app_bar__content_description__menu), tint = MaterialTheme.colorScheme.onBackground)
                 }
             },
             title = {
@@ -77,7 +79,7 @@ fun CustomAppBar(
                     onClick = { expanded = !expanded },
                     modifier = Modifier.padding(end = 10.dp)
                 ) {
-                    Icon(Icons.Default.MoreVert, contentDescription = "More options", tint = MaterialTheme.colorScheme.onBackground)
+                    Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.custom_app_bar__content_description__more_options), tint = MaterialTheme.colorScheme.onBackground)
                 }
                 DropdownMenu(
                     expanded = expanded,

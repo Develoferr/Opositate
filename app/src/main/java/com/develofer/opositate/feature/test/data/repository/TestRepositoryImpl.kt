@@ -1,16 +1,19 @@
 package com.develofer.opositate.feature.test.data.repository
 
+import com.develofer.opositate.R
 import com.develofer.opositate.feature.profile.data.model.PsTest
 import com.develofer.opositate.feature.profile.presentation.model.PsTestVO
 import com.develofer.opositate.feature.test.domain.repository.TestRepository
 import com.develofer.opositate.main.data.model.Result
+import com.develofer.opositate.main.data.provider.ResourceProvider
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 class TestRepositoryImpl @Inject constructor(
-    private val firestore: FirebaseFirestore
+    private val firestore: FirebaseFirestore,
+    private val resourceProvider: ResourceProvider
 ): TestRepository {
 
     override suspend fun getTestList(): Result<List<PsTestVO>> {
@@ -35,6 +38,5 @@ class TestRepositoryImpl @Inject constructor(
     }
 
     private fun getTestCollection(): CollectionReference =
-        firestore.collection("tests")
-
+        firestore.collection(resourceProvider.getString(R.string.firebase_constant_tests))
 }

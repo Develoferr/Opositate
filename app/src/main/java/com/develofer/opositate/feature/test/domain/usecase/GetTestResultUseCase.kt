@@ -1,5 +1,6 @@
 package com.develofer.opositate.feature.test.domain.usecase
 
+import com.develofer.opositate.R
 import com.develofer.opositate.feature.profile.data.model.PsTest
 import com.develofer.opositate.feature.profile.data.model.SolvedQuestion
 import com.develofer.opositate.feature.profile.data.model.SolvedTest
@@ -7,12 +8,14 @@ import com.develofer.opositate.feature.profile.data.model.TestResult
 import com.develofer.opositate.feature.profile.domain.usecase.GetUserIdUseCase
 import com.develofer.opositate.feature.test.domain.repository.SolvedTestRepository
 import com.develofer.opositate.main.data.model.Result
+import com.develofer.opositate.main.data.provider.ResourceProvider
 import javax.inject.Inject
 
 class GetTestResultUseCase @Inject constructor(
     private val solvedTestRepository: SolvedTestRepository,
     private val getUserIdUseCase: GetUserIdUseCase,
-    private val getTestUseCase: GetTestUseCase
+    private val getTestUseCase: GetTestUseCase,
+    private val resourceProvider: ResourceProvider,
 ) {
     suspend operator fun invoke(solvedTestId: String): Result<SolvedTest> {
         // Get User ID task
@@ -38,7 +41,7 @@ class GetTestResultUseCase @Inject constructor(
         // Generate SolvedTest by combining the results and the base test
         val testSolved = (testSolvedResult).data
         val test = (testResult as Result.Success).data
-        return if (testSolved == null || test == null) Result.Error(Exception("Test data or test is missing"))
+        return if (testSolved == null || test == null) Result.Error(Exception(resourceProvider.getString(R.string.error_message__test_data_missing)))
             else {
                 Result.Success(
                     SolvedTest(

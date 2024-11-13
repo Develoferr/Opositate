@@ -18,6 +18,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -93,7 +94,7 @@ fun StudyItemList(studyItemList: List<StudyItem>, isDarkTheme: Boolean, onClickI
                     if (!studyItemList[it].isEnabled) {
                         Icon(
                             painter = painterResource(id = R.drawable.lock),
-                            contentDescription = "Locked",
+                            contentDescription = stringResource(R.string.study_item_list__content_description__locked),
                             tint = if (isDarkTheme) Gray900 else Color.Gray,
                             modifier = Modifier.size(24.dp)
                         )

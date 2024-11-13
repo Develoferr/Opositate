@@ -27,7 +27,7 @@ fun SuccessDialog(
     confirmButton: @Composable () -> Unit = {},
     title: @Composable (() -> Unit)?,
     text: @Composable (() -> Unit)? = {
-        Text(text = "Operación exitosa.")
+        Text(text = stringResource(R.string.custom_base_dialog__default__exit_operation))
     }
 ) {
     CustomBaseAlertDialog(
@@ -49,10 +49,10 @@ fun ErrorDialog(
     delayTime: Long = 0,
     confirmButton: @Composable () -> Unit,
     title: @Composable (() -> Unit)? = {
-        Text(text = "Error")
+        Text(text = stringResource(R.string.custom_base_dialog__default__error))
     },
     text: @Composable (() -> Unit)? = {
-        Text(text = "Ha ocurrido un error. Inténtalo de nuevo.")
+        Text(text = stringResource(R.string.custom_base_dialog__default__try_again))
     }
 ) {
     CustomBaseAlertDialog(

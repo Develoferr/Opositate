@@ -8,7 +8,6 @@ import javax.inject.Inject
 class GetTestUseCase @Inject constructor(
     private val testRepository: TestRepository
 ) {
-    suspend operator fun invoke(testId: String): Result<PsTest?> {
-        return testRepository.getTest(testId)
-    }
+    suspend operator fun invoke(testId: String): Result<PsTest?> =
+        testRepository.getTest(testId)
 }

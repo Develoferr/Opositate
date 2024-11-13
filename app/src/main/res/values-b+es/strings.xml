@@ -1,0 +1,133 @@
+<resources>
+    <string name="app_name">opositate</string>
+
+    <!-- Error Messages -->
+    <string name="error_message_user_not_authenticated">El usuario no está autenticado</string>
+    <string name="error_message_no_display_name">El usuario no tiene un nombre para mostrar</string>
+    <string name="error_message_no_scores_document">El documento de puntuación del usuario no existe</string>
+    <string name="error_message_registration_failed">Error al registrarse</string>
+    <string name="error_message_profile_update_failed">Error al actualizar el perfil</string>
+    <string name="error_message_login_failed">Error al iniciar sesión</string>
+    <string name="error_message_password_reset_failed">Error al enviar el correo de restablecimiento de contraseña</string>
+    <string name="error_message_create_score_document_failed">Error al crear el documento de puntuaciones</string>
+    <string name="error_message_email_password_blank">El correo y la contraseña no pueden estar en blanco</string>
+    <string name="error_message_username_blank">El nombre de usuario no puede estar en blanco</string>
+    <string name="error_message_email_blank">El correo no puede estar en blanco</string>
+    <string name="error_message_reset_password_failed">Error al reestablecer la contraseña</string>
+    <string name="error_message__test_data_missing">No se han encontrado datos de tests</string>
+    <string name="error_message__login_failed">Error al realizar login</string>
+    <string name="error_message__register_failed">Error al realizar el registro</string>
+    <string name="error_message__failed_to_convert_document">Error al convertir el documento Puntuaciones del Usuraio</string>
+    <!-- Abilities -->
+    <string name="ability_name__logical_reasoning">Razonamiento Lógico</string>
+    <string name="ability_name__verbal_reasoning">Razonamiento Verbal</string>
+    <string name="ability_name__numerical_reasoning">Razonamiento Numérico</string>
+    <string name="ability_name__spatial_perception">Percepción Espacial</string>
+    <string name="ability_name__memory">Memoria</string>
+    <string name="ability_name__attention_and_concentration">Atención y Concentración</string>
+    <string name="ability_name__processing_speed">Velocidad de Procesamiento</string>
+    <string name="ability_name__abstract_reasoning">Razonamiento Abstracto</string>
+    <string name="ability_name__stress_resilience">Resiliencia al Estrés</string>
+    <string name="ability_name__visual_motor_skills">Habilidades Visuales y Motoras</string>
+    <string name="ability_name__planning_and_organization_skills">Habilidades de Planificación y Organización</string>
+
+    <!-- Custom Login Text Field -->
+    <string name="custom_login_text_field__content_description__password_eye_image">Botón alternar visibilidad de la contraseña</string>
+    <string name="custom_login_text_field__content_description__ic_info">Icono de Información</string>
+    <string name="custom_login_text_field__supporting_text__empty_field">Antes debes rellenar este campo</string>
+    <string name="custom_login_text_field__supporting_text__invalid_email">Debes introducir un correo válido</string>
+    <string name="custom_login_text_field__supporting_text__emails_do_not_match">Los correos no coinciden</string>
+
+    <!-- Login Screen -->
+    <string name="login_screen__title_text__welcome">Bienvenido</string>
+    <string name="login_screen__text__sign_in">Inicia sesión para continuar</string>
+    <string name="login_screen__label_text_field__email">Correo</string>
+    <string name="login_screen__label_text_field__password">Contraseña</string>
+    <string name="login_screen__text__forget_your_password">¿Hás olvidado tu contraseña?</string>
+    <string name="login_screen__text_btn__google">Login con Google</string>
+    <string name="login_screen__text_btn__new_user">¿Nuevo usuario?\nRegístrate</string>
+    <string name="login_screen__content_description__brain_image">Imagen Cerebro</string>
+    <string name="login_screen__title_text__login_successful">Login realizado con éxito</string>
+    <string name="login_screen__text__login_successful">Has iniciado sesión exitosamente</string>
+    <string name="login_screen__title_text__login_error">Error de inicio de sesión</string>
+    <string name="login_screen__title_text__reset_password_successful">Restablecimiento de contraseña exitoso</string>
+    <string name="login_screen__text__reset_password_successful">El correo para restablecer la contraseña se ha enviado exitosamente</string>
+    <string name="login_screen__text__reset_password_error">Error al restablecer la contraseña</string>
+    <string name="login_screen__text__generic_error">Ha ocurrido un error. Inténtalo de nuevo</string>
+
+    <!-- Register Screen -->
+    <string name="register_screen__content_description__brain_image">Imagen Cerebro</string>
+    <string name="register_screen__title_text__register">Regístrate</string>
+    <string name="register_screen__text__journey_begins">Aquí empieza tu viaje</string>
+    <string name="register_screen__label_text_field__user">Usuario</string>
+    <string name="register_screen__label_text_field__email">Correo</string>
+    <string name="register_screen__label_text_field__password">Contraseña</string>
+    <string name="register_screen__text_btn__register">Registrarse</string>
+    <string name="register_screen__text_btn__already_have_account">¿Ya tienes una cuenta?\nInicia sesión"</string>
+    <string name="register_screen__user_text_field__tool_tip">Tu usuario solo se utilizará en tu perfil, no guardamos esta información con otros usos"</string>
+    <string name="register_screen__title_text__login_successful">Registro realizado con éxito</string>
+    <string name="register_screen__text__login_successful">Tu registro se ha realizado exitosamente</string>
+    <string name="register_screen__title_text__login_error">Error de registro</string>
+    <string name="register_screen__text__reset_password_successful">Ha habido un error realizando el registro</string>
+
+    <!-- Reset Password Dialog -->
+    <string name="reset_password_dialog__text__reset_password">Reestablece tu contraseña</string>
+    <string name="reset_password_dialog__text__email">Correo</string>
+    <string name="reset_password_dialog__text__repeat_email">Confirmación</string>
+    <string name="reset_password_dialog__btn_text__send_email">Enviar correo</string>
+    <string name="reset_password_dialog__btn_text__cancel">Cancelar</string>
+
+    <!-- Profile Screen -->
+    <string name="profile_screen__app_bar_title__profile">Perfil</string>
+    <string name="profile_screen__title_text__scores">Puntuaciones</string>
+    <string name="profile_screen__title_text__chart">Gráfica</string>
+    <string name="profile_screen__text__level">Nivel  %1$d</string>
+
+    <!-- Test Screen -->
+    <string name="test_screen__app_bar_title__test">Tests</string>
+
+    <!-- Lesson Screen -->
+    <string name="lesson_screen__app_bar_title__lesson">Temas</string>
+    <string name="lesson_screen__content_description__previous_month">Botón mes siguiente</string>
+    <string name="lesson_screen__content_description__next_month">Botón mes anterior</string>
+
+    <!-- Calendar Screen -->
+    <string name="calendar_screen__app_bar_title__calendar">Calendario</string>
+
+    <!-- Test Solving Screen -->
+    <string name="test_solving_screen__content_description_before_button">Botón Anterior</string>
+    <string name="test_solving_screen__content_description__after_button">Botón Siguiente</string>
+    <string name="test_solving_screen__text_btn__finish">Finalizar test</string>
+    <string name="test_solving_screen__text_btn__start">Comenzar</string>
+    <string name="test_solving_screen__text_title">Instrucciones del test</string>
+    <string name="test_solving_screen__text_description">- Puedes contestar a las preguntas en el orden que desees, utiliza los botones inferiores para navegar entre preguntas.\n- Puedes dejar preguntas en blanco pero te recomendamos que contestes al mayor número de preguntas posible.\n- Si no has seleccionado un tiempo máximo de realización del Test, puedes tardar el tiempo que necesites. Si lo has seleccionado, el tiempo empezará a contar cuando cierres esta ventana.</string>
+    <string name="test_solving_screen__text__pause_title">¿A ti también te cansa?</string>
+    <string name="test_solving_screen__text__pause_body"> A nosotros también nos pasa, tomate un descanso y retómalo cuándo quieras.\n Si crees que vas a tardar mucho y no quieres perder tu progreso, te recomendamos que guardes tus avances.\n Podrás abrir la aplicación en cualquier momento y conservaremos el estado del test.</string>
+    <string name="test_solving_screen__text__save_progress">Guardar Progreso</string>
+    <string name="test_solving_screen__text__continue">Continuar</string>
+
+    <!-- Test Result Screen -->
+    <string name="test_result_screen__text__time_taken">"Tiempo Transcurrido: "</string>
+    <string name="test_result_screen__text__question_correct">"Preguntas Correctas: "</string>
+    <string name="test_result_screen__text__question_incorrect">"Preguntas Incorrectas: "</string>
+    <string name="test_result_screen__text__question_unanswered">"Preguntas Sin Responder: "</string>
+    <string name="test_result_screen__text__score">"Puntuación: "</string>
+
+    <!-- Bottom Navigation Bar -->
+    <string name="bottom_nav_bar__content_description__profile">Botón navegar a pantalla de perfil</string>
+    <string name="bottom_nav_bar__content_description__test">Botón navegar a pantalla de test</string>
+    <string name="bottom_nav_bar__content_description__lesson">Botón navegar a pantalla de temas</string>
+    <string name="bottom_nav_bar__content_description__calendar">Botón navegar a pantalla de calendario</string>
+
+    <!-- Custom Base Dialog -->
+    <string name="custom_base_dialog__default__exit_operation">Operación exitosa</string>
+    <string name="custom_base_dialog__default__error">Error</string>
+    <string name="custom_base_dialog__default__try_again">Ha ocurrido un error. Inténtalo de nuevo</string>
+
+    <!-- Custom App Bar -->
+    <string name="custom_app_bar__content_description__menu">Menu</string>
+    <string name="custom_app_bar__content_description__more_options">Más opciones</string>
+
+    <!-- Study Item List -->
+    <string name="study_item_list__content_description__locked">Icono de bloqueado</string>
+</resources>

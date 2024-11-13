@@ -204,7 +204,12 @@ fun TestStatisticsContent(uiState: TestResultUiState, completionTime: Int) {
                     append(stringResource(R.string.test_result_screen__text__question_correct))
                 }
                 withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.primary)) {
-                    append("$numCorrect/${uiState.testResult?.questions?.size}")
+                    append(
+                        stringResource(
+                            id = R.string.number_indicator_format_int,
+                            numCorrect ?: 0, uiState.testResult?.questions?.size ?: 0
+                        ),
+                    )
                 }
             }
         )
@@ -214,7 +219,12 @@ fun TestStatisticsContent(uiState: TestResultUiState, completionTime: Int) {
                     append(stringResource(R.string.test_result_screen__text__question_incorrect))
                 }
                 withStyle(style = SpanStyle(color = MaterialTheme.colorScheme.error)) {
-                    append("$numIncorrect/${uiState.testResult?.questions?.size}")
+                    append(
+                        stringResource(
+                            id = R.string.number_indicator_format_int,
+                            numIncorrect ?: 0, uiState.testResult?.questions?.size ?: 0
+                        ),
+                    )
                 }
             }
         )
@@ -224,7 +234,12 @@ fun TestStatisticsContent(uiState: TestResultUiState, completionTime: Int) {
                     append(stringResource(R.string.test_result_screen__text__question_unanswered))
                 }
                 withStyle(style = SpanStyle(fontSize = 16.sp, color = Gray600)) {
-                    append("$numUnanswered/${uiState.testResult?.questions?.size}")
+                    append(
+                        stringResource(
+                            id = R.string.number_indicator_format_int,
+                            numUnanswered ?: 0, uiState.testResult?.questions?.size ?: 0
+                        ),
+                    )
                 }
             }
         )
@@ -289,7 +304,9 @@ fun PieChart(numCorrect: Int?, numIncorrect: Int?, numUnanswered: Int?) {
 
     Spacer(modifier = Modifier.height(16.dp))
     PieChart(
-        modifier = Modifier.fillMaxWidth().fillMaxHeight(0.8f),
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.8f),
         pieChartData = testPieChartData,
         ratioLineColor = MaterialTheme.colorScheme.outlineVariant,
         textRatioStyle = TextStyle(color = MaterialTheme.colorScheme.onBackground),

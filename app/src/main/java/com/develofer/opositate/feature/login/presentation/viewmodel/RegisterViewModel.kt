@@ -2,6 +2,7 @@ package com.develofer.opositate.feature.login.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.domain.usecase.CreateUserUseCase
 import com.develofer.opositate.feature.login.presentation.model.RegisterDialogType
 import com.develofer.opositate.feature.login.presentation.model.RegisterState
@@ -9,6 +10,7 @@ import com.develofer.opositate.feature.login.presentation.model.RegisterUiState
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
 import com.develofer.opositate.main.coordinator.DialogStateCoordinator
 import com.develofer.opositate.main.data.model.Result
+import com.develofer.opositate.main.data.provider.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -19,7 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class RegisterViewModel @Inject constructor(
-    private val createUserUseCase: CreateUserUseCase
+    private val createUserUseCase: CreateUserUseCase,
+    private val resourceProvider: ResourceProvider
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(RegisterUiState())
@@ -70,7 +73,9 @@ class RegisterViewModel @Inject constructor(
                         registerDialogStateCoordinator.showDialog(RegisterDialogType.REGISTER_SUCCESS)
                     }
                     is Result.Error -> {
-                        _uiState.update { it.copy(registerState = RegisterState.Failure(result.exception.message ?: "Register failed")) }
+                        _uiState.update { it.copy(registerState = RegisterState.Failure(
+                            result.exception.message ?: resourceProvider.getString(R.string.error_message__register_failed)))
+                        }
                         registerDialogStateCoordinator.showDialog(RegisterDialogType.REGISTER_ERROR)
                     }
                     is Result.Loading -> {
@@ -81,7 +86,7 @@ class RegisterViewModel @Inject constructor(
         }
     }
 
-    fun areFieldsValid(): Boolean {
+    private fun areFieldsValid(): Boolean {
         validateUsername()
         validateEmail()
         validatePassword()

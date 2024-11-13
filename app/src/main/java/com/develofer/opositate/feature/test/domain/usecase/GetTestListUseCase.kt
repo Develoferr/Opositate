@@ -10,7 +10,6 @@ import javax.inject.Singleton
 class GetTestListUseCase @Inject constructor(
     private val testRepository: TestRepository
 ) {
-    suspend operator fun invoke(): Result<List<PsTestVO>> {
-        return testRepository.getTestList()
-    }
+    suspend operator fun invoke(): Result<List<PsTestVO>> =
+        testRepository.getTestList()
 }

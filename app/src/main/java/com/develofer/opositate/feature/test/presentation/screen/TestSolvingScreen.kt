@@ -166,7 +166,11 @@ fun TestSolvingScreen(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 Text(
-                    text = "${uiState.currentQuestionIndex + 1}/${uiState.test?.questions?.size}",
+                    text = stringResource(
+                        id = R.string.number_indicator_format,
+                        (uiState.currentQuestionIndex + 1),
+                        uiState.test?.questions?.size ?: 0
+                    ),
                     fontSize = 18.sp,
                     fontWeight = FontWeight.Bold
                 )
@@ -219,7 +223,7 @@ fun TestSolvingScreen(
                                 if (isDarkTheme) MaterialTheme.colorScheme.primary
                                 else MaterialTheme.colorScheme.secondary
                             } else MaterialTheme.colorScheme.outline
-                            , label = ""
+                            , label = "border color"
                         )
                         Card(
                             modifier = Modifier

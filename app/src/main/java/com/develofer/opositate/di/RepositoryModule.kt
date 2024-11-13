@@ -5,12 +5,13 @@ import com.develofer.opositate.feature.calendar.data.repository.CalendarReposito
 import com.develofer.opositate.feature.calendar.domain.repository.CalendarRepository
 import com.develofer.opositate.feature.login.data.AuthRepositoryImpl
 import com.develofer.opositate.feature.login.domain.repository.AuthRepository
-import com.develofer.opositate.feature.profile.domain.repository.UserRepository
 import com.develofer.opositate.feature.profile.data.repository.UserRepositoryImpl
-import com.develofer.opositate.feature.test.domain.repository.SolvedTestRepository
+import com.develofer.opositate.feature.profile.domain.repository.UserRepository
 import com.develofer.opositate.feature.test.data.repository.SolvedTestRepositoryImpl
-import com.develofer.opositate.feature.test.domain.repository.TestRepository
 import com.develofer.opositate.feature.test.data.repository.TestRepositoryImpl
+import com.develofer.opositate.feature.test.domain.repository.SolvedTestRepository
+import com.develofer.opositate.feature.test.domain.repository.TestRepository
+import com.develofer.opositate.main.data.provider.ResourceProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import dagger.Module
@@ -33,8 +34,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideAuthRepositoryImpl(
-        auth: FirebaseAuth
-    ): AuthRepositoryImpl = AuthRepositoryImpl(auth)
+        auth: FirebaseAuth,
+        resourceProvider: ResourceProvider
+    ): AuthRepositoryImpl = AuthRepositoryImpl(auth, resourceProvider)
 
     // Calendar Repository
     @Provides
@@ -60,8 +62,9 @@ object RepositoryModule {
     @Singleton
     fun provideUserRepositoryImpl(
         auth: FirebaseAuth,
-        firestore: FirebaseFirestore
-    ): UserRepositoryImpl = UserRepositoryImpl(auth, firestore)
+        firestore: FirebaseFirestore,
+        resourceProvider: ResourceProvider
+    ): UserRepositoryImpl = UserRepositoryImpl(auth, firestore, resourceProvider)
 
     // Test Repository
     @Provides
@@ -73,8 +76,9 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideTestRepositoryImpl(
-        firestore: FirebaseFirestore
-    ): TestRepositoryImpl = TestRepositoryImpl(firestore)
+        firestore: FirebaseFirestore,
+        resourceProvider: ResourceProvider
+    ): TestRepositoryImpl = TestRepositoryImpl(firestore, resourceProvider)
 
     // Solved Test Repository
     @Provides
@@ -86,7 +90,8 @@ object RepositoryModule {
     @Provides
     @Singleton
     fun provideSolvedTestRepositoryImpl(
-        firestore: FirebaseFirestore
-    ): SolvedTestRepositoryImpl = SolvedTestRepositoryImpl(firestore)
+        firestore: FirebaseFirestore,
+        resourceProvider: ResourceProvider
+    ): SolvedTestRepositoryImpl = SolvedTestRepositoryImpl(firestore, resourceProvider)
 
 }

@@ -2,9 +2,11 @@ package com.develofer.opositate.feature.login.presentation.resetpassword
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.domain.usecase.ResetPasswordUseCase
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
 import com.develofer.opositate.main.data.model.Result
+import com.develofer.opositate.main.data.provider.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +17,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ResetPasswordViewModel @Inject constructor(
-    private val resetPasswordUseCase: ResetPasswordUseCase
+    private val resetPasswordUseCase: ResetPasswordUseCase,
+    private val resourceProvider: ResourceProvider
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(ResetPasswordUiState())
@@ -51,9 +54,9 @@ class ResetPasswordViewModel @Inject constructor(
                     is Result.Error -> {
                         _uiState.update {
                             it.copy(resetState = ResetPasswordState.Failure(
-                            result.exception.message ?: "Reset password failed"))
+                            result.exception.message ?: resourceProvider.getString(R.string.error_message_reset_password_failed)))
                         }
-                        onFailure(result.exception.message ?: "Reset password failed")
+                        onFailure(result.exception.message ?: resourceProvider.getString(R.string.error_message_reset_password_failed))
                     }
                     is Result.Loading -> {
                         _uiState.update { it.copy(resetState = ResetPasswordState.Loading) }

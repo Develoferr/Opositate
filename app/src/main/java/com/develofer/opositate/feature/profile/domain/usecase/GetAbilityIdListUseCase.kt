@@ -1,6 +1,6 @@
 package com.develofer.opositate.feature.profile.domain.usecase
 
-import com.develofer.opositate.main.data.model.AbilityDataProvider
+import com.develofer.opositate.main.data.provider.AbilityDataProvider
 import javax.inject.Inject
 
 class GetAbilityIdListUseCase @Inject constructor(
