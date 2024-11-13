@@ -18,6 +18,7 @@ import com.aay.compose.radarChart.model.NetLinesStyle
 import com.aay.compose.radarChart.model.Polygon
 import com.aay.compose.radarChart.model.PolygonStyle
 import com.develofer.opositate.ui.theme.OpositateTheme
+import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 
 @Composable
 fun CustomRadarChart(radarLabels: List<String>, values: List<Double>, values2: List<Double>) {
@@ -49,7 +50,7 @@ fun CustomRadarChart(radarLabels: List<String>, values: List<Double>, values2: L
         polygons = listOf(
             Polygon(
                 values = values,
-                unit = "",
+                unit = EMPTY_STRING,
                 style = PolygonStyle(
                     fillColor = MaterialTheme.colorScheme.primary,
                     fillColorAlpha = 0.3f,
@@ -61,7 +62,7 @@ fun CustomRadarChart(radarLabels: List<String>, values: List<Double>, values2: L
             ),
             Polygon(
                 values = values2,
-                unit = "",
+                unit = EMPTY_STRING,
                 style = PolygonStyle(
                     fillColor = MaterialTheme.colorScheme.secondary,
                     fillColorAlpha = 0.3f,

@@ -8,6 +8,7 @@ import com.develofer.opositate.feature.test.domain.usecase.SaveTestResultUseCase
 import com.develofer.opositate.feature.test.presentation.model.TestSolvingUiState
 import com.develofer.opositate.feature.test.utils.correctTest
 import com.develofer.opositate.main.data.model.Result
+import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 import com.google.firebase.Timestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -72,7 +73,7 @@ class TestSolvingViewModel @Inject constructor(
     fun correctTest(navigateToTestResult: (testResultId: String) -> Unit) {
         val testResult = _uiState.value.test?.correctTest(_uiState.value.timeCount, Timestamp.now())
         testResult?.let { saveTestResult(it) }
-        navigateToTestResult(testResult?.id ?: "")
+        navigateToTestResult(testResult?.id ?: EMPTY_STRING)
     }
 
     private fun saveTestResult(testResult: TestResult) {

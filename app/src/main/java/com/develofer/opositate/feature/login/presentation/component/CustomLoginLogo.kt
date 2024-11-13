@@ -21,6 +21,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.develofer.opositate.R
+import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 
 @Composable
 fun CustomLoginLogo(isDarkTheme: Boolean, isKeyboardVisible: Boolean, modifier: Modifier) {
@@ -28,10 +29,10 @@ fun CustomLoginLogo(isDarkTheme: Boolean, isKeyboardVisible: Boolean, modifier: 
     val colorFilter = if (isDarkTheme) null
         else ColorFilter.tint(MaterialTheme.colorScheme.onBackground)
     val logoAlphaLight by animateFloatAsState(
-        targetValue = if (isKeyboardVisible) 0f else 1f, label = "",
+        targetValue = if (isKeyboardVisible) 0f else 1f, label = EMPTY_STRING,
         animationSpec = spring(stiffness = Spring.StiffnessHigh)
     )
-    val logoAlphaDark by animateFloatAsState(targetValue = if (isKeyboardVisible) 0f else .19f, label = "")
+    val logoAlphaDark by animateFloatAsState(targetValue = if (isKeyboardVisible) 0f else .19f, label = EMPTY_STRING)
     val modifierCopy = if (!isDarkTheme) {
         modifier.size(120.dp).alpha(logoAlphaLight).background(Color.Transparent)
             .padding(top = 0.dp).offset(y = 120.dp, x = (0).dp)

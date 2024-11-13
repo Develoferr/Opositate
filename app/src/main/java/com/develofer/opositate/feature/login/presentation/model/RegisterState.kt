@@ -1,11 +1,12 @@
 package com.develofer.opositate.feature.login.presentation.model
 
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
+import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 
 data class RegisterUiState(
-    val username: String = "",
-    val email: String = "",
-    val password: String = "",
+    val username: String = EMPTY_STRING,
+    val email: String = EMPTY_STRING,
+    val password: String = EMPTY_STRING,
     val isUsernameFocused: Boolean = false,
     val isEmailFocused: Boolean = false,
     val isPasswordFocused: Boolean = false,

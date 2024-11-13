@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Popup
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
+import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 import kotlinx.coroutines.delay
 
 @Composable
@@ -59,7 +60,7 @@ fun CustomLoginTextField(
     onFocusChange: (Boolean) -> Unit, isPasswordField: Boolean = false,
     supportingText: ValidateFieldErrors, isDarkTheme: Boolean, textLetterSpacing: TextUnit = 2.sp,
     labelFontSize: TextUnit = 15.sp, textFieldPaddingBottom: Dp = 0.dp, haveToolTip: Boolean = false,
-    toolTipText: String = "", painter: Painter = painterResource(id = R.drawable.ic_info)
+    toolTipText: String = EMPTY_STRING, painter: Painter = painterResource(id = R.drawable.ic_info)
 ) {
     var isPasswordVisible by remember { mutableStateOf(false) }
     var showTooltip by remember { mutableStateOf(false) }
@@ -106,7 +107,7 @@ fun CustomLoginTextField(
             keyboardType = KeyboardType.Email,
             imeAction = ImeAction.Next
         ),
-        keyboardActions = KeyboardActions(onNext = { onValueChange("") })
+        keyboardActions = KeyboardActions(onNext = { onValueChange(EMPTY_STRING) })
     )
     if (showTooltip) {
         Tooltip(tooltipPosition, iconSize, toolTipText)
@@ -137,7 +138,7 @@ private fun getSupportingText(
         ValidateFieldErrors.INVALID_EMAIL -> stringResource(id = R.string.custom_login_text_field__supporting_text__invalid_email)
         ValidateFieldErrors.EMPTY_TEXT -> stringResource(id = R.string.custom_login_text_field__supporting_text__empty_field)
         ValidateFieldErrors.EMAILS_DO_NOT_MATCH -> stringResource(id = R.string.custom_login_text_field__supporting_text__emails_do_not_match)
-        else -> ""
+        else -> EMPTY_STRING
     }
     return {
         Text(
@@ -228,7 +229,7 @@ private data class LoginFieldColors(
 @Composable
 fun CustomLoginTextFieldPreview() {
     CustomLoginTextField(
-        value = "",
+        value = EMPTY_STRING,
         onValueChange = {},
         label = "USER",
         isFocused = false,

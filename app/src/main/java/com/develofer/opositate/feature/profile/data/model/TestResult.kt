@@ -1,5 +1,6 @@
 package com.develofer.opositate.feature.profile.data.model
 
+import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 import com.google.firebase.Timestamp
 
 
@@ -8,7 +9,7 @@ data class TestResultDocument(
 )
 
 data class TestResult(
-    val id: String = "",
+    val id: String = EMPTY_STRING,
     val testId: Int = 0,
     val questions : List<QuestionResult> = emptyList(),
     val maxTime : Int = 0,
