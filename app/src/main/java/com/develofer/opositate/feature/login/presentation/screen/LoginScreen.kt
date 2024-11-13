@@ -8,16 +8,14 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -26,7 +24,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
@@ -35,14 +32,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.zIndex
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
-import com.airbnb.lottie.compose.rememberLottieComposition
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginButton
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginLogo
@@ -56,10 +49,12 @@ import com.develofer.opositate.feature.login.presentation.resetpassword.ResetPas
 import com.develofer.opositate.feature.login.presentation.utils.KeyboardAwareScreen
 import com.develofer.opositate.feature.login.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.main.MainViewModel
+import com.develofer.opositate.main.components.BaseLottieAnimation
 import com.develofer.opositate.main.components.ErrorDialog
 import com.develofer.opositate.main.components.SuccessDialog
 import com.develofer.opositate.main.coordinator.DialogState
 import com.develofer.opositate.ui.theme.OpositateTheme
+import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 
 @Composable
 fun LoginScreen(
@@ -109,7 +104,7 @@ fun LoginScreen(
         )
         LoginLoadingAnimation(
             loginState = uiState.loginState, animationState = animationState,
-            loginViewModel = loginViewModel, modifier = Modifier.align(Alignment.BottomCenter),
+            modifier = Modifier.align(Alignment.BottomCenter),
             onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState }
         )
         HandleDialog(
@@ -132,7 +127,7 @@ private fun LoginContent(
 ) {
     val animatedPaddingTop by animateDpAsState(
         targetValue  = if (isKeyBoardVisible) 50.dp else if (isDarkTheme) 280.dp else 240.dp,
-        label = ""
+        label = EMPTY_STRING
     )
     Column(
         modifier = Modifier
@@ -262,42 +257,16 @@ fun LoginResetPasswordDialog(
 
 @Composable
 private fun LoginLoadingAnimation(
-    loginState: LoginState, animationState: AnimationState, loginViewModel: LoginViewModel,
+    loginState: LoginState, animationState: AnimationState,
     modifier: Modifier, onAnimationStateChanged: (animationsState: AnimationState) -> Unit
 ) {
     if (loginState == LoginState.Loading || animationState == AnimationState.Loading) {
         onAnimationStateChanged(AnimationState.Loading)
-        LottieLoadingAnimation(
-            modifier = modifier.zIndex(2f),
-            loginViewModel
+        BaseLottieAnimation(
+            modifier = modifier.fillMaxWidth(),
+            animRes = LottieCompositionSpec.RawRes(R.raw.loading_anim7),
+//            surfaceColor = MaterialTheme.colorScheme.background,
         ) { onAnimationStateChanged(AnimationState.Finish) }
-    }
-}
-
-@Composable
-private fun LottieLoadingAnimation(
-    modifier: Modifier = Modifier, loginViewModel: LoginViewModel, onFinish: () -> Unit
-) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.loading_anim7))
-    val progress by animateLottieCompositionAsState(composition = composition, iterations = 1)
-    if (progress >= 1f && loginViewModel.areFieldsValid()) {
-        LaunchedEffect(Unit) {
-            onFinish()
-        }
-    }
-    Surface(
-        modifier = modifier
-            .fillMaxSize()
-            .alpha(1f),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        LottieAnimation(
-            composition = composition, progress = { progress },
-            modifier = modifier
-                .size(200.dp)
-                .alpha(1f)
-                .offset(y = (50).dp)
-        )
     }
 }
 
