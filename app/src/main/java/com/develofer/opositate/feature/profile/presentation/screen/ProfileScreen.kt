@@ -2,15 +2,19 @@ package com.develofer.opositate.feature.profile.presentation.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
@@ -20,10 +24,12 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,7 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.presentation.component.CustomBodyText
-import com.develofer.opositate.feature.profile.domain.model.ScoreVO
+import com.develofer.opositate.feature.profile.domain.model.ScoreAbilityVO
 import com.develofer.opositate.feature.profile.presentation.components.CustomDualProgressBar
 import com.develofer.opositate.feature.profile.presentation.components.CustomRadarChart
 import com.develofer.opositate.feature.profile.presentation.viewmodel.ProfileViewModel
@@ -61,7 +67,7 @@ fun ProfileScreen(
         CustomBodyText(text = userName, isDarkTheme = isDarkTheme, textSize = 25.sp)
         Spacer(modifier = Modifier.height(16.dp))
         Text(text = stringResource(id = R.string.profile_screen__text__level, userScores.level))
-        Spacer(modifier = Modifier.height(42.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         Column(modifier = Modifier.fillMaxSize()) {
             val tabTitles = listOf(stringResource(id = R.string.profile_screen__title_text__scores), stringResource(id = R.string.profile_screen__title_text__chart))
             var selectedTabIndex by remember { mutableIntStateOf(0) }
@@ -91,7 +97,7 @@ fun ProfileScreen(
 }
 
 @Composable
-fun ScoresContent(items: List<ScoreVO> = emptyList()) {
+fun ScoresContent(items: List<ScoreAbilityVO> = emptyList()) {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -100,22 +106,49 @@ fun ScoresContent(items: List<ScoreVO> = emptyList()) {
     ) {
         items(items.size) {
             val score = items[it]
-            Spacer(modifier = Modifier.size(16.dp))
-            Text(text = stringResource(id = score.abilityName))
+            val expanded = remember { mutableStateOf(score.expanded) }
+            if (items.indexOf(score) > 0) Spacer(modifier = Modifier.size(16.dp))
+                else Spacer(modifier = Modifier.size(8.dp))
+            Row {
+                Text(text = stringResource(id = score.abilityNameResId))
+                Spacer(modifier = Modifier
+                    .size(0.dp)
+                    .weight(1f))
+                Icon(
+                    modifier = Modifier.clickable { expanded.value = !expanded.value },
+                    painter = if (expanded.value) painterResource(R.drawable.ic_keyboard_arrow_up) else painterResource(R.drawable.ic_keyboard_arrow_down),
+                    contentDescription = stringResource(id = R.string.lesson_screen__content_description__next_month)
+                )
+            }
+
             Spacer(modifier = Modifier.size(0.dp))
             CustomDualProgressBar(
                 primaryProgress = ( score.startScore.toFloat() / 10 ),
                 secondaryProgress = ( score.presentScore.toFloat() / 10 )
             )
-            Spacer(modifier = Modifier.size(8.dp))
+            if (expanded.value) {
+                score.taskScores.forEach { taskScore ->
+                    Column(modifier = Modifier.padding(start = 16.dp).padding(end = 16.dp)) {
+                        Spacer(modifier = Modifier.size(4.dp))
+                        Text(text = stringResource(id = taskScore.taskNameResId), fontSize = 12.sp)
+                        Spacer(modifier = Modifier.size(0.dp))
+                        CustomDualProgressBar(
+                            modifier = Modifier.height(8.dp),
+                            primaryProgress = ( taskScore.startScore.toFloat() / 10 ),
+                            secondaryProgress = ( taskScore.presentScore.toFloat() / 10 )
+                        )
+                        Spacer(modifier = Modifier.size(8.dp))
+                    }
+                }
+            }
         }
     }
 }
 
 @Composable
-fun ChartContent(items: List<ScoreVO> = emptyList()) {
+fun ChartContent(items: List<ScoreAbilityVO> = emptyList()) {
     if (items.isNotEmpty()) {
-        val radarLabels = items.map { score -> stringResource(id = score.abilityName) }
+        val radarLabels = items.map { score -> stringResource(id = score.abilityNameResId) }
         val values = items.map { score -> score.startScore.toDouble() }
         val values2 = items.map { score -> score.presentScore.toDouble() }
         Box(

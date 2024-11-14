@@ -3,10 +3,9 @@ package com.develofer.opositate.feature.profile.domain.usecase
 import com.develofer.opositate.main.data.provider.AbilityDataProvider
 import javax.inject.Inject
 
-class GetAbilityIdListUseCase @Inject constructor(
+class GetTaskStringResIdUseCase @Inject constructor(
     private val abilityDataProvider: AbilityDataProvider
 ) {
-    operator fun invoke(): List<Map<String, Any>> {
-        return abilityDataProvider.getAbilityIdList()
-    }
+    operator fun invoke(abilityId: Int, abilityTaskId: Int): Int =
+        abilityDataProvider.getTaskStringResId(abilityId, abilityTaskId)
 }

@@ -8,5 +8,12 @@ data class UserScoresResponse(
 data class ScoreResponse(
     val abilityId: Int = 0,
     val startScore: Int = 0,
-    val presentScore: Int = 0
+    val presentScore: Int = 0,
+    val tasks: List<TaskScoreResponse> = emptyList()
+)
+
+data class TaskScoreResponse(
+    val taskId: Int = 0,
+    val startScore: Int = 0,
+    val presentScore: Int = 0,
 )

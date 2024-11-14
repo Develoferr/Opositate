@@ -38,26 +38,26 @@ class UserRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun createUserScoreDocument(abilityIdList: List<Int>): Result<Unit> {
+    override suspend fun createUserScoreDocument(abilityIdList: List<Map<String, Any>>): Result<Unit> {
         val userId = getUser()?.uid
         return if (userId.isNullOrBlank()) {
             Result.Error(Exception(resourceProvider.getString(R.string.error_message_user_not_authenticated)))
         } else {
             val userScoreDocument = getUserScoreDocumentReference(userId)
-            val userScores: MutableList<Map<String, Any>> = getUserScoresMap(abilityIdList)
+            val userScores: List<Map<String, Any>> = getUserScoresMap(abilityIdList)
             suspendCoroutine { continuation ->
                 userScoreDocument?.set(mapOf(
                     resourceProvider.getString(R.string.firebase_constant_level) to 0,
                     resourceProvider.getString(R.string.firebase_constant_scores) to userScores)
                 )?.addOnCompleteListener { createTask ->
-                        if (createTask.isSuccessful) {
-                            continuation.resume(Result.Success(Unit))
-                        } else {
-                            val errorMessage = createTask.exception?.message ?: resourceProvider.getString(R.string.error_message_create_score_document_failed)
-                            continuation.resume(Result.Error(Exception(errorMessage)))
-                        }
+                    if (createTask.isSuccessful) {
+                        continuation.resume(Result.Success(Unit))
+                    } else {
+                        val errorMessage = createTask.exception?.message ?: resourceProvider.getString(R.string.error_message_create_score_document_failed)
+                        continuation.resume(Result.Error(Exception(errorMessage)))
                     }
-            }
+                }
+            } ?: Result.Error(Exception(resourceProvider.getString(R.string.error_message_create_score_document_failed)))
         }
     }
 
@@ -86,16 +86,30 @@ class UserRepositoryImpl @Inject constructor(
 
     private fun getUser() = auth.currentUser
 
-    private fun getUserScoresMap(abilityIdList: List<Int>): MutableList<Map<String, Any>> {
+    private fun getUserScoresMap(abilityIdList: List<Map<String, Any>>): List<Map<String, Any>> {
         val userScores: MutableList<Map<String, Any>> = mutableListOf()
+
         abilityIdList.forEach { abilityId ->
+            val abilityIdValue = abilityId["abilityId"] as? Int ?: return@forEach
+            val tasks = abilityId["tasks"] as? List<Int> ?: return@forEach
+
+            val tasksWithScores = tasks.map { task ->
+                mapOf(
+                    "taskId" to (task),
+                    "startScore" to 0,
+                    "presentScore" to 0
+                )
+            }
+
             userScores.add(mapOf(
-                resourceProvider.getString(R.string.firebase_constant_ability_id) to abilityId,
+                resourceProvider.getString(R.string.firebase_constant_ability_id) to abilityIdValue,
                 resourceProvider.getString(R.string.firebase_constant_start_score) to 0,
-                resourceProvider.getString(R.string.firebase_constant_present_score) to 0)
-            )
+                resourceProvider.getString(R.string.firebase_constant_present_score) to 0,
+                "tasks" to tasksWithScores
+            ))
         }
-        return userScores
+
+        return userScores.toList()
     }
 
     private fun getUserScoreDocumentReference(userId: String?): DocumentReference? {

@@ -6,6 +6,6 @@ import com.google.firebase.firestore.DocumentSnapshot
 interface UserRepository {
     suspend fun getUserName(): Result<String>
     suspend fun getUserId(): Result<String>
-    suspend fun createUserScoreDocument(abilityIdList: List<Int>): Result<Unit>
+    suspend fun createUserScoreDocument(abilityIdList: List<Map<String, Any>>): Result<Unit>
     suspend fun getUserScoreDocument(): Result<DocumentSnapshot>
 }
