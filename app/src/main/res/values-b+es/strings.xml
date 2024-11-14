@@ -18,18 +18,6 @@
     <string name="error_message__login_failed">Error al realizar login</string>
     <string name="error_message__register_failed">Error al realizar el registro</string>
     <string name="error_message__failed_to_convert_document">Error al convertir el documento Puntuaciones del Usuraio</string>
-    <!-- Abilities -->
-    <string name="ability_name__logical_reasoning">Razonamiento Lógico</string>
-    <string name="ability_name__verbal_reasoning">Razonamiento Verbal</string>
-    <string name="ability_name__numerical_reasoning">Razonamiento Numérico</string>
-    <string name="ability_name__spatial_perception">Percepción Espacial</string>
-    <string name="ability_name__memory">Memoria</string>
-    <string name="ability_name__attention_and_concentration">Atención y Concentración</string>
-    <string name="ability_name__processing_speed">Velocidad de Procesamiento</string>
-    <string name="ability_name__abstract_reasoning">Razonamiento Abstracto</string>
-    <string name="ability_name__stress_resilience">Resiliencia al Estrés</string>
-    <string name="ability_name__visual_motor_skills">Habilidades Visuales y Motoras</string>
-    <string name="ability_name__planning_and_organization_skills">Habilidades de Planificación y Organización</string>
 
     <!-- Custom Login Text Field -->
     <string name="custom_login_text_field__content_description__password_eye_image">Botón alternar visibilidad de la contraseña</string>
@@ -130,4 +118,183 @@
 
     <!-- Study Item List -->
     <string name="study_item_list__content_description__locked">Icono de bloqueado</string>
+
+    <!-- Abilities -->
+    <!-- Logical Reasoning -->
+    <string name="ability_name__logical_reasoning">Razonamiento Lógico</string>
+    <string name="sub_ability_name__logical_reasoning__basic_inferences">Inferencias lógicas y matemáticas básicas</string>
+    <string name="sub_ability_name__logical_reasoning__numerical_relationships">Problemas de relaciones numéricas y distancias</string>
+    <string name="sub_ability_name__logical_reasoning__element_relations_and_rules">Relaciones entre elementos y reglas matemáticas</string>
+    <string name="sub_ability_name__logical_reasoning__divisibility_and_distributions">Preguntas sobre divisibilidad y distribuciones</string>
+    <string name="sub_ability_name__logical_reasoning__sequence_understanding">Secuencias numéricas y divisibilidad</string>
+    <string name="sub_ability_name__logical_reasoning__logical_patterns">Patrones lógicos (series y analogías)</string>
+    <string name="sub_ability_name__logical_reasoning__analysis_and_deductions">Análisis de afirmaciones y deducciones</string>
+    <string name="sub_ability_name__logical_reasoning__classification_and_grouping">Problemas de clasificación y agrupación </string>
+
+    <!-- Verbal Reasoning -->
+    <string name="ability_name__verbal_reasoning">Razonamiento Verbal</string>
+    <string name="sub_ability_name__verbal_reasoning__reading_comprehension">Evaluación de comprensión lectora y deducción de inferencias</string>
+    <string name="sub_ability_name__verbal_reasoning__verbal_analogies">Análisis y solución de analogías verbales</string>
+    <string name="sub_ability_name__verbal_reasoning__word_relationships">Identificación de relaciones entre palabras o frases</string>
+    <string name="sub_ability_name__verbal_reasoning__word_puzzles">Resolución de acertijos y juegos de palabras</string>
+    <string name="sub_ability_name__verbal_reasoning__text_coherence">Evaluación de coherencia y cohesión en textos complejos</string>
+    <string name="sub_ability_name__verbal_reasoning__implicit_explicit_inferences">Evaluación de inferencias implícitas y explícitas</string>
+    <string name="sub_ability_name__verbal_reasoning__antonyms_synonyms_contextual_meaning">Identificación de antónimos, sinónimos y significados contextuales</string>
+    <string name="sub_ability_name__verbal_reasoning__semantic_relationships">Solución de problemas de analogías verbales y relaciones semánticas</string>
+
+    <!-- Numerical Reasoning -->
+    <string name="ability_name__numerical_reasoning">Razonamiento Numérico</string>
+    <string name="sub_ability_name__numerical_reasoning__basic_math_operations">Resolución de operaciones matemáticas básicas</string>
+    <string name="sub_ability_name__numerical_reasoning__numerical_patterns">Evaluación de patrones numéricos</string>
+    <string name="sub_ability_name__numerical_reasoning__numerical_sequences_and_progressions">Evaluación de secuencias numéricas y progresiones</string>
+    <string name="sub_ability_name__numerical_reasoning__percentages_proportions_fractions">Cálculos de porcentajes, proporciones y fracciones</string>
+    <string name="sub_ability_name__numerical_reasoning__basic_algebra_equations">Problemas de álgebra básica y ecuaciones</string>
+    <string name="sub_ability_name__numerical_reasoning__understanding_magnitudes_and_scales">Comprensión de magnitudes y escalas numéricas</string>
+    <string name="sub_ability_name__numerical_reasoning__numerical_sets_relationships">Relaciones entre diferentes conjuntos numéricos</string>
+    <string name="sub_ability_name__numerical_reasoning__estimation_and_rounding">Problemas de estimación y redondeo de números</string>
+
+    <!-- Spatial Perception -->
+    <string name="ability_name__spatial_perception">Percepción Espacial</string>
+    <string name="sub_ability_name__spatial_perception__visual_and_spatial_manipulation">Evaluación de la capacidad para visualizar y manipular objetos en el espacio</string>
+    <string name="sub_ability_name__spatial_perception__geometric_figures">Identificación de figuras geométricas y sus propiedades</string>
+    <string name="sub_ability_name__spatial_perception__spatial_orientation_and_rotation">Evaluación de orientación espacial y rotación de objetos</string>
+    <string name="sub_ability_name__spatial_perception__maps_and_diagrams_analysis">Análisis de mapas y diagramas</string>
+    <string name="sub_ability_name__spatial_perception__3d_structures_patterns_recognition">Reconocimiento de patrones en estructuras tridimensionales</string>
+    <string name="sub_ability_name__spatial_perception__comparisons_of_figures_in_different_planes">Comparación de figuras y objetos en distintos planos</string>
+    <string name="sub_ability_name__spatial_perception__3d_visualization_from_2d">Tareas de visualización de objetos en 3D a partir de representaciones 2D</string>
+    <string name="sub_ability_name__spatial_perception__spatial_puzzles_resolution">Evaluación de habilidades para resolver puzzles espaciales</string>
+
+    <!-- Memory -->
+    <string name="ability_name__memory">Memoria</string>
+    <string name="sub_ability_name__memory__short_term_memory">Evaluación de la memoria a corto plazo</string>
+    <string name="sub_ability_name__memory__visual_and_auditory_memory">Pruebas de memoria visual y auditiva</string>
+    <string name="sub_ability_name__memory__sequences_remembering">Recordatorio de secuencias de números o palabras</string>
+    <string name="sub_ability_name__memory__working_memory">Evaluación de la memoria de trabajo</string>
+    <string name="sub_ability_name__memory__pattern_recognition_and_memorization">Tareas de memorización y reconocimiento de patrones</string>
+    <string name="sub_ability_name__memory__details_recall_from_texts">Evaluación de la capacidad para recordar detalles en historias o textos</string>
+    <string name="sub_ability_name__memory__spatial_and_visual_memory">Memoria de ubicaciones espaciales y visuales</string>
+    <string name="sub_ability_name__memory__recognizing_previously_presented_information">Reconocimiento de información previamente presentada</string>
+
+    <!-- Attention and Concentration -->
+    <string name="ability_name__attention_and_concentration">Atención y Concentración</string>
+    <string name="sub_ability_name__attention_and_concentration__long_task_attention">Evaluación de la capacidad para mantener la atención en tareas prolongadas</string>
+    <string name="sub_ability_name__attention_and_concentration__concentration_under_distractions">Pruebas de concentración bajo distracciones</string>
+    <string name="sub_ability_name__attention_and_concentration__detection_of_repetitive_task_details">Evaluación de la capacidad para detectar detalles en tareas repetitivas</string>
+    <string name="sub_ability_name__attention_and_concentration__divided_attention">Evaluación de la atención dividida</string>
+    <string name="sub_ability_name__attention_and_concentration__time_pressure_concentration">Evaluación de la concentración bajo presión de tiempo</string>
+    <string name="sub_ability_name__attention_and_concentration__visual_and_auditory_vigilance">Tareas de vigilancia visual y auditiva</string>
+    <string name="sub_ability_name__attention_and_concentration__multitasking_focus">Resolución de tareas que requieren mantener el enfoque en múltiples elementos</string>
+    <string name="sub_ability_name__attention_and_concentration__resistance_to_cognitive_fatigue">Evaluación de la resistencia a la fatiga mental en tareas de concentración</string>
+
+    <!-- Processing Speed -->
+    <string name="ability_name__processing_speed">Velocidad de Procesamiento</string>
+    <string name="sub_ability_name__processing_speed__quick_reaction">Tareas de reacción rápida a estímulos visuales y auditivos</string>
+    <string name="sub_ability_name__processing_speed__basic_math_speed">Pruebas de velocidad en la resolución de operaciones matemáticas básicas</string>
+    <string name="sub_ability_name__processing_speed__response_time_identification">Evaluación de tiempo de respuesta en la identificación de patrones</string>
+    <string name="sub_ability_name__processing_speed__text_image_processing">Ejercicios de procesamiento de texto o imágenes bajo presión de tiempo</string>
+    <string name="sub_ability_name__processing_speed__quick_decision_time_limit">Evaluación de rapidez en la toma de decisiones en situaciones de límite de tiempo</string>
+    <string name="sub_ability_name__processing_speed__symbol_number_sorting">Comparación y clasificación de símbolos o números rápidamente</string>
+    <string name="sub_ability_name__processing_speed__sequence_word_letter_speed">Pruebas de velocidad de procesamiento en secuencias de palabras o letras</string>
+    <string name="sub_ability_name__processing_speed__subtle_difference_detection">Evaluación de velocidad en la detección de diferencias sutiles entre imágenes</string>
+
+    <!-- Abstract Reasoning -->
+    <string name="ability_name__abstract_reasoning">Razonamiento Abstracto</string>
+    <string name="sub_ability_name__abstract_reasoning__complex_patterns">Identificación de patrones complejos y relaciones abstractas</string>
+    <string name="sub_ability_name__abstract_reasoning__set_logic_abstract_relations">Evaluación de lógica de conjuntos y relaciones abstractas</string>
+    <string name="sub_ability_name__abstract_reasoning__abstract_sequence_problems">Resolución de problemas con secuencias y figuras abstractas</string>
+    <string name="sub_ability_name__abstract_reasoning__non_numeric_rule_deduction">Deducción de reglas en secuencias no numéricas ni verbales</string>
+    <string name="sub_ability_name__abstract_reasoning__advanced_geometric_patterns">Análisis de patrones geométricos avanzados y simbología abstracta</string>
+    <string name="sub_ability_name__abstract_reasoning__non_concrete_reasoning">Evaluación de capacidad para razonar en conceptos no concretos</string>
+    <string name="sub_ability_name__abstract_reasoning__abstract_diagram_comparison">Comparación de diagramas abstractos para identificar similitudes y diferencias</string>
+    <string name="sub_ability_name__abstract_reasoning__geometric_pattern_identification">Ejercicios de identificación de patrones en series geométricas</string>
+
+    <!-- Stress Resilience -->
+    <string name="ability_name__stress_resilience">Resiliencia al Estrés</string>
+    <string name="sub_ability_name__stress_resilience__performance_under_pressure">Evaluación de la capacidad para mantener el rendimiento bajo presión</string>
+    <string name="sub_ability_name__stress_resilience__quick_decisions_high_pressure">Tareas de toma de decisiones rápidas en situaciones de alta presión</string>
+    <string name="sub_ability_name__stress_resilience__adaptation_unexpected_changes">Pruebas de adaptación a situaciones inesperadas o cambios repentinos</string>
+    <string name="sub_ability_name__stress_resilience__frustration_tolerance">Medición de tolerancia a la frustración ante tareas difíciles</string>
+    <string name="sub_ability_name__stress_resilience__perseverance_prolonged_tasks">Pruebas de perseverancia ante fallos y tareas prolongadas</string>
+    <string name="sub_ability_name__stress_resilience__cognitive_load_emotional_pressure">Evaluación de manejo de carga cognitiva y presión emocional</string>
+    <string name="sub_ability_name__stress_resilience__repetitive_tasks_increasing_difficulty">Simulación de tareas repetitivas con nivel de dificultad creciente</string>
+    <string name="sub_ability_name__stress_resilience__emotional_self_regulation">Evaluación de autorregulación emocional frente a estímulos estresantes</string>
+
+    <!-- Visual Motor Skills -->
+    <string name="ability_name__visual_motor_skills">Habilidades Visomotoras</string>
+    <string name="sub_ability_name__visual_motor_skills__eye_hand_coordination">Tareas de coordinación ojo-mano (ej. dibujo de figuras bajo instrucción)</string>
+    <string name="sub_ability_name__visual_motor_skills__assembly_precision">Pruebas de precisión en tareas de ensamblaje de piezas</string>
+    <string name="sub_ability_name__visual_motor_skills__fine_motor_skills">Evaluación de habilidades motoras finas en tareas de manipulación</string>
+    <string name="sub_ability_name__visual_motor_skills__visual_tracking">Tareas de seguimiento visual de objetos en movimiento</string>
+    <string name="sub_ability_name__visual_motor_skills__speed_precision_touch_visual">Pruebas de rapidez y precisión en respuestas táctiles y visuales</string>
+    <string name="sub_ability_name__visual_motor_skills__pattern_reproduction">Tareas de precisión en la reproducción de patrones visuales</string>
+    <string name="sub_ability_name__visual_motor_skills__quick_response_visual_touch">Ejercicios de respuesta rápida a estímulos visuales táctiles</string>
+    <string name="sub_ability_name__visual_motor_skills__complex_pattern_tracing">Evaluación de habilidades para realizar trazados siguiendo patrones complejos</string>
+
+    <!-- Planning and Organization Skills -->
+    <string name="ability_name__planning_and_organization_skills">Planificación y Organización</string>
+    <string name="sub_ability_name__planning_and_organization_skills__task_order_prioritization">Evaluación de habilidades para ordenar y priorizar tareas</string>
+    <string name="sub_ability_name__planning_and_organization_skills__goal_setting_sequential_steps">Ejercicios de establecimiento de metas y pasos secuenciales</string>
+    <string name="sub_ability_name__planning_and_organization_skills__strategic_problem_solving">Pruebas de resolución de problemas que requieren estrategia</string>
+    <string name="sub_ability_name__planning_and_organization_skills__goal_oriented_sequencing">Planificación de secuencias para alcanzar un objetivo dado</string>
+    <string name="sub_ability_name__planning_and_organization_skills__logical_ordering">Tareas de organización de elementos en un orden lógico</string>
+    <string name="sub_ability_name__planning_and_organization_skills__plan_adaptation">Evaluación de capacidad para adaptar y ajustar planes cuando sea necesario</string>
+    <string name="sub_ability_name__planning_and_organization_skills__sequential_puzzle_maze">Ejercicios de resolución de rompecabezas secuenciales o laberintos</string>
+    <string name="sub_ability_name__planning_and_organization_skills__resource_management_simulation">Pruebas de organización y asignación de recursos en situaciones simuladas</string>
+
+    <!-- Decision Making -->
+    <string name="ability_name__decision_making">Toma de Decisiones</string>
+    <string name="sub_ability_name__decision_making__logical_decision_uncertainty">Evaluación de la capacidad para tomar decisiones lógicas bajo incertidumbre o presión</string>
+    <string name="sub_ability_name__decision_making__prioritization_selection_multiple_variables">Pruebas de priorización y selección entre opciones con múltiples variables</string>
+    <string name="sub_ability_name__decision_making__ethical_practical_judgment">Tareas de juicio y toma de decisiones éticas o prácticas</string>
+    <string name="sub_ability_name__decision_making__conflict_interest_context">Evaluación de decisiones en contextos de conflicto de intereses</string>
+    <string name="sub_ability_name__decision_making__rapid_decision_scenarios">Simulaciones de escenarios donde se debe decidir rápidamente</string>
+    <string name="sub_ability_name__decision_making__long_term_consequence_analysis">Análisis de consecuencias a largo plazo en las decisiones</string>
+    <string name="sub_ability_name__decision_making__incomplete_ambiguous_information">Evaluación de la toma de decisiones frente a información incompleta o ambigua</string>
+    <string name="sub_ability_name__decision_making__selection_under_time_resource_pressure">Ejercicios de selección bajo presión de tiempo y recursos limitados</string>
+
+    <!-- Creativity -->
+    <string name="ability_name__creativity">Creatividad</string>
+    <string name="sub_ability_name__creativity__divergent_thinking">Pruebas de pensamiento divergente para generar múltiples soluciones</string>
+    <string name="sub_ability_name__creativity__fluency_originality_ideas">Ejercicios de fluidez y originalidad en ideas o conceptos</string>
+    <string name="sub_ability_name__creativity__unusual_connections">Evaluación de capacidad para ver conexiones inusuales entre elementos</string>
+    <string name="sub_ability_name__creativity__creative_problem_solving">Resolución de problemas creativos con restricciones específicas</string>
+    <string name="sub_ability_name__creativity__inventiveness_product_ideas">Ejercicios de inventiva para la creación de productos o ideas novedosas</string>
+    <string name="sub_ability_name__creativity__modifying_traditional_approaches">Evaluación de capacidad para modificar enfoques tradicionales a situaciones nuevas</string>
+    <string name="sub_ability_name__creativity__creative_visualization">Tareas de visualización creativa para resolver problemas complejos</string>
+    <string name="sub_ability_name__creativity__creative_writing_hypotheticals">Ejercicios de escritura creativa en situaciones hipotéticas</string>
+
+    <!-- Mechanical Comprehension -->
+    <string name="ability_name__mechanical_comprehension">Comprensión Mecánica</string>
+    <string name="sub_ability_name__mechanical_comprehension__mechanical_physical_principles">Evaluación de la comprensión de principios mecánicos y físicos</string>
+    <string name="sub_ability_name__mechanical_comprehension__spatial_reasoning_moving_objects">Pruebas de razonamiento espacial con objetos en movimiento</string>
+    <string name="sub_ability_name__mechanical_comprehension__laws_of_motion">Comprensión de leyes de movimiento, como la gravedad y la fricción</string>
+    <string name="sub_ability_name__mechanical_comprehension__simple_mechanisms">Evaluación de mecanismos simples (palancas, poleas, engranajes, etc.)</string>
+    <string name="sub_ability_name__mechanical_comprehension__identifying_physical_principles">Identificación de principios físicos en máquinas y dispositivos</string>
+    <string name="sub_ability_name__mechanical_comprehension__predicting_mechanical_outcomes">Ejercicios de predicción de resultados en escenarios mecánicos</string>
+    <string name="sub_ability_name__mechanical_comprehension__basic_electrical_circuits">Análisis de circuitos eléctricos básicos y sus componentes</string>
+    <string name="sub_ability_name__mechanical_comprehension__understanding_complex_systems">Evaluación de comprensión de sistemas complejos y su funcionamiento</string>
+
+    <!-- Problem Solving -->
+    <string name="ability_name__problem_solving">Resolución de Problemas</string>
+    <string name="sub_ability_name__problem_solving__analyzing_multi_variable_problems">Evaluación de habilidades para analizar problemas con múltiples variables</string>
+    <string name="sub_ability_name__problem_solving__logical_critical_solution_steps">Pruebas de solución de problemas que requieren pasos lógicos y críticos</string>
+    <string name="sub_ability_name__problem_solving__resource_limitations">Ejercicios de resolución de problemas con límites de recursos o información incompleta</string>
+    <string name="sub_ability_name__problem_solving__alternative_solutions_complexity">Evaluación de la capacidad de pensar en soluciones alternativas en contextos de alta complejidad</string>
+    <string name="sub_ability_name__problem_solving__nonlinear_multi_step_problems">Ejercicios de resolución de problemas no lineales que requieren una estrategia multi-paso</string>
+    <string name="sub_ability_name__problem_solving__reorganizing_information_patterns">Tareas que impliquen reorganizar información y buscar patrones</string>
+    <string name="sub_ability_name__problem_solving__hypothetical_scenarios">Resolución de problemas en escenarios hipotéticos con múltiples variables</string>
+    <string name="sub_ability_name__problem_solving__solving_changing_conditions">Evaluación de la capacidad para resolver problemas bajo condiciones cambiantes</string>
+
+    <!-- Emotional Intelligence -->
+    <string name="ability_name__emotional_intelligence">Inteligencia Emocional</string>
+    <string name="sub_ability_name__emotional_intelligence__self_emotion_management">Evaluación de habilidades para reconocer y manejar emociones propias</string>
+    <string name="sub_ability_name__emotional_intelligence__empathy_understanding_interactions">Pruebas de empatía y comprensión emocional en interacciones</string>
+    <string name="sub_ability_name__emotional_intelligence__emotional_regulation_resilience">Evaluación de regulación emocional y resiliencia interpersonal</string>
+    <string name="sub_ability_name__emotional_intelligence__emotion_identification_faces">Tareas de identificación de emociones a través de expresiones faciales o contexto</string>
+    <string name="sub_ability_name__emotional_intelligence__conflict_resolution_interpersonal">Ejercicios de resolución de conflictos en situaciones interpersonales</string>
+    <string name="sub_ability_name__emotional_intelligence__active_listening_emotional_response">Evaluación de habilidades de escucha activa y respuesta emocional adecuada</string>
+    <string name="sub_ability_name__emotional_intelligence__emotional_regulation_social_simulations">Simulaciones de situaciones sociales que requieran regulación emocional</string>
+    <string name="sub_ability_name__emotional_intelligence__self_control_under_stress">Tareas de autocontrol emocional en situaciones de estrés</string>
+
+
 </resources>
