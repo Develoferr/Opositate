@@ -12,8 +12,11 @@ data class LessonItem(
     override val isEnabled: Boolean
 ) : StudyItem
 
-data class TestItem(
+data class TestByTaskItem(
     override val number: Int,
     override val title: String,
-    override val isEnabled: Boolean
+    override val isEnabled: Boolean,
+    val testId: String,
+    val abilityId: Int,
+    val taskId: Int
 ) : StudyItem

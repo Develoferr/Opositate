@@ -214,7 +214,7 @@ private fun HandleRegisterDialog(
                         },
                         isDialogVisible = dialogState.collectAsState().value.isVisible, delayTime = 3000,
                         title = { Text(text = stringResource(id = R.string.register_screen__title_text__login_successful)) },
-                        text = { Text(stringResource(id = R.string.register_screen__text__login_successful)) },
+                        content = { Text(stringResource(id = R.string.register_screen__text__login_successful)) },
                     )
                 }
                 RegisterDialogType.REGISTER_ERROR -> {

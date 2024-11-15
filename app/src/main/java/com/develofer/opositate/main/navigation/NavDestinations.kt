@@ -38,7 +38,9 @@ object CalendarNavigation: Route {
 
 @Serializable
 data class TestSolvingNavigation(
-    val testId: String
+    val testId: String,
+    val abilityId: Int,
+    val taskId: Int
 ) {
     companion object: Route {
         override val route = this::class.qualifiedName

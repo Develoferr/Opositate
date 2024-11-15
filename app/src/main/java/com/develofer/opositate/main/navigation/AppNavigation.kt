@@ -95,7 +95,8 @@ fun AppNavigation(
             }
             composable<TestNavigation> {
                 TestScreen(
-                    navigateToTestSolving = { testId -> navHostController.navigate(TestSolvingNavigation(testId)) },
+                    navigateToTestSolving = { testId, abilityId, taskId -> navHostController.navigate(
+                        TestSolvingNavigation(testId, abilityId, taskId)) },
                     isDarkTheme = isDarkTheme,
                     mainViewModel = mainViewModel
                 )
@@ -117,6 +118,8 @@ fun AppNavigation(
                 TestSolvingScreen(
                     isDarkTheme = isDarkTheme,
                     testId = testSolvingNavigation.testId,
+                    abilityId = testSolvingNavigation.abilityId,
+                    taskId = testSolvingNavigation.taskId,
                     mainViewModel = mainViewModel,
                     navigateToTestResult = { testResultId -> navHostController.navigate(TestResultNavigation(testResultId)) }
                 )

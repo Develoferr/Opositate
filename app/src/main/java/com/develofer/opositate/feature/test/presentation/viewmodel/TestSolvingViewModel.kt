@@ -60,9 +60,9 @@ class TestSolvingViewModel @Inject constructor(
         }
     }
 
-    fun getTest(testId: String) {
+    fun getTest(testId: String, abilityId: Int, taskId: Int) {
         viewModelScope.launch {
-            when (val result = getTestUseCase(testId)) {
+            when (val result = getTestUseCase(testId, abilityId, taskId)) {
                 is Result.Success -> _uiState.update { it.copy(test = result.data) }
                 is Result.Error -> { } // Handle Error
                 is Result.Loading -> { } // Handle Loading

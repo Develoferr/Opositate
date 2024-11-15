@@ -49,6 +49,8 @@ import kotlin.time.Duration.Companion.seconds
 @Composable
 fun TestSolvingScreen(
     testId: String,
+    abilityId: Int,
+    taskId: Int,
     testSolvingViewModel: TestSolvingViewModel = hiltViewModel(),
     isDarkTheme: Boolean,
     navigateToTestResult: (testResultId: String) -> Unit,
@@ -62,7 +64,7 @@ fun TestSolvingScreen(
                     else timeCount < (maxTime ?: 0)
     mainViewModel.hideSystemUI()
     LaunchedEffect(uiState.isTestActive) {
-        testSolvingViewModel.getTest(testId)
+        testSolvingViewModel.getTest(testId, abilityId, taskId)
         if (uiState.isTestActive) {
             while (testFinishModeCondition) {
                 delay(1.seconds)

@@ -25,8 +25,9 @@ fun SuccessDialog(
     onDismiss: () -> Unit = {},
     delayTime: Long = 0,
     confirmButton: @Composable () -> Unit = {},
+    dismissButton: @Composable (() -> Unit) = {},
     title: @Composable (() -> Unit)?,
-    text: @Composable (() -> Unit)? = {
+    content: @Composable (() -> Unit)? = {
         Text(text = stringResource(R.string.custom_base_dialog__default__exit_operation))
     }
 ) {
@@ -35,8 +36,9 @@ fun SuccessDialog(
         isDialogVisible = isDialogVisible,
         onDismiss = onDismiss,
         title = title,
-        text = text ,
+        content = content ,
         confirmButton = confirmButton,
+        dismissButton = dismissButton,
         delayTime = delayTime
     )
 }
@@ -60,7 +62,7 @@ fun ErrorDialog(
         isDialogVisible = isDialogVisible,
         onDismiss = onDismiss,
         title = title,
-        text = text ,
+        content = text ,
         confirmButton = confirmButton,
         delayTime = delayTime,
 
@@ -74,7 +76,7 @@ fun CustomBaseAlertDialog(
     onDismiss: () -> Unit = {},
     delayTime: Long = 0,
     title: @Composable (() -> Unit)?,
-    text: @Composable (() -> Unit)?,
+    content: @Composable (() -> Unit)?,
     dismissButton: @Composable (() -> Unit)? = null,
     confirmButton: @Composable (() -> Unit)
 ) {
@@ -85,7 +87,7 @@ fun CustomBaseAlertDialog(
             modifier = modifier,
             onDismissRequest = onDismiss,
             title = title,
-            text = text,
+            text = content,
             confirmButton = confirmButton,
             dismissButton = dismissButton,
         )
@@ -130,7 +132,7 @@ fun CustomBaseDialogPreview() {
             isDialogVisible = true,
             delayTime = 3000,
             title = { Text(text = stringResource(id = R.string.login_screen__title_text__login_successful)) },
-            text = { Text(stringResource(id = R.string.login_screen__text__login_successful)) },
+            content = { Text(stringResource(id = R.string.login_screen__text__login_successful)) },
             confirmButton = {  },
         )
     }
