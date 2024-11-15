@@ -1,8 +1,10 @@
 package com.develofer.opositate.feature.test.data.repository
 
 import com.develofer.opositate.R
+import com.develofer.opositate.feature.profile.data.model.PsTest
 import com.develofer.opositate.feature.profile.presentation.model.PsTestDocumentResponse
 import com.develofer.opositate.feature.profile.presentation.model.PsTestResponse
+import com.develofer.opositate.feature.profile.presentation.model.toVO
 import com.develofer.opositate.feature.test.domain.repository.TestRepository
 import com.develofer.opositate.main.data.model.Result
 import com.develofer.opositate.main.data.provider.ResourceProvider
@@ -55,18 +57,18 @@ class TestRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun getTest(id: String, abilityId: Int, abilityTaskId: Int): Result<PsTestResponse?> {
+    override suspend fun getTest(id: String, abilityId: Int, abilityTaskId: Int): Result<PsTest?> {
         return try {
             val documentId = "${abilityId}_${abilityTaskId}"
             val document = getTestCollection().document(documentId).get().await()
             val testList = if (document.exists()) document.toObject(PsTestDocumentResponse::class.java) else null
-            val test = testList?.tests?.find { it.id == id.toInt() }
-                Result.Success(test)
+            val test = testList?.tests?.find { it.id == id.toInt() }?.toVO()
+            Result.Success(test)
         } catch (e: Exception) {
             Result.Error(e)
         }
     }
 
     private fun getTestCollection(): CollectionReference =
-        firestore.collection(resourceProvider.getString(R.string.firebase_constant_tests))
+        firestore.collection(resourceProvider.getString(R.string.firebase_constant__tests))
 }
