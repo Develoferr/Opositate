@@ -9,7 +9,7 @@ data class ScoreResponse(
     val abilityId: Int = 0,
     val startScore: Int = 0,
     val presentScore: Int = 0,
-    val tasks: List<TaskScoreResponse> = emptyList()
+    val taskScores: List<TaskScoreResponse> = emptyList()
 )
 
 data class TaskScoreResponse(

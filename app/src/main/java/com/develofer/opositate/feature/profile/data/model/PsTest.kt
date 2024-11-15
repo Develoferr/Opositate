@@ -4,6 +4,8 @@ import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 
 data class PsTest(
     val id: Int = 0,
+    val abilityId: Int = 0,
+    val abilityTaskId: Int = 0,
     val name: String = EMPTY_STRING,
     val questions: List<Question> = emptyList(),
     val maxTime: Int = 0,

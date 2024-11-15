@@ -11,6 +11,8 @@ data class TestResultDocument(
 data class TestResult(
     val id: String = EMPTY_STRING,
     val testId: Int = 0,
+    val abilityId: Int = 0,
+    val taskId: Int = 0,
     val questions : List<QuestionResult> = emptyList(),
     val maxTime : Int = 0,
     val completionTime : Int = 0,

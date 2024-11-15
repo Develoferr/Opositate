@@ -1,19 +1,19 @@
 package com.develofer.opositate.feature.profile.domain.model
 
-data class UserScoresVO(
+data class UserScores(
     val level: Int = 0,
-    val scores: List<ScoreAbilityVO> = emptyList(),
+    val scores: List<ScoreAbility> = emptyList(),
 )
 
-data class ScoreAbilityVO(
+data class ScoreAbility(
     val abilityNameResId: Int = 0,
     val startScore: Int = 0,
     val presentScore: Int = 0,
-    val taskScores: List<ScoreTaskVO> = emptyList(),
+    val taskScores: List<ScoreTask> = emptyList(),
     var expanded: Boolean = false
 )
 
-data class ScoreTaskVO (
+data class ScoreTask (
     val taskNameResId: Int = 0,
     val startScore: Int = 0,
     val presentScore: Int = 0
