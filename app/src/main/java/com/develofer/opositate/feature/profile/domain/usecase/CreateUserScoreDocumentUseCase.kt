@@ -14,5 +14,4 @@ class CreateUserScoreDocumentUseCase @Inject constructor(
         val abilityIdList = getAbilityIdListUseCase()
         return userRepository.createUserScoreDocument(abilityIdList)
     }
-
 }

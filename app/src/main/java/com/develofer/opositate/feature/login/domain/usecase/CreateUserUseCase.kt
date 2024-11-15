@@ -11,7 +11,8 @@ import javax.inject.Singleton
 class CreateUserUseCase @Inject constructor(
     private val authRepository: AuthRepository,
     private val updateUserNameUseCase: UpdateUserNameUseCase,
-    private val createUserScoreDocumentUseCase: CreateUserScoreDocumentUseCase
+    private val createUserScoreDocumentUseCase: CreateUserScoreDocumentUseCase,
+    private val createTestAsksDocumentUseCase: CreateTestAskDocumentUseCase
 ) {
     suspend operator fun invoke(username: String, email: String, password: String): Result<Unit> {
         // Create User Task
@@ -22,9 +23,13 @@ class CreateUserUseCase @Inject constructor(
         val updateUsernameResult = updateUserNameUseCase(username)
         if (updateUsernameResult is Result.Error) return updateUsernameResult
 
-        // Create User score document Task
+        // Create User Score document Task
         val createUserScoreDocumentResult = createUserScoreDocumentUseCase()
-        return if (createUserScoreDocumentResult is Result.Error) Result.Error(createUserScoreDocumentResult.exception)
+        if (createUserScoreDocumentResult is Result.Error) return createUserScoreDocumentResult
+
+        // Create Test Asks document Task
+        val createTestAsksDocumentResult = createTestAsksDocumentUseCase()
+        return if (createTestAsksDocumentResult is Result.Error) createTestAsksDocumentResult
             else Result.Success(Unit)
     }
 }

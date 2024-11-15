@@ -1,9 +1,8 @@
 package com.develofer.opositate.feature.profile.domain.usecase
 
 import com.develofer.opositate.R
-import com.develofer.opositate.feature.profile.data.model.UserScoresResponse
-import com.develofer.opositate.feature.profile.domain.mapper.toVo
-import com.develofer.opositate.feature.profile.domain.model.UserScoresVO
+import com.develofer.opositate.feature.profile.domain.mapper.toDomain
+import com.develofer.opositate.feature.profile.domain.model.UserScores
 import com.develofer.opositate.feature.profile.domain.repository.UserRepository
 import com.develofer.opositate.main.data.model.Result
 import com.develofer.opositate.main.data.provider.ResourceProvider
@@ -11,18 +10,17 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class GetUserScoresDocumentUseCase @Inject constructor(
+class GetUserScoresUseCase @Inject constructor(
     private val userRepository: UserRepository,
     private val getAbilityStringResIdUseCase: GetAbilityResIdUseCase,
     private val getTaskStringResIdUseCase: GetTaskStringResIdUseCase,
     private val resourceProvider: ResourceProvider
 ) {
-    suspend operator fun invoke(): Result<UserScoresVO> {
-        return when (val result = userRepository.getUserScoreDocument()) {
+    suspend operator fun invoke(): Result<UserScores> {
+        return when (val result = userRepository.getUserScoreResponse()) {
             is Result.Success -> {
-                result.data.toObject(UserScoresResponse::class.java)?.let { userScoresResponse ->
-
-                    val userScoresVO = userScoresResponse.toVo(
+                result.data?.let {
+                    val userScoresVO = result.data.toDomain(
                         getAbilityStringResIdUseCase,
                         getTaskStringResIdUseCase)
 
@@ -32,7 +30,7 @@ class GetUserScoresDocumentUseCase @Inject constructor(
                 ))
             }
             is Result.Error -> Result.Error(result.exception)
-            Result.Loading -> Result.Loading
+            is Result.Loading -> Result.Loading
         }
     }
 }
