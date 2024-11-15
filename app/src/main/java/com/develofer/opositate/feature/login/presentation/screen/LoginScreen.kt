@@ -291,7 +291,7 @@ private fun HandleDialog(
                         isDialogVisible = dialogState.value.isVisible,
                         delayTime = 3000,
                         title = { Text(text = stringResource(id = R.string.login_screen__title_text__login_successful)) },
-                        text = { Text(stringResource(id = R.string.login_screen__text__login_successful)) },
+                        content = { Text(stringResource(id = R.string.login_screen__text__login_successful)) },
                     )
                 }
                 LoginDialogType.LOGIN_ERROR -> {
@@ -319,7 +319,7 @@ private fun HandleDialog(
                         isDialogVisible = dialogState.value.isVisible,
                         delayTime = 3000,
                         title = { Text(text = stringResource(id = R.string.login_screen__title_text__reset_password_successful)) },
-                        text = { Text(stringResource(id = R.string.login_screen__text__reset_password_successful)) },
+                        content = { Text(stringResource(id = R.string.login_screen__text__reset_password_successful)) },
                     )
                 }
                 LoginDialogType.RESET_PASSWORD_ERROR -> {

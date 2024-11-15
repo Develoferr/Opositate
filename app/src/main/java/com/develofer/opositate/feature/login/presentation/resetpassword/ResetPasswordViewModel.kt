@@ -54,9 +54,9 @@ class ResetPasswordViewModel @Inject constructor(
                     is Result.Error -> {
                         _uiState.update {
                             it.copy(resetState = ResetPasswordState.Failure(
-                            result.exception.message ?: resourceProvider.getString(R.string.error_message_reset_password_failed)))
+                            result.exception.message ?: resourceProvider.getString(R.string.error_message__reset_password_failed)))
                         }
-                        onFailure(result.exception.message ?: resourceProvider.getString(R.string.error_message_reset_password_failed))
+                        onFailure(result.exception.message ?: resourceProvider.getString(R.string.error_message__reset_password_failed))
                     }
                     is Result.Loading -> {
                         _uiState.update { it.copy(resetState = ResetPasswordState.Loading) }

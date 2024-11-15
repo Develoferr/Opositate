@@ -19,12 +19,12 @@ class SolvedTestRepositoryImpl @Inject constructor(
     override suspend fun saveTestResult(
         testResult: TestResult, userId: String, isFirstTest: Boolean
     ): Result<Unit> =
-        if (userId.isBlank()) Result.Error(Exception(resourceProvider.getString(R.string.error_message_user_not_authenticated)))
+        if (userId.isBlank()) Result.Error(Exception(resourceProvider.getString(R.string.error_message__user_not_authenticated)))
         else {
             try {
                 val testResultList = if (isFirstTest) listOf(testResult)
                 else getTestResultList(userId)?.solvedTests?.plus(testResult) ?: listOf(testResult)
-                getSolvedTestCollection().document(userId).set(mapOf(resourceProvider.getString(R.string.firebase_constant_solved_tests) to testResultList)).await()
+                getSolvedTestCollection().document(userId).set(mapOf(resourceProvider.getString(R.string.firebase_constant__solved_tests) to testResultList)).await()
                 Result.Success(Unit)
             } catch (e: Exception) {
                 Result.Error(e)
@@ -32,7 +32,7 @@ class SolvedTestRepositoryImpl @Inject constructor(
         }
 
     override suspend fun getTestResult(solvedTestId: String, userId: String): Result<TestResult?> =
-        if (userId.isBlank()) Result.Error(Exception(resourceProvider.getString(R.string.error_message_user_not_authenticated)))
+        if (userId.isBlank()) Result.Error(Exception(resourceProvider.getString(R.string.error_message__user_not_authenticated)))
         else {
             try {
                 Result.Success(getTestResultList(userId)?.solvedTests?.find { it.id == solvedTestId })
@@ -43,7 +43,7 @@ class SolvedTestRepositoryImpl @Inject constructor(
 
 
     private fun getSolvedTestCollection(): CollectionReference =
-        firestore.collection(resourceProvider.getString(R.string.firebase_constant_solved_tests))
+        firestore.collection(resourceProvider.getString(R.string.firebase_constant__solved_tests))
 
     private suspend fun getTestResultList(userId: String): TestResultDocument? {
         val solvedTestDocument = getSolvedTestCollection().document(userId).get().await()

@@ -21,7 +21,7 @@ class AuthRepositoryImpl @Inject constructor(
     override fun getUser(): Result<FirebaseUser?> {
         return auth.currentUser?.let {
             Result.Success(it)
-        } ?: Result.Error(Exception(resourceProvider.getString(R.string.error_message_user_not_authenticated)))
+        } ?: Result.Error(Exception(resourceProvider.getString(R.string.error_message__user_not_authenticated)))
     }
 
     override suspend fun createUser(email: String, password: String): Result<Unit> =
@@ -31,12 +31,12 @@ class AuthRepositoryImpl @Inject constructor(
                     if (createTask.isSuccessful) {
                         continuation.resume(Result.Success(Unit))
                     } else {
-                        val errorMessage = createTask.exception?.message ?: resourceProvider.getString(R.string.error_message_registration_failed)
+                        val errorMessage = createTask.exception?.message ?: resourceProvider.getString(R.string.error_message__registration_failed)
                         continuation.resume(Result.Error(Exception(errorMessage)))
                     }
                 }
             }
-        } else Result.Error(Exception(resourceProvider.getString(R.string.error_message_email_password_blank)))
+        } else Result.Error(Exception(resourceProvider.getString(R.string.error_message__email_password_blank)))
 
     override suspend fun updateUsername(username: String): Result<Unit> =
         if (username.isNotBlank()) {
@@ -49,12 +49,12 @@ class AuthRepositoryImpl @Inject constructor(
                     if (updateTask.isSuccessful) {
                         continuation.resume(Result.Success(Unit))
                     } else {
-                        val errorMessage = updateTask.exception?.message ?: resourceProvider.getString(R.string.error_message_profile_update_failed)
+                        val errorMessage = updateTask.exception?.message ?: resourceProvider.getString(R.string.error_message__profile_update_failed)
                         continuation.resume(Result.Error(Exception(errorMessage)))
                     }
                 }
             }
-        } else Result.Error(Exception(resourceProvider.getString(R.string.error_message_username_blank)))
+        } else Result.Error(Exception(resourceProvider.getString(R.string.error_message__username_blank)))
 
 
     override suspend fun login(email: String, password: String): Result<Unit> =
@@ -64,12 +64,12 @@ class AuthRepositoryImpl @Inject constructor(
                     if (loginTask.isSuccessful) {
                         continuation.resume(Result.Success(Unit))
                     } else {
-                        val errorMessage = loginTask.exception?.message ?: resourceProvider.getString(R.string.error_message_login_failed)
+                        val errorMessage = loginTask.exception?.message ?: resourceProvider.getString(R.string.error_message__login_failed)
                         continuation.resume(Result.Error(Exception(errorMessage)))
                     }
                 }
             }
-        } else Result.Error(Exception(resourceProvider.getString(R.string.error_message_email_password_blank)))
+        } else Result.Error(Exception(resourceProvider.getString(R.string.error_message__email_password_blank)))
 
 
     override suspend fun sendPasswordResetEmail(email: String): Result<Unit> =
@@ -80,12 +80,12 @@ class AuthRepositoryImpl @Inject constructor(
                         continuation.resume(Result.Success(Unit))
                     } else {
                         val errorMessage =
-                            sendTask.exception?.message ?: resourceProvider.getString(R.string.error_message_password_reset_failed)
+                            sendTask.exception?.message ?: resourceProvider.getString(R.string.error_message__password_reset_failed)
                         continuation.resume(Result.Error(Exception(errorMessage)))
                     }
                 }
             }
-        } else Result.Error(Exception(resourceProvider.getString(R.string.error_message_email_blank)))
+        } else Result.Error(Exception(resourceProvider.getString(R.string.error_message__email_blank)))
 
     override fun logout(): Result<Unit> {
         return try {
