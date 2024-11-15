@@ -2,18 +2,18 @@
     <string name="app_name">opositate</string>
 
     <!-- Error Messages -->
-    <string name="error_message_user_not_authenticated">El usuario no está autenticado</string>
-    <string name="error_message_no_display_name">El usuario no tiene un nombre para mostrar</string>
-    <string name="error_message_no_scores_document">El documento de puntuación del usuario no existe</string>
-    <string name="error_message_registration_failed">Error al registrarse</string>
-    <string name="error_message_profile_update_failed">Error al actualizar el perfil</string>
-    <string name="error_message_login_failed">Error al iniciar sesión</string>
-    <string name="error_message_password_reset_failed">Error al enviar el correo de restablecimiento de contraseña</string>
-    <string name="error_message_create_score_document_failed">Error al crear el documento de puntuaciones</string>
-    <string name="error_message_email_password_blank">El correo y la contraseña no pueden estar en blanco</string>
-    <string name="error_message_username_blank">El nombre de usuario no puede estar en blanco</string>
-    <string name="error_message_email_blank">El correo no puede estar en blanco</string>
-    <string name="error_message_reset_password_failed">Error al reestablecer la contraseña</string>
+    <string name="error_message__user_not_authenticated">El usuario no está autenticado</string>
+    <string name="error_message__no_display_name">El usuario no tiene un nombre para mostrar</string>
+    <string name="error_message__no_scores_document">El documento de puntuación del usuario no existe</string>
+    <string name="error_message__no_asks_document">El documento de respuestas de los tests no existe</string>
+    <string name="error_message__registration_failed">Error al registrarse</string>
+    <string name="error_message__profile_update_failed">Error al actualizar el perfil</string>
+    <string name="error_message__password_reset_failed">Error al enviar el correo de restablecimiento de contraseña</string>
+    <string name="error_message__create_score_document_failed">Error al crear el documento de puntuaciones</string>
+    <string name="error_message__email_password_blank">El correo y la contraseña no pueden estar en blanco</string>
+    <string name="error_message__username_blank">El nombre de usuario no puede estar en blanco</string>
+    <string name="error_message__email_blank">El correo no puede estar en blanco</string>
+    <string name="error_message__reset_password_failed">Error al reestablecer la contraseña</string>
     <string name="error_message__test_data_missing">No se han encontrado datos de tests</string>
     <string name="error_message__login_failed">Error al realizar login</string>
     <string name="error_message__register_failed">Error al realizar el registro</string>
@@ -295,6 +295,5 @@
     <string name="sub_ability_name__emotional_intelligence__active_listening_emotional_response">Evaluación de habilidades de escucha activa y respuesta emocional adecuada</string>
     <string name="sub_ability_name__emotional_intelligence__emotional_regulation_social_simulations">Simulaciones de situaciones sociales que requieran regulación emocional</string>
     <string name="sub_ability_name__emotional_intelligence__self_control_under_stress">Tareas de autocontrol emocional en situaciones de estrés</string>
-
 
 </resources>

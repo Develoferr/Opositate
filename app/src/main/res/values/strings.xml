@@ -8,27 +8,34 @@
     <string name="month_year_format" translatable="false">%1$s %2$d</string>
 
     <!-- Firebase Constants -->
-    <string name="firebase_constant_solved_tests" translatable="false">solvedTests</string>
-    <string name="firebase_constant_level" translatable="false">level</string>
-    <string name="firebase_constant_scores" translatable="false">scores</string>
-    <string name="firebase_constant_ability_id" translatable="false">abilityId</string>
-    <string name="firebase_constant_start_score" translatable="false">startScore</string>
-    <string name="firebase_constant_present_score" translatable="false">presentScore</string>
-    <string name="firebase_constant_tests" translatable="false">tests</string>
+    <string name="firebase_constant__solved_tests" translatable="false">solvedTests</string>
+    <string name="firebase_constant__level" translatable="false">level</string>
+    <string name="firebase_constant__scores" translatable="false">scores</string>
+    <string name="firebase_constant__ability_id" translatable="false">abilityId</string>
+    <string name="firebase_constant__start_score" translatable="false">startScore</string>
+    <string name="firebase_constant__present_score" translatable="false">presentScore</string>
+    <string name="firebase_constant__tests" translatable="false">tests</string>
+    <string name="firebase_constant__tasks" translatable="false">tasks</string>
+    <string name="firebase_constant__tasks_scores" translatable="false">taskScores</string>
+    <string name="firebase_constant__task_id" translatable="false">taskId</string>
+    <string name="firebase_constant__task_asks" translatable="false">taskAsks</string>
+    <string name="firebase_constant__test_asks" translatable="false">testAsks</string>
+    <string name="firebase_constant__approved_tests" translatable="false">approvedTests</string>
+    <string name="firebase_constant__failed_test" translatable="false">failedTests</string>
 
     <!-- Error Messages -->
-    <string name="error_message_user_not_authenticated">User is not authenticated</string>
-    <string name="error_message_no_display_name">User has no display name</string>
-    <string name="error_message_no_scores_document">User scores document does not exist</string>
-    <string name="error_message_registration_failed">Registration failed</string>
-    <string name="error_message_profile_update_failed">Profile update failed</string>
-    <string name="error_message_login_failed">Login failed</string>
-    <string name="error_message_password_reset_failed">Failed to send reset email</string>
-    <string name="error_message_create_score_document_failed">Failed to create user score document</string>
-    <string name="error_message_email_password_blank">Email and password must not be blank</string>
-    <string name="error_message_username_blank">Username must not be blank</string>
-    <string name="error_message_email_blank">Email must not be blank</string>
-    <string name="error_message_reset_password_failed">Failed to reset password</string>
+    <string name="error_message__user_not_authenticated">User is not authenticated</string>
+    <string name="error_message__no_display_name">User has no display name</string>
+    <string name="error_message__no_scores_document">User scores document does not exist</string>
+    <string name="error_message__no_asks_document">User scores document does not exist</string>
+    <string name="error_message__registration_failed">Registration failed</string>
+    <string name="error_message__profile_update_failed">Profile update failed</string>
+    <string name="error_message__password_reset_failed">Failed to send reset email</string>
+    <string name="error_message__create_score_document_failed">Failed to create user score document</string>
+    <string name="error_message__email_password_blank">Email and password must not be blank</string>
+    <string name="error_message__username_blank">Username must not be blank</string>
+    <string name="error_message__email_blank">Email must not be blank</string>
+    <string name="error_message__reset_password_failed">Failed to reset password</string>
     <string name="error_message__test_data_missing">Test data or test is missing</string>
     <string name="error_message__login_failed">Login failed</string>
     <string name="error_message__register_failed">Register failed</string>
@@ -313,6 +320,5 @@
     <string name="sub_ability_name__emotional_intelligence__active_listening_emotional_response">Evaluation of active listening skills and appropriate emotional responses</string>
     <string name="sub_ability_name__emotional_intelligence__emotional_regulation_social_simulations">Simulations of social situations requiring emotional regulation</string>
     <string name="sub_ability_name__emotional_intelligence__self_control_under_stress">Tasks of emotional self-control in stressful situations</string>
-
 
 </resources>
