@@ -45,7 +45,7 @@ fun TestScreen(
     mainViewModel.showSystemUI()
     val screenTitle = stringResource(id = R.string.test_screen__app_bar_title__test)
     var showNewTestDialog by remember { mutableStateOf(false) }
-    var selectedTestId by remember { mutableStateOf("") }
+    var selectedTestId by remember { mutableStateOf("0") }
     var selectedAbilityId by remember { mutableIntStateOf(0) }
     var selectedTaskId by remember { mutableIntStateOf(0) }
     var newTestName by remember { mutableStateOf("") }
@@ -55,9 +55,9 @@ fun TestScreen(
     val testList by testViewModel.testAsks.collectAsState()
     TestItemList(
         testItemList = testList,
-        onClickItem = { testId, abilityId, taskName ->
-            selectedTestId = testId
+        onClickItem = { abilityId, taskId, taskName ->
             selectedAbilityId = abilityId
+            selectedTaskId = taskId
             newTestName = taskName
             showNewTestDialog = true
         }
@@ -93,14 +93,14 @@ fun TestScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    selectedTaskId = id
+                                    selectedTestId = id.toString()
                                 },
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(
-                                selected = selectedTaskId == id,
+                                selected = selectedTestId.toInt() == id,
                                 onClick = {
-                                    selectedTaskId = id
+                                    selectedTestId = id.toString()
                                 }
                             )
                             Text(

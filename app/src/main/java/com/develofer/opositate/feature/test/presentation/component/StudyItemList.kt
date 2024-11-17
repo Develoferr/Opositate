@@ -115,7 +115,7 @@ fun StudyItemList(
 @Composable
 fun TestItemList(
     testItemList: List<AbilityAsksItem>,
-    onClickItem: (testId: String, abilityId: Int, testName: String) -> Unit = { _, _, _ -> },
+    onClickItem: (abilityId: Int, taskId: Int, testName: String) -> Unit,
 ) {
     LazyColumn {
         items(testItemList.size) {
@@ -154,7 +154,7 @@ fun TestItemList(
                             text = task.taskName,
                             fontSize = 12.sp,
                             modifier = Modifier.clickable {
-                                onClickItem(testItemList[it].abilityId.toString(), task.taskId, task.taskName)
+                                onClickItem(testItemList[it].abilityId, task.taskId, task.taskName)
                             }
                         )
                         Spacer(modifier = Modifier.size(8.dp))

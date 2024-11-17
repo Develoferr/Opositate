@@ -64,7 +64,10 @@ fun TestSolvingScreen(
                     else timeCount < (maxTime ?: 0)
     mainViewModel.hideSystemUI()
     LaunchedEffect(uiState.isTestActive) {
-        testSolvingViewModel.getTest(testId, abilityId, taskId)
+        testSolvingViewModel.getTest(
+            testId = testId,
+            abilityId = abilityId,
+            taskId = taskId)
         if (uiState.isTestActive) {
             while (testFinishModeCondition) {
                 delay(1.seconds)
@@ -218,7 +221,7 @@ fun TestSolvingScreen(
                         .fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    items(items = currentQuestion.options, key = { it }) { option ->
+                    items(items = currentQuestion.options) { option ->
                         val isSelected = uiState.test?.questions?.get(uiState.currentQuestionIndex)?.selectedAnswer == currentQuestion.options.indexOf(option)
                         val borderColor by animateColorAsState(
                             targetValue = if (isSelected) {
