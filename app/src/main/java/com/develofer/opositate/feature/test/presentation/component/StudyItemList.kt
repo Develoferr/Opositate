@@ -30,8 +30,9 @@ import com.develofer.opositate.feature.test.domain.model.AbilityAsksItem
 import com.develofer.opositate.ui.theme.Gray200
 import com.develofer.opositate.ui.theme.Gray300
 import com.develofer.opositate.ui.theme.Gray500
-import com.develofer.opositate.ui.theme.Gray800
+import com.develofer.opositate.ui.theme.Gray700
 import com.develofer.opositate.ui.theme.Gray900
+import com.develofer.opositate.ui.theme.Gray960
 
 @Composable
 fun StudyItemList(
@@ -45,7 +46,7 @@ fun StudyItemList(
                 colors = CardDefaults.cardColors(
                     containerColor = when {
                         isDarkTheme && studyItemList[it].isEnabled -> Gray900
-                        isDarkTheme && !studyItemList[it].isEnabled -> Gray800
+                        isDarkTheme && !studyItemList[it].isEnabled -> Gray960
                         !isDarkTheme && studyItemList[it].isEnabled -> Gray300
                         !isDarkTheme && !studyItemList[it].isEnabled -> Gray500
                         else -> Color.White
@@ -53,10 +54,10 @@ fun StudyItemList(
                 ),
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(start = 24.dp)
-                    .padding(end = 24.dp)
-                    .padding(top = if (it == 0) 28.dp else 8.dp)
-                    .padding(bottom = if (it == studyItemList.size - 1) 16.dp else 8.dp)
+                    .padding(start = 16.dp)
+                    .padding(end = 16.dp)
+                    .padding(top = if (it == 0) 16.dp else 6.dp)
+                    .padding(bottom = if (it == studyItemList.size - 1) 16.dp else 6.dp)
                     .clickable(
                         enabled = studyItemList[it].isEnabled,
                         onClick = { onClickItem((studyItemList[it].number - 1).toString()) }
@@ -65,7 +66,7 @@ fun StudyItemList(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(16.dp),
+                        .padding(12.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Spacer(modifier = Modifier.width(8.dp))
@@ -76,13 +77,13 @@ fun StudyItemList(
                         fontWeight = FontWeight.Bold,
                         color = when {
                             isDarkTheme && studyItemList[it].isEnabled -> Gray200
-                            isDarkTheme && !studyItemList[it].isEnabled -> Gray900
+                            isDarkTheme && !studyItemList[it].isEnabled -> Gray700
                             !isDarkTheme -> Color.Gray
                             else -> Color.Black
                         }
                     )
 
-                    Spacer(modifier = Modifier.width(32.dp))
+                    Spacer(modifier = Modifier.width(24.dp))
 
                     Text(
                         text = studyItemList[it].title,
@@ -91,7 +92,7 @@ fun StudyItemList(
                         modifier = Modifier.weight(1f),
                         color = when {
                             isDarkTheme && studyItemList[it].isEnabled -> MaterialTheme.colorScheme.primary
-                            isDarkTheme && !studyItemList[it].isEnabled -> Gray900
+                            isDarkTheme && !studyItemList[it].isEnabled -> Gray700
                             !isDarkTheme && studyItemList[it].isEnabled -> Color.Black
                             !isDarkTheme && !studyItemList[it].isEnabled -> Color.Gray
                             else -> Color.Black
@@ -102,7 +103,7 @@ fun StudyItemList(
                         Icon(
                             painter = painterResource(id = R.drawable.lock),
                             contentDescription = stringResource(R.string.study_item_list__content_description__locked),
-                            tint = if (isDarkTheme) Gray900 else Color.Gray,
+                            tint = if (isDarkTheme) Gray700 else Color.Gray,
                             modifier = Modifier.size(24.dp)
                         )
                     }
