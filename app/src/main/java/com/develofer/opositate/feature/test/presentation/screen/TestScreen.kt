@@ -60,7 +60,8 @@ fun TestScreen(
             selectedTaskId = taskId
             newTestName = taskName
             showNewTestDialog = true
-        }
+        },
+        isDarkTheme = isDarkTheme
     )
     if (showNewTestDialog) {
         SuccessDialog(
