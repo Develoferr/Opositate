@@ -24,6 +24,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.calendar.presentation.model.CalendarUiState
 import com.develofer.opositate.feature.calendar.utils.daysOfWeek
@@ -41,8 +42,10 @@ fun CalendarContent(
     onNextMonthClicked: () -> Unit,
     isDarkTheme: Boolean
 ) {
-    Column {
-        Spacer(modifier = Modifier.size(32.dp))
+    Column(
+        modifier = Modifier.padding(horizontal = 16.dp)
+    ) {
+        Spacer(modifier = Modifier.size(24.dp))
         MonthYearSelector(yearMonth, onPreviousMonthClicked, onNextMonthClicked)
         WeekDays()
         DaysOfMonth(dates, onDateClick, isDarkTheme)
@@ -64,7 +67,9 @@ fun DayOfWeekItem(day: String, modifier: Modifier) {
         Text(
             text = day.replaceFirstChar { it.uppercase() },
             style = MaterialTheme.typography.bodyMedium,
+            maxLines = 1,
             fontWeight = FontWeight.W500,
+            fontSize = 10.sp,
             modifier = Modifier
                 .align(Alignment.Center)
                 .padding(10.dp)
