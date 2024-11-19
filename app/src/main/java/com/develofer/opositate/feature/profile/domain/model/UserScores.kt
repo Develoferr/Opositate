@@ -18,3 +18,8 @@ data class ScoreTask (
     val startScore: Int = 0,
     val presentScore: Int = 0
 )
+
+data class UserScoresByGroup(
+    val userScoresGroupResId: Int = 0,
+    val scoresByGroup: List<ScoreAbility> = emptyList()
+)
