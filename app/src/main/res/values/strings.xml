@@ -125,6 +125,8 @@
     <string name="test_result_screen__text__question_unanswered">"Questions Unanswered: "</string>
     <string name="test_result_screen__text__score">"Score: "</string>
 
+    <!-- Settings Screen -->
+    <string name="settings_screen__app_bar_title__settings">Settings</string>
 
     <!-- Bottom Navigation Bar -->
     <string name="bottom_nav_bar__content_description__profile">Navigate to profile screen button</string>
@@ -145,6 +147,13 @@
     <string name="study_item_list__content_description__locked">Locked Icon</string>
 
     <!-- Abilities -->
+    <!-- Ability Groups -->
+    <string name="group_name__cognitive_skills">Cognitive Skills</string>
+    <string name="group_name__spatial_and_motor_skills">Spatial and Motor Skills</string>
+    <string name="group_name__emotional_and_social_skills">Emotional and Social Skills</string>
+    <string name="group_name__problem_solving_and_creative_skills">Problem-Solving and Creative Skills</string>
+    <string name="group_name__management_and_organizational_skills">Management and Organizational Skills</string>
+
     <!-- Logical Reasoning -->
     <string name="ability_name__logical_reasoning">Logical Reasoning</string>
     <string name="sub_ability_name__logical_reasoning__basic_inferences">Evaluation of basic logical and mathematical inferences</string>
