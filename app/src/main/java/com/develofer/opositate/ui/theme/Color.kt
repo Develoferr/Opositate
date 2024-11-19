@@ -44,6 +44,7 @@ val Gray700 = Color(0xFF616161)
 val Gray800 = Color(0xFF424242)
 val Gray850 = Color(0xFF313131)
 val Gray900 = Color(0xFF212121)
+val Gray960 = Color(0xFF121212)
 
 // Texts colors
 val TextPrimaryLight = Gray900
