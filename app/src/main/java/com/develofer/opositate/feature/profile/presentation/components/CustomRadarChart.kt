@@ -2,6 +2,7 @@ package com.develofer.opositate.feature.profile.presentation.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
@@ -12,6 +13,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.aay.compose.radarChart.RadarChart
 import com.aay.compose.radarChart.model.NetLinesStyle
@@ -36,7 +38,7 @@ fun CustomRadarChart(radarLabels: List<String>, values: List<Double>, values2: L
     )
 
     RadarChart(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
         radarLabels = radarLabels.map { label -> label.filter { letter -> letter.isUpperCase() }},
         labelsStyle = labelsStyle,
         netLinesStyle = NetLinesStyle(
