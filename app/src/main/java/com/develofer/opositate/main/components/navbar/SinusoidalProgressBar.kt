@@ -1,4 +1,4 @@
-package com.develofer.opositate.main.components
+package com.develofer.opositate.main.components.navbar
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.tween

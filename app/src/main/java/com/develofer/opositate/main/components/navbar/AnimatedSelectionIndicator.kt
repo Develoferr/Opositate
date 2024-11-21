@@ -1,4 +1,4 @@
-package com.develofer.opositate.main.components
+package com.develofer.opositate.main.components.navbar
 
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloat
@@ -36,6 +36,7 @@ fun AnimatedSelectionIndicator(
 ) {
     var totalWidth by remember { mutableIntStateOf(0) }
     val itemWidth = totalWidth / 5f
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
