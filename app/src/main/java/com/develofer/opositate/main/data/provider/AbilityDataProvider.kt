@@ -20,10 +20,35 @@ class AbilityDataProvider {
             )
         }
 
+    fun getAbilityGroupId(abilityId: Int): Int =
+        Abilities.entries.find { it.abilityId == abilityId }?.groupId ?: 0
+
+    fun getGroupResIdIcon(groupId: Int): Int =
+        when (groupId) {
+            0 -> R.drawable.ic_reasoning_skills
+            1 -> R.drawable.ic_cognitive_processing_skills
+            2 -> R.drawable.ic_spatial_and_motor_skills
+            3 -> R.drawable.ic_emotional_and_social_skills_2
+            4 -> R.drawable.ic_problem_solving_and_creative_skills
+            5 -> R.drawable.ic_management_and_organizational_skills
+            else -> R.drawable.ic_reasoning_skills
+        }
+
+    fun getGroupResId(groupId: Int): Int =
+        when (groupId) {
+            0 -> R.string.group_name__reasoning_skills
+            1 -> R.string.group_name__cognitive_processing_skills
+            2 -> R.string.group_name__spatial_and_motor_skills
+            3 -> R.string.group_name__emotional_and_social_skills
+            4 -> R.string.group_name__problem_solving_and_creative_skills
+            5 -> R.string.group_name__management_and_organizational_skills
+            else -> R.string.group_name__reasoning_skills
+        }
+
 }
 
-private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List<AbilityTask>) {
-    LOGICAL_REASONING(0, R.string.ability_name__logical_reasoning,
+private enum class Abilities(val abilityId: Int, val resId: Int, val groupId: Int, val tasks: List<AbilityTask>) {
+    LOGICAL_REASONING(0, R.string.ability_name__logical_reasoning, 0,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__logical_reasoning__basic_inferences),
             AbilityTask(1, R.string.sub_ability_name__logical_reasoning__numerical_relationships),
@@ -35,7 +60,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__logical_reasoning__classification_and_grouping)
         )
     ),
-    VERBAL_REASONING(1, R.string.ability_name__verbal_reasoning,
+    VERBAL_REASONING(1, R.string.ability_name__verbal_reasoning, 0,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__verbal_reasoning__reading_comprehension),
             AbilityTask(1, R.string.sub_ability_name__verbal_reasoning__verbal_analogies),
@@ -47,7 +72,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__verbal_reasoning__semantic_relationships)
         )
     ),
-    NUMERICAL_REASONING(2, R.string.ability_name__numerical_reasoning,
+    NUMERICAL_REASONING(2, R.string.ability_name__numerical_reasoning, 0,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__numerical_reasoning__basic_math_operations),
             AbilityTask(1, R.string.sub_ability_name__numerical_reasoning__numerical_patterns),
@@ -59,7 +84,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__numerical_reasoning__estimation_and_rounding)
         )
     ),
-    SPATIAL_PERCEPTION(3, R.string.ability_name__spatial_perception,
+    SPATIAL_PERCEPTION(3, R.string.ability_name__spatial_perception, 2,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__spatial_perception__visual_and_spatial_manipulation),
             AbilityTask(1, R.string.sub_ability_name__spatial_perception__geometric_figures),
@@ -71,7 +96,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__spatial_perception__spatial_puzzles_resolution)
         )
     ),
-    MEMORY(4, R.string.ability_name__memory,
+    MEMORY(4, R.string.ability_name__memory, 1,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__memory__short_term_memory),
             AbilityTask(1, R.string.sub_ability_name__memory__visual_and_auditory_memory),
@@ -83,7 +108,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__memory__recognizing_previously_presented_information)
         )
     ),
-    ATTENTION_AND_CONCENTRATION(5, R.string.ability_name__attention_and_concentration,
+    ATTENTION_AND_CONCENTRATION(5, R.string.ability_name__attention_and_concentration, 1,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__attention_and_concentration__long_task_attention),
             AbilityTask(1, R.string.sub_ability_name__attention_and_concentration__concentration_under_distractions),
@@ -95,7 +120,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__attention_and_concentration__resistance_to_cognitive_fatigue)
         )
     ),
-    PROCESSING_SPEED(6, R.string.ability_name__processing_speed,
+    PROCESSING_SPEED(6, R.string.ability_name__processing_speed, 1,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__processing_speed__quick_reaction),
             AbilityTask(1, R.string.sub_ability_name__processing_speed__basic_math_speed),
@@ -107,7 +132,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__processing_speed__subtle_difference_detection)
         )
     ),
-    ABSTRACT_REASONING(7, R.string.ability_name__abstract_reasoning,
+    ABSTRACT_REASONING(7, R.string.ability_name__abstract_reasoning, 0,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__abstract_reasoning__complex_patterns),
             AbilityTask(1, R.string.sub_ability_name__abstract_reasoning__set_logic_abstract_relations),
@@ -119,7 +144,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__abstract_reasoning__geometric_pattern_identification)
         )
     ),
-    STRESS_RESILIENCE(8, R.string.ability_name__stress_resilience,
+    STRESS_RESILIENCE(8, R.string.ability_name__stress_resilience, 3,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__stress_resilience__performance_under_pressure),
             AbilityTask(1, R.string.sub_ability_name__stress_resilience__quick_decisions_high_pressure),
@@ -131,7 +156,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__stress_resilience__emotional_self_regulation)
         )
     ),
-    VISUAL_MOTOR_SKILLS(9, R.string.ability_name__visual_motor_skills,
+    VISUAL_MOTOR_SKILLS(9, R.string.ability_name__visual_motor_skills, 2,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__visual_motor_skills__eye_hand_coordination),
             AbilityTask(1, R.string.sub_ability_name__visual_motor_skills__assembly_precision),
@@ -143,7 +168,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__visual_motor_skills__complex_pattern_tracing)
         )
     ),
-    PLANNING_AND_ORGANIZATION_SKILLS(10, R.string.ability_name__planning_and_organization_skills,
+    PLANNING_AND_ORGANIZATION_SKILLS(10, R.string.ability_name__planning_and_organization_skills, 5,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__planning_and_organization_skills__task_order_prioritization),
             AbilityTask(1, R.string.sub_ability_name__planning_and_organization_skills__goal_setting_sequential_steps),
@@ -155,7 +180,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__planning_and_organization_skills__resource_management_simulation)
         )
     ),
-    DECISION_MAKING(11, R.string.ability_name__decision_making,
+    DECISION_MAKING(11, R.string.ability_name__decision_making, 4,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__decision_making__logical_decision_uncertainty),
             AbilityTask(1, R.string.sub_ability_name__decision_making__prioritization_selection_multiple_variables),
@@ -167,7 +192,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__decision_making__selection_under_time_resource_pressure)
         )
     ),
-    CREATIVITY(12, R.string.ability_name__creativity,
+    CREATIVITY(12, R.string.ability_name__creativity, 4,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__creativity__divergent_thinking),
             AbilityTask(1, R.string.sub_ability_name__creativity__fluency_originality_ideas),
@@ -179,7 +204,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__creativity__creative_writing_hypotheticals)
         )
     ),
-    MECHANICAL_COMPREHENSION(13, R.string.ability_name__mechanical_comprehension,
+    MECHANICAL_COMPREHENSION(13, R.string.ability_name__mechanical_comprehension, 2,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__mechanical_comprehension__mechanical_physical_principles),
             AbilityTask(1, R.string.sub_ability_name__mechanical_comprehension__spatial_reasoning_moving_objects),
@@ -191,7 +216,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__mechanical_comprehension__understanding_complex_systems)
         )
     ),
-    PROBLEM_SOLVING(14, R.string.ability_name__problem_solving,
+    PROBLEM_SOLVING(14, R.string.ability_name__problem_solving, 4,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__problem_solving__analyzing_multi_variable_problems),
             AbilityTask(1, R.string.sub_ability_name__problem_solving__logical_critical_solution_steps),
@@ -203,7 +228,7 @@ private enum class Abilities(val abilityId: Int, val resId: Int, val tasks: List
             AbilityTask(7, R.string.sub_ability_name__problem_solving__solving_changing_conditions)
         )
     ),
-    EMOTIONAL_INTELLIGENCE(15, R.string.ability_name__emotional_intelligence,
+    EMOTIONAL_INTELLIGENCE(15, R.string.ability_name__emotional_intelligence, 3,
         listOf(
             AbilityTask(0, R.string.sub_ability_name__emotional_intelligence__self_emotion_management),
             AbilityTask(1, R.string.sub_ability_name__emotional_intelligence__empathy_understanding_interactions),

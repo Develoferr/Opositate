@@ -8,20 +8,19 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.9.3"
-composeBom = "2024.10.01"
+composeBom = "2024.11.00"
 composeUI = "1.7.5"
 constraintlayoutCompose = "1.1.0"
 accompanistSystemUiController = "0.36.0"
 accompanistInsets = "0.30.1"
 coreSplashScreen = "1.0.1"
 datastorePreferences = "1.1.1"
-material = "1.7.5"
-navigation = "2.8.3"
+navigation = "2.8.4"
 kotlinxSerializationJson = "1.6.3"
 kotlinParcelize = "1.9.0"
 hilt = "2.52"
 hiltNavigationCompose = "1.2.0"
-firebaseBom = "33.5.1"
+firebaseBom = "33.6.0"
 googleServices = "4.4.2"
 crashlytics = "3.0.2"
 lottie = "6.3.0"
@@ -35,14 +34,12 @@ androidx-foundation-layout = { module = "androidx.compose.foundation:foundation-
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 # Compose
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
-androidx-material-icons-core = { module = "androidx.compose.material:material-icons-core", version.ref = "material" }
-androidx-material-icons-extended = { module = "androidx.compose.material:material-icons-extended", version.ref = "material" }
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4", version.ref = "composeUI" }
 androidx-constraintlayout-compose = { module = "androidx.constraintlayout:constraintlayout-compose", version.ref = "constraintlayoutCompose" }

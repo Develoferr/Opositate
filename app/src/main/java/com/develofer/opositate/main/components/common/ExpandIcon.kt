@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -14,7 +15,8 @@ import com.develofer.opositate.ui.theme.Gray300
 @Composable
 fun ExpandIcon(
     isExpanded: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    tint : Color = Gray300
 ) {
     Icon(
         modifier = Modifier
@@ -25,6 +27,6 @@ fun ExpandIcon(
         contentDescription = stringResource(
             id = R.string.lesson_screen__content_description__next_month
         ),
-        tint = Gray300
+        tint = tint
     )
 }

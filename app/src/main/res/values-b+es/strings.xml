@@ -67,6 +67,7 @@
 
     <!-- Profile Screen -->
     <string name="profile_screen__app_bar_title__profile">Perfil</string>
+    <string name="profile_screen__title_text__statistics">Estadísticas</string>
     <string name="profile_screen__title_text__scores">Puntuaciones</string>
     <string name="profile_screen__title_text__chart">Gráfica</string>
     <string name="profile_screen__text__level">Nivel  %1$d</string>

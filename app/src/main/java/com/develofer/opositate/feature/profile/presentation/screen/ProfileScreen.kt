@@ -1,169 +1,117 @@
 package com.develofer.opositate.feature.profile.presentation.screen
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Tab
-import androidx.compose.material3.TabRow
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
-import com.develofer.opositate.feature.login.presentation.component.CustomBodyText
-import com.develofer.opositate.feature.profile.domain.model.ScoreAbility
-import com.develofer.opositate.feature.profile.presentation.components.CustomDualProgressBar
-import com.develofer.opositate.feature.profile.presentation.components.CustomRadarChart
+import com.develofer.opositate.feature.profile.model.ProfileScreenState
 import com.develofer.opositate.feature.profile.presentation.viewmodel.ProfileViewModel
 import com.develofer.opositate.main.MainViewModel
+import com.develofer.opositate.main.components.common.GradientElevatedAssistChip
 import com.develofer.opositate.ui.theme.OpositateTheme
 
 @Composable
 fun ProfileScreen(
     isDarkTheme: Boolean,
     mainViewModel: MainViewModel = hiltViewModel(),
-    profileViewModel: ProfileViewModel = hiltViewModel()
+    profileViewModel: ProfileViewModel = hiltViewModel(),
 ) {
+    SetupSystemUI(mainViewModel)
+
+    val screenState = rememberProfileScreenState(profileViewModel)
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        var selectedTabIndex by remember { mutableIntStateOf(0) }
+
+        TabRow(
+            selectedTabIndex,
+            isDarkTheme,
+            onTabSelected = { index -> selectedTabIndex = index }
+        )
+        when (selectedTabIndex) {
+            0 -> StatisticsContent(
+                isDarkTheme = isDarkTheme
+            )
+            1 -> ScoresContent(
+                scoresByGroup = screenState.scoresByGroup,
+                isDarkTheme = isDarkTheme
+            )
+            2 -> ChartContent(
+                items = screenState.userScores.scores
+            )
+        }
+    }
+}
+
+@Composable
+private fun SetupSystemUI(mainViewModel: MainViewModel) {
     mainViewModel.showSystemUI()
     val screenTitle = stringResource(id = R.string.profile_screen__app_bar_title__profile)
     LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }
+}
 
+@Composable
+private fun rememberProfileScreenState(profileViewModel: ProfileViewModel): ProfileScreenState {
     val userName by profileViewModel.userName.collectAsState()
     val userScores by profileViewModel.scores.collectAsState()
+    val scoresByGroup by profileViewModel.scoresByGroup.collectAsState()
 
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Spacer(modifier = Modifier.height(16.dp))
-        CustomBodyText(text = userName, isDarkTheme = isDarkTheme, textSize = 25.sp)
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(text = stringResource(id = R.string.profile_screen__text__level, userScores.level))
-        Spacer(modifier = Modifier.height(24.dp))
-        Column(modifier = Modifier.fillMaxSize()) {
-            val tabTitles = listOf(stringResource(id = R.string.profile_screen__title_text__scores), stringResource(id = R.string.profile_screen__title_text__chart))
-            var selectedTabIndex by remember { mutableIntStateOf(0) }
-            TabRow(selectedTabIndex = selectedTabIndex) {
-                tabTitles.forEachIndexed { index, title ->
-                    Tab(
-                        modifier = Modifier.background(MaterialTheme.colorScheme.primaryContainer),
-                        selected = selectedTabIndex == index,
-                        onClick = { selectedTabIndex = index },
-                        selectedContentColor = MaterialTheme.colorScheme.secondaryContainer,
-                        text = {
-                            Text(
-                                text = title.uppercase(),
-                                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                                fontSize = 16.sp
-                            )
-                        }
-                    )
-                }
-            }
-            when (selectedTabIndex) {
-                0 -> ScoresContent(userScores.scores)
-                1 -> ChartContent(userScores.scores)
-            }
-        }
-    }
+    return ProfileScreenState(
+        userName = userName,
+        userScores = userScores,
+        scoresByGroup = scoresByGroup
+    )
 }
 
 @Composable
-fun ScoresContent(items: List<ScoreAbility> = emptyList()) {
-    LazyColumn(
+private fun TabRow(
+    selectedTabIndex: Int,
+    isDarkTheme: Boolean,
+    onTabSelected: (Int) -> Unit
+) {
+    val tabTitles = listOf(
+        stringResource(id = R.string.profile_screen__title_text__statistics),
+        stringResource(id = R.string.profile_screen__title_text__scores),
+        stringResource(id = R.string.profile_screen__title_text__chart)
+    )
+
+    Row(
         modifier = Modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.secondaryContainer),
-        contentPadding = PaddingValues(16.dp)
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        items(items.size) {
-            val score = items[it]
-            val expanded = remember { mutableStateOf(score.expanded) }
-            if (items.indexOf(score) > 0) Spacer(modifier = Modifier.size(16.dp))
-                else Spacer(modifier = Modifier.size(8.dp))
-            Row {
-                Text(text = stringResource(id = score.abilityNameResId))
-                Spacer(modifier = Modifier
-                    .size(0.dp)
-                    .weight(1f))
-                Icon(
-                    modifier = Modifier.clickable { expanded.value = !expanded.value },
-                    painter = if (expanded.value) painterResource(R.drawable.ic_keyboard_arrow_up) else painterResource(R.drawable.ic_keyboard_arrow_down),
-                    contentDescription = stringResource(id = R.string.lesson_screen__content_description__next_month)
-                )
-            }
-
-            Spacer(modifier = Modifier.size(0.dp))
-            CustomDualProgressBar(
-                primaryProgress = ( score.startScore.toFloat() / 10 ),
-                secondaryProgress = ( score.presentScore.toFloat() / 10 )
-            )
-            if (expanded.value) {
-                score.taskScores.forEach { taskScore ->
-                    Column(modifier = Modifier.padding(start = 16.dp).padding(end = 16.dp)) {
-                        Spacer(modifier = Modifier.size(4.dp))
-                        Text(text = stringResource(id = taskScore.taskNameResId), fontSize = 12.sp)
-                        Spacer(modifier = Modifier.size(0.dp))
-                        CustomDualProgressBar(
-                            modifier = Modifier.height(8.dp),
-                            primaryProgress = ( taskScore.startScore.toFloat() / 10 ),
-                            secondaryProgress = ( taskScore.presentScore.toFloat() / 10 )
-                        )
-                        Spacer(modifier = Modifier.size(8.dp))
-                    }
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun ChartContent(items: List<ScoreAbility> = emptyList()) {
-    if (items.isNotEmpty()) {
-        val radarLabels = items.map { score -> stringResource(id = score.abilityNameResId) }
-        val values = items.map { score -> score.startScore.toDouble() }
-        val values2 = items.map { score -> score.presentScore.toDouble() }
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(MaterialTheme.colorScheme.secondaryContainer)
-        ) {
-            CustomRadarChart(
-                radarLabels = radarLabels,
-                values = values,
-                values2 = values2
+        tabTitles.forEachIndexed { index, title ->
+            GradientElevatedAssistChip(
+                onClick = { onTabSelected(index) },
+                label = title,
+                isSelected = selectedTabIndex == index
             )
         }
     }
-
+    Spacer(modifier = Modifier.fillMaxWidth().size(8.dp))
 }
 
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
