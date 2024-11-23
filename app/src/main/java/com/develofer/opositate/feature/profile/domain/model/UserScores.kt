@@ -20,6 +20,8 @@ data class ScoreTask (
 )
 
 data class UserScoresByGroup(
-    val userScoresGroupResId: Int = 0,
-    val scoresByGroup: List<ScoreAbility> = emptyList()
+    val userScoresGroupNameResId: Int = 0,
+    val userScoresGroupIconResId: Int = 0,
+    val scoresByGroup: List<ScoreAbility> = emptyList(),
+    var expanded: Boolean = false
 )
