@@ -1,16 +1,16 @@
-package com.develofer.opositate.main.components
+package com.develofer.opositate.main.components.appbar
 
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeContent
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.MoreVert
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -18,7 +18,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -31,8 +30,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.develofer.opositate.R
-import com.develofer.opositate.feature.login.presentation.component.CustomTitleText
+import com.develofer.opositate.feature.login.presentation.component.CustomBodyText
+import com.develofer.opositate.ui.theme.Gray400
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,19 +41,17 @@ fun CustomAppBar(
     title: State<String>,
     isDarkTheme: Boolean,
     actions: @Composable () -> Unit = {},
-    logout: () -> Unit
+    logout: () -> Unit,
+    saveTests: () -> Unit
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-    Column {
-        TopAppBar(
-            windowInsets = WindowInsets.safeContent.only(WindowInsetsSides.Top),
+        CenterAlignedTopAppBar(
+            windowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Top),
             colors = TopAppBarColors(
-                containerColor = if (isDarkTheme) {
-                    Color.Black
-                } else {
-                    MaterialTheme.colorScheme.primary
-                },
+                containerColor =
+                    if (isDarkTheme) MaterialTheme.colorScheme.background
+                        else MaterialTheme.colorScheme.primary,
                 scrolledContainerColor = Color.Unspecified,
                 navigationIconContentColor = Color.Unspecified,
                 titleContentColor = Color.Unspecified,
@@ -63,7 +62,11 @@ fun CustomAppBar(
                     onClick = { /* Handle navigation icon click */ },
                     modifier = Modifier.padding(start = 10.dp)
                 ) {
-                    Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = stringResource(R.string.custom_app_bar__content_description__menu), tint = MaterialTheme.colorScheme.onBackground)
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = stringResource(R.string.custom_app_bar__content_description__menu),
+                        tint = Gray400
+                    )
                 }
             },
             title = {
@@ -71,7 +74,12 @@ fun CustomAppBar(
                     modifier = Modifier.fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    CustomTitleText(text = title.value, isDarkTheme = isDarkTheme)
+                    CustomBodyText(
+                        text = title.value,
+                        isDarkTheme = isDarkTheme,
+                        textSize = 25.sp,
+
+                    )
                 }
             },
             actions = {
@@ -79,7 +87,11 @@ fun CustomAppBar(
                     onClick = { expanded = !expanded },
                     modifier = Modifier.padding(end = 10.dp)
                 ) {
-                    Icon(Icons.Default.MoreVert, contentDescription = stringResource(R.string.custom_app_bar__content_description__more_options), tint = MaterialTheme.colorScheme.onBackground)
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = stringResource(R.string.custom_app_bar__content_description__more_options),
+                        tint = Gray400
+                    )
                 }
                 DropdownMenu(
                     expanded = expanded,
@@ -93,8 +105,9 @@ fun CustomAppBar(
                         }
                     )
                     DropdownMenuItem(
-                        text = { Text("Opción 2") },
+                        text = { Text("Save Tests") },
                         onClick = {
+                            saveTests()
                             expanded = false
                         }
                     )
@@ -107,5 +120,4 @@ fun CustomAppBar(
                 }
             }
         )
-    }
 }

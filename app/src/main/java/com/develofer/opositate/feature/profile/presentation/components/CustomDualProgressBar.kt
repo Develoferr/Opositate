@@ -12,7 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.develofer.opositate.ui.theme.Gray700
+import com.develofer.opositate.ui.theme.Gray900
 import com.develofer.opositate.ui.theme.Primary
 import com.develofer.opositate.ui.theme.Secondary
 
@@ -30,7 +30,7 @@ fun CustomDualProgressBar(
 
         ProgressBar(
             progress = 1f,
-            color = Gray700,
+            color = Gray900,
             modifier = Modifier
                 .height(20.dp).clip(RoundedCornerShape(8.dp))
         )
@@ -38,7 +38,7 @@ fun CustomDualProgressBar(
         ProgressBar(
             progress = primaryProgress,
             color = Primary,
-            modifier = Modifier.alpha(0.4f)
+            modifier = Modifier.alpha(0.2f)
                 .height(20.dp).clip(RoundedCornerShape(8.dp))
         )
 

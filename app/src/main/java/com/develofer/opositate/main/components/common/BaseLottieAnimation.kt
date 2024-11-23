@@ -1,4 +1,4 @@
-package com.develofer.opositate.main.components
+package com.develofer.opositate.main.components.common
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset

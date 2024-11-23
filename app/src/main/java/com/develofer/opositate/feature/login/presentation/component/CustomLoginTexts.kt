@@ -39,7 +39,7 @@ fun CustomBodyText(text: String, isDarkTheme: Boolean, textSize: TextUnit) {
     Text(
         text = text,
         fontSize = textSize,
-        color = if (isDarkTheme) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onBackground,
+        color = MaterialTheme.colorScheme.onBackground,
         style = MaterialTheme.typography.bodyMedium,
     )
 }
