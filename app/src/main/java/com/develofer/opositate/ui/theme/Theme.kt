@@ -15,7 +15,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 
 val LightColorScheme = lightColorScheme(
     // Surface Colors
-    background = Primary,
+    background = Color.White,
     onBackground = TextPrimaryLight,
     surface = Gray100,
     onSurface = TextSecondaryLight,

@@ -50,7 +50,7 @@ val Gray960 = Color(0xFF121212)
 val TextPrimaryLight = Gray900
 val TextSecondaryLight = Gray600
 
-val TextPrimaryDark = Gray100
+val TextPrimaryDark = Gray400
 val TextSecondaryDark = Gray500
 
 // Error colors
