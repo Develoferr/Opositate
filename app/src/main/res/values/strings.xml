@@ -148,11 +148,12 @@
 
     <!-- Abilities -->
     <!-- Ability Groups -->
-    <string name="group_name__cognitive_skills">Cognitive Skills</string>
-    <string name="group_name__spatial_and_motor_skills">Spatial and Motor Skills</string>
-    <string name="group_name__emotional_and_social_skills">Emotional and Social Skills</string>
-    <string name="group_name__problem_solving_and_creative_skills">Problem-Solving and Creative Skills</string>
-    <string name="group_name__management_and_organizational_skills">Management and Organizational Skills</string>
+    <string name="group_name__reasoning_skills">Reasoning</string>
+    <string name="group_name__cognitive_processing_skills">Cognitive Processing</string>
+    <string name="group_name__spatial_and_motor_skills">Spatial and Motor</string>
+    <string name="group_name__emotional_and_social_skills">Emotional and Social</string>
+    <string name="group_name__problem_solving_and_creative_skills">Problem-Solving and Creative</string>
+    <string name="group_name__management_and_organizational_skills">Management and Organizational</string>
 
     <!-- Logical Reasoning -->
     <string name="ability_name__logical_reasoning">Logical Reasoning</string>
