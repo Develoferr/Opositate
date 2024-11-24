@@ -4,6 +4,10 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
+import androidx.compose.foundation.layout.safeContent
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
@@ -57,6 +61,7 @@ fun CustomBottomNavigationBar(
 
         NavigationBar(
             containerColor = if (isDarkTheme) Gray900 else Color.White,
+            windowInsets = WindowInsets.safeContent.only(WindowInsetsSides.Bottom),
         ) {
             items.forEach { destination ->
                 val isSelected = currentRoute == destination.route

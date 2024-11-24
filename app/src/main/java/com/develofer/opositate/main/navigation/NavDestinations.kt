@@ -27,16 +27,6 @@ object TestNavigation: Route {
 }
 
 @Serializable
-object LessonNavigation: Route {
-    override val route = this::class.qualifiedName
-}
-
-@Serializable
-object CalendarNavigation: Route {
-    override val route = this::class.qualifiedName
-}
-
-@Serializable
 data class TestSolvingNavigation(
     val testId: String,
     val abilityId: Int,
@@ -54,4 +44,20 @@ data class TestResultNavigation(
     companion object: Route {
         override val route = this::class.qualifiedName
     }
+
+}
+
+@Serializable
+object LessonNavigation: Route {
+    override val route = this::class.qualifiedName
+}
+
+@Serializable
+object CalendarNavigation: Route {
+    override val route = this::class.qualifiedName
+}
+
+@Serializable
+object SettingsNavigation: Route {
+    override val route = this::class.qualifiedName
 }
