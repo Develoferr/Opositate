@@ -20,12 +20,13 @@ import com.develofer.opositate.feature.lesson.LessonScreen
 import com.develofer.opositate.feature.login.presentation.screen.LoginScreen
 import com.develofer.opositate.feature.login.presentation.screen.RegisterScreen
 import com.develofer.opositate.feature.profile.presentation.screen.ProfileScreen
+import com.develofer.opositate.feature.settings.SettingsScreen
 import com.develofer.opositate.feature.test.presentation.screen.TestResultScreen
 import com.develofer.opositate.feature.test.presentation.screen.TestScreen
 import com.develofer.opositate.feature.test.presentation.screen.TestSolvingScreen
 import com.develofer.opositate.main.MainViewModel
-import com.develofer.opositate.main.components.CustomAppBar
-import com.develofer.opositate.main.components.CustomBottomNavigationBar
+import com.develofer.opositate.main.components.appbar.CustomAppBar
+import com.develofer.opositate.main.components.navbar.CustomBottomNavigationBar
 
 @Composable
 fun AppNavigation(
@@ -43,7 +44,8 @@ fun AppNavigation(
                     ProfileNavigation.route,
                     TestNavigation.route,
                     LessonNavigation.route,
-                    CalendarNavigation.route
+                    CalendarNavigation.route,
+                    SettingsNavigation.route
                 )
             ) {
                 CustomBottomNavigationBar(navHostController)
@@ -54,7 +56,8 @@ fun AppNavigation(
                     ProfileNavigation.route,
                     TestNavigation.route,
                     LessonNavigation.route,
-                    CalendarNavigation.route
+                    CalendarNavigation.route,
+                    SettingsNavigation.route
                 )
             ) {
                 CustomAppBar(
@@ -129,6 +132,12 @@ fun AppNavigation(
                 TestResultScreen(
                     testResultId = testResultNavigation.testResultId,
                     isDarkTheme = isDarkTheme
+                )
+            }
+            composable<SettingsNavigation> {
+                SettingsScreen(
+                    isDarkTheme = isDarkTheme,
+                    mainViewModel = mainViewModel
                 )
             }
         }
