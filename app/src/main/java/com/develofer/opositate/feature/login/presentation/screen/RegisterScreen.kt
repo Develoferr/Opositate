@@ -43,9 +43,9 @@ import com.develofer.opositate.feature.login.presentation.model.RegisterState
 import com.develofer.opositate.feature.login.presentation.model.RegisterUiState
 import com.develofer.opositate.feature.login.presentation.utils.KeyboardAwareScreen
 import com.develofer.opositate.feature.login.presentation.viewmodel.RegisterViewModel
-import com.develofer.opositate.main.components.BaseLottieAnimation
-import com.develofer.opositate.main.components.ErrorDialog
-import com.develofer.opositate.main.components.SuccessDialog
+import com.develofer.opositate.main.components.common.BaseLottieAnimation
+import com.develofer.opositate.main.components.common.ErrorDialog
+import com.develofer.opositate.main.components.common.SuccessDialog
 import com.develofer.opositate.main.coordinator.DialogState
 import com.develofer.opositate.ui.theme.OpositateTheme
 import kotlinx.coroutines.flow.StateFlow

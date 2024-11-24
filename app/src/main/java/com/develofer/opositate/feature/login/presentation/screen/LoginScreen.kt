@@ -49,9 +49,9 @@ import com.develofer.opositate.feature.login.presentation.resetpassword.ResetPas
 import com.develofer.opositate.feature.login.presentation.utils.KeyboardAwareScreen
 import com.develofer.opositate.feature.login.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.main.MainViewModel
-import com.develofer.opositate.main.components.BaseLottieAnimation
-import com.develofer.opositate.main.components.ErrorDialog
-import com.develofer.opositate.main.components.SuccessDialog
+import com.develofer.opositate.main.components.common.BaseLottieAnimation
+import com.develofer.opositate.main.components.common.ErrorDialog
+import com.develofer.opositate.main.components.common.SuccessDialog
 import com.develofer.opositate.main.coordinator.DialogState
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
