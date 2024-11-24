@@ -113,6 +113,7 @@ dependencies {
 
     // Chart
     implementation(libs.chart)
+    implementation(libs.compose.charts)
 
     // Serialization
     implementation(libs.kotlixSerializationJson)
