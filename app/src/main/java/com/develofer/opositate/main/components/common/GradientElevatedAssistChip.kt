@@ -50,8 +50,8 @@ fun GradientElevatedAssistChip(
 
     val borderBrush = Brush.linearGradient(
         colors = colors,
-        start = Offset(0f, 0f),
-        end = Offset.Infinite
+        start = Offset(0f, Float.POSITIVE_INFINITY),
+        end = Offset(Float.POSITIVE_INFINITY, 0f)
     )
 
     ElevatedAssistChip(
@@ -66,7 +66,7 @@ fun GradientElevatedAssistChip(
             )
         },
         colors = AssistChipDefaults.elevatedAssistChipColors(
-            containerColor = if (isSelected) Color.Transparent else Gray960
+            containerColor = if (isSelected) Color.Black else Gray960
         ),
         border = if (isSelected) BorderStroke(width = 2.dp, brush = borderBrush)
         else BorderStroke(1.dp, Gray900)
