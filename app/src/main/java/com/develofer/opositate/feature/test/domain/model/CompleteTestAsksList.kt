@@ -31,3 +31,10 @@ data class TestAskItem(
     val completionTime: Int,
     val timestamp: Timestamp? = null,
 )
+
+data class TestAsksByGroup(
+    val testAskGroupNameResId: Int = 0,
+    val testAskGroupIconResId: Int = 0,
+    val asksByGroup: List<AbilityAsksItem> = emptyList(),
+    var expanded: Boolean = false
+)

@@ -4,6 +4,14 @@ import com.develofer.opositate.feature.profile.data.model.PsTest
 import com.develofer.opositate.feature.profile.data.model.Question
 import com.develofer.opositate.feature.profile.data.model.QuestionResult
 import com.develofer.opositate.feature.profile.data.model.TestResult
+import com.develofer.opositate.feature.profile.domain.usecase.GetAbilityGroupIdUseCase
+import com.develofer.opositate.feature.profile.domain.usecase.GetAbilityResIdUseCase
+import com.develofer.opositate.feature.profile.domain.usecase.GetGroupAbilityResIdUseCase
+import com.develofer.opositate.feature.profile.domain.usecase.GetGroupResIdIconUseCase
+import com.develofer.opositate.feature.test.domain.model.AbilityAsksItem
+import com.develofer.opositate.feature.test.domain.model.TaskAsksItem
+import com.develofer.opositate.feature.test.domain.model.TestAskItem
+import com.develofer.opositate.feature.test.domain.model.TestAsksByGroup
 import com.google.firebase.Timestamp
 import java.util.UUID
 
@@ -32,4 +40,51 @@ fun calculateScore(questions: List<Question>): Float {
         else if (question.selectedAnswer != null) incorrectAnswers += 1
     }
     return (correctAnswers - (incorrectAnswers / 3)) / questions.size
+}
+
+fun List<AbilityAsksItem>.toTestAsksByGroup(
+    getAbilityGroupIdUseCase: GetAbilityGroupIdUseCase,
+    getGroupAbilityResIdUseCase: GetGroupAbilityResIdUseCase,
+    getGroupResIdIconUseCase: GetGroupResIdIconUseCase,
+    getAbilityResIdUseCase: GetAbilityResIdUseCase
+): List<TestAsksByGroup> {
+    val groupedAsks = mutableMapOf<Int, MutableList<AbilityAsksItem>>()
+    this.forEachIndexed { index, asksItem ->
+        val scoreGroupId = getAbilityGroupIdUseCase(index)
+        groupedAsks.computeIfAbsent(scoreGroupId) { mutableListOf() }.add(asksItem)
+    }
+
+    return groupedAsks.map { (groupId, asks) ->
+        TestAsksByGroup(
+            testAskGroupNameResId = getGroupAbilityResIdUseCase(groupId),
+            testAskGroupIconResId = getGroupResIdIconUseCase(groupId),
+            asksByGroup = asks.map { ask ->
+                AbilityAsksItem(
+                    abilityId = ask.abilityId,
+                    approvedTests = ask.approvedTests,
+                    failedTest = ask.failedTest,
+                    tasksAsks = ask.tasksAsks.map { task ->
+                        TaskAsksItem(
+                            taskId = task.taskId,
+                            approvedTests = task.approvedTests,
+                            failedTest = task.failedTest,
+                            testAsks = task.testAsks.map { testAsk ->
+                                TestAskItem(
+                                    testId = testAsk.testId,
+                                    maxTime = testAsk.maxTime,
+                                    correctAnswers = testAsk.correctAnswers,
+                                    incorrectAnswers = testAsk.incorrectAnswers,
+                                    completionTime = testAsk.completionTime,
+                                    timestamp = testAsk.timestamp
+                                )
+                            },
+                            taskName = task.taskName
+                        )
+                    },
+                    abilityName = ask.abilityName
+                )
+            }
+        )
+    }
+
 }

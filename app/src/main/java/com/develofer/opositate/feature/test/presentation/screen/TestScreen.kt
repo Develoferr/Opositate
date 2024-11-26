@@ -33,7 +33,7 @@ import com.develofer.opositate.R
 import com.develofer.opositate.feature.test.presentation.component.TestItemList
 import com.develofer.opositate.feature.test.presentation.viewmodel.TestViewModel
 import com.develofer.opositate.main.MainViewModel
-import com.develofer.opositate.main.components.SuccessDialog
+import com.develofer.opositate.main.components.common.SuccessDialog
 
 @Composable
 fun TestScreen(
@@ -53,8 +53,8 @@ fun TestScreen(
     LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }
 
     val testList by testViewModel.testAsks.collectAsState()
-    TestItemList(
-        testItemList = testList,
+    TestContent(
+        asksByGroup = testList,
         onClickItem = { abilityId, taskId, taskName ->
             selectedAbilityId = abilityId
             selectedTaskId = taskId
