@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.presentation.component.CustomBodyText
-import com.develofer.opositate.ui.theme.Gray400
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,7 +64,7 @@ fun CustomAppBar(
                     Icon(
                         imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                         contentDescription = stringResource(R.string.custom_app_bar__content_description__menu),
-                        tint = Gray400
+                        tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
             },
@@ -90,7 +89,7 @@ fun CustomAppBar(
                     Icon(
                         imageVector = Icons.Default.MoreVert,
                         contentDescription = stringResource(R.string.custom_app_bar__content_description__more_options),
-                        tint = Gray400
+                        tint = MaterialTheme.colorScheme.onPrimary
                     )
                 }
                 DropdownMenu(
