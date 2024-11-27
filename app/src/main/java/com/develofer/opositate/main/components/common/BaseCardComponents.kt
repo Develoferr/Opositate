@@ -47,12 +47,13 @@ fun StatisticCard(
 ) {
     Card(
         shape = RoundedCornerShape(8.dp),
+        elevation = if (isDarkTheme) CardDefaults.cardElevation(defaultElevation = 0.dp) else CardDefaults.cardElevation(defaultElevation = 8.dp),
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp)
             .border(1.dp, Gray800, RoundedCornerShape(8.dp)),
         colors = CardDefaults.cardColors(
-            containerColor = if (isDarkTheme) Gray960 else Color.LightGray
+            containerColor = if (isDarkTheme) Gray960 else Color.White
         )
     ) {
         Column(Modifier.padding(vertical = 8.dp, horizontal = 16.dp)) {
