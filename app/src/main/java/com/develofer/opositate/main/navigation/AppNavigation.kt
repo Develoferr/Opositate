@@ -1,10 +1,6 @@
 package com.develofer.opositate.main.navigation
 
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.WindowInsetsSides
-import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -34,11 +30,13 @@ fun AppNavigation(
     startDestination: Route,
     mainViewModel: MainViewModel = hiltViewModel(),
     appBarTitle: State<String>,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
+    isProgressVisible: Boolean,
+    progress: Float
 ) {
     val currentRoute = navHostController.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
-        contentWindowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom),
+//        contentWindowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom),
         bottomBar =  {
             if (currentRoute in listOf(
                     ProfileNavigation.route,
@@ -48,7 +46,10 @@ fun AppNavigation(
                     SettingsNavigation.route
                 )
             ) {
-                CustomBottomNavigationBar(navHostController)
+                CustomBottomNavigationBar(
+                    navHostController,
+                    isProgressVisible, progress,
+                    isDarkTheme)
             }
         },
         topBar = {
@@ -66,6 +67,9 @@ fun AppNavigation(
                     logout = {
                         mainViewModel.logout()
                         navigateToLogin(navHostController)
+                    },
+                    saveTests = {
+                        mainViewModel.saveTests()
                     }
                 )
             }
@@ -120,7 +124,7 @@ fun AppNavigation(
                 val testSolvingNavigation: TestSolvingNavigation = backStackEntry.toRoute()
                 TestSolvingScreen(
                     isDarkTheme = isDarkTheme,
-                    testId = testSolvingNavigation.testId,
+                    testId = testSolvingNavigation.difficultId,
                     abilityId = testSolvingNavigation.abilityId,
                     taskId = testSolvingNavigation.taskId,
                     mainViewModel = mainViewModel,
