@@ -25,13 +25,13 @@ class AbilityDataProvider {
 
     fun getGroupResIdIcon(groupId: Int): Int =
         when (groupId) {
-            0 -> R.drawable.ic_reasoning_skills
-            1 -> R.drawable.ic_cognitive_processing_skills
-            2 -> R.drawable.ic_spatial_and_motor_skills
-            3 -> R.drawable.ic_emotional_and_social_skills_2
-            4 -> R.drawable.ic_problem_solving_and_creative_skills
-            5 -> R.drawable.ic_management_and_organizational_skills
-            else -> R.drawable.ic_reasoning_skills
+            0 -> R.drawable.ic_brain_puzzle
+            1 -> R.drawable.ic_brain_thunder
+            2 -> R.drawable.ic_brain_wrench_2
+            3 -> R.drawable.ic_brain_hearth
+            4 -> R.drawable.ic_brain_bulb
+            5 -> R.drawable.ic_brain_organizational
+            else -> R.drawable.ic_brain_puzzle_3
         }
 
     fun getGroupResId(groupId: Int): Int =
