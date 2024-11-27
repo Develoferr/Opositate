@@ -331,5 +331,6 @@
     <string name="sub_ability_name__emotional_intelligence__active_listening_emotional_response">Evaluation of active listening skills and appropriate emotional responses</string>
     <string name="sub_ability_name__emotional_intelligence__emotional_regulation_social_simulations">Simulations of social situations requiring emotional regulation</string>
     <string name="sub_ability_name__emotional_intelligence__self_control_under_stress">Tasks of emotional self-control in stressful situations</string>
+    <string name="error_message__no_email">User has no email</string>
 
 </resources>

@@ -51,15 +51,23 @@ fun ProfileScreen(
             onTabSelected = { index -> selectedTabIndex = index }
         )
         when (selectedTabIndex) {
-            0 -> StatisticsContent(
+            0 -> AccountContent(
+                isDarkTheme = isDarkTheme,
+                userName = screenState.userName,
+                userEmail = screenState.userEmail
+            )
+            1 -> StatisticsContent(
                 isDarkTheme = isDarkTheme
             )
-            1 -> ScoresContent(
+            2 -> ScoresContent(
                 scoresByGroup = screenState.scoresByGroup,
                 isDarkTheme = isDarkTheme
             )
-            2 -> ChartContent(
+            3 -> ChartContent(
                 items = screenState.userScores.scores
+            )
+            4 -> AchievementsContent(
+                isDarkTheme = isDarkTheme
             )
         }
     }
@@ -75,11 +83,13 @@ private fun SetupSystemUI(mainViewModel: MainViewModel) {
 @Composable
 private fun rememberProfileScreenState(profileViewModel: ProfileViewModel): ProfileScreenState {
     val userName by profileViewModel.userName.collectAsState()
+    val userEmail by profileViewModel.userEmail.collectAsState()
     val userScores by profileViewModel.scores.collectAsState()
     val scoresByGroup by profileViewModel.scoresByGroup.collectAsState()
 
     return ProfileScreenState(
         userName = userName,
+        userEmail = userEmail,
         userScores = userScores,
         scoresByGroup = scoresByGroup
     )

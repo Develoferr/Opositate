@@ -26,10 +26,20 @@ class UserRepositoryImpl @Inject constructor(
 
     override suspend fun getUserName(): Result<String> {
         val user = getUser()
+
         return if (user?.displayName.isNullOrEmpty()) {
             Result.Error(Exception(resourceProvider.getString(R.string.error_message__no_display_name)))
         } else {
             Result.Success(user?.displayName ?: EMPTY_STRING)
+        }
+    }
+
+    override suspend fun getUserEmail(): Result<String> {
+        val user = getUser()
+        return if (user?.email.isNullOrEmpty()) {
+            Result.Error(Exception(resourceProvider.getString(R.string.error_message__no_email)))
+        } else {
+            Result.Success(user?.email ?: EMPTY_STRING)
         }
     }
 

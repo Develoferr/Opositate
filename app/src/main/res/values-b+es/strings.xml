@@ -307,5 +307,6 @@
     <string name="sub_ability_name__emotional_intelligence__active_listening_emotional_response">Evaluación de habilidades de escucha activa y respuesta emocional adecuada</string>
     <string name="sub_ability_name__emotional_intelligence__emotional_regulation_social_simulations">Simulaciones de situaciones sociales que requieran regulación emocional</string>
     <string name="sub_ability_name__emotional_intelligence__self_control_under_stress">Tareas de autocontrol emocional en situaciones de estrés</string>
+    <string name="error_message__no_email">El usuario no tiene correo</string>
 
 </resources>

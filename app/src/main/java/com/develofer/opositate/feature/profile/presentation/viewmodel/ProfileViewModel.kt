@@ -7,6 +7,7 @@ import com.develofer.opositate.feature.profile.domain.model.UserScoresByGroup
 import com.develofer.opositate.feature.profile.domain.usecase.GetAbilityGroupIdUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetGroupAbilityResIdUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetGroupResIdIconUseCase
+import com.develofer.opositate.feature.profile.domain.usecase.GetUserEmailUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetUserNameUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetUserScoresUseCase
 import com.develofer.opositate.feature.profile.utils.toUserScoresByGroupList
@@ -21,6 +22,7 @@ import javax.inject.Inject
 @HiltViewModel
 class ProfileViewModel @Inject constructor(
     private val getUserNameUseCase: GetUserNameUseCase,
+    private val getUserEmailUseCase: GetUserEmailUseCase,
     private val getUserScoresUseCase: GetUserScoresUseCase,
     private val getGroupAbilityUseCase: GetGroupAbilityResIdUseCase,
     private val getGroupIdUseCase: GetAbilityGroupIdUseCase,
@@ -30,6 +32,9 @@ class ProfileViewModel @Inject constructor(
     private val _userName = MutableStateFlow(EMPTY_STRING)
     val userName: StateFlow<String> get() = _userName
 
+    private val _userEmail = MutableStateFlow(EMPTY_STRING)
+    val userEmail: StateFlow<String> get() = _userEmail
+
     private val _scores = MutableStateFlow(UserScores())
     val scores: StateFlow<UserScores> get() = _scores
 
@@ -38,6 +43,7 @@ class ProfileViewModel @Inject constructor(
 
     init {
         fetchUserName()
+        fetchUserEmail()
         fetchScores()
     }
 
@@ -46,6 +52,20 @@ class ProfileViewModel @Inject constructor(
             when (val result = getUserNameUseCase()) {
                 is Result.Success -> {
                     _userName.value = result.data
+                }
+                is Result.Error -> {
+                    // Handle error with dialog
+                }
+                is Result.Loading -> { }
+            }
+        }
+    }
+
+    private fun fetchUserEmail() {
+        viewModelScope.launch {
+            when (val result = getUserEmailUseCase()) {
+                is Result.Success -> {
+                    _userEmail.value = result.data
                 }
                 is Result.Error -> {
                     // Handle error with dialog

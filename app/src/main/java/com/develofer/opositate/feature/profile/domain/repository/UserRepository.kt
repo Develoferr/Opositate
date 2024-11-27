@@ -6,6 +6,7 @@ import com.develofer.opositate.main.data.model.Result
 
 interface UserRepository {
     suspend fun getUserName(): Result<String>
+    suspend fun getUserEmail(): Result<String>
     suspend fun getUserId(): Result<String>
     suspend fun createUserScoreDocument(abilityIdList: List<Map<String, Any>>): Result<Unit>
     suspend fun createTestAsksDocument(abilityIdList: List<Map<String, Any>>): Result<Unit>
