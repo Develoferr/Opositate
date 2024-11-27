@@ -30,7 +30,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
-import com.develofer.opositate.feature.test.presentation.component.TestItemList
+import com.develofer.opositate.feature.test.presentation.component.TestContent
 import com.develofer.opositate.feature.test.presentation.viewmodel.TestViewModel
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.main.components.common.SuccessDialog
@@ -114,7 +114,12 @@ fun TestScreen(
 
             },
             confirmButton = {
-                TextButton(onClick = { navigateToTestSolving(selectedTestId, selectedAbilityId, selectedTaskId) }) {
+                TextButton(onClick = {
+                    showNewTestDialog = false
+                    mainViewModel.startProgress {
+                        navigateToTestSolving(selectedTestId, selectedAbilityId, selectedTaskId)
+                    }
+                }) {
                     Text(
                         "Empezar"
                     )

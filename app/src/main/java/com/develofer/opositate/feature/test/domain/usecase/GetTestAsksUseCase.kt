@@ -4,6 +4,7 @@ import com.develofer.opositate.feature.profile.domain.repository.UserRepository
 import com.develofer.opositate.feature.profile.domain.usecase.GetAbilityResIdUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetTaskStringResIdUseCase
 import com.develofer.opositate.feature.test.domain.model.CompleteTestAsksList
+import com.develofer.opositate.feature.test.utils.addNames
 import com.develofer.opositate.main.data.model.Result
 import com.develofer.opositate.main.data.provider.ResourceProvider
 import javax.inject.Inject
@@ -32,21 +33,3 @@ class GetTestAsksUseCase @Inject constructor(
         )
     }
 }
-
-private fun CompleteTestAsksList.addNames(
-    testAsksList: CompleteTestAsksList,
-    getAbilityResIdUseCase: GetAbilityResIdUseCase,
-    getTaskStringResIdUseCase: GetTaskStringResIdUseCase,
-    resourceProvider: ResourceProvider
-) = CompleteTestAsksList(
-    testByAbilityList = testAsksList.testByAbilityList.map {
-        it.copy(
-            abilityName = resourceProvider.getString(getAbilityResIdUseCase(it.abilityId)),
-            tasksAsks = it.tasksAsks.map { taskAsks ->
-                taskAsks.copy(
-                    taskName = resourceProvider.getString(getTaskStringResIdUseCase(it.abilityId, taskAsks.taskId))
-                )
-            }
-        )
-    }
-)

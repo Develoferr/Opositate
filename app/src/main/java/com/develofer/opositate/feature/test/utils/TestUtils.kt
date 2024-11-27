@@ -8,10 +8,13 @@ import com.develofer.opositate.feature.profile.domain.usecase.GetAbilityGroupIdU
 import com.develofer.opositate.feature.profile.domain.usecase.GetAbilityResIdUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetGroupAbilityResIdUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetGroupResIdIconUseCase
+import com.develofer.opositate.feature.profile.domain.usecase.GetTaskStringResIdUseCase
 import com.develofer.opositate.feature.test.domain.model.AbilityAsksItem
+import com.develofer.opositate.feature.test.domain.model.CompleteTestAsksList
 import com.develofer.opositate.feature.test.domain.model.TaskAsksItem
 import com.develofer.opositate.feature.test.domain.model.TestAskItem
 import com.develofer.opositate.feature.test.domain.model.TestAsksByGroup
+import com.develofer.opositate.main.data.provider.ResourceProvider
 import com.google.firebase.Timestamp
 import java.util.UUID
 
@@ -86,5 +89,22 @@ fun List<AbilityAsksItem>.toTestAsksByGroup(
             }
         )
     }
-
 }
+
+fun CompleteTestAsksList.addNames(
+    testAsksList: CompleteTestAsksList,
+    getAbilityResIdUseCase: GetAbilityResIdUseCase,
+    getTaskStringResIdUseCase: GetTaskStringResIdUseCase,
+    resourceProvider: ResourceProvider
+) = CompleteTestAsksList(
+    testByAbilityList = testAsksList.testByAbilityList.map {
+        it.copy(
+            abilityName = resourceProvider.getString(getAbilityResIdUseCase(it.abilityId)),
+            tasksAsks = it.tasksAsks.map { taskAsks ->
+                taskAsks.copy(
+                    taskName = resourceProvider.getString(getTaskStringResIdUseCase(it.abilityId, taskAsks.taskId))
+                )
+            }
+        )
+    }
+)

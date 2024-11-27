@@ -78,7 +78,7 @@ fun TestContent(
 
         Spacer(modifier = Modifier.size(16.dp))
 
-        HorizontalDivider(thickness = 1.dp, color = if (isDarkTheme) Gray900 else Gray600)
+        HorizontalDivider(modifier = Modifier.padding(horizontal = 16.dp), thickness = 1.dp, color = if (isDarkTheme) Gray900 else Gray600)
 
         Spacer(modifier = Modifier.size(16.dp))
 
@@ -89,7 +89,7 @@ fun TestContent(
             color = Gray400
         )
 
-        Spacer(modifier = Modifier.size(8.dp).padding(horizontal = 16.dp))
+        Spacer(modifier = Modifier.size(8.dp))
 
         asksByGroup.forEachIndexed { index, group ->
             if (index > 0 && index < asksByGroup.size) Spacer(modifier = Modifier.size(16.dp))
