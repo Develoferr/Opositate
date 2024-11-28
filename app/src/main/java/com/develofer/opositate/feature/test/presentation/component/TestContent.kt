@@ -30,14 +30,17 @@ import com.develofer.opositate.feature.test.domain.model.AbilityAsksItem
 import com.develofer.opositate.feature.test.domain.model.TestAsksByGroup
 import com.develofer.opositate.main.components.common.ExpandIcon
 import com.develofer.opositate.ui.theme.Gray400
+import com.develofer.opositate.ui.theme.Gray500
 import com.develofer.opositate.ui.theme.Gray600
 import com.develofer.opositate.ui.theme.Gray700
+import com.develofer.opositate.ui.theme.Gray800
 import com.develofer.opositate.ui.theme.Gray900
 import com.develofer.opositate.ui.theme.Gray960
 
 @Composable
 fun TestContent(
     asksByGroup: List<TestAsksByGroup>,
+    loading: () -> Unit,
     onClickItem: (abilityId: Int, taskId: Int, testName: String) -> Unit,
     isDarkTheme: Boolean,
 ) {
@@ -63,16 +66,24 @@ fun TestContent(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
-                .border(1.dp, Gray700, RoundedCornerShape(8.dp)),
+                .border(1.dp, Gray800, RoundedCornerShape(8.dp)),
             colors = CardDefaults.cardColors(
                 containerColor = if (isDarkTheme) Gray960 else Color.White
-            )
+            ),
+            onClick = { loading() }
         ) {
-            Text(
-                modifier = Modifier.padding(start = 18.dp, top = 10.dp, bottom = 10.dp),
-                text = "Test con todas las habilidades",
-                fontSize = 12.sp
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.padding(horizontal = 16.dp)
+            ) {
+                Text(
+                    modifier = Modifier.padding(start = 2.dp, top = 10.dp, bottom = 10.dp),
+                    text = "Test con todas las habilidades",
+                    fontSize = 12.sp
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                NewTestIcon(onClick = {  })
+            }
         }
 
         Spacer(modifier = Modifier.size(16.dp))
@@ -118,7 +129,7 @@ private fun AskGroupItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
-                .border(1.dp, Gray700, RoundedCornerShape(8.dp)),
+                .border(1.dp, Gray800, RoundedCornerShape(8.dp)),
             colors = CardDefaults.cardColors(
                 containerColor = if (isDarkTheme) Gray960 else Color.White
             )
@@ -164,8 +175,8 @@ private fun AskGroupHeader(
         Icon(
             painter = painterResource(id = askGroup.testAskGroupIconResId),
             contentDescription = null,
-            modifier = Modifier.size(28.dp),
-            tint = if (isDarkTheme) Gray400 else Gray600
+            modifier = Modifier.size(32.dp),
+            tint = if (isDarkTheme) Gray500 else Gray600
         )
         Spacer(modifier = Modifier.size(16.dp))
         Text(
@@ -173,6 +184,8 @@ private fun AskGroupHeader(
             fontSize = 12.sp
         )
         Spacer(modifier = Modifier.weight(1f))
+        NewTestIcon(onClick = {  })
+        Spacer(modifier = Modifier.size(16.dp))
         ExpandIcon(
             isExpanded = isExpanded,
             onClick = onExpandClick,
@@ -191,10 +204,17 @@ private fun AskGroupContent(
         HorizontalDivider(thickness = 1.dp, color = if (isDarkTheme) Gray700 else Gray600)
         Spacer(modifier = Modifier.size(3.dp))
 
-        Text(
-            modifier = Modifier.padding(start = 16.dp, top = 4.dp),
-            text = ask.abilityName,
-            fontSize = 12.sp
-        )
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.padding(horizontal = 16.dp)
+        ) {
+            Text(
+                modifier = Modifier.padding(top = 4.dp),
+                text = ask.abilityName,
+                fontSize = 12.sp
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            NewTestIcon(onClick = {  })
+        }
     }
 }
