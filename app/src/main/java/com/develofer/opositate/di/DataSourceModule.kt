@@ -1,7 +1,7 @@
 package com.develofer.opositate.di
 
 import com.develofer.opositate.feature.calendar.data.local.CalendarDataSource
-import com.develofer.opositate.main.data.provider.AbilityDataProvider
+import com.develofer.opositate.main.data.provider.TestDataProvider
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,5 +19,5 @@ object DataSourceModule {
 
     @Provides
     @Singleton
-    fun provideAbilityDataProvider(): AbilityDataProvider = AbilityDataProvider()
+    fun provideTestDataProvider(): TestDataProvider = TestDataProvider()
 }

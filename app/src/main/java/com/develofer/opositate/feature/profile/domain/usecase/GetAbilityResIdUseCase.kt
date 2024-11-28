@@ -1,11 +1,11 @@
 package com.develofer.opositate.feature.profile.domain.usecase
 
-import com.develofer.opositate.main.data.provider.AbilityDataProvider
+import com.develofer.opositate.main.data.provider.TestDataProvider
 import javax.inject.Inject
 
 class GetAbilityResIdUseCase @Inject constructor(
-    private val abilityDataProvider: AbilityDataProvider
+    private val testDataProvider: TestDataProvider
 ) {
     operator fun invoke(abilityId: Int): Int =
-        abilityDataProvider.getAbilityStringResId(abilityId)
+        testDataProvider.getAbilityStringResId(abilityId)
 }
