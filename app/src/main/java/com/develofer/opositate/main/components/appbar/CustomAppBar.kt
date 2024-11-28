@@ -45,78 +45,78 @@ fun CustomAppBar(
 ) {
     var expanded by remember { mutableStateOf(false) }
 
-        CenterAlignedTopAppBar(
-            windowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Top),
-            colors = TopAppBarColors(
-                containerColor =
-                    if (isDarkTheme) MaterialTheme.colorScheme.background
-                        else MaterialTheme.colorScheme.primary,
-                scrolledContainerColor = Color.Unspecified,
-                navigationIconContentColor = Color.Unspecified,
-                titleContentColor = Color.Unspecified,
-                actionIconContentColor = Color.Unspecified
-            ),
-            navigationIcon = {
-                IconButton(
-                    onClick = { /* Handle navigation icon click */ },
-                    modifier = Modifier.padding(start = 10.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.custom_app_bar__content_description__menu),
-                        tint = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
-            },
-            title = {
-                Box(
-                    modifier = Modifier.fillMaxWidth(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CustomBodyText(
-                        text = title.value,
-                        isDarkTheme = isDarkTheme,
-                        textSize = 25.sp,
-
-                    )
-                }
-            },
-            actions = {
-                IconButton(
-                    onClick = { expanded = !expanded },
-                    modifier = Modifier.padding(end = 10.dp)
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.MoreVert,
-                        contentDescription = stringResource(R.string.custom_app_bar__content_description__more_options),
-                        tint = MaterialTheme.colorScheme.onPrimary
-                    )
-                }
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
-                ) {
-                    DropdownMenuItem(
-                        text = { Text("Cerrar sesión") },
-                        onClick = {
-                            logout()
-                            expanded = false
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Save Tests") },
-                        onClick = {
-                            saveTests()
-                            expanded = false
-                        }
-                    )
-                    DropdownMenuItem(
-                        text = { Text("Opción 3") },
-                        onClick = {
-                            expanded = false
-                        }
-                    )
-                }
+    CenterAlignedTopAppBar(
+        windowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Top),
+        colors = TopAppBarColors(
+            containerColor =
+                if (isDarkTheme) MaterialTheme.colorScheme.background
+                    else MaterialTheme.colorScheme.primary,
+            scrolledContainerColor = Color.Unspecified,
+            navigationIconContentColor = Color.Unspecified,
+            titleContentColor = Color.Unspecified,
+            actionIconContentColor = Color.Unspecified
+        ),
+        navigationIcon = {
+            IconButton(
+                onClick = { /* Handle navigation icon click */ },
+                modifier = Modifier.padding(start = 10.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                    contentDescription = stringResource(R.string.custom_app_bar__content_description__menu),
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
             }
-        )
+        },
+        title = {
+            Box(
+                modifier = Modifier.fillMaxWidth(),
+                contentAlignment = Alignment.Center
+            ) {
+                CustomBodyText(
+                    text = title.value,
+                    isDarkTheme = isDarkTheme,
+                    textSize = 25.sp,
+
+                )
+            }
+        },
+        actions = {
+            IconButton(
+                onClick = { expanded = !expanded },
+                modifier = Modifier.padding(end = 10.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.MoreVert,
+                    contentDescription = stringResource(R.string.custom_app_bar__content_description__more_options),
+                    tint = MaterialTheme.colorScheme.onPrimary
+                )
+            }
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                DropdownMenuItem(
+                    text = { Text("Cerrar sesión") },
+                    onClick = {
+                        logout()
+                        expanded = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text("Save Tests") },
+                    onClick = {
+                        saveTests()
+                        expanded = false
+                    }
+                )
+                DropdownMenuItem(
+                    text = { Text("Opción 3") },
+                    onClick = {
+                        expanded = false
+                    }
+                )
+            }
+        }
+    )
 }

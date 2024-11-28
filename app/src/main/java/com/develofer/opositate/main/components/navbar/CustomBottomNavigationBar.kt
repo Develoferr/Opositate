@@ -15,6 +15,8 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -125,6 +127,7 @@ private fun GetNavigationIcon(destination: Route, isSelected: Boolean) {
                 else -> R.drawable.ic_brain_profile_png
             }
         ),
+        modifier = Modifier.rotate(if (destination == LessonNavigation) 180f else 0f),
         contentDescription = stringResource(
             when (destination) {
                 ProfileNavigation -> R.string.bottom_nav_bar__content_description__profile
