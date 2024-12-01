@@ -22,6 +22,11 @@
     <string name="firebase_constant__test_asks" translatable="false">testAsks</string>
     <string name="firebase_constant__approved_tests" translatable="false">approvedTests</string>
     <string name="firebase_constant__failed_test" translatable="false">failedTests</string>
+    <string name="firebase_constant__solved_tests_ability" translatable="false">solvedTestsAbility</string>
+    <string name="firebase_constant__solved_tests_general" translatable="false">solvedTestsGeneral</string>
+    <string name="firebase_constant__solved_tests_group" translatable="false">solvedTestsGroup</string>
+    <string name="firebase_constant__solved_tests_task" translatable="false">solvedTestTask</string>
+    <string name="firebase_constant__solved_tests_custom" translatable="false">solvedTestsCustom</string>
 
     <!-- Error Messages -->
     <string name="error_message__user_not_authenticated">User is not authenticated</string>
