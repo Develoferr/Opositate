@@ -1,13 +1,11 @@
 package com.develofer.opositate.feature.test.domain.repository
 
-import com.develofer.opositate.feature.profile.data.model.PsTest
-import com.develofer.opositate.feature.profile.presentation.model.PsTestDocumentResponse
-import com.develofer.opositate.feature.profile.presentation.model.PsTestResponse
+import com.develofer.opositate.feature.test.presentation.model.PsTest
 import com.develofer.opositate.main.data.model.Result
 
 interface TestRepository {
-    suspend fun getTestList(): Result<List<PsTestDocumentResponse>>
-    suspend fun getTestListByAbility(abilityId: Int): Result<List<PsTestDocumentResponse>>
-    suspend fun getTestListByTask(abilityId: Int, abilityTaskId: Int): Result<List<PsTestResponse>>
-    suspend fun getTest(id: String, abilityId: Int, abilityTaskId: Int): Result<PsTest?>
+    suspend fun getTestByAbility(abilityId: Int, difficultyId: Int, testId: Int?): Result<PsTest?>
+    suspend fun getTestByGroup(abilityIdList: List<Int>, difficultyId: Int, testId: Int?): Result<PsTest?>
+    suspend fun getTestByTask(abilityId: Int, taskId: Int, testId: Int, difficultyId: Int): Result<PsTest?>
+    suspend fun getTestGeneral(difficultyId: Int, testId: Int): Result<PsTest?>
 }

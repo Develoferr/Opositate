@@ -53,16 +53,17 @@ class TestSolvingViewModel @Inject constructor(
             it.copy(
                 test = it.test?.copy(
                     questions = it.test.questions.mapIndexed { i, question ->
-                        if (i == _uiState.value.currentQuestionIndex) question.copy(selectedAnswer = index) else question
+                        if (i == _uiState.value.currentQuestionIndex) question.copy(selectedAnswer = index)
+                            else question
                     }
                 )
             )
         }
     }
 
-    fun getTest(testId: String, abilityId: Int, taskId: Int) {
+    fun getTest(testTypeId: Int, difficultId: Int?, groupId: Int?, abilityId: Int?, taskId: Int?) {
         viewModelScope.launch {
-            when (val result = getTestUseCase(testId, abilityId, taskId)) {
+            when (val result = getTestUseCase(testTypeId, difficultId, groupId, abilityId, taskId)) {
                 is Result.Success -> _uiState.update { it.copy(test = result.data) }
                 is Result.Error -> { } // Handle Error
                 is Result.Loading -> { } // Handle Loading
@@ -71,7 +72,10 @@ class TestSolvingViewModel @Inject constructor(
     }
 
     fun correctTest(navigateToTestResult: (testResultId: String) -> Unit) {
-        val testResult = _uiState.value.test?.correctTest(_uiState.value.timeCount, Timestamp.now())
+        val testResult = _uiState.value.test?.correctTest(
+            _uiState.value.timeCount,
+            Timestamp.now()
+        )
         testResult?.let { saveTestResult(it) }
         navigateToTestResult(testResult?.id ?: EMPTY_STRING)
     }

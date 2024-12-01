@@ -1,7 +1,5 @@
 package com.develofer.opositate.feature.test.presentation.model
 
-import com.develofer.opositate.feature.profile.data.model.PsTest
-
 data class TestSolvingUiState(
     val currentQuestionIndex: Int = 0,
     val timeCount: Int = 0,
