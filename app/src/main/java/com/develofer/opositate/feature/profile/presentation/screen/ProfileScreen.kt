@@ -3,7 +3,6 @@ package com.develofer.opositate.feature.profile.presentation.screen
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,7 +15,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,7 +39,6 @@ fun ProfileScreen(
 
     Column(
         modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
         var selectedTabIndex by remember { mutableIntStateOf(0) }
 
@@ -51,22 +48,22 @@ fun ProfileScreen(
             onTabSelected = { index -> selectedTabIndex = index }
         )
         when (selectedTabIndex) {
-            0 -> AccountContent(
+            0 -> AccountSection(
                 isDarkTheme = isDarkTheme,
                 userName = screenState.userName,
                 userEmail = screenState.userEmail
             )
-            1 -> StatisticsContent(
+            1 -> GeneralStatisticsSection(
                 isDarkTheme = isDarkTheme
             )
-            2 -> ScoresContent(
+            2 -> ProgressSection(
                 scoresByGroup = screenState.scoresByGroup,
                 isDarkTheme = isDarkTheme
             )
-            3 -> ChartContent(
+            3 -> AbilityScoresSection(
                 items = screenState.userScores.scores
             )
-            4 -> AchievementsContent(
+            4 -> AchievementsSection(
                 isDarkTheme = isDarkTheme
             )
         }

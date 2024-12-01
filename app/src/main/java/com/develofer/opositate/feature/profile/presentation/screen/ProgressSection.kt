@@ -34,11 +34,12 @@ import com.develofer.opositate.main.components.common.ExpandIcon
 import com.develofer.opositate.ui.theme.Gray300
 import com.develofer.opositate.ui.theme.Gray400
 import com.develofer.opositate.ui.theme.Gray600
+import com.develofer.opositate.ui.theme.Gray700
 import com.develofer.opositate.ui.theme.Gray900
 import com.develofer.opositate.ui.theme.Gray960
 
 @Composable
-fun ScoresContent(
+fun ProgressSection(
     scoresByGroup: List<UserScoresByGroup>,
     isDarkTheme: Boolean
 ) {
@@ -75,7 +76,7 @@ private fun ScoreGroupItem(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
-                .border(1.dp, Gray900, RoundedCornerShape(8.dp)),
+                .border(1.dp, Gray700, RoundedCornerShape(8.dp)),
             colors = CardDefaults.cardColors(
                 containerColor = when { isDarkTheme -> Gray960 else -> Gray300 }
             )
@@ -142,9 +143,9 @@ private fun ScoreGroupContent(
     scores: List<ScoreAbility>,
     isDarkTheme: Boolean
 ) {
-    scores.forEachIndexed { index, score ->
+    scores.forEach { score ->
         Spacer(modifier = Modifier.size(3.dp))
-        HorizontalDivider(thickness = 1.dp, color = if (isDarkTheme) Gray900 else Gray600)
+        HorizontalDivider(thickness = 1.dp, color = if (isDarkTheme) Gray700 else Gray600)
 //        Spacer(modifier = Modifier.size(3.dp))
 
         val abilityExpanded = remember { mutableStateOf(score.expanded) }

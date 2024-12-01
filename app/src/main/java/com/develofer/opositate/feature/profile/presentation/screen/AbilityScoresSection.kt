@@ -9,7 +9,7 @@ import com.develofer.opositate.feature.profile.domain.model.ScoreAbility
 import com.develofer.opositate.feature.profile.presentation.components.CustomRadarChart
 
 @Composable
-fun ChartContent(items: List<ScoreAbility> = emptyList()) {
+fun AbilityScoresSection(items: List<ScoreAbility> = emptyList()) {
 
     if (items.isNotEmpty()) {
         val radarLabels = items.map { score -> stringResource(id = score.abilityNameResId) }
