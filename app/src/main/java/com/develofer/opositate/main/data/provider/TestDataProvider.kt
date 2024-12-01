@@ -1,7 +1,6 @@
 package com.develofer.opositate.main.data.provider
 
 import com.develofer.opositate.R
-import com.develofer.opositate.feature.test.presentation.screen.TestType
 
 class TestDataProvider {
 
@@ -20,6 +19,9 @@ class TestDataProvider {
                 }
             )
         }
+
+    fun getAbilityIdListFromGroupId(groupId: Int): List<Int> =
+        Abilities.entries.filter { it.groupId == groupId }.map { it.abilityId }
 
     fun getAbilityGroupId(abilityId: Int): Int =
         Abilities.entries.find { it.abilityId == abilityId }?.groupId ?: 0
@@ -47,19 +49,18 @@ class TestDataProvider {
         }
 
     fun getTestTypeById(testTypeId: Int): TestType =
-        TestTypeData.entries.find { it.testTypeId == testTypeId }?.testType ?: TestType.GENERAL
+        TestType.entries.find { it.testTypeId == testTypeId } ?: TestType.GENERAL
 
     fun getTestTypeIdByTestType(testType: TestType): Int =
-        TestTypeData.entries.find { it.testType == testType }?.testTypeId ?: 0
-
+        TestType.entries.find { it == testType }?.testTypeId ?: 0
 }
 
-private enum class TestTypeData(val testTypeId: Int, val testType: TestType) {
-    GENERAL(0, TestType.GENERAL),
-    GROUP(1, TestType.GROUP),
-    ABILITY(2, TestType.ABILITY),
-    TASK(3, TestType.TASK),
-    CUSTOM(4, TestType.CUSTOM)
+enum class TestType(val testTypeId: Int) {
+    GENERAL(0),
+    GROUP(1),
+    ABILITY(2),
+    TASK(3),
+    CUSTOM(4)
 }
 
 private enum class Abilities(val abilityId: Int, val resId: Int, val groupId: Int, val tasks: List<AbilityTask>) {

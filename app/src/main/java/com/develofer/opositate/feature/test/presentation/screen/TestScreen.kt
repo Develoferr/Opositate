@@ -26,7 +26,6 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.withStyle
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
@@ -34,31 +33,41 @@ import com.develofer.opositate.feature.test.presentation.component.TestContent
 import com.develofer.opositate.feature.test.presentation.viewmodel.TestViewModel
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.main.components.common.SuccessDialog
+import com.develofer.opositate.main.data.provider.TestType
 
 @Composable
 fun TestScreen(
-    navigateToTestSolving: (testId: String, abilityId: Int, taskId: Int) -> Unit,
+    navigateToTestSolvingGeneralTest: (testTypeId: Int, difficultId: Int) -> Unit,
+    navigateToTestSolvingGroupAbilityTest: (testTypeId: Int, difficultId: Int, groupId: Int) -> Unit,
+    navigateToTestSolvingAbilityTest: (testTypeId: Int, difficultId: Int, abilityId: Int) -> Unit,
+    navigateToTestSolvingTaskTest: (testTypeId: Int, difficultId: Int, abilityId: Int, taskId: Int) -> Unit,
     isDarkTheme: Boolean,
     mainViewModel: MainViewModel = hiltViewModel(),
     testViewModel: TestViewModel = hiltViewModel()
 ) {
     mainViewModel.showSystemUI()
     val screenTitle = stringResource(id = R.string.test_screen__app_bar_title__test)
+    LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }
+
     var showNewTestDialog by remember { mutableStateOf(false) }
-    var selectedTestId by remember { mutableStateOf("0") }
+    var selectedDifficultId by remember { mutableIntStateOf(0) }
+    var selectedGroupId by remember { mutableIntStateOf(0) }
     var selectedAbilityId by remember { mutableIntStateOf(0) }
     var selectedTaskId by remember { mutableIntStateOf(0) }
-    var newTestName by remember { mutableStateOf("") }
+    var selectedTestName by remember { mutableStateOf("") }
+    var selectedTestType by remember { mutableStateOf(TestType.GENERAL) }
 
-    LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }
 
     val testList by testViewModel.testAsks.collectAsState()
     TestContent(
         asksByGroup = testList,
-        onClickItem = { abilityId, taskId, taskName ->
+        onClickItem = { difficultId, groupId, abilityId, taskId, testName, testType ->
+            selectedDifficultId = difficultId
+            selectedGroupId = groupId
             selectedAbilityId = abilityId
             selectedTaskId = taskId
-            newTestName = taskName
+            selectedTestName = testName
+            selectedTestType = testType
             showNewTestDialog = true
         },
         isDarkTheme = isDarkTheme
@@ -72,17 +81,15 @@ fun TestScreen(
             content = {
                 val options = listOf(
                     "Fácil" to 0,
-                    "Medio-fácil" to 1,
-                    "Media" to 2,
-                    "Medio-difícil" to 3,
-                    "Difícil" to 4
+                    "Media" to 1,
+                    "Difícil" to 2
                 )
                 Column {
                     Text(
                         text = buildAnnotatedString {
-                            append("Vas a comenzar un test sobre ")
+                            append(if (selectedTestType == TestType.GENERAL) "Vas a comenzar un test " else "Vas a comenzar un test sobre ")
                             withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                                append(newTestName)
+                                append(selectedTestName)
                             }
                         },
                     )
@@ -94,14 +101,14 @@ fun TestScreen(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .clickable {
-                                    selectedTestId = id.toString()
+                                    selectedDifficultId = id
                                 },
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(
-                                selected = selectedTestId.toInt() == id,
+                                selected = selectedDifficultId == id,
                                 onClick = {
-                                    selectedTestId = id.toString()
+                                    selectedDifficultId = id
                                 }
                             )
                             Text(
@@ -116,12 +123,20 @@ fun TestScreen(
             confirmButton = {
                 TextButton(onClick = {
                     showNewTestDialog = false
+
                     mainViewModel.startProgress {
-                        navigateToTestSolving(selectedTestId, selectedAbilityId, selectedTaskId)
+                        when (selectedTestType) {
+                            TestType.GENERAL -> navigateToTestSolvingGeneralTest(0, selectedDifficultId)
+                            TestType.GROUP -> navigateToTestSolvingGroupAbilityTest(1, selectedDifficultId, selectedGroupId)
+                            TestType.ABILITY -> navigateToTestSolvingAbilityTest(2, selectedDifficultId, selectedAbilityId)
+                            TestType.TASK -> navigateToTestSolvingTaskTest(3, selectedDifficultId, selectedAbilityId, selectedTaskId)
+                            TestType.CUSTOM -> {  }
+                        }
                     }
+
                 }) {
                     Text(
-                        "Empezar"
+                        text = "Empezar"
                     )
                 }
             },
@@ -134,10 +149,4 @@ fun TestScreen(
             }
         )
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun TestScreenPreview() {
-    TestScreen({ _, _, _ -> }, isDarkTheme = true)
 }

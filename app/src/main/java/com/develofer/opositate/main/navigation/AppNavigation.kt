@@ -36,7 +36,6 @@ fun AppNavigation(
 ) {
     val currentRoute = navHostController.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
-//        contentWindowInsets = WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom),
         bottomBar =  {
             if (currentRoute in listOf(
                     ProfileNavigation.route,
@@ -102,8 +101,10 @@ fun AppNavigation(
             }
             composable<TestNavigation> {
                 TestScreen(
-                    navigateToTestSolving = { testId, abilityId, taskId -> navHostController.navigate(
-                        TestSolvingNavigation(testId, abilityId, taskId)) },
+                    navigateToTestSolvingGeneralTest = { testType, difficultId -> navHostController.navigate(TestSolvingNavigation(testType, difficultId, null, null, null)) },
+                    navigateToTestSolvingGroupAbilityTest = { testType, difficultId, groupId -> navHostController.navigate(TestSolvingNavigation(testType, difficultId, groupId, null, null)) },
+                    navigateToTestSolvingAbilityTest = { testType, difficultId, abilityId -> navHostController.navigate(TestSolvingNavigation(testType, difficultId, null, abilityId, null)) },
+                    navigateToTestSolvingTaskTest = { testType, difficultId, abilityId, taskId -> navHostController.navigate(TestSolvingNavigation(testType, difficultId, null, abilityId, taskId)) },
                     isDarkTheme = isDarkTheme,
                     mainViewModel = mainViewModel
                 )
@@ -124,7 +125,9 @@ fun AppNavigation(
                 val testSolvingNavigation: TestSolvingNavigation = backStackEntry.toRoute()
                 TestSolvingScreen(
                     isDarkTheme = isDarkTheme,
-                    testId = testSolvingNavigation.difficultId,
+                    testTypeId = testSolvingNavigation.testTypeId,
+                    difficultId = testSolvingNavigation.difficultId,
+                    groupId = testSolvingNavigation.groupId,
                     abilityId = testSolvingNavigation.abilityId,
                     taskId = testSolvingNavigation.taskId,
                     mainViewModel = mainViewModel,

@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.sp
 import com.develofer.opositate.feature.test.domain.model.AbilityAsksItem
 import com.develofer.opositate.feature.test.domain.model.TestAsksByGroup
 import com.develofer.opositate.main.components.common.ExpandIcon
+import com.develofer.opositate.main.data.provider.TestType
 import com.develofer.opositate.ui.theme.Gray400
 import com.develofer.opositate.ui.theme.Gray500
 import com.develofer.opositate.ui.theme.Gray600
@@ -40,8 +41,7 @@ import com.develofer.opositate.ui.theme.Gray960
 @Composable
 fun TestContent(
     asksByGroup: List<TestAsksByGroup>,
-    loading: () -> Unit,
-    onClickItem: (abilityId: Int, taskId: Int, testName: String) -> Unit,
+    onClickItem: (difficultId: Int, groupId: Int, abilityId: Int, taskId: Int, newTestName: String, testType: TestType) -> Unit,
     isDarkTheme: Boolean,
 ) {
     Column(
@@ -70,7 +70,7 @@ fun TestContent(
             colors = CardDefaults.cardColors(
                 containerColor = if (isDarkTheme) Gray960 else Color.White
             ),
-            onClick = { loading() }
+            onClick = {  }
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -82,7 +82,7 @@ fun TestContent(
                     fontSize = 12.sp
                 )
                 Spacer(modifier = Modifier.weight(1f))
-                NewTestIcon(onClick = {  })
+                NewTestIcon(onClick = { onClickItem(0, 0, 0, 0, "General", TestType.GENERAL) })
             }
         }
 
@@ -104,9 +104,11 @@ fun TestContent(
             if (index > 0 && index < asksByGroup.size) Spacer(modifier = Modifier.size(16.dp))
 
             AskGroupItem(
+                askGroupIndex = index,
                 askGroup = group,
                 isDarkTheme = isDarkTheme,
-                isLastItem = index == asksByGroup.size - 1
+                isLastItem = index == asksByGroup.size - 1,
+                onClickItem = onClickItem
             )
         }
 
@@ -118,7 +120,9 @@ fun TestContent(
 private fun AskGroupItem(
     askGroup: TestAsksByGroup,
     isDarkTheme: Boolean,
-    isLastItem: Boolean
+    isLastItem: Boolean,
+    onClickItem: (difficultId: Int, groupId: Int, abilityId: Int, taskId: Int, newTestName: String, testType: TestType) -> Unit,
+    askGroupIndex: Int
 ) {
     val groupExpanded = remember { mutableStateOf(askGroup.expanded) }
 
@@ -137,16 +141,19 @@ private fun AskGroupItem(
             Spacer(modifier = Modifier.size(8.dp))
 
             AskGroupHeader(
+                askGroupIndex = askGroupIndex,
                 askGroup = askGroup,
                 isDarkTheme = isDarkTheme,
                 isExpanded = groupExpanded.value,
-                onExpandClick = { groupExpanded.value = !groupExpanded.value }
+                onExpandClick = { groupExpanded.value = !groupExpanded.value },
+                onClickItem = onClickItem
             )
 
             if (groupExpanded.value) {
                 AskGroupContent(
                     asks = askGroup.asksByGroup,
-                    isDarkTheme = isDarkTheme
+                    isDarkTheme = isDarkTheme,
+                    onClickItem = onClickItem
                 )
             }
 
@@ -166,8 +173,11 @@ private fun AskGroupHeader(
     askGroup: TestAsksByGroup,
     isDarkTheme: Boolean,
     isExpanded: Boolean,
-    onExpandClick: () -> Unit
+    onExpandClick: () -> Unit,
+    onClickItem: (difficultId: Int, groupId: Int, abilityId: Int, taskId: Int, newTestName: String, testType: TestType) -> Unit,
+    askGroupIndex: Int
 ) {
+    val groupName = stringResource(id = askGroup.testAskGroupNameResId)
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(horizontal = 16.dp)
@@ -180,11 +190,11 @@ private fun AskGroupHeader(
         )
         Spacer(modifier = Modifier.size(16.dp))
         Text(
-            text = stringResource(id = askGroup.testAskGroupNameResId),
+            text = groupName,
             fontSize = 12.sp
         )
         Spacer(modifier = Modifier.weight(1f))
-        NewTestIcon(onClick = {  })
+        NewTestIcon(onClick = { onClickItem(0, askGroupIndex, 0, 0, groupName, TestType.GROUP) })
         Spacer(modifier = Modifier.size(16.dp))
         ExpandIcon(
             isExpanded = isExpanded,
@@ -197,7 +207,8 @@ private fun AskGroupHeader(
 @Composable
 private fun AskGroupContent(
     asks: List<AbilityAsksItem>,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
+    onClickItem: (difficultId: Int, groupId: Int, abilityId: Int, taskId: Int, newTestName: String, testType: TestType) -> Unit
 ) {
     asks.forEach { ask ->
         Spacer(modifier = Modifier.size(3.dp))
@@ -214,7 +225,7 @@ private fun AskGroupContent(
                 fontSize = 12.sp
             )
             Spacer(modifier = Modifier.weight(1f))
-            NewTestIcon(onClick = {  })
+            NewTestIcon(onClick = { onClickItem(0, 0, ask.abilityId, 0, ask.abilityName, TestType.ABILITY) })
         }
     }
 }
