@@ -1,17 +1,29 @@
 package com.develofer.opositate.feature.calendar.data.local
 
 import com.develofer.opositate.feature.calendar.presentation.model.CalendarUiState
+import com.develofer.opositate.feature.calendar.utils.WeekConfiguration
 import java.time.DayOfWeek
 import java.time.LocalDate
 import java.time.YearMonth
 import java.time.temporal.TemporalAdjusters
 
 class CalendarDataSource {
-    fun getDates(yearMonth: YearMonth): List<CalendarUiState.Date> {
+    fun getDates(yearMonth: YearMonth, weekConfiguration: WeekConfiguration): List<CalendarUiState.Date> {
+        val firstDayOfWeek = when (weekConfiguration) {
+            WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY -> DayOfWeek.MONDAY
+            WeekConfiguration.SUNDAY_START_WEEKEND_FRIDAY_SATURDAY -> DayOfWeek.SUNDAY
+        }
+
         val firstDayOfMonth = LocalDate.of(yearMonth.year, yearMonth.monthValue, 1)
         val lastDayOfMonth = yearMonth.atEndOfMonth()
-        val startDay = firstDayOfMonth.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY))
-        val endDay = lastDayOfMonth.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))
+
+        val startDay = firstDayOfMonth.with(TemporalAdjusters.previousOrSame(firstDayOfWeek))
+        val endDay = lastDayOfMonth.with(TemporalAdjusters.nextOrSame(
+            when (weekConfiguration) {
+                WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY -> DayOfWeek.SUNDAY
+                WeekConfiguration.SUNDAY_START_WEEKEND_FRIDAY_SATURDAY -> DayOfWeek.SATURDAY
+            }
+        ))
 
         val datesInCalendar = generateSequence(startDay) { it.plusDays(1) }
             .takeWhile { it.isBefore(endDay.plusDays(1)) }
@@ -23,7 +35,8 @@ class CalendarDataSource {
                 )
             }
             .toList().toMutableList()
-        if (datesInCalendar.size <= 35) {
+
+        if (datesInCalendar.size < 42) {
             val daysToAdd = 42 - datesInCalendar.size
 
             for (i in 1..daysToAdd) {
@@ -35,6 +48,7 @@ class CalendarDataSource {
                 )
             }
         }
+
         return datesInCalendar
     }
 }

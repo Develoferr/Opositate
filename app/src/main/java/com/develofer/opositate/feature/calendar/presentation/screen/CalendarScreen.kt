@@ -9,6 +9,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.calendar.presentation.components.CalendarContent
 import com.develofer.opositate.feature.calendar.presentation.viewmodel.CalendarViewModel
+import com.develofer.opositate.feature.calendar.utils.WeekConfiguration
 import com.develofer.opositate.main.MainViewModel
 
 @Composable
@@ -29,6 +30,7 @@ fun CalendarScreen(
         },
         onPreviousMonthClicked = { calendarViewModel.toPreviousMonth() },
         onNextMonthClicked = { calendarViewModel.toNextMonth() },
-        isDarkTheme = isDarkTheme
+        isDarkTheme = isDarkTheme,
+        weekConfiguration = WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY
     )
 }

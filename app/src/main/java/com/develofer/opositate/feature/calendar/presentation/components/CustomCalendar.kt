@@ -27,8 +27,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.calendar.presentation.model.CalendarUiState
-import com.develofer.opositate.feature.calendar.utils.daysOfWeek
+import com.develofer.opositate.feature.calendar.utils.WeekConfiguration
+import com.develofer.opositate.feature.calendar.utils.getDaysOfWeek
 import com.develofer.opositate.feature.calendar.utils.getLocalizedMonthName
+import com.develofer.opositate.feature.calendar.utils.isWeekend
 import com.develofer.opositate.ui.theme.Gray500
 import com.develofer.opositate.ui.theme.Gray700
 import java.time.YearMonth
@@ -40,23 +42,27 @@ fun CalendarContent(
     onDateClick: (CalendarUiState.Date) -> Unit,
     onPreviousMonthClicked: () -> Unit,
     onNextMonthClicked: () -> Unit,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
+    weekConfiguration: WeekConfiguration = WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY
 ) {
     Column(
         modifier = Modifier.padding(horizontal = 16.dp)
     ) {
         Spacer(modifier = Modifier.size(24.dp))
         MonthYearSelector(yearMonth, onPreviousMonthClicked, onNextMonthClicked)
-        WeekDays()
-        DaysOfMonth(dates, onDateClick, isDarkTheme)
+        WeekDays(weekConfiguration)
+        DaysOfMonth(dates, onDateClick, isDarkTheme, weekConfiguration)
     }
 }
 
 @Composable
-fun WeekDays() {
+fun WeekDays(weekConfiguration: WeekConfiguration) {
     Row(modifier = Modifier.fillMaxWidth()) {
-        daysOfWeek.forEach { day ->
-            DayOfWeekItem(day, modifier = Modifier.weight(1f))
+        getDaysOfWeek(weekConfiguration).forEach { day ->
+            DayOfWeekItem(
+                day = day.replaceFirstChar { it.uppercase() },
+                modifier = Modifier.weight(1f)
+            )
         }
     }
 }
@@ -108,7 +114,8 @@ fun MonthYearSelector(
 private fun DaysOfMonth(
     dates: List<CalendarUiState.Date>,
     onDateClick: (CalendarUiState.Date) -> Unit,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
+    weekConfiguration: WeekConfiguration
 ) {
     var index = 0
     repeat(6) {
@@ -119,7 +126,8 @@ private fun DaysOfMonth(
                     date = date,
                     onClickListener = onDateClick,
                     modifier = Modifier.weight(1f),
-                    isDarkTheme = isDarkTheme
+                    isDarkTheme = isDarkTheme,
+                    weekConfiguration = weekConfiguration
                 )
                 index++
             }
@@ -132,10 +140,17 @@ fun DayOfMonthItem(
     date: CalendarUiState.Date,
     onClickListener: (CalendarUiState.Date) -> Unit,
     modifier: Modifier = Modifier,
-    isDarkTheme: Boolean
+    isDarkTheme: Boolean,
+    weekConfiguration: WeekConfiguration = WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY
 ) {
-    val textColor = if (date.isInCurrentMonth) MaterialTheme.colorScheme.onBackground
-        else { if (isDarkTheme) Gray700 else Gray500 }
+    val textColor = if (date.isInCurrentMonth) {
+        if (isWeekend(date.date, weekConfiguration)) MaterialTheme.colorScheme.secondary
+        else MaterialTheme.colorScheme.onBackground
+    } else {
+        if (isWeekend(date.date, weekConfiguration)) MaterialTheme.colorScheme.secondary.copy(alpha = 0.4f)
+        else
+            if (isDarkTheme) Gray700 else Gray500
+    }
     Box(
         modifier = modifier
             .background(

@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.feature.calendar.domain.usecase.GetCalendarDatesUseCase
 import com.develofer.opositate.feature.calendar.presentation.model.CalendarUiState
+import com.develofer.opositate.feature.calendar.utils.WeekConfiguration
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -32,7 +33,7 @@ class CalendarViewModel @Inject constructor(
 
     private fun updateCalendar(newMonth: YearMonth) {
         viewModelScope.launch {
-            val dates = getCalendarDatesUseCase(newMonth)
+            val dates = getCalendarDatesUseCase(newMonth, WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY)
             _uiState.value = CalendarUiState(newMonth, dates)
         }
     }
