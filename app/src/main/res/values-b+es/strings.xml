@@ -18,6 +18,9 @@
     <string name="error_message__login_failed">Error al realizar login</string>
     <string name="error_message__register_failed">Error al realizar el registro</string>
     <string name="error_message__failed_to_convert_document">Error al convertir el documento Puntuaciones del Usuraio</string>
+    <string name="error_message__no_email">El usuario no tiene correo</string>
+    <string name="error_message__email_update_failed">Error al actualizar el correo</string>
+    <string name="error_message__account_deletion_failed">Error al borrar la cuenta</string>
 
     <!-- Custom Login Text Field -->
     <string name="custom_login_text_field__content_description__password_eye_image">Botón alternar visibilidad de la contraseña</string>
@@ -307,6 +310,5 @@
     <string name="sub_ability_name__emotional_intelligence__active_listening_emotional_response">Evaluación de habilidades de escucha activa y respuesta emocional adecuada</string>
     <string name="sub_ability_name__emotional_intelligence__emotional_regulation_social_simulations">Simulaciones de situaciones sociales que requieran regulación emocional</string>
     <string name="sub_ability_name__emotional_intelligence__self_control_under_stress">Tareas de autocontrol emocional en situaciones de estrés</string>
-    <string name="error_message__no_email">El usuario no tiene correo</string>
 
 </resources>
