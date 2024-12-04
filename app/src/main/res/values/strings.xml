@@ -54,7 +54,7 @@
     <string name="custom_login_text_field__content_description__ic_info">Info Icon</string>
     <string name="custom_login_text_field__supporting_text__empty_field">You must fill in this field first</string>
     <string name="custom_login_text_field__supporting_text__invalid_email">You must enter a valid email</string>
-    <string name="custom_login_text_field__supporting_text__emails_do_not_match">Emails do not match</string>
+    <string name="custom_login_text_field__supporting_text__emails_do_not_match">Fields do not match</string>
 
     <!-- Login Screen -->
     <string name="login_screen__title_text__welcome">Welcome</string>
