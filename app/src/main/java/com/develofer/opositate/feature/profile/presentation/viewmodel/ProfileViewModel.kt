@@ -2,20 +2,27 @@ package com.develofer.opositate.feature.profile.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.develofer.opositate.feature.login.domain.usecase.ResetPasswordUseCase
 import com.develofer.opositate.feature.profile.domain.model.UserScores
-import com.develofer.opositate.feature.profile.domain.model.UserScoresByGroup
 import com.develofer.opositate.feature.profile.domain.usecase.GetAbilityGroupIdUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetGroupAbilityResIdUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetGroupResIdIconUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetUserEmailUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetUserNameUseCase
 import com.develofer.opositate.feature.profile.domain.usecase.GetUserScoresUseCase
+import com.develofer.opositate.feature.profile.domain.usecase.UpdateEmailUseCase
+import com.develofer.opositate.feature.profile.domain.usecase.UpdateUserNameUseCase
+import com.develofer.opositate.feature.profile.model.ProfileUiState
+import com.develofer.opositate.feature.profile.presentation.model.ProfileDialogType
 import com.develofer.opositate.feature.profile.utils.toUserScoresByGroupList
 import com.develofer.opositate.main.data.model.Result
-import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
+import com.develofer.opositate.main.data.model.UiResult
+import com.develofer.opositate.main.domain.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -26,20 +33,24 @@ class ProfileViewModel @Inject constructor(
     private val getUserScoresUseCase: GetUserScoresUseCase,
     private val getGroupAbilityUseCase: GetGroupAbilityResIdUseCase,
     private val getGroupIdUseCase: GetAbilityGroupIdUseCase,
-    private val getGroupIdIcon: GetGroupResIdIconUseCase
+    private val getGroupIdIcon: GetGroupResIdIconUseCase,
+    private val logoutUseCase: LogoutUseCase,
+    private val updateUserNameUseCase: UpdateUserNameUseCase,
+    private val updateEmailUseCase: UpdateEmailUseCase,
+    private val resetPasswordUseCase: ResetPasswordUseCase
 ) : ViewModel() {
 
-    private val _userName = MutableStateFlow(EMPTY_STRING)
-    val userName: StateFlow<String> get() = _userName
+    private val _uiState = MutableStateFlow(ProfileUiState())
+    val uiState: StateFlow<ProfileUiState> = _uiState.asStateFlow()
 
-    private val _userEmail = MutableStateFlow(EMPTY_STRING)
-    val userEmail: StateFlow<String> get() = _userEmail
+    fun showDialog(dialogType: ProfileDialogType) {
+        _uiState.value.dialogStateCoordinator.showDialog(dialogType)
+    }
 
-    private val _scores = MutableStateFlow(UserScores())
-    val scores: StateFlow<UserScores> get() = _scores
+    fun hideDialog() {
+        _uiState.value.dialogStateCoordinator.hideDialog()
 
-    private val _scoresByGroup = MutableStateFlow(emptyList<UserScoresByGroup>())
-    val scoresByGroup: StateFlow<List<UserScoresByGroup>> get() = _scoresByGroup
+    }
 
     init {
         fetchUserName()
@@ -51,7 +62,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = getUserNameUseCase()) {
                 is Result.Success -> {
-                    _userName.value = result.data
+                    _uiState.update { it.copy(userName = result.data) }
                 }
                 is Result.Error -> {
                     // Handle error with dialog
@@ -65,7 +76,7 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = getUserEmailUseCase()) {
                 is Result.Success -> {
-                    _userEmail.value = result.data
+                    _uiState.update { it.copy(userEmail = result.data) }
                 }
                 is Result.Error -> {
                     // Handle error with dialog
@@ -79,8 +90,8 @@ class ProfileViewModel @Inject constructor(
         viewModelScope.launch {
             when (val result = getUserScoresUseCase()) {
                 is Result.Success -> {
-                    _scores.value = result.data
-                    _scoresByGroup.value = fetchScoresByGroup(result.data)
+                    _uiState.update { it.copy(userScores = result.data) }
+                    _uiState.update { it.copy(scoresByGroup = fetchScoresByGroup(result.data)) }
                 }
                 is Result.Error -> {
                     // Handle error with dialog
@@ -96,4 +107,77 @@ class ProfileViewModel @Inject constructor(
             getGroupIdUseCase,
             getGroupIdIcon
         )
+
+    fun updateUserName(newUserName: String) {
+        _uiState.update {it.copy(updateUserNameResult = UiResult.Loading)}
+        viewModelScope.launch {
+            when (val result = updateUserNameUseCase(newUserName)) {
+                is Result.Success -> {
+                    _uiState.update {it.copy(userName = newUserName)}
+                    _uiState.update {it.copy(updateUserNameResult = UiResult.Success)}
+                }
+                is Result.Error -> {
+                    val error = result.exception.message ?: "An error occurred"
+                    _uiState.update {it.copy(updateUserNameResult = UiResult.Error(error))}
+                }
+                is Result.Loading -> { }
+            }
+        }
+    }
+
+    fun updateEmail(newEmail: String) {
+        _uiState.update {it.copy(updateEmailResult = UiResult.Loading)}
+        viewModelScope.launch {
+            when (val result = updateEmailUseCase(newEmail)) {
+                is Result.Success -> {
+                    _uiState.update {it.copy(userEmail = newEmail)}
+                    _uiState.update {it.copy(updateEmailResult = UiResult.Success)}
+                }
+                is Result.Error -> {
+                    val error = result.exception.message ?: "An error occurred"
+                    _uiState.update {it.copy(updateEmailResult = UiResult.Error(error))}
+                }
+                is Result.Loading -> { }
+            }
+        }
+    }
+
+    fun updatePassword(newPassword: String) {
+        _uiState.update {it.copy(updatePasswordResult = UiResult.Loading)}
+        viewModelScope.launch {
+            when (resetPasswordUseCase(newPassword)) {
+                is Result.Success -> {
+                    _uiState.update {it.copy(updatePasswordResult = UiResult.Success)}
+                }
+                is Result.Error -> {
+                    _uiState.update {it.copy(updatePasswordResult = UiResult.Error("An error occurred"))}
+                }
+
+                is Result.Loading -> {}
+            }
+        }
+    }
+
+    fun logOut() {
+        hideDialog()
+        viewModelScope.launch {
+            when (logoutUseCase()) {
+                is Result.Success -> {}
+                is Result.Error -> {
+                    // Handle error with dialog
+                }
+                is Result.Loading -> {}
+            }
+        }
+    }
+
+    fun cleanUpState() {
+        _uiState.update {
+            it.copy(
+                updateUserNameResult = UiResult.Idle,
+                updateEmailResult = UiResult.Idle,
+                updatePasswordResult = UiResult.Idle
+            )
+        }
+    }
 }

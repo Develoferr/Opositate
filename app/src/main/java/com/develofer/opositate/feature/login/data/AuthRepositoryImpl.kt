@@ -52,10 +52,9 @@ class AuthRepositoryImpl @Inject constructor(
                         val errorMessage = updateTask.exception?.message ?: resourceProvider.getString(R.string.error_message__profile_update_failed)
                         continuation.resume(Result.Error(Exception(errorMessage)))
                     }
-                }
+                } ?: continuation.resume(Result.Error(Exception(resourceProvider.getString(R.string.error_message__user_not_authenticated))))
             }
         } else Result.Error(Exception(resourceProvider.getString(R.string.error_message__username_blank)))
-
 
     override suspend fun login(email: String, password: String): Result<Unit> =
         if (email.isNotBlank() && password.isNotBlank()) {
@@ -71,7 +70,6 @@ class AuthRepositoryImpl @Inject constructor(
             }
         } else Result.Error(Exception(resourceProvider.getString(R.string.error_message__email_password_blank)))
 
-
     override suspend fun sendPasswordResetEmail(email: String): Result<Unit> =
         if (email.isNotBlank()) {
             suspendCoroutine { continuation ->
@@ -86,6 +84,35 @@ class AuthRepositoryImpl @Inject constructor(
                 }
             }
         } else Result.Error(Exception(resourceProvider.getString(R.string.error_message__email_blank)))
+
+    override suspend fun updateEmail(newEmail: String): Result<Unit> =
+        if (newEmail.isNotBlank()) {
+            suspendCoroutine { continuation ->
+                auth.currentUser?.verifyBeforeUpdateEmail(newEmail)?.addOnCompleteListener { updateTask ->
+                    if (updateTask.isSuccessful) {
+                        continuation.resume(Result.Success(Unit))
+                    } else {
+                        val errorMessage = updateTask.exception?.message
+                            ?: resourceProvider.getString(R.string.error_message__email_update_failed)
+                        continuation.resume(Result.Error(Exception(errorMessage)))
+                    }
+                } ?: continuation.resume(Result.Error(Exception(resourceProvider.getString(R.string.error_message__user_not_authenticated))))
+            }
+        } else Result.Error(Exception(resourceProvider.getString(R.string.error_message__email_blank)))
+
+    override suspend fun deleteAccount(): Result<Unit> =
+        suspendCoroutine { continuation ->
+            auth.currentUser?.delete()?.addOnCompleteListener { deleteTask ->
+                if (deleteTask.isSuccessful) {
+                    continuation.resume(Result.Success(Unit))
+                } else {
+                    val errorMessage = deleteTask.exception?.message
+                        ?: resourceProvider.getString(R.string.error_message__account_deletion_failed)
+                    continuation.resume(Result.Error(Exception(errorMessage)))
+                }
+            } ?: continuation.resume(Result.Error(Exception(resourceProvider.getString(R.string.error_message__user_not_authenticated))))
+        }
+
 
     override fun logout(): Result<Unit> {
         return try {

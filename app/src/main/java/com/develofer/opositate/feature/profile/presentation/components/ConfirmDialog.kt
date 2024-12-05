@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -19,6 +18,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginTextField
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
 import com.develofer.opositate.feature.profile.presentation.viewmodel.ConfirmDialogViewModel
+import com.develofer.opositate.main.components.common.LoadingButton
+import com.develofer.opositate.main.data.model.UiResult
 
 enum class FieldValidationType {
     EMAIL,
@@ -39,7 +40,9 @@ fun ConfirmDialog(
     secondFieldType: FieldValidationType = FieldValidationType.NONE,
     onConfirm: (String) -> Unit,
     onCancel: () -> Unit,
-    onDismissRequest: () -> Unit
+    onDismissRequest: () -> Unit,
+    uiResult: UiResult,
+    onAnimationComplete: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val isDarkTheme = isSystemInDarkTheme()
@@ -83,28 +86,30 @@ fun ConfirmDialog(
             }
         },
         confirmButton = {
-            Button(
+            LoadingButton(
+                state = uiResult,
                 onClick = {
-                    viewModel.validateFields(
+                    val isFieldsValid = viewModel.validateFields(
                         firstFieldType,
                         secondFieldType,
                         shouldValidateSecondField = true
                     )
-
-                    if (uiState.firstFieldValidationError == ValidateFieldErrors.NONE &&
-                        uiState.secondFieldValidationError == ValidateFieldErrors.NONE
-                    ) {
-                        onConfirm(
-                            uiState.firstFieldValue.trim(),
-                        )
-                    }
-                }
-            ) {
-                Text(text = confirmButtonText.uppercase())
-            }
+                    if (isFieldsValid) onConfirm(uiState.firstFieldValue)
+                },
+                onAnimationComplete = {
+                    onAnimationComplete()
+                    viewModel.cleanUpState()
+                    onDismissRequest()
+                },
+                modifier = Modifier,
+                text = confirmButtonText
+            )
         },
         dismissButton = {
-            TextButton(onClick = onCancel) {
+            TextButton(onClick = {
+                viewModel.cleanUpState()
+                onCancel()
+            }) {
                 Text(text = cancelButtonText.uppercase())
             }
         }
@@ -118,13 +123,5 @@ data class GenericDialogUiState(
     val isSecondFieldFocused: Boolean = false,
     val firstFieldValidationError: ValidateFieldErrors = ValidateFieldErrors.NONE,
     val secondFieldValidationError: ValidateFieldErrors = ValidateFieldErrors.NONE,
-    val isPasswordVisible: Boolean = false,
-    val actionState: ActionState = ActionState.Idle
+    val isPasswordVisible: Boolean = false
 )
-
-sealed class ActionState {
-    data object Idle : ActionState()
-    data object Loading : ActionState()
-    data object Success : ActionState()
-    data class Failure(val error: String) : ActionState()
-}
