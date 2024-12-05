@@ -8,10 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -35,24 +36,22 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.develofer.opositate.R
-import com.develofer.opositate.feature.login.presentation.component.CustomLoginButton
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginLogo
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginTextButton
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginTextField
 import com.develofer.opositate.feature.login.presentation.component.LoginHeader
+import com.develofer.opositate.feature.login.presentation.component.LoginLoadingButton
 import com.develofer.opositate.feature.login.presentation.model.LoginDialogType
-import com.develofer.opositate.feature.login.presentation.model.LoginState
 import com.develofer.opositate.feature.login.presentation.model.LoginUiState
 import com.develofer.opositate.feature.login.presentation.resetpassword.ResetPasswordDialog
 import com.develofer.opositate.feature.login.presentation.utils.KeyboardAwareScreen
 import com.develofer.opositate.feature.login.presentation.viewmodel.LoginViewModel
 import com.develofer.opositate.main.MainViewModel
-import com.develofer.opositate.main.components.common.BaseLottieAnimation
 import com.develofer.opositate.main.components.common.ErrorDialog
 import com.develofer.opositate.main.components.common.SuccessDialog
 import com.develofer.opositate.main.coordinator.DialogState
+import com.develofer.opositate.main.data.model.UiResult
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 
@@ -94,18 +93,14 @@ fun LoginScreen(
             uiState = uiState, loginViewModel = loginViewModel, isDarkTheme = isDarkTheme,
             isKeyBoardVisible = isKeyboardVisible, clearFocus = { focusManager.clearFocus() },
             onForgotPasswordClick = { loginViewModel.toggleResetPasswordDialogVisibility(true) },
-            navigateToRegister = { navigateToRegister() }
+            navigateToRegister = { navigateToRegister() },
+            navigateToProfile = { navigateToProfile() }
         )
         LoginResetPasswordDialog(
             showResetPasswordDialog = uiState.showResetPasswordDialog, focusManager = focusManager,
             loginViewModel = loginViewModel, onPasswordFinished = { passwordResetFinished = true},
             hideDialog = { loginViewModel.toggleResetPasswordDialogVisibility(false) },
             saveErrorMessage = { newErrorMessage -> registerErrorMessage = newErrorMessage },
-        )
-        LoginLoadingAnimation(
-            loginState = uiState.loginState, animationState = animationState,
-            modifier = Modifier.align(Alignment.BottomCenter),
-            onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState }
         )
         HandleDialog(
             hideDialog = {
@@ -122,8 +117,14 @@ fun LoginScreen(
 
 @Composable
 private fun LoginContent(
-    uiState: LoginUiState, loginViewModel: LoginViewModel, isDarkTheme: Boolean, isKeyBoardVisible: Boolean,
-    onForgotPasswordClick: () -> Unit, clearFocus: () -> Unit, navigateToRegister: () -> Unit,
+    uiState: LoginUiState,
+    loginViewModel: LoginViewModel,
+    isDarkTheme: Boolean,
+    isKeyBoardVisible: Boolean,
+    onForgotPasswordClick: () -> Unit,
+    clearFocus: () -> Unit,
+    navigateToRegister: () -> Unit,
+    navigateToProfile: () -> Unit,
 ) {
     val animatedPaddingTop by animateDpAsState(
         targetValue  = if (isKeyBoardVisible) 50.dp else if (isDarkTheme) 280.dp else 240.dp,
@@ -142,7 +143,7 @@ private fun LoginContent(
             subtitleTextId = R.string.login_screen__text__sign_in
         )
         LoginFields(uiState, loginViewModel, Modifier.align(Alignment.CenterHorizontally), isDarkTheme, onForgotPasswordClick)
-        LoginButtons(loginViewModel, isDarkTheme, clearFocus, navigateToRegister)
+        LoginButtons(loginViewModel, isDarkTheme, clearFocus, navigateToRegister, uiState.loginState, navigateToProfile, uiState.googleLoginState)
     }
 }
 
@@ -184,43 +185,48 @@ private fun ForgotPasswordButton(modifier: Modifier, isDarkTheme: Boolean, onFor
 
 @Composable
 private fun LoginButtons(
-    loginViewModel: LoginViewModel, isDarkTheme: Boolean,
-    clearFocus: () -> Unit = {}, navigateToRegister: () -> Unit
+    loginViewModel: LoginViewModel,
+    isDarkTheme: Boolean,
+    clearFocus: () -> Unit = {},
+    navigateToRegister: () -> Unit,
+    loginState: UiResult,
+    navigateToProfile: () -> Unit,
+    googleLoginState: UiResult
 ) {
     Spacer(modifier = Modifier.height(16.dp))
-    LoginButton(
-        onClick = {
+    LoginLoadingButton(
+        modifier = Modifier.padding(horizontal = 128.dp),
+        loadingState = loginState,
+        onclick = {
             loginViewModel.login()
             clearFocus()
         },
-        isDarkTheme = isDarkTheme
+        onAnimationComplete = {
+            if (loginState == UiResult.Success) navigateToProfile()
+            loginViewModel.cleanUpState()
+        },
+        isDarkTheme = isDarkTheme,
+        text = stringResource(id = R.string.login_screen__text_btn__go).uppercase()
     )
     Spacer(modifier = Modifier.height(16.dp))
-    GoogleLoginButton(
-        onClick = {
+    LoginLoadingButton(
+        modifier = Modifier.padding(horizontal = 16.dp),
+        loadingState = googleLoginState,
+        onclick = {  },
+        onAnimationComplete = {  },
+        isDarkTheme = isDarkTheme,
+        text = stringResource(id = R.string.login_screen__text_btn__google).uppercase(),
+        leadingIcon = {
+            Icon(
+                painter = painterResource(id = R.drawable.ic_google_icon),
+                contentDescription = null,
+                modifier = Modifier.size(25.dp),
+            )
+        }
 
-        }, isDarkTheme = isDarkTheme)
+    )
     Spacer(modifier = Modifier.height(12.dp))
     GoToRegisterButton(onClick = { navigateToRegister() }, isDarkTheme)
-}
-
-@Composable
-private fun LoginButton(onClick: () -> Unit, isDarkTheme: Boolean) {
-    CustomLoginButton(
-        text = stringResource(id = R.string.login_screen__text_btn__go).uppercase(),
-        onClick = onClick,
-        isDarkTheme = isDarkTheme
-    )
-}
-
-@Composable
-private fun GoogleLoginButton(onClick: () -> Unit, isDarkTheme: Boolean) {
-    CustomLoginButton(
-        text = stringResource(id = R.string.login_screen__text_btn__google),
-        onClick = { onClick() },
-        isDarkTheme = isDarkTheme,
-        icon = painterResource(id = R.drawable.ic_google_icon),
-    )
 }
 
 @Composable
@@ -256,21 +262,6 @@ fun LoginResetPasswordDialog(
 }
 
 @Composable
-private fun LoginLoadingAnimation(
-    loginState: LoginState, animationState: AnimationState,
-    modifier: Modifier, onAnimationStateChanged: (animationsState: AnimationState) -> Unit
-) {
-    if (loginState == LoginState.Loading || animationState == AnimationState.Loading) {
-        onAnimationStateChanged(AnimationState.Loading)
-        BaseLottieAnimation(
-            modifier = modifier.fillMaxWidth(),
-            animRes = LottieCompositionSpec.RawRes(R.raw.loading_anim7),
-//            surfaceColor = MaterialTheme.colorScheme.background,
-        ) { onAnimationStateChanged(AnimationState.Finish) }
-    }
-}
-
-@Composable
 private fun HandleDialog(
     animationState: AnimationState, uiState: LoginUiState, errorMessage: String?,
     onAnimationStateChanged: (animationState: AnimationState) -> Unit,
@@ -295,20 +286,20 @@ private fun HandleDialog(
                     )
                 }
                 LoginDialogType.LOGIN_ERROR -> {
-                    val error: String? = if (uiState.loginState is LoginState.Failure) {
-                        uiState.loginState.error
-                    } else null
-                    ErrorDialog(
-                        title = { Text(text = stringResource(id = R.string.login_screen__title_text__login_error)) },
-                        text = { Text(text = error ?: stringResource(id = R.string.login_screen__text__generic_error)) },
-                        confirmButton = {
-                            TextButton(onClick = { hideDialog() }) { Text(
-                                stringResource(id = R.string.login_screen__text_btn__ok)
-                            ) }
-                        },
-                        onDismiss = { hideDialog() },
-                        isDialogVisible = dialogState.value.isVisible
-                    )
+//                    val error: String? = if (uiState.loginState is LoginState.Failure) {
+//                        uiState.loginState.error
+//                    } else null
+//                    ErrorDialog(
+//                        title = { Text(text = stringResource(id = R.string.login_screen__title_text__login_error)) },
+//                        text = { Text(text = error ?: stringResource(id = R.string.login_screen__text__generic_error)) },
+//                        confirmButton = {
+//                            TextButton(onClick = { hideDialog() }) { Text(
+//                                stringResource(id = R.string.login_screen__text_btn__ok)
+//                            ) }
+//                        },
+//                        onDismiss = { hideDialog() },
+//                        isDialogVisible = dialogState.value.isVisible
+//                    )
                 }
                 LoginDialogType.RESET_PASSWORD_SUCCESS -> {
                     SuccessDialog(

@@ -1,6 +1,7 @@
 package com.develofer.opositate.feature.login.presentation.model
 
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
+import com.develofer.opositate.main.data.model.UiResult
 import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 
 data class LoginUiState(
@@ -11,12 +12,6 @@ data class LoginUiState(
     val emailValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
     val passwordValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
     val showResetPasswordDialog: Boolean = false,
-    val loginState: LoginState = LoginState.Idle,
+    val loginState: UiResult = UiResult.Idle,
+    val googleLoginState: UiResult = UiResult.Idle,
 )
-
-sealed class LoginState {
-    data object Idle : LoginState()
-    data object Loading : LoginState()
-    data object Success : LoginState()
-    data class Failure(val error: String) : LoginState()
-}

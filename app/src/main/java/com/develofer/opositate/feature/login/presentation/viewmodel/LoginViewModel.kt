@@ -5,11 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.domain.usecase.LoginUseCase
 import com.develofer.opositate.feature.login.presentation.model.LoginDialogType
-import com.develofer.opositate.feature.login.presentation.model.LoginState
 import com.develofer.opositate.feature.login.presentation.model.LoginUiState
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
 import com.develofer.opositate.main.coordinator.DialogStateCoordinator
 import com.develofer.opositate.main.data.model.Result
+import com.develofer.opositate.main.data.model.UiResult
 import com.develofer.opositate.main.data.provider.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -62,23 +62,23 @@ class LoginViewModel @Inject constructor(
     fun login() {
         if (areFieldsValid()) {
             viewModelScope.launch {
-                _uiState.update { it.copy(loginState = LoginState.Loading) }
+                _uiState.update { it.copy(loginState = UiResult.Loading) }
                 when (val result = loginUseCase(
                     email = _uiState.value.email.trim(),
                     password = _uiState.value.password.trim()
                 )) {
                     is Result.Success -> {
-                        _uiState.update { it.copy(loginState = LoginState.Success) }
+                        _uiState.update { it.copy(loginState = UiResult.Success) }
                         loginDialogStateCoordinator.showDialog(LoginDialogType.LOGIN_SUCCESS)
                     }
                     is Result.Error -> {
-                        _uiState.update { it.copy(loginState = LoginState.Failure(
+                        _uiState.update { it.copy(loginState = UiResult.Error(
                             result.exception.message ?: resourceProvider.getString(R.string.error_message__login_failed)))
                         }
                         loginDialogStateCoordinator.showDialog(LoginDialogType.LOGIN_ERROR)
                     }
                     is Result.Loading -> {
-                        _uiState.update { it.copy(loginState = LoginState.Loading) }
+                        _uiState.update { it.copy(loginState = UiResult.Loading) }
                     }
                 }
             }
@@ -120,5 +120,9 @@ class LoginViewModel @Inject constructor(
 
     private fun isFieldEmpty(value: String): Boolean {
         return value.isBlank()
+    }
+
+    fun cleanUpState() {
+        _uiState.update { it.copy(loginState = UiResult.Idle) }
     }
 }
