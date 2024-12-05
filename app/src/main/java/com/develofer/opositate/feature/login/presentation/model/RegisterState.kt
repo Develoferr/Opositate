@@ -1,6 +1,7 @@
 package com.develofer.opositate.feature.login.presentation.model
 
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
+import com.develofer.opositate.main.data.model.UiResult
 import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 
 data class RegisterUiState(
@@ -13,12 +14,5 @@ data class RegisterUiState(
     val usernameValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
     val emailValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
     val passwordValidateFieldError: ValidateFieldErrors = ValidateFieldErrors.NONE,
-    val registerState: RegisterState = RegisterState.Idle
+    val registerState: UiResult = UiResult.Idle
 )
-
-sealed class RegisterState {
-    data object Idle : RegisterState()
-    data object Loading : RegisterState()
-    data object Success : RegisterState()
-    data class Failure(val error: String) : RegisterState()
-}

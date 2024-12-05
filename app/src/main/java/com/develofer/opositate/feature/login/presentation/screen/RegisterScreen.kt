@@ -10,10 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -31,24 +28,17 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.develofer.opositate.R
-import com.develofer.opositate.feature.login.presentation.component.CustomLoginButton
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginLogo
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginTextButton
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginTextField
 import com.develofer.opositate.feature.login.presentation.component.LoginHeader
-import com.develofer.opositate.feature.login.presentation.model.RegisterDialogType
-import com.develofer.opositate.feature.login.presentation.model.RegisterState
+import com.develofer.opositate.feature.login.presentation.component.LoginLoadingButton
 import com.develofer.opositate.feature.login.presentation.model.RegisterUiState
 import com.develofer.opositate.feature.login.presentation.utils.KeyboardAwareScreen
 import com.develofer.opositate.feature.login.presentation.viewmodel.RegisterViewModel
-import com.develofer.opositate.main.components.common.BaseLottieAnimation
-import com.develofer.opositate.main.components.common.ErrorDialog
-import com.develofer.opositate.main.components.common.SuccessDialog
-import com.develofer.opositate.main.coordinator.DialogState
+import com.develofer.opositate.main.data.model.UiResult
 import com.develofer.opositate.ui.theme.OpositateTheme
-import kotlinx.coroutines.flow.StateFlow
 
 @Composable
 fun RegisterScreen(
@@ -64,8 +54,6 @@ fun RegisterScreen(
     val focusManager = LocalFocusManager.current
 
     val uiState by registerViewModel.uiState.collectAsState()
-    val dialogState = registerViewModel.getDialogState()
-    var animationState: AnimationState by remember { mutableStateOf(AnimationState.Idle) }
 
     Box(
         modifier = Modifier
@@ -84,32 +72,23 @@ fun RegisterScreen(
             isKeyboardVisible = isKeyboardVisible,
             registerViewModel = registerViewModel,
             navigateToLogin = { navigateToLogin() },
-            clearFocus = { focusManager.clearFocus() }
-        )
-        RegisterLoadingAnimation(
+            clearFocus = { focusManager.clearFocus() },
             registerState = uiState.registerState,
-            animationState = animationState,
-            modifier = Modifier.align(Alignment.BottomCenter),
-            onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState }
-        )
-        HandleRegisterDialog(
-            hideDialog = {
-                animationState = AnimationState.Idle
-                registerViewModel.hideDialog()
-            },
-            animationState = animationState,
-            uiState = uiState,
-            dialogState = dialogState,
-            onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState },
-            navigateToLogin = { navigateToLogin() },
+            cleanUpState = { registerViewModel.cleanUpState() }
         )
     }
 }
 
 @Composable
 private fun RegisterContent(
-    uiState: RegisterUiState, isDarkTheme: Boolean, isKeyboardVisible: Boolean,
-    registerViewModel: RegisterViewModel, navigateToLogin: () -> Unit, clearFocus: () -> Unit
+    uiState: RegisterUiState,
+    isDarkTheme: Boolean,
+    isKeyboardVisible: Boolean,
+    registerViewModel: RegisterViewModel,
+    navigateToLogin: () -> Unit,
+    clearFocus: () -> Unit,
+    registerState: UiResult,
+    cleanUpState: () -> Unit
 ) {
     val animatedPaddingTop by animateDpAsState(
         targetValue  = if (isKeyboardVisible) 50.dp else if (isDarkTheme) 280.dp else 240.dp,
@@ -125,7 +104,7 @@ private fun RegisterContent(
             R.string.register_screen__text__journey_begins
         )
         RegisterFields(uiState, registerViewModel, isDarkTheme)
-        RegisterButtons(isDarkTheme, registerViewModel, navigateToLogin, clearFocus)
+        RegisterButtons(isDarkTheme, registerViewModel, navigateToLogin, clearFocus, registerState, cleanUpState)
     }
 }
 
@@ -163,15 +142,26 @@ fun RegisterFields(uiState: RegisterUiState, registerViewModel: RegisterViewMode
 }
 
 @Composable
-fun RegisterButtons(isDarkTheme: Boolean, registerViewModel: RegisterViewModel, navigateToLogin: () -> Unit, clearFocus: () -> Unit) {
+fun RegisterButtons(
+    isDarkTheme: Boolean,
+    registerViewModel: RegisterViewModel,
+    navigateToLogin: () -> Unit,
+    clearFocus: () -> Unit,
+    registerState: UiResult,
+    cleanUpState: () -> Unit
+) {
     Spacer(modifier = Modifier.height(26.dp))
-    CustomLoginButton(
-        onClick = {
+    LoginLoadingButton(
+        modifier = Modifier.padding(horizontal = 64.dp),
+        loadingState = registerState,
+        onclick = {
             registerViewModel.register()
             clearFocus()
-        },
-        text = stringResource(id = R.string.register_screen__text_btn__register),
-        isDarkTheme = isDarkTheme
+        }, onAnimationComplete = {
+            if (registerState == UiResult.Success) navigateToLogin()
+            cleanUpState()
+        }, isDarkTheme = isDarkTheme,
+        text = stringResource(id = R.string.register_screen__text_btn__register).uppercase()
     )
     Spacer(modifier = Modifier.height(12.dp))
     CustomLoginTextButton(
@@ -179,76 +169,6 @@ fun RegisterButtons(isDarkTheme: Boolean, registerViewModel: RegisterViewModel, 
         text = stringResource(id = R.string.register_screen__text_btn__already_have_account),
         isDarkTheme = isDarkTheme
     )
-}
-
-@Composable
-private fun RegisterLoadingAnimation(
-    registerState: RegisterState, animationState: AnimationState,
-    modifier: Modifier, onAnimationStateChanged: (animationsState: AnimationState) -> Unit
-) {
-    if (registerState == RegisterState.Loading || animationState == AnimationState.Loading) {
-        onAnimationStateChanged(AnimationState.Loading)
-        BaseLottieAnimation(
-            modifier = modifier.size(200.dp),
-            surfaceColor = MaterialTheme.colorScheme.background,
-            LottieCompositionSpec.RawRes(R.raw.loading_anim7),
-        ) { onAnimationStateChanged(AnimationState.Finish) }
-    }
-}
-
-@Composable
-private fun HandleRegisterDialog(
-    hideDialog: () -> Unit, animationState: AnimationState, uiState: RegisterUiState,
-    dialogState: StateFlow<DialogState<RegisterDialogType>>,
-    onAnimationStateChanged: (animationState: AnimationState) -> Unit, navigateToLogin: () -> Unit) {
-
-    if (animationState == AnimationState.Finish || animationState == AnimationState.Dialog) {
-        onAnimationStateChanged(AnimationState.Dialog)
-        if (dialogState.collectAsState().value.isVisible) {
-            when (dialogState.collectAsState().value.dialogType) {
-                RegisterDialogType.REGISTER_SUCCESS -> {
-                    SuccessDialog(
-                        onDismiss = {
-                            hideDialog()
-                            navigateToLogin()
-                        },
-                        isDialogVisible = dialogState.collectAsState().value.isVisible, delayTime = 3000,
-                        title = { Text(text = stringResource(id = R.string.register_screen__title_text__login_successful)) },
-                        content = { Text(stringResource(id = R.string.register_screen__text__login_successful)) },
-                    )
-                }
-                RegisterDialogType.REGISTER_ERROR -> {
-                    val error: String? = if (uiState.registerState is RegisterState.Failure) {
-                        uiState.registerState.error
-                    } else null
-                    ErrorDialog(
-                        title = { Text(text = stringResource(id = R.string.register_screen__title_text__login_error)) },
-                        text = { Text(text = error ?: stringResource(id = R.string.register_screen__text__reset_password_successful)) },
-                        confirmButton = {
-                            TextButton(onClick = { hideDialog() }) { Text(
-                                stringResource(id = R.string.login_screen__text_btn__ok)
-                            ) }
-                        },
-                        onDismiss = { hideDialog() },
-                        isDialogVisible = dialogState.collectAsState().value.isVisible
-                    )
-                }
-                else -> {
-                    ErrorDialog(
-                        onDismiss = { hideDialog() },
-                        text = { Text(text = stringResource(id = R.string.login_screen__text__generic_error)) },
-                        confirmButton = {
-                            TextButton(onClick = { hideDialog() }) {
-                                Text(
-                                    stringResource(id = R.string.login_screen__text_btn__ok)
-                                )
-                            }
-                        },
-                    )
-                }
-            }
-        }
-    }
 }
 
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)

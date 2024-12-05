@@ -4,12 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.domain.usecase.CreateUserUseCase
-import com.develofer.opositate.feature.login.presentation.model.RegisterDialogType
-import com.develofer.opositate.feature.login.presentation.model.RegisterState
 import com.develofer.opositate.feature.login.presentation.model.RegisterUiState
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
-import com.develofer.opositate.main.coordinator.DialogStateCoordinator
 import com.develofer.opositate.main.data.model.Result
+import com.develofer.opositate.main.data.model.UiResult
 import com.develofer.opositate.main.data.provider.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,13 +25,6 @@ class RegisterViewModel @Inject constructor(
 
     private val _uiState = MutableStateFlow(RegisterUiState())
     val uiState: StateFlow<RegisterUiState> = _uiState.asStateFlow()
-
-    private val registerDialogStateCoordinator: DialogStateCoordinator<RegisterDialogType> = DialogStateCoordinator()
-    fun getDialogState() = registerDialogStateCoordinator.dialogState
-
-    fun hideDialog() {
-        registerDialogStateCoordinator.hideDialog()
-    }
 
     fun onUsernameChanged(newUsername: String) {
         _uiState.update { it.copy(username = newUsername) }
@@ -62,24 +53,22 @@ class RegisterViewModel @Inject constructor(
     fun register() {
         if (areFieldsValid()) {
             viewModelScope.launch {
-                _uiState.update { it.copy(registerState = RegisterState.Loading) }
+                _uiState.update { it.copy(registerState = UiResult.Loading) }
                 when (val result = createUserUseCase(
                     username = _uiState.value.username.trim(),
                     email = _uiState.value.email.trim(),
                     password = _uiState.value.password.trim()
                 )) {
                     is Result.Success -> {
-                        _uiState.update { it.copy(registerState = RegisterState.Success) }
-                        registerDialogStateCoordinator.showDialog(RegisterDialogType.REGISTER_SUCCESS)
+                        _uiState.update { it.copy(registerState = UiResult.Success) }
                     }
                     is Result.Error -> {
-                        _uiState.update { it.copy(registerState = RegisterState.Failure(
+                        _uiState.update { it.copy(registerState = UiResult.Error(
                             result.exception.message ?: resourceProvider.getString(R.string.error_message__register_failed)))
                         }
-                        registerDialogStateCoordinator.showDialog(RegisterDialogType.REGISTER_ERROR)
                     }
                     is Result.Loading -> {
-                        _uiState.update { it.copy(registerState = RegisterState.Loading) }
+                        _uiState.update { it.copy(registerState = UiResult.Loading) }
                     }
                 }
             }
@@ -100,7 +89,7 @@ class RegisterViewModel @Inject constructor(
             it.copy(
                 usernameValidateFieldError = when {
                     isFieldEmpty(it.username) -> {
-                        if (_uiState.value.registerState is RegisterState.Idle) ValidateFieldErrors.NONE
+                        if (_uiState.value.registerState is UiResult.Idle) ValidateFieldErrors.NONE
                         else ValidateFieldErrors.EMPTY_TEXT
                     }
                     else -> ValidateFieldErrors.NONE
@@ -138,5 +127,9 @@ class RegisterViewModel @Inject constructor(
 
     private fun isFieldEmpty(value: String): Boolean {
         return value.isBlank()
+    }
+
+    fun cleanUpState() {
+        _uiState.update { it.copy(registerState = UiResult.Idle) }
     }
 }
