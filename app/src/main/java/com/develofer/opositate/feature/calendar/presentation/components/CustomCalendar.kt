@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -46,7 +47,7 @@ fun CalendarContent(
     weekConfiguration: WeekConfiguration = WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY
 ) {
     Column(
-        modifier = Modifier.padding(horizontal = 16.dp)
+        modifier = Modifier.fillMaxSize().background(if (isDarkTheme) Color.Unspecified else Color.White).padding(horizontal = 16.dp)
     ) {
         Spacer(modifier = Modifier.size(24.dp))
         MonthYearSelector(yearMonth, onPreviousMonthClicked, onNextMonthClicked)

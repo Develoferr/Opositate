@@ -1,5 +1,6 @@
 package com.develofer.opositate.feature.test.presentation.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -47,7 +48,8 @@ fun TestContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
+            .verticalScroll(rememberScrollState())
+            .background(if (isDarkTheme) Color.Unspecified else Color.White),
     ) {
 
         Spacer(modifier = Modifier.size(16.dp))

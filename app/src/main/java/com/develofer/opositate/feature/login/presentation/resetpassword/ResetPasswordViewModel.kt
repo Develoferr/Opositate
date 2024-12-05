@@ -82,7 +82,7 @@ class ResetPasswordViewModel @Inject constructor(
 
         val confirmEmailError = when {
             isFieldEmpty(state.confirmEmail) -> ValidateFieldErrors.EMPTY_TEXT
-            state.email != state.confirmEmail -> ValidateFieldErrors.EMAILS_DO_NOT_MATCH
+            state.email != state.confirmEmail -> ValidateFieldErrors.FIELDS_DO_NOT_MATCH
             !isEmailValid(state.email) -> ValidateFieldErrors.INVALID_EMAIL
             else -> ValidateFieldErrors.NONE
         }

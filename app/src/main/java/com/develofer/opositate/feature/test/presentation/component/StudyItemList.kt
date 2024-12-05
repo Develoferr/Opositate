@@ -106,7 +106,7 @@ fun StudyItemList(
 
                     if (!studyItemList[it].isEnabled) {
                         Icon(
-                            painter = painterResource(id = R.drawable.lock),
+                            painter = painterResource(id = R.drawable.ic_lock),
                             contentDescription = stringResource(R.string.study_item_list__content_description__locked),
                             tint = if (isDarkTheme) Gray700 else Color.Gray,
                             modifier = Modifier.size(24.dp)

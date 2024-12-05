@@ -56,6 +56,7 @@ import kotlinx.coroutines.delay
 
 @Composable
 fun CustomLoginTextField(
+    modifier: Modifier = Modifier.padding(horizontal = 45.dp),
     value: String, onValueChange: (String) -> Unit, label: String, isFocused: Boolean,
     onFocusChange: (Boolean) -> Unit, isPasswordField: Boolean = false,
     supportingText: ValidateFieldErrors, isDarkTheme: Boolean, textLetterSpacing: TextUnit = 2.sp,
@@ -89,9 +90,8 @@ fun CustomLoginTextField(
             focusedTextColor = Color.Black,
             unfocusedTextColor = Color.Black
         ),
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
-            .padding(horizontal = 45.dp)
             .padding(textFieldPaddingBottom)
             .height(76.dp)
             .onFocusChanged { onFocusChange(it.isFocused) },
@@ -137,7 +137,7 @@ private fun getSupportingText(
     val supportingTextFieldError = when (supportingText) {
         ValidateFieldErrors.INVALID_EMAIL -> stringResource(id = R.string.custom_login_text_field__supporting_text__invalid_email)
         ValidateFieldErrors.EMPTY_TEXT -> stringResource(id = R.string.custom_login_text_field__supporting_text__empty_field)
-        ValidateFieldErrors.EMAILS_DO_NOT_MATCH -> stringResource(id = R.string.custom_login_text_field__supporting_text__emails_do_not_match)
+        ValidateFieldErrors.FIELDS_DO_NOT_MATCH -> stringResource(id = R.string.custom_login_text_field__supporting_text__emails_do_not_match)
         else -> EMPTY_STRING
     }
     return {

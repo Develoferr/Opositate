@@ -72,7 +72,7 @@ fun TestSolvingScreen(
             groupId,
             abilityId,
             taskId
-            )
+        )
         if (uiState.isTestActive) {
             while (testFinishModeCondition) {
                 delay(1.seconds)

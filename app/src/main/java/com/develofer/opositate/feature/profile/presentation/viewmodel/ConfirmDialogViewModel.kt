@@ -1,19 +1,15 @@
 package com.develofer.opositate.feature.profile.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
-import com.develofer.opositate.feature.profile.presentation.components.ActionState
 import com.develofer.opositate.feature.profile.presentation.components.FieldValidationType
 import com.develofer.opositate.feature.profile.presentation.components.GenericDialogUiState
-import com.develofer.opositate.main.data.model.Result
 import com.develofer.opositate.main.data.provider.ResourceProvider
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -47,7 +43,7 @@ class ConfirmDialogViewModel @Inject constructor(
         firstFieldType: FieldValidationType,
         secondFieldType: FieldValidationType,
         shouldValidateSecondField: Boolean = true
-    ) {
+    ): Boolean {
         val firstFieldError = validateSingleField(
             value = _uiState.value.firstFieldValue,
             validationType = firstFieldType
@@ -57,7 +53,6 @@ class ConfirmDialogViewModel @Inject constructor(
             validateSecondField(
                 firstValue = _uiState.value.firstFieldValue,
                 secondValue = _uiState.value.secondFieldValue,
-                firstFieldType = firstFieldType,
                 secondFieldType = secondFieldType
             )
         } else ValidateFieldErrors.NONE
@@ -66,6 +61,7 @@ class ConfirmDialogViewModel @Inject constructor(
             firstFieldValidationError = firstFieldError,
             secondFieldValidationError = secondFieldError
         ) }
+        return firstFieldError == ValidateFieldErrors.NONE && secondFieldError == ValidateFieldErrors.NONE
     }
 
     private fun validateSingleField(
@@ -94,19 +90,12 @@ class ConfirmDialogViewModel @Inject constructor(
     private fun validateSecondField(
         firstValue: String,
         secondValue: String,
-        firstFieldType: FieldValidationType,
         secondFieldType: FieldValidationType
     ): ValidateFieldErrors {
         if (secondValue.isBlank()) return ValidateFieldErrors.EMPTY_TEXT
 
         return when {
-            firstFieldType == FieldValidationType.EMAIL &&
-                    secondFieldType == FieldValidationType.EMAIL &&
-                    firstValue != secondValue -> ValidateFieldErrors.FIELDS_DO_NOT_MATCH
-
-            firstFieldType == FieldValidationType.PASSWORD &&
-                    secondFieldType == FieldValidationType.PASSWORD &&
-                    firstValue != secondValue -> ValidateFieldErrors.FIELDS_DO_NOT_MATCH
+            firstValue != secondValue -> ValidateFieldErrors.FIELDS_DO_NOT_MATCH
 
             else -> validateSingleField(secondValue, secondFieldType)
         }
@@ -116,31 +105,15 @@ class ConfirmDialogViewModel @Inject constructor(
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
     }
 
-    fun performAction(
-        onSuccess: () -> Unit,
-        onFailure: (String) -> Unit,
-        actionBlock: suspend () -> Result<Any>
-    ) {
-        viewModelScope.launch {
-            _uiState.update { it.copy(actionState = ActionState.Loading) }
-
-            when (val result = actionBlock()) {
-                is Result.Success -> {
-                    _uiState.update { it.copy(actionState = ActionState.Success) }
-                    onSuccess()
-                }
-                is Result.Error -> {
-                    _uiState.update {
-                        it.copy(actionState = ActionState.Failure(
-                            result.exception.message ?: "An error occurred"
-                        ))
-                    }
-                    onFailure(result.exception.message ?: "An error occurred")
-                }
-                is Result.Loading -> {
-                    _uiState.update { it.copy(actionState = ActionState.Loading) }
-                }
-            }
-        }
+    fun cleanUpState() {
+        _uiState.update { GenericDialogUiState(
+            firstFieldValue = "",
+            secondFieldValue = "",
+            isFirstFieldFocused = false,
+            isSecondFieldFocused = false,
+            firstFieldValidationError = ValidateFieldErrors.NONE,
+            secondFieldValidationError = ValidateFieldErrors.NONE,
+            isPasswordVisible = false
+        ) }
     }
 }
