@@ -44,7 +44,7 @@ fun CalendarContent(
     onPreviousMonthClicked: () -> Unit,
     onNextMonthClicked: () -> Unit,
     isDarkTheme: Boolean,
-    weekConfiguration: WeekConfiguration = WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY
+    weekConfiguration: WeekConfiguration = WeekConfiguration.MONDAY_START_WEEK
 ) {
     Column(
         modifier = Modifier.fillMaxSize().background(if (isDarkTheme) Color.Unspecified else Color.White).padding(horizontal = 16.dp)
@@ -120,17 +120,24 @@ private fun DaysOfMonth(
 ) {
     var index = 0
     repeat(6) {
-        Row {
-            repeat(7) {
-                val date = if (index < dates.size) dates[index] else CalendarUiState.Date.Empty
-                DayOfMonthItem(
-                    date = date,
-                    onClickListener = onDateClick,
-                    modifier = Modifier.weight(1f),
-                    isDarkTheme = isDarkTheme,
-                    weekConfiguration = weekConfiguration
-                )
-                index++
+        val isAllWeekDaysOutsideMonth = (0 until 7).all {
+            val currentIndex = index + it
+            !dates[currentIndex].isInCurrentMonth
+        }
+
+        if (!isAllWeekDaysOutsideMonth) {
+            Row {
+                repeat(7) {
+                    val date = if (index < dates.size) dates[index] else CalendarUiState.Date.Empty
+                    DayOfMonthItem(
+                        date = date,
+                        onClickListener = onDateClick,
+                        modifier = Modifier.weight(1f),
+                        isDarkTheme = isDarkTheme,
+                        weekConfiguration = weekConfiguration
+                    )
+                    index++
+                }
             }
         }
     }
@@ -142,7 +149,7 @@ fun DayOfMonthItem(
     onClickListener: (CalendarUiState.Date) -> Unit,
     modifier: Modifier = Modifier,
     isDarkTheme: Boolean,
-    weekConfiguration: WeekConfiguration = WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY
+    weekConfiguration: WeekConfiguration = WeekConfiguration.MONDAY_START_WEEK
 ) {
     val textColor = if (date.isInCurrentMonth) {
         if (isWeekend(date.date, weekConfiguration)) MaterialTheme.colorScheme.secondary

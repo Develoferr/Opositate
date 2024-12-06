@@ -33,7 +33,7 @@ class CalendarViewModel @Inject constructor(
 
     private fun updateCalendar(newMonth: YearMonth) {
         viewModelScope.launch {
-            val dates = getCalendarDatesUseCase(newMonth, WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY)
+            val dates = getCalendarDatesUseCase(newMonth, WeekConfiguration.MONDAY_START_WEEK)
             _uiState.value = CalendarUiState(newMonth, dates)
         }
     }

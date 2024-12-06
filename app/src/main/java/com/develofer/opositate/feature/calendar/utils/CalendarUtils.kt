@@ -23,15 +23,15 @@ fun getLocalizedMonthName(yearMonth: YearMonth): String {
 }
 
 enum class WeekConfiguration {
-    MONDAY_START_WEEKEND_SATURDAY_SUNDAY,
-    SUNDAY_START_WEEKEND_FRIDAY_SATURDAY
+    MONDAY_START_WEEK,
+    SUNDAY_START_WEEK
 }
 
 fun getDaysOfWeek(weekConfiguration: WeekConfiguration): List<String> {
     val allDays = daysOfWeek.toList()
     return when (weekConfiguration) {
-        WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY -> allDays
-        WeekConfiguration.SUNDAY_START_WEEKEND_FRIDAY_SATURDAY -> {
+        WeekConfiguration.MONDAY_START_WEEK -> allDays
+        WeekConfiguration.SUNDAY_START_WEEK -> {
             val sundayIndex = allDays.indexOf(DayOfWeek.SUNDAY.getDisplayName(TextStyle.SHORT, Locale.getDefault()))
             if (sundayIndex != -1) {
                 allDays.drop(sundayIndex) + allDays.take(sundayIndex)
@@ -44,9 +44,9 @@ fun getDaysOfWeek(weekConfiguration: WeekConfiguration): List<String> {
 
 fun isWeekend(date: LocalDate, weekConfiguration: WeekConfiguration): Boolean {
     return when (weekConfiguration) {
-        WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY ->
+        WeekConfiguration.MONDAY_START_WEEK ->
             date.dayOfWeek == DayOfWeek.SATURDAY || date.dayOfWeek == DayOfWeek.SUNDAY
-        WeekConfiguration.SUNDAY_START_WEEKEND_FRIDAY_SATURDAY ->
+        WeekConfiguration.SUNDAY_START_WEEK ->
             date.dayOfWeek == DayOfWeek.FRIDAY || date.dayOfWeek == DayOfWeek.SATURDAY
     }
 }

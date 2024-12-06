@@ -31,6 +31,6 @@ fun CalendarScreen(
         onPreviousMonthClicked = { calendarViewModel.toPreviousMonth() },
         onNextMonthClicked = { calendarViewModel.toNextMonth() },
         isDarkTheme = isDarkTheme,
-        weekConfiguration = WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY
+        weekConfiguration = WeekConfiguration.MONDAY_START_WEEK
     )
 }

@@ -10,8 +10,8 @@ import java.time.temporal.TemporalAdjusters
 class CalendarDataSource {
     fun getDates(yearMonth: YearMonth, weekConfiguration: WeekConfiguration): List<CalendarUiState.Date> {
         val firstDayOfWeek = when (weekConfiguration) {
-            WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY -> DayOfWeek.MONDAY
-            WeekConfiguration.SUNDAY_START_WEEKEND_FRIDAY_SATURDAY -> DayOfWeek.SUNDAY
+            WeekConfiguration.MONDAY_START_WEEK -> DayOfWeek.MONDAY
+            WeekConfiguration.SUNDAY_START_WEEK -> DayOfWeek.SUNDAY
         }
 
         val firstDayOfMonth = LocalDate.of(yearMonth.year, yearMonth.monthValue, 1)
@@ -20,8 +20,8 @@ class CalendarDataSource {
         val startDay = firstDayOfMonth.with(TemporalAdjusters.previousOrSame(firstDayOfWeek))
         val endDay = lastDayOfMonth.with(TemporalAdjusters.nextOrSame(
             when (weekConfiguration) {
-                WeekConfiguration.MONDAY_START_WEEKEND_SATURDAY_SUNDAY -> DayOfWeek.SUNDAY
-                WeekConfiguration.SUNDAY_START_WEEKEND_FRIDAY_SATURDAY -> DayOfWeek.SATURDAY
+                WeekConfiguration.MONDAY_START_WEEK -> DayOfWeek.SUNDAY
+                WeekConfiguration.SUNDAY_START_WEEK -> DayOfWeek.SATURDAY
             }
         ))
 
