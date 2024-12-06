@@ -1,5 +1,8 @@
 package com.develofer.opositate.feature.login.presentation.component
 
+import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.border
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -12,7 +15,6 @@ import com.develofer.opositate.main.data.model.UiResult
 import com.develofer.opositate.ui.theme.ErrorLight
 import com.develofer.opositate.ui.theme.Gray200
 import com.develofer.opositate.ui.theme.Primary
-import com.develofer.opositate.ui.theme.Secondary
 
 @Composable
 fun LoginLoadingButton(
@@ -25,7 +27,12 @@ fun LoginLoadingButton(
     leadingIcon: @Composable (() -> Unit)? = null
 ) {
     LoadingButton(
-        modifier = modifier,
+        modifier = modifier.border(
+            if (!isDarkTheme && loadingState is UiResult.Success)
+                BorderStroke(2.dp, Color.Black)
+            else BorderStroke(width = 0.dp, color = Color.Transparent),
+            shape = RoundedCornerShape(13.dp)
+        ),
         text = text,
         state = loadingState, onClick = {
             onclick()
@@ -33,11 +40,11 @@ fun LoginLoadingButton(
             onAnimationComplete()
         },
         idleBackgroundColor = if (isDarkTheme) Primary else Color.Black,
-        successBackgroundColor = if (isDarkTheme) Secondary else Secondary,
-        errorBackgroundColor = if (isDarkTheme) ErrorLight else ErrorLight,
+        successBackgroundColor = Primary,
+        errorBackgroundColor = ErrorLight,
         loadingIndicatorColor = if (isDarkTheme) Color.Black else Gray200,
-        errorIndicatorColor = if (isDarkTheme) Color.Black else Color.Black,
-        successIndicatorColor = if (isDarkTheme) Color.Black else Color.Black,
+        errorIndicatorColor =  Color.Black,
+        successIndicatorColor = Color.Black,
         textComponent = {
             Text(
                 text = text,

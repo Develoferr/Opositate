@@ -142,10 +142,10 @@ class ProfileViewModel @Inject constructor(
         }
     }
 
-    fun updatePassword(newPassword: String) {
+    fun updatePassword(email: String) {
         _uiState.update {it.copy(updatePasswordResult = UiResult.Loading)}
         viewModelScope.launch {
-            when (resetPasswordUseCase(newPassword)) {
+            when (resetPasswordUseCase(email)) {
                 is Result.Success -> {
                     _uiState.update {it.copy(updatePasswordResult = UiResult.Success)}
                 }

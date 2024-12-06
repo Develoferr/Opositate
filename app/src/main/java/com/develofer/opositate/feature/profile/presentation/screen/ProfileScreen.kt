@@ -57,7 +57,7 @@ fun ProfileScreen(
         closeDialog = { profileViewModel.hideDialog() },
         updateUserName = { newUserName -> profileViewModel.updateUserName(newUserName) },
         updateEmail = { newEmail -> profileViewModel.updateEmail(newEmail) },
-        updatePassword = { newPassword -> profileViewModel.updatePassword(newPassword) },
+        updatePassword = { email -> profileViewModel.updatePassword(email) },
         logOut = { profileViewModel.logOut() },
         updateEmailUiResult = uiState.value.updateEmailResult,
         updatePasswordUiResult = uiState.value.updatePasswordResult,

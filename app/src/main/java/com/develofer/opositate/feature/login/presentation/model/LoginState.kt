@@ -14,4 +14,5 @@ data class LoginUiState(
     val showResetPasswordDialog: Boolean = false,
     val loginState: UiResult = UiResult.Idle,
     val googleLoginState: UiResult = UiResult.Idle,
+    val updatePasswordState: UiResult = UiResult.Idle
 )

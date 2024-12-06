@@ -4,10 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.login.domain.usecase.LoginUseCase
-import com.develofer.opositate.feature.login.presentation.model.LoginDialogType
+import com.develofer.opositate.feature.login.domain.usecase.ResetPasswordUseCase
 import com.develofer.opositate.feature.login.presentation.model.LoginUiState
 import com.develofer.opositate.feature.login.presentation.model.TextFieldErrors.ValidateFieldErrors
-import com.develofer.opositate.main.coordinator.DialogStateCoordinator
 import com.develofer.opositate.main.data.model.Result
 import com.develofer.opositate.main.data.model.UiResult
 import com.develofer.opositate.main.data.provider.ResourceProvider
@@ -22,22 +21,12 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase,
-    private val resourceProvider: ResourceProvider
+    private val resourceProvider: ResourceProvider,
+    private val resetPasswordUseCase: ResetPasswordUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(LoginUiState())
     val uiState: StateFlow<LoginUiState> = _uiState.asStateFlow()
-
-    private val loginDialogStateCoordinator: DialogStateCoordinator<LoginDialogType> = DialogStateCoordinator()
-    fun getDialogState() = loginDialogStateCoordinator.dialogState
-
-    fun showDialog(dialogType: LoginDialogType) {
-        loginDialogStateCoordinator.showDialog(dialogType)
-    }
-
-    fun hideDialog() {
-        loginDialogStateCoordinator.hideDialog()
-    }
 
     fun onEmailChanged(newEmail: String) {
         _uiState.update { it.copy(email = newEmail) }
@@ -69,18 +58,32 @@ class LoginViewModel @Inject constructor(
                 )) {
                     is Result.Success -> {
                         _uiState.update { it.copy(loginState = UiResult.Success) }
-                        loginDialogStateCoordinator.showDialog(LoginDialogType.LOGIN_SUCCESS)
                     }
                     is Result.Error -> {
                         _uiState.update { it.copy(loginState = UiResult.Error(
                             result.exception.message ?: resourceProvider.getString(R.string.error_message__login_failed)))
                         }
-                        loginDialogStateCoordinator.showDialog(LoginDialogType.LOGIN_ERROR)
                     }
                     is Result.Loading -> {
                         _uiState.update { it.copy(loginState = UiResult.Loading) }
                     }
                 }
+            }
+        }
+    }
+
+    fun updatePassword(email: String) {
+        _uiState.update {it.copy(updatePasswordState = UiResult.Loading)}
+        viewModelScope.launch {
+            when (resetPasswordUseCase(email)) {
+                is Result.Success -> {
+                    _uiState.update {it.copy(updatePasswordState = UiResult.Success)}
+                }
+                is Result.Error -> {
+                    _uiState.update {it.copy(updatePasswordState = UiResult.Error("An error occurred"))}
+                }
+
+                is Result.Loading -> {}
             }
         }
     }
@@ -123,6 +126,10 @@ class LoginViewModel @Inject constructor(
     }
 
     fun cleanUpState() {
-        _uiState.update { it.copy(loginState = UiResult.Idle) }
+        _uiState.update { it.copy(
+            loginState = UiResult.Idle,
+            googleLoginState = UiResult.Idle,
+            updatePasswordState = UiResult.Idle
+        ) }
     }
 }

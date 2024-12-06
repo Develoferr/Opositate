@@ -14,10 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,15 +39,12 @@ import com.develofer.opositate.feature.login.presentation.component.CustomLoginT
 import com.develofer.opositate.feature.login.presentation.component.CustomLoginTextField
 import com.develofer.opositate.feature.login.presentation.component.LoginHeader
 import com.develofer.opositate.feature.login.presentation.component.LoginLoadingButton
-import com.develofer.opositate.feature.login.presentation.model.LoginDialogType
 import com.develofer.opositate.feature.login.presentation.model.LoginUiState
-import com.develofer.opositate.feature.login.presentation.resetpassword.ResetPasswordDialog
 import com.develofer.opositate.feature.login.presentation.utils.KeyboardAwareScreen
 import com.develofer.opositate.feature.login.presentation.viewmodel.LoginViewModel
+import com.develofer.opositate.feature.profile.presentation.components.ConfirmDialog
+import com.develofer.opositate.feature.profile.presentation.components.FieldValidationType
 import com.develofer.opositate.main.MainViewModel
-import com.develofer.opositate.main.components.common.ErrorDialog
-import com.develofer.opositate.main.components.common.SuccessDialog
-import com.develofer.opositate.main.coordinator.DialogState
 import com.develofer.opositate.main.data.model.UiResult
 import com.develofer.opositate.ui.theme.OpositateTheme
 import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
@@ -71,10 +65,6 @@ fun LoginScreen(
     val focusManager = LocalFocusManager.current
 
     val uiState by loginViewModel.uiState.collectAsState()
-    val dialogState = loginViewModel.getDialogState().collectAsState()
-    var passwordResetFinished by remember { mutableStateOf(false) }
-    var animationState: AnimationState by remember { mutableStateOf(AnimationState.Idle) }
-    var registerErrorMessage: String? by remember { mutableStateOf(null) }
 
     mainViewModel.hideSystemUI()
 
@@ -98,19 +88,11 @@ fun LoginScreen(
         )
         LoginResetPasswordDialog(
             showResetPasswordDialog = uiState.showResetPasswordDialog, focusManager = focusManager,
-            loginViewModel = loginViewModel, onPasswordFinished = { passwordResetFinished = true},
+            loginViewModel = loginViewModel,
             hideDialog = { loginViewModel.toggleResetPasswordDialogVisibility(false) },
-            saveErrorMessage = { newErrorMessage -> registerErrorMessage = newErrorMessage },
-        )
-        HandleDialog(
-            hideDialog = {
-                animationState = AnimationState.Idle
-                loginViewModel.hideDialog()
-            },
-            animationState = animationState, uiState = uiState, errorMessage = registerErrorMessage,
-            dialogState = dialogState, passwordResetFinished = passwordResetFinished,
-            onAnimationStateChanged = { newAnimationState -> animationState = newAnimationState },
-            navigateToProfile = { navigateToProfile() }, onDialogDismissed = { passwordResetFinished = false }
+            updatePassword = { loginViewModel.updatePassword(it) },
+            updatePasswordUiResult = uiState.updatePasswordState,
+            cleanUpState = { loginViewModel.cleanUpState() }
         )
     }
 }
@@ -223,7 +205,6 @@ private fun LoginButtons(
                 modifier = Modifier.size(25.dp),
             )
         }
-
     )
     Spacer(modifier = Modifier.height(12.dp))
     GoToRegisterButton(onClick = { navigateToRegister() }, isDarkTheme)
@@ -239,113 +220,33 @@ private fun GoToRegisterButton(onClick: () -> Unit, isDarkTheme: Boolean) {
 
 @Composable
 fun LoginResetPasswordDialog(
-    showResetPasswordDialog: Boolean, focusManager: FocusManager, loginViewModel: LoginViewModel,
-    hideDialog: () -> Unit, saveErrorMessage: (String) -> Unit, onPasswordFinished: () -> Unit
+    showResetPasswordDialog: Boolean,
+    focusManager: FocusManager,
+    loginViewModel: LoginViewModel,
+    hideDialog: () -> Unit,
+    updatePasswordUiResult: UiResult,
+    cleanUpState: () -> Unit,
+    updatePassword: (String) -> Unit
 ) {
     if (showResetPasswordDialog) {
         clearFocus(focusManager, loginViewModel)
-        ResetPasswordDialog(
+        ConfirmDialog(
+            title = "Reestablecer contraseña",
+            firstFieldLabel = "Correo",
+            secondFieldLabel = "Confirmar correo",
+            confirmButtonText = "Reestablecer",
+            cancelButtonText = "Cancelar",
+            firstFieldType = FieldValidationType.EMAIL,
+            secondFieldType = FieldValidationType.EMAIL,
+            onConfirm = { email -> updatePassword(email) },
+            onCancel = { hideDialog() },
             onDismissRequest = { hideDialog() },
-            onSuccess = {
+            uiResult = updatePasswordUiResult,
+            onAnimationComplete = {
+                cleanUpState()
                 hideDialog()
-                onPasswordFinished()
-                loginViewModel.showDialog(LoginDialogType.RESET_PASSWORD_SUCCESS)
-            },
-            onFailure = { newErrorMessage ->
-                saveErrorMessage(newErrorMessage)
-                hideDialog()
-                onPasswordFinished()
-                loginViewModel.showDialog(LoginDialogType.RESET_PASSWORD_SUCCESS)
             }
         )
-    }
-}
-
-@Composable
-private fun HandleDialog(
-    animationState: AnimationState, uiState: LoginUiState, errorMessage: String?,
-    onAnimationStateChanged: (animationState: AnimationState) -> Unit,
-    navigateToProfile: () -> Unit, dialogState: State<DialogState<LoginDialogType>>,
-    hideDialog: () -> Unit, passwordResetFinished: Boolean, onDialogDismissed: () -> Unit
-) {
-    if (animationState == AnimationState.Finish || animationState == AnimationState.Dialog ||
-        passwordResetFinished) {
-        onAnimationStateChanged(AnimationState.Dialog)
-        if (dialogState.value.isVisible) {
-            when (dialogState.value.dialogType) {
-                LoginDialogType.LOGIN_SUCCESS -> {
-                    SuccessDialog(
-                        onDismiss = {
-                            hideDialog()
-                            navigateToProfile()
-                        },
-                        isDialogVisible = dialogState.value.isVisible,
-                        delayTime = 3000,
-                        title = { Text(text = stringResource(id = R.string.login_screen__title_text__login_successful)) },
-                        content = { Text(stringResource(id = R.string.login_screen__text__login_successful)) },
-                    )
-                }
-                LoginDialogType.LOGIN_ERROR -> {
-//                    val error: String? = if (uiState.loginState is LoginState.Failure) {
-//                        uiState.loginState.error
-//                    } else null
-//                    ErrorDialog(
-//                        title = { Text(text = stringResource(id = R.string.login_screen__title_text__login_error)) },
-//                        text = { Text(text = error ?: stringResource(id = R.string.login_screen__text__generic_error)) },
-//                        confirmButton = {
-//                            TextButton(onClick = { hideDialog() }) { Text(
-//                                stringResource(id = R.string.login_screen__text_btn__ok)
-//                            ) }
-//                        },
-//                        onDismiss = { hideDialog() },
-//                        isDialogVisible = dialogState.value.isVisible
-//                    )
-                }
-                LoginDialogType.RESET_PASSWORD_SUCCESS -> {
-                    SuccessDialog(
-                        onDismiss = {
-                            onDialogDismissed()
-                            hideDialog()
-                                    },
-                        isDialogVisible = dialogState.value.isVisible,
-                        delayTime = 3000,
-                        title = { Text(text = stringResource(id = R.string.login_screen__title_text__reset_password_successful)) },
-                        content = { Text(stringResource(id = R.string.login_screen__text__reset_password_successful)) },
-                    )
-                }
-                LoginDialogType.RESET_PASSWORD_ERROR -> {
-                    ErrorDialog(
-                        title = { Text(text = stringResource(id = R.string.login_screen__text__reset_password_error)) },
-                        text = { Text(text = errorMessage ?: stringResource(id = R.string.login_screen__text__generic_error)) },
-                        confirmButton = {
-                            TextButton(onClick = { hideDialog() }) {
-                                Text(
-                                    stringResource(id = R.string.login_screen__text_btn__ok)
-                                )
-                            }
-                        },
-                        onDismiss = {
-                            onDialogDismissed()
-                            hideDialog()
-                        },
-                        isDialogVisible = dialogState.value.isVisible
-                    )
-                }
-                else -> {
-                    ErrorDialog(
-                        onDismiss = { hideDialog() },
-                        text = { Text(text = stringResource(id = R.string.login_screen__text__generic_error)) },
-                        confirmButton = {
-                            TextButton(onClick = { hideDialog() }) {
-                                Text(
-                                    stringResource(id = R.string.login_screen__text_btn__ok)
-                                )
-                            }
-                        },
-                    )
-                }
-            }
-        }
     }
 }
 
@@ -353,13 +254,6 @@ private fun clearFocus(focusManager: FocusManager, loginViewModel: LoginViewMode
     focusManager.clearFocus()
     loginViewModel.onEmailFocusChanged(false)
     loginViewModel.onPasswordFocusChanged(false)
-}
-
-sealed class AnimationState {
-    data object Idle : AnimationState()
-    data object Loading : AnimationState()
-    data object Finish : AnimationState()
-    data object Dialog : AnimationState()
 }
 
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
