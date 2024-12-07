@@ -48,6 +48,7 @@
     <string name="error_message__no_email">User has no email</string>
     <string name="error_message__email_update_failed">Failed to update email</string>
     <string name="error_message__account_deletion_failed">Failed to delete account</string>
+    <string name="error_message__reauthentication_failed">Reauthentication failed</string>
 
     <!-- Custom Login Text Field -->
     <string name="custom_login_text_field__content_description__password_eye_image">Toggle password visibility button</string>
@@ -55,6 +56,8 @@
     <string name="custom_login_text_field__supporting_text__empty_field">You must fill in this field first</string>
     <string name="custom_login_text_field__supporting_text__invalid_email">You must enter a valid email</string>
     <string name="custom_login_text_field__supporting_text__emails_do_not_match">Fields do not match</string>
+    <string name="custom_login_text_field__supporting_text__wrong_email">Wrong Email</string>
+    <string name="custom_login_text_field__supporting_text__wrong_password">Wrong password</string>
 
     <!-- Login Screen -->
     <string name="login_screen__title_text__welcome">Welcome</string>

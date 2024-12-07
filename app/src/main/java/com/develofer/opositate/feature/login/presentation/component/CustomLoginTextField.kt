@@ -138,6 +138,8 @@ private fun getSupportingText(
         ValidateFieldErrors.INVALID_EMAIL -> stringResource(id = R.string.custom_login_text_field__supporting_text__invalid_email)
         ValidateFieldErrors.EMPTY_TEXT -> stringResource(id = R.string.custom_login_text_field__supporting_text__empty_field)
         ValidateFieldErrors.FIELDS_DO_NOT_MATCH -> stringResource(id = R.string.custom_login_text_field__supporting_text__emails_do_not_match)
+        ValidateFieldErrors.WRONG_EMAIL -> stringResource(id = R.string.custom_login_text_field__supporting_text__wrong_email)
+        ValidateFieldErrors.WRONG_PASSWORD -> stringResource(id = R.string.custom_login_text_field__supporting_text__wrong_password)
         else -> EMPTY_STRING
     }
     return {

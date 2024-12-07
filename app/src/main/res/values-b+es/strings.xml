@@ -21,6 +21,7 @@
     <string name="error_message__no_email">El usuario no tiene correo</string>
     <string name="error_message__email_update_failed">Error al actualizar el correo</string>
     <string name="error_message__account_deletion_failed">Error al borrar la cuenta</string>
+    <string name="error_message__reauthentication_failed">Error relogeando</string>
 
     <!-- Custom Login Text Field -->
     <string name="custom_login_text_field__content_description__password_eye_image">Botón alternar visibilidad de la contraseña</string>
@@ -28,6 +29,8 @@
     <string name="custom_login_text_field__supporting_text__empty_field">Antes debes rellenar este campo</string>
     <string name="custom_login_text_field__supporting_text__invalid_email">Debes introducir un correo válido</string>
     <string name="custom_login_text_field__supporting_text__emails_do_not_match">Los campos no coinciden</string>
+    <string name="custom_login_text_field__supporting_text__wrong_email">Correo incorrecto</string>
+    <string name="custom_login_text_field__supporting_text__wrong_password">Contraseña incorrecta</string>
 
     <!-- Login Screen -->
     <string name="login_screen__title_text__welcome">Bienvenido</string>

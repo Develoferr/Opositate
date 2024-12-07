@@ -6,6 +6,8 @@ object TextFieldErrors {
         INVALID_EMAIL,
         INVALID_PASSWORD,
         FIELDS_DO_NOT_MATCH,
+        WRONG_EMAIL,
+        WRONG_PASSWORD,
         NONE
     }
 }

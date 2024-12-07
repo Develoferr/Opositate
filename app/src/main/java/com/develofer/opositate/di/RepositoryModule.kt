@@ -7,6 +7,9 @@ import com.develofer.opositate.feature.login.data.AuthRepositoryImpl
 import com.develofer.opositate.feature.login.domain.repository.AuthRepository
 import com.develofer.opositate.feature.profile.data.repository.UserRepositoryImpl
 import com.develofer.opositate.feature.profile.domain.repository.UserRepository
+import com.develofer.opositate.feature.settings.data.datasource.SettingsPreferencesDataSource
+import com.develofer.opositate.feature.settings.data.repository.SettingsRepositoryImpl
+import com.develofer.opositate.feature.settings.domain.repository.SettingsRepository
 import com.develofer.opositate.feature.test.data.repository.SolvedTestRepositoryImpl
 import com.develofer.opositate.feature.test.data.repository.TestRepositoryImpl
 import com.develofer.opositate.feature.test.domain.repository.SolvedTestRepository
@@ -94,4 +97,16 @@ object RepositoryModule {
         resourceProvider: ResourceProvider
     ): SolvedTestRepositoryImpl = SolvedTestRepositoryImpl(firestore, resourceProvider)
 
+    // Settings Repository
+    @Provides
+    @Singleton
+    fun provideSettingsRepository(
+        settingsRepositoryImpl: SettingsRepositoryImpl
+    ): SettingsRepository = settingsRepositoryImpl
+
+    @Provides
+    @Singleton
+    fun provideSettingsRepositoryImpl(
+        settingsPreferencesDataSource: SettingsPreferencesDataSource
+    ): SettingsRepositoryImpl = SettingsRepositoryImpl(settingsPreferencesDataSource)
 }
