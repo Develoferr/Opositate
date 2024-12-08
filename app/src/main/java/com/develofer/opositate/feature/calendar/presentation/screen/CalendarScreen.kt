@@ -9,7 +9,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.calendar.presentation.components.CalendarContent
 import com.develofer.opositate.feature.calendar.presentation.viewmodel.CalendarViewModel
-import com.develofer.opositate.feature.calendar.utils.WeekConfiguration
 import com.develofer.opositate.main.MainViewModel
 
 @Composable
@@ -20,6 +19,7 @@ fun CalendarScreen(
 ) {
     mainViewModel.showSystemUI()
     val calendarState by calendarViewModel.uiState.collectAsState()
+    val weekConfiguration by calendarViewModel.weekConfiguration.collectAsState()
     val screenTitle = stringResource(id = R.string.calendar_screen__app_bar_title__calendar)
     LaunchedEffect(Unit) { mainViewModel.setAppBarTitle(screenTitle) }
     CalendarContent (
@@ -31,6 +31,6 @@ fun CalendarScreen(
         onPreviousMonthClicked = { calendarViewModel.toPreviousMonth() },
         onNextMonthClicked = { calendarViewModel.toNextMonth() },
         isDarkTheme = isDarkTheme,
-        weekConfiguration = WeekConfiguration.MONDAY_START_WEEK
+        weekConfiguration = weekConfiguration
     )
 }

@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -32,8 +33,10 @@ import com.develofer.opositate.feature.calendar.utils.WeekConfiguration
 import com.develofer.opositate.feature.calendar.utils.getDaysOfWeek
 import com.develofer.opositate.feature.calendar.utils.getLocalizedMonthName
 import com.develofer.opositate.feature.calendar.utils.isWeekend
+import com.develofer.opositate.feature.profile.presentation.components.OpositateCard
 import com.develofer.opositate.ui.theme.Gray500
 import com.develofer.opositate.ui.theme.Gray700
+import com.develofer.opositate.ui.theme.Gray800
 import java.time.YearMonth
 
 @Composable
@@ -44,15 +47,29 @@ fun CalendarContent(
     onPreviousMonthClicked: () -> Unit,
     onNextMonthClicked: () -> Unit,
     isDarkTheme: Boolean,
-    weekConfiguration: WeekConfiguration = WeekConfiguration.MONDAY_START_WEEK
+    weekConfiguration: WeekConfiguration?
 ) {
-    Column(
-        modifier = Modifier.fillMaxSize().background(if (isDarkTheme) Color.Unspecified else Color.White).padding(horizontal = 16.dp)
-    ) {
-        Spacer(modifier = Modifier.size(24.dp))
-        MonthYearSelector(yearMonth, onPreviousMonthClicked, onNextMonthClicked)
-        WeekDays(weekConfiguration)
-        DaysOfMonth(dates, onDateClick, isDarkTheme, weekConfiguration)
+    weekConfiguration?.let {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(if (isDarkTheme) Color.Unspecified else Color.White)
+        ) {
+            Spacer(modifier = Modifier.size(24.dp))
+            OpositateCard(
+                isDarkTheme = isDarkTheme,
+                content = {
+                    Column (modifier = Modifier.padding(horizontal = 12.dp, vertical = 8.dp)) {
+                        MonthYearSelector(yearMonth, onPreviousMonthClicked, onNextMonthClicked)
+                        HorizontalDivider(thickness = 1.dp, color = Gray800)
+                        WeekDays(weekConfiguration)
+                        if (dates.isNotEmpty()) {
+                            DaysOfMonth(dates, onDateClick, isDarkTheme, weekConfiguration)
+                        }
+                    }
+                }
+            )
+        }
     }
 }
 
