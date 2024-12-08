@@ -11,6 +11,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontFamily
 import androidx.core.view.WindowInsetsControllerCompat
+import com.develofer.opositate.main.navigation.LoginNavigation
+import com.develofer.opositate.main.navigation.RegisterNavigation
 
 val LightColorScheme = lightColorScheme(
     // Surface Colors
@@ -88,9 +90,15 @@ fun appTypography(darkTheme: Boolean): Typography {
 @Composable
 fun OpositateTheme(
     darkTheme: Boolean,
+    currentRoute: String? = null,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
+    val colorScheme =
+        if (darkTheme)
+            DarkColorScheme
+        else
+            if (currentRoute !in (listOf(LoginNavigation.route, RegisterNavigation.route))) LightColorScheme.copy(background = Color.White)
+            else LightColorScheme
 
     val view = LocalView.current
     if (!view.isInEditMode) {

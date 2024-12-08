@@ -11,13 +11,10 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Modifier
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.splashscreen.SplashScreenViewProvider
@@ -27,7 +24,6 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.develofer.opositate.main.navigation.AppNavigation
-import com.develofer.opositate.ui.theme.OpositateTheme
 import com.google.firebase.auth.FirebaseAuth
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -82,18 +78,14 @@ class MainActivity : ComponentActivity() {
             if (isSystemUIVisible) showSystemUI() else hideSystemUI()
         }
 
-        OpositateTheme(darkTheme = isDarkTheme) {
-            Surface(modifier = Modifier.fillMaxSize()) {
-                val startDestination = mainViewModel.getStartDestination()
-                AppNavigation(
-                    navHostController = navHostController,
-                    startDestination,
-                    mainViewModel,
-                    appBarTitle,
-                    isDarkTheme
-                )
-            }
-        }
+        val startDestination = mainViewModel.getStartDestination()
+        AppNavigation(
+            navHostController = navHostController,
+            startDestination,
+            mainViewModel,
+            appBarTitle,
+            isDarkTheme
+        )
     }
 
     private fun hideSystemUI() {

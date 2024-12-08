@@ -47,6 +47,7 @@ fun ProfileScreen(
     isDarkTheme: Boolean,
     mainViewModel: MainViewModel = hiltViewModel(),
     profileViewModel: ProfileViewModel = hiltViewModel(),
+    navigateToLogin: () -> Unit,
 ) {
     SetupSystemUI(mainViewModel)
 
@@ -58,7 +59,10 @@ fun ProfileScreen(
         updateUserName = { newUserName -> profileViewModel.updateUserName(newUserName) },
         updateEmail = { newEmail -> profileViewModel.updateEmail(newEmail) },
         updatePassword = { email -> profileViewModel.updatePassword(email) },
-        logOut = { profileViewModel.logOut() },
+        logOut = {
+            profileViewModel.logOut()
+            navigateToLogin()
+        },
         updateEmailUiResult = uiState.value.updateEmailResult,
         updatePasswordUiResult = uiState.value.updatePasswordResult,
         updateUserNameUiResult = uiState.value.updateUserNameResult,
@@ -285,6 +289,6 @@ private fun TabRow(
 @Composable
 fun ProfileScreenPreview() {
     OpositateTheme(darkTheme = true) {
-        ProfileScreen(true)
+        ProfileScreen(true, navigateToLogin = { })
     }
 }
