@@ -81,7 +81,7 @@ fun CustomRadarChart(radarLabels: List<String>, values: List<Double>, values2: L
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_NO)
 @Composable
 fun CustomRadarChartPreview() {
-    OpositateTheme {
+    OpositateTheme(darkTheme = false) {
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = Color.White

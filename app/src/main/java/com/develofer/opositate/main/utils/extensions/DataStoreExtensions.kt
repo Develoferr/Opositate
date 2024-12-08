@@ -1,4 +1,4 @@
-package com.develofer.opositate.main.extensions
+package com.develofer.opositate.main.utils.extensions
 
 import android.content.Context
 import androidx.datastore.core.DataStore

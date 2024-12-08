@@ -174,7 +174,7 @@ fun RegisterButtons(
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun RegisterPreview() {
-    OpositateTheme {
+    OpositateTheme(darkTheme = true) {
         RegisterScreen({}, isDarkTheme = true)
     }
 }

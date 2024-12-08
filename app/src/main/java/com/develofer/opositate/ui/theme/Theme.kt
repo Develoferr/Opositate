@@ -1,7 +1,6 @@
 package com.develofer.opositate.ui.theme
 
 import android.app.Activity
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.material3.darkColorScheme
@@ -78,8 +77,8 @@ fun applyFontFamily(fontFamily: FontFamily): Typography {
 }
 
 @Composable
-fun appTypography(): Typography {
-    return if (isSystemInDarkTheme()) {
+fun appTypography(darkTheme: Boolean): Typography {
+    return if (darkTheme) {
         applyFontFamily(AkzidenzGroteskBQ)
     } else {
         applyFontFamily(Gotham)
@@ -88,7 +87,7 @@ fun appTypography(): Typography {
 
 @Composable
 fun OpositateTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean,
     content: @Composable () -> Unit
 ) {
     val colorScheme = if (darkTheme) DarkColorScheme else LightColorScheme
@@ -104,7 +103,7 @@ fun OpositateTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = appTypography(),
+        typography = appTypography(darkTheme),
         content = content
     )
 }

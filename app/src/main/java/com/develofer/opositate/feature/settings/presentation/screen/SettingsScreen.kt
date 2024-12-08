@@ -206,13 +206,13 @@ fun ThemeCustomizationZone(
                         Row {
                             Spacer(modifier = Modifier.width(8.dp))
                             SettingsAssistChip(
-                                selected = !isDarkThemeManual,
+                                selected = isDarkThemeManual,
                                 onWeekStartChanged = { onThemeManualChanged(true) },
                                 text = "Oscuro"
                             )
                             Spacer(modifier = Modifier.width(8.dp))
                             SettingsAssistChip(
-                                selected = isDarkThemeManual,
+                                selected = !isDarkThemeManual,
                                 onWeekStartChanged = { onThemeManualChanged(false) },
                                 text = "Claro"
                             )

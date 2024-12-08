@@ -284,7 +284,7 @@ private fun TabRow(
 @Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
 @Composable
 fun ProfileScreenPreview() {
-    OpositateTheme {
+    OpositateTheme(darkTheme = true) {
         ProfileScreen(true)
     }
 }

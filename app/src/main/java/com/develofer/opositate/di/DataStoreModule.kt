@@ -4,7 +4,7 @@ import android.content.Context
 import androidx.datastore.core.DataStore
 import androidx.datastore.preferences.core.Preferences
 import com.develofer.opositate.feature.settings.data.datasource.SettingsPreferencesDataSource
-import com.develofer.opositate.main.extensions.dataStore
+import com.develofer.opositate.main.utils.extensions.dataStore
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

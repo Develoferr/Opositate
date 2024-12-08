@@ -3,6 +3,7 @@ package com.develofer.opositate.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.develofer.opositate.R
+import com.develofer.opositate.feature.settings.domain.usecase.GetThemePreferencesUseCase
 import com.develofer.opositate.main.data.model.Result
 import com.develofer.opositate.main.data.provider.ResourceProvider
 import com.develofer.opositate.main.domain.GetUserUseCase
@@ -14,11 +15,14 @@ import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class MainViewModel @Inject constructor(
+    private val getThemePreferencesUseCase: GetThemePreferencesUseCase,
     private val getUserUseCase: GetUserUseCase,
     private val logoutUseCase: LogoutUseCase,
     resourceProvider: ResourceProvider
@@ -33,9 +37,31 @@ class MainViewModel @Inject constructor(
     private val _appBarTitle = MutableStateFlow(resourceProvider.getString(R.string.profile_screen__app_bar_title__profile))
     val appBarTitle: StateFlow<String> get() = _appBarTitle
 
+    private val _themePreferences = MutableStateFlow(ThemePreferences())
+    val themePreferences: StateFlow<ThemePreferences> = _themePreferences.asStateFlow()
+
     private var currentUser = MutableStateFlow<FirebaseUser?>(null)
 
-    init { getUserAuth() }
+    init {
+        getUserAuth()
+        loadThemePreferences()
+    }
+
+    private fun loadThemePreferences() {
+        viewModelScope.launch {
+            combine(
+                getThemePreferencesUseCase.getAutoThemeSelection(),
+                getThemePreferencesUseCase.getDarkThemeManual()
+            ) { autoThemeSelection, manualDarkTheme ->
+                ThemePreferences(
+                    isAutoThemeEnabled = autoThemeSelection,
+                    isDarkThemeManual = manualDarkTheme
+                )
+            }.collect { preferences ->
+                _themePreferences.value = preferences
+            }
+        }
+    }
 
     fun setAppBarTitle(title: String) {
         _appBarTitle.value = title

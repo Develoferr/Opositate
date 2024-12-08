@@ -70,13 +70,19 @@ class MainActivity : ComponentActivity() {
     private fun SetupAppContent() {
         val appBarTitle = mainViewModel.appBarTitle.collectAsState()
         val isSystemUIVisible by mainViewModel.isSystemUIVisible.collectAsState()
-        val isDarkTheme = isSystemInDarkTheme()
+        val themePreferences by mainViewModel.themePreferences.collectAsState()
+
+        val isDarkTheme = if (themePreferences.isAutoThemeEnabled) {
+            isSystemInDarkTheme()
+        } else {
+            themePreferences.isDarkThemeManual
+        }
 
         LaunchedEffect(isSystemUIVisible) {
             if (isSystemUIVisible) showSystemUI() else hideSystemUI()
         }
 
-        OpositateTheme {
+        OpositateTheme(darkTheme = isDarkTheme) {
             Surface(modifier = Modifier.fillMaxSize()) {
                 val startDestination = mainViewModel.getStartDestination()
                 AppNavigation(
