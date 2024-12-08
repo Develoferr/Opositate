@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.only
 import androidx.compose.foundation.layout.safeContent
-import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -20,7 +19,6 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -33,34 +31,17 @@ import com.develofer.opositate.main.navigation.Route
 import com.develofer.opositate.main.navigation.SettingsNavigation
 import com.develofer.opositate.main.navigation.TestNavigation
 import com.develofer.opositate.ui.theme.Gray600
-import com.develofer.opositate.ui.theme.Gray800
 import com.develofer.opositate.ui.theme.Gray900
 
 @Composable
 fun CustomBottomNavigationBar(
     navController: NavHostController,
-    isProgressVisible: Boolean,
-    progress: Float,
     isDarkTheme: Boolean
 ) {
     val items = listOf(ProfileNavigation, TestNavigation, LessonNavigation, CalendarNavigation, SettingsNavigation)
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
-    val colors = listOf(MaterialTheme.colorScheme.primary, MaterialTheme.colorScheme.secondary)
 
     Column {
-        SinusoidalProgressBar(
-            isVisible = isProgressVisible,
-            progress = progress,
-        )
-        if (!isDarkTheme) HorizontalDivider(thickness = 2.dp, color = Gray800)
-        else {
-            AnimatedSelectionIndicator(
-                items = items,
-                currentRoute = currentRoute,
-                colors = colors
-            )
-        }
-
         NavigationBar(
             containerColor = if (isDarkTheme) Gray900 else Color.White,
             windowInsets = WindowInsets.safeContent.only(WindowInsetsSides.Bottom),

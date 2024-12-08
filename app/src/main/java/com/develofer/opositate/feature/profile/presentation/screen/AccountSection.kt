@@ -92,7 +92,7 @@ fun AccountSettings(
             ClickableBox(
                 content = {
                     HorizontalDivider(thickness = 1.dp, color = Gray800)
-                    SettingRow(text = "Actualizar contraseña")
+                    SettingRow(text = "Reestablecer contraseña")
                 },
                 onClick = { showDialog(ProfileDialogType.UPDATE_PASSWORD) }
             )

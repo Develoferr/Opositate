@@ -62,7 +62,8 @@ fun ProfileScreen(
         updateEmailUiResult = uiState.value.updateEmailResult,
         updatePasswordUiResult = uiState.value.updatePasswordResult,
         updateUserNameUiResult = uiState.value.updateUserNameResult,
-        cleanUpState = { profileViewModel.cleanUpState() }
+        cleanUpState = { profileViewModel.cleanUpState() },
+        isDarkTheme = isDarkTheme
     )
 
     Column(
@@ -110,14 +111,15 @@ fun HandleDialog(
     updateEmailUiResult: UiResult,
     updatePasswordUiResult: UiResult,
     updateUserNameUiResult: UiResult,
-    cleanUpState: () -> Unit
+    cleanUpState: () -> Unit,
+    isDarkTheme: Boolean
 ) {
     if (dialogState.isVisible) {
         when (dialogState.dialogType) {
             ProfileDialogType.SIGN_OUT -> SignOutDialog(closeDialog, logOut)
-            ProfileDialogType.UPDATE_PASSWORD -> UpdatePasswordDialog(closeDialog, updatePassword, updatePasswordUiResult, cleanUpState)
-            ProfileDialogType.UPDATE_USERNAME -> UpdateUsernameDialog(closeDialog, updateUserName, updateUserNameUiResult, cleanUpState)
-            ProfileDialogType.UPDATE_EMAIL -> UpdateEmailDialog(closeDialog, updateEmail, updateEmailUiResult, cleanUpState)
+            ProfileDialogType.UPDATE_PASSWORD -> UpdatePasswordDialog(closeDialog, updatePassword, updatePasswordUiResult, cleanUpState, isDarkTheme)
+            ProfileDialogType.UPDATE_USERNAME -> UpdateUsernameDialog(closeDialog, updateUserName, updateUserNameUiResult, cleanUpState, isDarkTheme)
+            ProfileDialogType.UPDATE_EMAIL -> UpdateEmailDialog(closeDialog, updateEmail, updateEmailUiResult, cleanUpState, isDarkTheme)
             null -> {}
         }
     }
@@ -147,13 +149,14 @@ fun UpdatePasswordDialog(
     closeDialog: () -> Unit,
     updatePassword: (String) -> Unit,
     updatePasswordUiResult: UiResult,
-    cleanUpState: () -> Unit
+    cleanUpState: () -> Unit,
+    isDarkTheme: Boolean
 ) {
     ConfirmDialog(
         title = "Reestablecer contraseña",
         firstFieldLabel = "Correo",
         secondFieldLabel = "Confirmar correo",
-        confirmButtonText = "Reestablecer",
+        confirmButtonText = "Reestablecer".uppercase(),
         cancelButtonText = "Cancelar",
         firstFieldType = FieldValidationType.EMAIL,
         secondFieldType = FieldValidationType.EMAIL,
@@ -161,7 +164,9 @@ fun UpdatePasswordDialog(
         onCancel = { closeDialog() },
         onDismissRequest = { closeDialog() },
         uiResult = updatePasswordUiResult,
-        onAnimationComplete = { cleanUpState() }
+        onAnimationComplete = { cleanUpState() },
+        isDarkTheme = isDarkTheme,
+        explainingText = "Ingrese su dirección de correo\nEnviaremos un mensaje con un enlace para reestablecer su contraseña"
     )
 }
 
@@ -170,13 +175,14 @@ fun UpdateUsernameDialog(
     closeDialog: () -> Unit,
     updateUserName: (String) -> Unit,
     updateUserNameUiResult: UiResult,
-    cleanUpState: () -> Unit
+    cleanUpState: () -> Unit,
+    isDarkTheme: Boolean
 ) {
     ConfirmDialog(
         title = "Actualiza tu nombre de usuario",
         firstFieldLabel = "Nuevo Usuario",
         secondFieldLabel = "Confirmar Usuario",
-        confirmButtonText = "Actualizar",
+        confirmButtonText = "Actualizar".uppercase(),
         cancelButtonText = "Cancelar",
         firstFieldType = FieldValidationType.TEXT,
         secondFieldType = FieldValidationType.TEXT,
@@ -184,7 +190,8 @@ fun UpdateUsernameDialog(
         onCancel = { closeDialog() },
         onDismissRequest = { closeDialog() },
         uiResult = updateUserNameUiResult,
-        onAnimationComplete = { cleanUpState() }
+        onAnimationComplete = { cleanUpState() },
+        isDarkTheme = isDarkTheme
     )
 }
 
@@ -193,13 +200,14 @@ fun UpdateEmailDialog(
     closeDialog: () -> Unit,
     updateEmail: (String) -> Unit,
     updateEmailUiResult: UiResult,
-    cleanUpState: () -> Unit
+    cleanUpState: () -> Unit,
+    isDarkTheme: Boolean
 ) {
     ConfirmDialog(
         title = "Actualizar Correo",
-        firstFieldLabel = "Nueva Correo",
+        firstFieldLabel = "Nuevo Correo",
         secondFieldLabel = "Confirmar Correo",
-        confirmButtonText = "Actualizar",
+        confirmButtonText = "Actualizar".uppercase(),
         cancelButtonText = "Cancelar",
         firstFieldType = FieldValidationType.EMAIL,
         secondFieldType = FieldValidationType.EMAIL,
@@ -207,7 +215,8 @@ fun UpdateEmailDialog(
         onCancel = { closeDialog() },
         onDismissRequest = { closeDialog() },
         uiResult = updateEmailUiResult,
-        onAnimationComplete = { cleanUpState() }
+        onAnimationComplete = { cleanUpState() },
+        isDarkTheme = isDarkTheme
     )
 }
 

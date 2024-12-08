@@ -13,9 +13,7 @@ import javax.inject.Singleton
 object DataSourceModule {
     @Provides
     @Singleton
-    fun provideCalendarDataSource(): CalendarDataSource {
-        return CalendarDataSource()
-    }
+    fun provideCalendarDataSource(): CalendarDataSource = CalendarDataSource()
 
     @Provides
     @Singleton

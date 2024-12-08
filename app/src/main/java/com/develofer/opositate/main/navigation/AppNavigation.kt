@@ -30,9 +30,7 @@ fun AppNavigation(
     startDestination: Route,
     mainViewModel: MainViewModel = hiltViewModel(),
     appBarTitle: State<String>,
-    isDarkTheme: Boolean,
-    isProgressVisible: Boolean,
-    progress: Float
+    isDarkTheme: Boolean
 ) {
     val currentRoute = navHostController.currentBackStackEntryAsState().value?.destination?.route
     Scaffold(
@@ -47,8 +45,8 @@ fun AppNavigation(
             ) {
                 CustomBottomNavigationBar(
                     navHostController,
-                    isProgressVisible, progress,
-                    isDarkTheme)
+                    isDarkTheme
+                )
             }
         },
         topBar = {

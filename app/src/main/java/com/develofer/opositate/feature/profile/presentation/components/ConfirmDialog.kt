@@ -1,9 +1,6 @@
 package com.develofer.opositate.feature.profile.presentation.components
 
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Text
@@ -42,20 +39,30 @@ fun ConfirmDialog(
     onCancel: () -> Unit,
     onDismissRequest: () -> Unit,
     uiResult: UiResult,
-    onAnimationComplete: () -> Unit
+    onAnimationComplete: () -> Unit,
+    explainingText: String? = null,
+    isDarkTheme: Boolean
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val isDarkTheme = isSystemInDarkTheme()
 
     AlertDialog(
         onDismissRequest = onDismissRequest,
         title = {
-            Text(text = title.uppercase())
+            Text(
+                modifier = Modifier.padding(horizontal = 8.dp),
+                text = title.uppercase()
+            )
         },
         text = {
             Column {
+                explainingText?.let {
+                    Text(
+                        modifier = Modifier.padding(horizontal = 8.dp),
+                        text = explainingText
+                    )
+                }
                 CustomLoginTextField(
-                    modifier = Modifier.padding(horizontal = 16.dp),
+                    modifier = Modifier.padding(horizontal = 8.dp),
                     value = uiState.firstFieldValue,
                     onValueChange = { viewModel.onFirstFieldChanged(it) },
                     label = firstFieldLabel.uppercase(),
@@ -67,11 +74,8 @@ fun ConfirmDialog(
                     textLetterSpacing = 0.sp,
                     labelFontSize = 13.sp,
                 )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
                 CustomLoginTextField(
-                    modifier = Modifier.padding(horizontal = 16.dp),
+                    modifier = Modifier.padding(horizontal = 8.dp),
                     value = uiState.secondFieldValue,
                     onValueChange = { viewModel.onSecondFieldChanged(it) },
                     label = secondFieldLabel.uppercase(),
@@ -101,7 +105,7 @@ fun ConfirmDialog(
                     viewModel.cleanUpState()
                     onDismissRequest()
                 },
-                modifier = Modifier,
+                modifier = Modifier.padding(horizontal = 8.dp),
                 text = confirmButtonText
             )
         },

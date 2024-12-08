@@ -1,6 +1,5 @@
 package com.develofer.opositate.feature.login.presentation.screen
 
-import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
@@ -28,7 +27,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -46,7 +44,6 @@ import com.develofer.opositate.feature.profile.presentation.components.ConfirmDi
 import com.develofer.opositate.feature.profile.presentation.components.FieldValidationType
 import com.develofer.opositate.main.MainViewModel
 import com.develofer.opositate.main.data.model.UiResult
-import com.develofer.opositate.ui.theme.OpositateTheme
 import com.develofer.opositate.utils.StringConstants.EMPTY_STRING
 
 @Composable
@@ -92,7 +89,8 @@ fun LoginScreen(
             hideDialog = { loginViewModel.toggleResetPasswordDialogVisibility(false) },
             updatePassword = { loginViewModel.updatePassword(it) },
             updatePasswordUiResult = uiState.updatePasswordState,
-            cleanUpState = { loginViewModel.cleanUpState() }
+            cleanUpState = { loginViewModel.cleanUpState() },
+            isDarkTheme = isDarkTheme
         )
     }
 }
@@ -226,7 +224,8 @@ fun LoginResetPasswordDialog(
     hideDialog: () -> Unit,
     updatePasswordUiResult: UiResult,
     cleanUpState: () -> Unit,
-    updatePassword: (String) -> Unit
+    updatePassword: (String) -> Unit,
+    isDarkTheme: Boolean
 ) {
     if (showResetPasswordDialog) {
         clearFocus(focusManager, loginViewModel)
@@ -242,10 +241,12 @@ fun LoginResetPasswordDialog(
             onCancel = { hideDialog() },
             onDismissRequest = { hideDialog() },
             uiResult = updatePasswordUiResult,
+            isDarkTheme = isDarkTheme,
             onAnimationComplete = {
                 cleanUpState()
                 hideDialog()
-            }
+            },
+            explainingText = "Ingrese su dirección de correo\nEnviaremos un mensaje con un enlace para reestablecer su contraseña"
         )
     }
 }
@@ -254,12 +255,4 @@ private fun clearFocus(focusManager: FocusManager, loginViewModel: LoginViewMode
     focusManager.clearFocus()
     loginViewModel.onEmailFocusChanged(false)
     loginViewModel.onPasswordFocusChanged(false)
-}
-
-@Preview(showBackground = true, uiMode = UI_MODE_NIGHT_YES)
-@Composable
-fun LoginPreview() {
-    OpositateTheme {
-        LoginScreen({}, {}, true, hiltViewModel())
-    }
 }
