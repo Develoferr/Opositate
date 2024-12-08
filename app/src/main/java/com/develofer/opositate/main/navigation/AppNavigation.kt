@@ -16,7 +16,7 @@ import com.develofer.opositate.feature.lesson.LessonScreen
 import com.develofer.opositate.feature.login.presentation.screen.LoginScreen
 import com.develofer.opositate.feature.login.presentation.screen.RegisterScreen
 import com.develofer.opositate.feature.profile.presentation.screen.ProfileScreen
-import com.develofer.opositate.feature.settings.SettingsScreen
+import com.develofer.opositate.feature.settings.presentation.screen.SettingsScreen
 import com.develofer.opositate.feature.test.presentation.screen.TestResultScreen
 import com.develofer.opositate.feature.test.presentation.screen.TestScreen
 import com.develofer.opositate.feature.test.presentation.screen.TestSolvingScreen
@@ -131,20 +131,29 @@ fun AppNavigation(
                     abilityId = testSolvingNavigation.abilityId,
                     taskId = testSolvingNavigation.taskId,
                     mainViewModel = mainViewModel,
-                    navigateToTestResult = { testResultId -> navHostController.navigate(TestResultNavigation(testResultId)) }
+                    navigateToTestResultGeneralTest = { testType, difficultId, testResultId -> navHostController.navigate(TestResultNavigation(testType, difficultId, null, null, null, testResultId)) },
+                    navigateToTestResultGroupAbilityTest = { testType, difficultId, groupId, testResultId -> navHostController.navigate(TestResultNavigation(testType, difficultId, groupId, null, null, testResultId)) },
+                    navigateToTestResultAbilityTest = { testType, difficultId, abilityId, testResultId -> navHostController.navigate(TestResultNavigation(testType, difficultId, null, abilityId, null, testResultId)) },
+                    navigateToTestResultTaskTest = { testType, difficultId, abilityId, taskId, testResultId -> navHostController.navigate(TestResultNavigation(testType, difficultId, null, abilityId, taskId, testResultId)) },
                 )
             }
             composable<TestResultNavigation> { backStackEntry ->
                 val testResultNavigation: TestResultNavigation = backStackEntry.toRoute()
                 TestResultScreen(
                     testResultId = testResultNavigation.testResultId,
+                    testTypeId = testResultNavigation.testTypeId,
+                    difficultId = testResultNavigation.difficultId,
+                    groupId = testResultNavigation.groupId,
+                    abilityId = testResultNavigation.abilityId,
+                    taskId = testResultNavigation.taskId,
                     isDarkTheme = isDarkTheme
                 )
             }
             composable<SettingsNavigation> {
                 SettingsScreen(
                     isDarkTheme = isDarkTheme,
-                    mainViewModel = mainViewModel
+                    mainViewModel = mainViewModel,
+                    navigateToLogin = { navigateToLogin(navHostController) }
                 )
             }
         }

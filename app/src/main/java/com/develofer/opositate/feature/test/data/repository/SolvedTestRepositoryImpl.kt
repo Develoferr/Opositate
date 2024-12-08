@@ -36,7 +36,7 @@ class SolvedTestRepositoryImpl @Inject constructor(
         if (userId.isBlank()) Result.Error(Exception(resourceProvider.getString(R.string.error_message__user_not_authenticated)))
         else {
             try {
-                Result.Success(getTestResultList(userId, testType)?.solvedTests?.find { it.id == solvedTestId })
+                Result.Success(getTestResultList(userId, testType)?.solvedTests?.find { it.testId == solvedTestId.toInt() })
             } catch (e: Exception) {
                 Result.Error(e)
             }

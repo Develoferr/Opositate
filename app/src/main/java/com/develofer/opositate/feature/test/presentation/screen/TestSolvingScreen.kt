@@ -41,6 +41,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.develofer.opositate.R
 import com.develofer.opositate.feature.test.presentation.viewmodel.TestSolvingViewModel
 import com.develofer.opositate.main.MainViewModel
+import com.develofer.opositate.main.data.provider.TestType
 import com.develofer.opositate.utils.StringConstants.TWO_DIGITS_FORMAT
 import kotlinx.coroutines.delay
 import java.util.Locale
@@ -55,8 +56,11 @@ fun TestSolvingScreen(
     taskId: Int?,
     testSolvingViewModel: TestSolvingViewModel = hiltViewModel(),
     isDarkTheme: Boolean,
-    navigateToTestResult: (testResultId: String) -> Unit,
-    mainViewModel: MainViewModel
+    mainViewModel: MainViewModel,
+    navigateToTestResultGeneralTest: (testTypeId: Int, difficultId: Int, testResultId: Int) -> Unit,
+    navigateToTestResultGroupAbilityTest: (testTypeId: Int, difficultId: Int, groupId: Int, testResultId: Int) -> Unit,
+    navigateToTestResultAbilityTest: (testTypeId: Int, difficultId: Int, abilityId: Int, testResultId: Int) -> Unit,
+    navigateToTestResultTaskTest: (testTypeId: Int, difficultId: Int, abilityId: Int, taskId: Int, testResultId: Int) -> Unit
 ) {
     val uiState by testSolvingViewModel.uiState.collectAsState()
     val maxTime = uiState.test?.maxTime
@@ -281,7 +285,18 @@ fun TestSolvingScreen(
                         Button(
                             onClick = {
                                 testSolvingViewModel.toggleTestActive(false)
-                                testSolvingViewModel.correctTest(navigateToTestResult)
+                                testSolvingViewModel.correctTest {
+                                    val test = uiState.test
+                                    if (test != null) {
+                                        when (test.testType) {
+                                            TestType.GENERAL -> navigateToTestResultGeneralTest(0, difficultId ?: 0, 0)
+                                            TestType.GROUP -> navigateToTestResultGroupAbilityTest(1, difficultId ?: 0, groupId ?: 0, 0)
+                                            TestType.ABILITY -> navigateToTestResultAbilityTest(2, difficultId ?: 0, abilityId ?: 0, 0)
+                                            TestType.TASK -> navigateToTestResultTaskTest(3, difficultId ?: 0, abilityId ?: 0, taskId ?: 0, 0)
+                                            TestType.CUSTOM -> {}
+                                        }
+                                    }
+                                }
                             }
                         ) {
                             Text(stringResource(R.string.test_solving_screen__text_btn__finish).uppercase())
@@ -302,5 +317,4 @@ fun TestSolvingScreen(
             }
         }
     }
-
 }

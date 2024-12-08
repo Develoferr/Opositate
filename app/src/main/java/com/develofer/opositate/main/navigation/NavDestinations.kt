@@ -41,7 +41,12 @@ data class TestSolvingNavigation(
 
 @Serializable
 data class TestResultNavigation(
-    val testResultId: String
+    val testTypeId: Int,
+    val difficultId: Int?,
+    val groupId: Int?,
+    val abilityId: Int?,
+    val taskId: Int?,
+    val testResultId: Int
 ) {
     companion object: Route {
         override val route = this::class.qualifiedName

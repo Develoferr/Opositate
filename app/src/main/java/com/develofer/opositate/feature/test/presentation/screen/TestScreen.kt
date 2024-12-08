@@ -124,16 +124,13 @@ fun TestScreen(
                 TextButton(onClick = {
                     showNewTestDialog = false
 
-                    mainViewModel.startProgress {
-                        when (selectedTestType) {
-                            TestType.GENERAL -> navigateToTestSolvingGeneralTest(0, selectedDifficultId)
-                            TestType.GROUP -> navigateToTestSolvingGroupAbilityTest(1, selectedDifficultId, selectedGroupId)
-                            TestType.ABILITY -> navigateToTestSolvingAbilityTest(2, selectedDifficultId, selectedAbilityId)
-                            TestType.TASK -> navigateToTestSolvingTaskTest(3, selectedDifficultId, selectedAbilityId, selectedTaskId)
-                            TestType.CUSTOM -> {  }
-                        }
+                    when (selectedTestType) {
+                        TestType.GENERAL -> navigateToTestSolvingGeneralTest(0, selectedDifficultId)
+                        TestType.GROUP -> navigateToTestSolvingGroupAbilityTest(1, selectedDifficultId, selectedGroupId)
+                        TestType.ABILITY -> navigateToTestSolvingAbilityTest(2, selectedDifficultId, selectedAbilityId)
+                        TestType.TASK -> navigateToTestSolvingTaskTest(3, selectedDifficultId, selectedAbilityId, selectedTaskId)
+                        TestType.CUSTOM -> {  }
                     }
-
                 }) {
                     Text(
                         text = "Empezar"

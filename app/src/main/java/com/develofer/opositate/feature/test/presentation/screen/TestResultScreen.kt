@@ -53,14 +53,19 @@ import java.util.Locale
 
 @Composable
 fun TestResultScreen(
-    testResultId: String,
+    testResultId: Int,
+    testTypeId: Int,
+    difficultId: Int?,
+    groupId: Int?,
+    abilityId: Int?,
+    taskId: Int?,
     testResultViewModel: TestResultViewModel = hiltViewModel(),
     isDarkTheme: Boolean
 ) {
     val uiState by testResultViewModel.uiState.collectAsState()
 
     LaunchedEffect(uiState.isTestActive) {
-        testResultViewModel.getTestResult(testResultId)
+        testResultViewModel.getTestResult(testResultId, testTypeId, difficultId, groupId, abilityId, taskId)
     }
 
     uiState.testResult?.let { testResult ->
