@@ -1,8 +1,9 @@
-# Gradle files
+# Build system directories
 .gradle/
 build/
-*/build/
 **/build/
+
+# Gradle Wrapper files
 gradle-wrapper.jar
 gradle-wrapper.properties
 
@@ -16,7 +17,9 @@ local.properties
 # User-specific configurations
 *.hprof
 *.log
-*.txt
+*.trace
+
+# Android outputs
 *.apk
 *.aab
 *.ap_
@@ -30,7 +33,7 @@ local.properties
 *.bin
 *.dll
 
-# Android Emulator
+# Android Emulator files
 *.avd/
 *.avd/*.ini
 *.lock
@@ -48,8 +51,20 @@ out/
 # Java
 *.class
 
-# Firebase config file
+# Firebase config files
 google-services.json
+firebase-debug.log
 
-# Misc
-*.DS_Store
+# Firebase Functions
+functions/lib/           # TypeScript compiled files
+functions/node_modules/  # Installed dependencies
+functions/.env           # Environment variables
+
+# Miscellaneous system files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
