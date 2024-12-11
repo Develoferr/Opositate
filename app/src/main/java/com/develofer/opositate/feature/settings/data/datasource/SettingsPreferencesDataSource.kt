@@ -24,7 +24,7 @@ class SettingsPreferencesDataSource(
 
     val mondayStartWeek: Flow<Boolean?> = dataStore.data
         .map { preferences ->
-            preferences[MONDAY_START_WEEK]
+            preferences[MONDAY_START_WEEK] ?: true
         }
 
     suspend fun saveAutoThemeSelection(isAutoEnabled: Boolean) {
